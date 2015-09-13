@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<calendar>
+   <task>
+      <name>test task</name>
+   </task>
+   <deadline>
+      <name>test deadline</name>
+      <startDate>14/09/2014 20:00</startDate>
+   </deadline>
+   <schedule>
+      <name>test schedule</name>
+      <startDate>14/09/2014 20:00</startDate>
+      <endDate>14/09/2014 21:00</endDate>
+   </schedule>
+</calendar>
