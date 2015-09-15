@@ -6,20 +6,25 @@ public class Event {
 	public int type;
 	public Date startDate;
 	public Date endDate;
+	public int ID;
 	
-	public Event(String name, Date startDate, Date endDate){
+	public Event(int ID, String name, Date startDate, Date endDate){
+		this.ID = ID;
 		this.name = name;
-		this.type = 3;
+		this.type = Constants.SCHEDULE_TYPE_NUMBER;
 		this.startDate = startDate;
 		this.endDate = endDate;
 	}
-	public Event(String name, Date startDate){
+	public Event(int ID, String name, Date endDate){
+		this.ID = ID;
 		this.name = name;
-		this.type = 2;
-		this.startDate = startDate;
+		this.type = Constants.DEADLINE_TYPE_NUMBER;
+		this.endDate = endDate;
 		
 	}
-	public Event(String name){
+	  
+	public Event(int ID, String name){
+		this.ID = ID;
 		this.name = name;
 		this.type = Constants.TASK_TYPE_NUMBER;
 	}

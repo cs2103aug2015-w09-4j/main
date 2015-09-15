@@ -31,6 +31,7 @@ public class TGStorageManager {
 	private ArrayList<Event> _deadlineCache;
 	private ArrayList<Event> _scheduleCache;
 	File inputFile;
+	private int currentIndex;
 
 	public TGStorageManager(String fileDirectory) {
 		this._fileDirectory = fileDirectory;
@@ -66,6 +67,7 @@ public class TGStorageManager {
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 			Document doc = dBuilder.parse(inputFile);
 			doc.getDocumentElement().normalize();
+			currentIndex = getCurrentIndexFromFile(doc);
 			initializeTaskCache(doc);
 			initializeDeadlineCache(doc);
 			initializeScheduleCache(doc);
@@ -80,6 +82,7 @@ public class TGStorageManager {
 	}
 
 	private void createStorageFile() {
+		currentIndex = 0;
 		StringWriter stringWriter = new StringWriter();
 
 		XMLOutputFactory xMLOutputFactory = XMLOutputFactory.newInstance();
@@ -90,12 +93,13 @@ public class TGStorageManager {
 
 			xMLStreamWriter.writeStartDocument();
 			xMLStreamWriter.writeStartElement("calendar");
+			xMLStreamWriter.writeAttribute("current", "0");
 			xMLStreamWriter.writeEndElement();
-	        xMLStreamWriter.writeEndDocument();
+			xMLStreamWriter.writeEndDocument();
 
-	         xMLStreamWriter.flush();
-	         xMLStreamWriter.close();
-	         
+			xMLStreamWriter.flush();
+			xMLStreamWriter.close();
+
 		} catch (XMLStreamException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -113,10 +117,17 @@ public class TGStorageManager {
 
 	}
 
+	private int getCurrentIndexFromFile(Document doc) {
+		return Integer.parseInt(doc.getDocumentElement()
+				.getAttribute("current"));
+	}
+
 	private void initializeTaskCache(Document doc) {
 
 		NodeList nodeList;
 		XPath xPath = XPathFactory.newInstance().newXPath();
+		Element eElement;
+		int ID;
 		try {
 			nodeList = (NodeList) xPath.compile(Constants.XML_TASK_EXPRESSION)
 					.evaluate(doc, XPathConstants.NODESET);
@@ -125,8 +136,9 @@ public class TGStorageManager {
 				// System.out.println("\nCurrent Element :" +
 				// nNode.getNodeName());
 				if (nNode.getNodeType() == Node.ELEMENT_NODE) {
-					Element eElement = (Element) nNode;
-					_taskCache.add(new Event(eElement
+					eElement = (Element) nNode;
+					ID = Integer.parseInt(eElement.getAttribute("id"));
+					_taskCache.add(new Event(ID, eElement
 							.getElementsByTagName("name").item(0)
 							.getTextContent()));
 				}
@@ -147,19 +159,21 @@ public class TGStorageManager {
 					XPathConstants.NODESET);
 			String nameString, startDateString;
 			Date startDate;
+			int ID;
 			for (int i = 0; i < nodeList.getLength(); i++) {
 				Node nNode = nodeList.item(i);
 				// System.out.println("\nCurrent Element :" +
 				// nNode.getNodeName());
 				if (nNode.getNodeType() == Node.ELEMENT_NODE) {
 					Element eElement = (Element) nNode;
+					ID = Integer.parseInt(eElement.getAttribute("id"));
 					nameString = eElement.getElementsByTagName("name").item(0)
 							.getTextContent();
 					startDateString = eElement
 							.getElementsByTagName("startDate").item(0)
 							.getTextContent();
 					startDate = sdf.parse(startDateString);
-					_deadlineCache.add(new Event(nameString, startDate));
+					_deadlineCache.add(new Event(ID, nameString, startDate));
 				}
 			}
 		} catch (XPathExpressionException e) {
@@ -181,10 +195,12 @@ public class TGStorageManager {
 					XPathConstants.NODESET);
 			String nameString, startDateString, endDateString;
 			Date startDate, endDate;
+			int ID;
 			for (int i = 0; i < nodeList.getLength(); i++) {
 				Node nNode = nodeList.item(i);
 				if (nNode.getNodeType() == Node.ELEMENT_NODE) {
 					Element eElement = (Element) nNode;
+					ID = Integer.parseInt(eElement.getAttribute("id"));
 					nameString = eElement.getElementsByTagName("name").item(0)
 							.getTextContent();
 					startDateString = eElement
@@ -194,8 +210,8 @@ public class TGStorageManager {
 							.item(0).getTextContent();
 					startDate = sdf.parse(startDateString);
 					endDate = sdf.parse(endDateString);
-					_scheduleCache
-							.add(new Event(nameString, startDate, endDate));
+					_scheduleCache.add(new Event(ID, nameString, startDate,
+							endDate));
 				}
 			}
 		} catch (XPathExpressionException e) {
@@ -210,15 +226,15 @@ public class TGStorageManager {
 	public static void main(String[] args) {
 		TGStorageManager tm = new TGStorageManager("new");
 		for (Event element : tm.getTaskCache()) {
-			System.out.println(element.name);
+			System.out.println(element.ID+" "+element.name);
 		}
 		System.out.println();
 		for (Event element : tm.getDeadlineCache()) {
-			System.out.println(element.name + ":" + element.startDate);
+			System.out.println(element.ID+" "+element.name + ":" + element.endDate);
 		}
 		System.out.println();
 		for (Event element : tm.getScheduleCache()) {
-			System.out.println(element.name + ":" + element.startDate + "-"
+			System.out.println(element.ID+" "+element.name + ":" + element.startDate + "-"
 					+ element.endDate);
 
 		}
