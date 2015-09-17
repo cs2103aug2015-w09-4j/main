@@ -85,6 +85,34 @@ public class TGStorageManager {
 		updateStorage();
 	}
 	
+	//precon:id exists
+	public void deleteEventByID(int id){
+		for (Event element:_taskCache){
+			if (element.ID == id){
+				_taskCache.remove(element);
+				updateStorage();
+				return;
+			}
+		}
+		
+		for (Event element:_scheduleCache){
+			if (element.ID == id){
+				_scheduleCache.remove(element);
+				updateStorage();
+				return;
+			}
+		}
+		
+		for (Event element:_deadlineCache){
+			if (element.ID == id){
+				_deadlineCache.remove(element);
+				updateStorage();
+				return;
+			}
+		}
+		//System.out.println("not found");
+	}
+	
 	private void initialize() {
 		try {
 			File inputFile = new File(_fileDirectory);
@@ -352,6 +380,7 @@ public class TGStorageManager {
 		TGStorageManager tm = new TGStorageManager("test");
 		//tm.addTask("new task6");
 		//tm.addDeadline("new deadline22", Calendar.getInstance().getTime());
+		tm.deleteEventByID(2);
 		for (Event element : tm.getTaskCache()) {
 			System.out.println(element.ID+" "+element.name);
 		}
