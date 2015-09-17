@@ -1,11 +1,13 @@
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.StringReader;
 import java.io.StringWriter;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -14,6 +16,15 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Source;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.TransformerFactoryConfigurationError;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
@@ -52,7 +63,28 @@ public class TGStorageManager {
 	public ArrayList<Event> getDeadlineCache() {
 		return this._deadlineCache;
 	}
-
+	
+	public void addTask(String name){
+		Event newTask = new Event(currentIndex,name);
+		_taskCache.add(newTask);
+		currentIndex++;
+		updateStorage();
+	}
+	
+	public void addDeadline(String name, Date endDate){
+		Event newDeadline = new Event(currentIndex,name, endDate);
+		_deadlineCache.add(newDeadline);
+		currentIndex++;
+		updateStorage();
+	}
+	
+	public void addSchedule(String name, Date startDate, Date endDate){
+		Event newSchedule = new Event(currentIndex,name, startDate, endDate);
+		_scheduleCache.add(newSchedule);
+		currentIndex++;
+		updateStorage();
+	}
+	
 	private void initialize() {
 		try {
 			File inputFile = new File(_fileDirectory);
@@ -105,15 +137,15 @@ public class TGStorageManager {
 			e.printStackTrace();
 			return;
 		}
-		try {
-			FileWriter fw = new FileWriter(_fileDirectory);
-			fw.write(stringWriter.getBuffer().toString());
-			stringWriter.close();
-			fw.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
+			writexmlStringToFile(stringWriter.getBuffer().toString());
+			try {
+				stringWriter.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
 
 	}
 
@@ -157,8 +189,8 @@ public class TGStorageManager {
 			nodeList = (NodeList) xPath.compile(
 					Constants.XML_DEADLINE_EXPRESSION).evaluate(doc,
 					XPathConstants.NODESET);
-			String nameString, startDateString;
-			Date startDate;
+			String nameString, endDateString;
+			Date endDate;
 			int ID;
 			for (int i = 0; i < nodeList.getLength(); i++) {
 				Node nNode = nodeList.item(i);
@@ -169,11 +201,11 @@ public class TGStorageManager {
 					ID = Integer.parseInt(eElement.getAttribute("id"));
 					nameString = eElement.getElementsByTagName("name").item(0)
 							.getTextContent();
-					startDateString = eElement
-							.getElementsByTagName("startDate").item(0)
+					endDateString = eElement
+							.getElementsByTagName("endDate").item(0)
 							.getTextContent();
-					startDate = sdf.parse(startDateString);
-					_deadlineCache.add(new Event(ID, nameString, startDate));
+					endDate = sdf.parse(endDateString);
+					_deadlineCache.add(new Event(ID, nameString, endDate));
 				}
 			}
 		} catch (XPathExpressionException e) {
@@ -222,12 +254,108 @@ public class TGStorageManager {
 			e.printStackTrace();
 		}
 	}
+	private void updateStorage(){
+		try {
+	         StringWriter stringWriter = new StringWriter();
+	         DateFormat sdf = new SimpleDateFormat(Constants.DEFAULT_DATE_FORMAT);
+	         XMLOutputFactory xMLOutputFactory = XMLOutputFactory.newInstance();	
+	         XMLStreamWriter xMLStreamWriter = xMLOutputFactory.createXMLStreamWriter(stringWriter);
+	         
+	         xMLStreamWriter.writeStartDocument();
+	         xMLStreamWriter.writeStartElement("calendar");
+	         xMLStreamWriter.writeAttribute("current", String.valueOf(currentIndex));
+	         for (Event element:_taskCache){
+	        	 xMLStreamWriter.writeStartElement("task");			
+	             xMLStreamWriter.writeAttribute("id", String.valueOf(element.ID));
+	             xMLStreamWriter.writeStartElement("name");	
+	             xMLStreamWriter.writeCharacters(element.name);
+	             xMLStreamWriter.writeEndElement();
+	             xMLStreamWriter.writeEndElement();
+	         }
+	         
+	         for (Event element:_deadlineCache){
+	        	 xMLStreamWriter.writeStartElement("deadline");			
+	             xMLStreamWriter.writeAttribute("id", String.valueOf(element.ID));
+	             xMLStreamWriter.writeStartElement("name");	
+	             xMLStreamWriter.writeCharacters(element.name);
+	             xMLStreamWriter.writeEndElement();
+	             xMLStreamWriter.writeStartElement("endDate");	
+	             xMLStreamWriter.writeCharacters(sdf.format(element.endDate));
+	             xMLStreamWriter.writeEndElement();
+	             xMLStreamWriter.writeEndElement();
+	         }
+	         
+	         for (Event element:_scheduleCache){
+	        	 xMLStreamWriter.writeStartElement("schedule");			
+	             xMLStreamWriter.writeAttribute("id", String.valueOf(element.ID));
+	             xMLStreamWriter.writeStartElement("name");	
+	             xMLStreamWriter.writeCharacters(element.name);
+	             xMLStreamWriter.writeEndElement();
+	             xMLStreamWriter.writeStartElement("startDate");	
+	             xMLStreamWriter.writeCharacters(sdf.format(element.startDate));
+	             xMLStreamWriter.writeEndElement();
+	             xMLStreamWriter.writeStartElement("endDate");	
+	             xMLStreamWriter.writeCharacters(sdf.format(element.endDate));
+	             xMLStreamWriter.writeEndElement();
+	             xMLStreamWriter.writeEndElement();
+	         }
 
+	         xMLStreamWriter.writeEndElement();
+	         xMLStreamWriter.writeEndDocument();
+
+	         xMLStreamWriter.flush();
+	         xMLStreamWriter.close();
+
+	         String xmlString = stringWriter.getBuffer().toString();
+	         
+	         writexmlStringToFile(xmlString);
+	         stringWriter.close();
+	         
+
+	      } catch (XMLStreamException e) {
+	         e.printStackTrace();
+	      } catch (IOException e) {
+	         // TODO Auto-generated catch block
+	         e.printStackTrace();
+	      }
+	}
+	
+	private void writexmlStringToFile(String xmlString){
+		try {
+            Source xmlInput = new StreamSource(new StringReader(xmlString));
+            StringWriter outputStringWriter = new StringWriter();
+            StreamResult xmlOutput = new StreamResult(outputStringWriter);
+            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            transformerFactory.setAttribute("indent-number", 2);
+            Transformer transformer = transformerFactory.newTransformer(); 
+            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+            transformer.transform(xmlInput, xmlOutput);
+			FileWriter fw = new FileWriter(_fileDirectory);
+			fw.write(xmlOutput.getWriter().toString());
+			fw.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (TransformerConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (TransformerFactoryConfigurationError e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (TransformerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	public static void main(String[] args) {
-		TGStorageManager tm = new TGStorageManager("new");
+		TGStorageManager tm = new TGStorageManager("test");
+		//tm.addTask("new task6");
+		//tm.addDeadline("new deadline22", Calendar.getInstance().getTime());
 		for (Event element : tm.getTaskCache()) {
 			System.out.println(element.ID+" "+element.name);
 		}
+		
 		System.out.println();
 		for (Event element : tm.getDeadlineCache()) {
 			System.out.println(element.ID+" "+element.name + ":" + element.endDate);
