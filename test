@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?><calendar current="13">
+  <task id="0">
+    <name>test task</name>
+  </task>
+  <task id="3">
+    <name>new task</name>
+  </task>
+  <task id="4">
+    <name>new task2</name>
+  </task>
+  <task id="5">
+    <name>new task2</name>
+  </task>
+  <task id="7">
+    <name>new task2</name>
+  </task>
+  <task id="9">
+    <name>new task3</name>
+  </task>
+  <task id="10">
+    <name>new task4</name>
+  </task>
+  <task id="11">
+    <name>new task5</name>
+  </task>
+  <task id="12">
+    <name>new task6</name>
+  </task>
+  <deadline id="1">
+    <name>test deadline</name>
+    <endDate>14/09/2014 20:00</endDate>
+  </deadline>
+  <deadline id="2">
+    <name>test schedule</name>
+    <endDate>14/09/2014 21:00</endDate>
+  </deadline>
+  <deadline id="6">
+    <name>new deadline</name>
+    <endDate>17/09/2015 16:03</endDate>
+  </deadline>
+  <schedule id="8">
+    <name>new sch</name>
+    <startDate>17/09/2015 16:05</startDate>
+    <endDate>17/09/2015 16:05</endDate>
+  </schedule>
+</calendar>
