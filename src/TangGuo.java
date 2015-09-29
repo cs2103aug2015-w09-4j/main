@@ -53,7 +53,7 @@ public class TangGuo {
 		System.out.println(display);
 	}
 
-	private String executeinputs(String input) throws ParseException {
+	public String executeinputs(String input) throws ParseException {
 
 		String command = getFirstWord(input);
 	    Constants.COMMAND_TYPE commandType = findCommandType(command);
@@ -164,6 +164,7 @@ public class TangGuo {
 		int index;
 
 		try {
+			System.out.println(idHash);
 			System.out.println(idHash.get(number));
 			index = idHash.get(number);
 		} catch (NumberFormatException e) {
