@@ -64,15 +64,19 @@ public class TGStorageManager {
 		return this._deadlineCache;
 	}
 	
+	public int getCurrentIndex() {
+		return currentIndex;
+	}
+	
 	public void addTask(String name){
 		Event newTask = new Event(currentIndex,name);
 		_taskCache.add(newTask);
 		currentIndex++;
 		updateStorage();
-	}
+	}	
 	
 	public void addDeadline(String name, Date endDate){
-		Event newDeadline = new Event(currentIndex,name, endDate);
+		Event newDeadline = new Event(currentIndex, name, endDate);
 		_deadlineCache.add(newDeadline);
 		currentIndex++;
 		updateStorage();
@@ -376,7 +380,7 @@ public class TGStorageManager {
 		}
 	}
 	
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		TGStorageManager tm = new TGStorageManager("test");
 		//tm.addTask("new task6");
 		//tm.addDeadline("new deadline22", Calendar.getInstance().getTime());
@@ -395,5 +399,5 @@ public class TGStorageManager {
 					+ element.endDate);
 
 		}
-	}
+	} */
 }
