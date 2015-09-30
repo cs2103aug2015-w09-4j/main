@@ -32,7 +32,7 @@ public class TangGuo {
 	}
 	
 	public static void main(String[] args) throws IOException, ParseException {
-		TangGuo tg = new TangGuo("test");
+		TangGuo tg = new TangGuo(args[0]);
 		showToUser(String.format(Constants.TANGGUO_START, fileName));
 		
 		while (true) {
