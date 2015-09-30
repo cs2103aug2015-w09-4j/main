@@ -158,8 +158,13 @@ public class TangGuo {
 		int index;
 
 		try {
+<<<<<<< HEAD
 			System.out.println(idHash);	//for tutorial test
 			System.out.println(idHash.get(Integer.parseInt(number)));
+=======
+			System.out.println(idHash);
+			System.out.println(idHash.get(number));
+>>>>>>> 319760b71ad13f3af9712ec238f91ef77e0050c0
 			index = idHash.get(number);
 		} catch (NumberFormatException e) {
 			return Constants.TANGGUO_WRONG_DELETE;
