@@ -2,7 +2,11 @@
   <task id="19">
     <name>terence rocks</name>
   </task>
+<<<<<<< HEAD
   <task id="20">
+=======
+    <task id="20">
+>>>>>>> origin/logic
     <name>terence cant debug</name>
   </task>
   <task id="22">

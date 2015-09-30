@@ -11,8 +11,6 @@ public class Constants {
 	
 	public static final String DEFAULT_DATE_FORMAT = "dd/MM/yyyy HH:mm";
 	public static final int DATE_LENGTH = 17;
-
-	
 	public static final String TANGGUO_IO_EXCEPTION = "An unexpected error has occurred";
 	public static final String TANGGUO_START = "Welcome to TangGuo. %s is ready for use";
 	public static final String TANGGUO_ADD_SUCCESS = "Added to %1$s: %2$s";
