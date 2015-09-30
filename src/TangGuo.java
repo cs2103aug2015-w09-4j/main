@@ -16,7 +16,7 @@ import java.util.Date;
 import java.util.HashMap;
 
 public class TangGuo {
-	
+		
 	//private static ArrayList<String> inputLines;
 	private static String fileName;
 	private Scanner scanner = new Scanner(System.in);
@@ -26,8 +26,6 @@ public class TangGuo {
 
 	public TangGuo(String file) {
 		fileName = file;
-		//inputLines = new ArrayList<String>();
-		//fileInitialise(fileName);
 		storage = new TGStorageManager(fileName);
 		idHash = new HashMap<Integer, Integer>();
 		eventCounter = 0;
@@ -38,22 +36,22 @@ public class TangGuo {
 		showToUser(String.format(Constants.TANGGUO_START, fileName));
 
 		while (true) {
-			tg.respondToUser();
+			tg.runUserInput();
 		}
 	}
 
-	private void respondToUser() throws ParseException {
-		System.out.print("input: ");
+	private void runUserInput() throws ParseException {
+		showToUser("input: ");
 		String input = scanner.nextLine();
 		String output = executeinputs(input);
-		System.out.println(output);
+		showToUser(output);
 	}
 
 	private static void showToUser(String display) {
 		System.out.println(display);
 	}
 
-	private String executeinputs(String input) throws ParseException {
+	public String executeinputs(String input) throws ParseException {
 
 		String command = getFirstWord(input);
 	    Constants.COMMAND_TYPE commandType = findCommandType(command);
@@ -67,7 +65,7 @@ public class TangGuo {
 		case ADD_TASK:
 			return addTask(sentence);
 		case DISPLAY:
-			return flashTangGuo();
+			return displayTangGuo();
 		case DELETE:
 			return deleteEvent(sentence);
 		case CLEAR:
@@ -84,7 +82,6 @@ public class TangGuo {
 	}
 
 	private String addDeadline(String event) throws ParseException {
-		// add into TangGuo's file
 
 		// add into storage
 		Date endDate = extractDate(event);
@@ -101,8 +98,6 @@ public class TangGuo {
 	}
 
 	private String addSchedule(String event) throws ParseException {
-		// add into TangGuo's file
-		//addEvent(event);
 
 		// add into storage
 		Date endDate = extractDate(event);
@@ -120,9 +115,6 @@ public class TangGuo {
 	}
 
 	private String addTask(String event) {
-		// add into TangGuo's file
-		//addEvent(event);
-
 		// add into storage
 		storage.addTask(event);
 
@@ -135,7 +127,7 @@ public class TangGuo {
 		return String.format(Constants.TANGGUO_ADD_SUCCESS, fileName, event);
 	}
 
-	private String flashTangGuo() {
+	private String displayTangGuo() {
 		String printOut = "";
 		int j = 0;
 
@@ -159,12 +151,15 @@ public class TangGuo {
 	}
 
 	private String deleteEvent(String number) {
+		System.out.println("IDHash keys: " + idHash.keySet());
+		System.out.println("IDHash values: " + idHash.values());
 		
 		String deletedLine = "";
 		int index;
 
 		try {
-			System.out.println(idHash.get(number));
+			System.out.println(idHash);	//for tutorial test
+			System.out.println(idHash.get(Integer.parseInt(number)));
 			index = idHash.get(number);
 		} catch (NumberFormatException e) {
 			return Constants.TANGGUO_WRONG_DELETE;
@@ -176,7 +171,6 @@ public class TangGuo {
 			return Constants.TANGGUO_OUT_BOUNDS;
 		}
 		// TODO Storage deletion. (Storage ID is different from the number here)
-		//fileUpdate();
 		return String.format(Constants.TANGGUO_DELETE_SUCCESS, fileName, deletedLine);
 
 	}
@@ -186,9 +180,7 @@ public class TangGuo {
 		storage.getTaskCache().clear();
 		storage.getDeadlineCache().clear();
 		storage.getScheduleCache().clear();
-		
-		//fileUpdate();
-		
+				
 		return String.format(Constants.TANGGUO_CLEAR, fileName);
 	}
 
@@ -240,60 +232,6 @@ public class TangGuo {
 			return Constants.COMMAND_TYPE.INVALID;
 		}
 	}
-
-	// file-related methods
-	/*private void fileUpdate() {
-		try {
-			FileWriter fw = new FileWriter(fileName);
-			BufferedWriter bw = new BufferedWriter(fw);
-
-			for (int i = 0; i < inputLines.size(); i++) {
-				bw.write(inputLines.get(i));
-				bw.newLine();
-			}
-			bw.close();
-
-		} catch (IOException e) {
-			System.out.println(Constants.TANGGUO_IO_EXCEPTION);
-			System.out.println();
-		}
-	} */
-
-	/* private void createFile(String fileName) {
-
-		try {
-			FileWriter fw = new FileWriter(fileName);
-			BufferedWriter bw = new BufferedWriter(fw);
-			bw.close();
-		} catch (IOException e) {
-			System.out.println(Constants.TANGGUO_IO_EXCEPTION);
-			System.out.println();
-			System.exit(0);
-		}
-	} */
-
-	/*private void fileInitialise(String file_directory) {
-
-		try {
-			FileReader fr = new FileReader(fileName);
-			BufferedReader br = new BufferedReader(fr);
-
-			String line;
-			while ((line = br.readLine()) != null) {
-				inputLines.add(line);
-			}
-
-			br.close();
-		} catch (FileNotFoundException e) {
-			createFile(file_directory);
-			System.out.println();
-		} catch (IOException e) {
-			System.out.println(Constants.TANGGUO_IO_EXCEPTION);
-			System.out.println();
-			System.exit(0);
-
-		}
-	} */
 
 	private String getFirstWord(String input) {
 		String inputString = input.trim().split("\\s+")[0];
