@@ -15,8 +15,8 @@ public class Event {
 		this.name = name;
 		this.startDate = startDate;
 		this.endDate = endDate;
-		this.category = "DEFAULT";
-		this.priority = -1;
+		this.category = Constants.DEFAULT_CATEGORY;
+		this.priority = Constants.DEFAULT_PRIORITY;
 	}
 	
 	public Event(int ID, String name, Date endDate){
@@ -24,16 +24,16 @@ public class Event {
 		this.ID = ID;
 		this.name = name;
 		this.endDate = endDate;
-		this.category = "DEFAULT";
-		this.priority = -1;
+		this.category = Constants.DEFAULT_CATEGORY;
+		this.priority = Constants.DEFAULT_PRIORITY;
 	}
 	  
 	public Event(int ID, String name){
 		this.type = Constants.TASK_TYPE_NUMBER;
 		this.ID = ID;
 		this.name = name;
-		this.category = "DEFAULT";
-		this.priority = -1;
+		this.category = Constants.DEFAULT_CATEGORY;
+		this.priority = Constants.DEFAULT_PRIORITY;
 	}
 	
 	public int getType() {

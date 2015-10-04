@@ -4,11 +4,19 @@ public class Constants {
 	public static final String XML_SCHEDULE_EXPRESSION = "/calendar/schedule";
 	public static final String XML_CALENDAR_EXPRESSION = "calendar";
 	
+	/*
+	 * Event Constants
+	 */
 	public static final int TASK_TYPE_NUMBER = 1; 
 	public static final int DEADLINE_TYPE_NUMBER = 2; 
 	public static final int SCHEDULE_TYPE_NUMBER = 3; 
+	public static final String DEFAULT_CATEGORY = "DEFAULT";
+	public static final int DEFAULT_PRIORITY = -1;
 	
 	
+	/*
+	 * Tanguo Constants
+	 */
 	public static final String DEFAULT_DATE_FORMAT = "dd/MM/yyyy HH:mm";
 	public static final int DATE_LENGTH = 17;
 	public static final String TANGGUO_IO_EXCEPTION = "An unexpected error has occurred";

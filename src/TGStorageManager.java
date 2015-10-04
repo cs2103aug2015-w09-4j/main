@@ -330,21 +330,32 @@ public class TGStorageManager {
 
 		NodeList nodeList;
 		XPath xPath = XPathFactory.newInstance().newXPath();
-		Element eElement;
-		int ID;
 		try {
 			nodeList = (NodeList) xPath.compile(Constants.XML_TASK_EXPRESSION)
 					.evaluate(doc, XPathConstants.NODESET);
+			String nameString, categoryString;
+			int ID, priority;
+			Event event;
 			for (int i = 0; i < nodeList.getLength(); i++) {
 				Node nNode = nodeList.item(i);
 				// System.out.println("\nCurrent Element :" +
 				// nNode.getNodeName());
 				if (nNode.getNodeType() == Node.ELEMENT_NODE) {
-					eElement = (Element) nNode;
+					Element eElement = (Element) nNode;
 					ID = Integer.parseInt(eElement.getAttribute("id"));
-					_taskCache.add(new Event(ID, eElement
-							.getElementsByTagName("name").item(0)
-							.getTextContent()));
+					nameString = eElement.getElementsByTagName("name").item(0)
+							.getTextContent();
+					categoryString = eElement.getElementsByTagName("category").item(0)
+							.getTextContent();
+					priority = Integer.parseInt(eElement.getElementsByTagName("priority").item(0)
+							.getTextContent());
+					event = new Event(ID, nameString);
+					
+					if (!categoryString.equals(Constants.DEFAULT_CATEGORY))
+						event.setCategory(categoryString);
+					if (priority != Constants.DEFAULT_PRIORITY)
+						event.setPriority(priority);
+					_taskCache.add(event);
 				}
 			}
 		} catch (XPathExpressionException e) {
@@ -354,6 +365,7 @@ public class TGStorageManager {
 	}
 
 	private void initializeDeadlineCache(Document doc) {
+		
 		DateFormat sdf = new SimpleDateFormat(Constants.DEFAULT_DATE_FORMAT);
 		NodeList nodeList;
 		XPath xPath = XPathFactory.newInstance().newXPath();
@@ -361,9 +373,10 @@ public class TGStorageManager {
 			nodeList = (NodeList) xPath.compile(
 					Constants.XML_DEADLINE_EXPRESSION).evaluate(doc,
 					XPathConstants.NODESET);
-			String nameString, endDateString;
+			String nameString, endDateString, categoryString;
 			Date endDate;
-			int ID;
+			int ID, priority;
+			Event event;
 			for (int i = 0; i < nodeList.getLength(); i++) {
 				Node nNode = nodeList.item(i);
 				// System.out.println("\nCurrent Element :" +
@@ -377,7 +390,17 @@ public class TGStorageManager {
 							.getElementsByTagName("endDate").item(0)
 							.getTextContent();
 					endDate = sdf.parse(endDateString);
-					_deadlineCache.add(new Event(ID, nameString, endDate));
+					categoryString = eElement.getElementsByTagName("category").item(0)
+							.getTextContent();
+					priority = Integer.parseInt(eElement.getElementsByTagName("priority").item(0)
+							.getTextContent());
+					event = new Event(ID, nameString, endDate);
+					
+					if (!categoryString.equals(Constants.DEFAULT_CATEGORY))
+						event.setCategory(categoryString);
+					if (priority != Constants.DEFAULT_PRIORITY)
+						event.setPriority(priority);
+					_deadlineCache.add(event);
 				}
 			}
 		} catch (XPathExpressionException e) {
@@ -390,6 +413,7 @@ public class TGStorageManager {
 	}
 
 	private void initializeScheduleCache(Document doc) {
+		
 		DateFormat sdf = new SimpleDateFormat(Constants.DEFAULT_DATE_FORMAT);
 		NodeList nodeList;
 		XPath xPath = XPathFactory.newInstance().newXPath();
@@ -397,9 +421,10 @@ public class TGStorageManager {
 			nodeList = (NodeList) xPath.compile(
 					Constants.XML_SCHEDULE_EXPRESSION).evaluate(doc,
 					XPathConstants.NODESET);
-			String nameString, startDateString, endDateString;
+			String nameString, startDateString, endDateString, categoryString;
 			Date startDate, endDate;
-			int ID;
+			int ID, priority;
+			Event event;
 			for (int i = 0; i < nodeList.getLength(); i++) {
 				Node nNode = nodeList.item(i);
 				if (nNode.getNodeType() == Node.ELEMENT_NODE) {
@@ -414,8 +439,17 @@ public class TGStorageManager {
 							.item(0).getTextContent();
 					startDate = sdf.parse(startDateString);
 					endDate = sdf.parse(endDateString);
-					_scheduleCache.add(new Event(ID, nameString, startDate,
-							endDate));
+					categoryString = eElement.getElementsByTagName("category").item(0)
+							.getTextContent();
+					priority = Integer.parseInt(eElement.getElementsByTagName("priority").item(0)
+							.getTextContent());
+					event = new Event(ID, nameString, startDate, endDate);
+					
+					if (!categoryString.equals(Constants.DEFAULT_CATEGORY))
+						event.setCategory(categoryString);
+					if (priority != Constants.DEFAULT_PRIORITY)
+						event.setPriority(priority);
+					_scheduleCache.add(event);
 				}
 			}
 		} catch (XPathExpressionException e) {
