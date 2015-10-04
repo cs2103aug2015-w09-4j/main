@@ -136,15 +136,15 @@ public class TangGuo {
 		}
 		
 		for (int i = 0; i < storage.getDeadlineCache().size(); i++) {
-			printOut = printOut + (j++ + 1) + ". " + storage.getDeadlineCache().get(i).name + "\n";
+			printOut = printOut + (j++ + 1) + ". " + storage.getDeadlineCache().get(i).getName() + "\n";
 		}
 		
 		for (int i = 0; i < storage.getTaskCache().size(); i++) {
-			printOut = printOut + (j++ + 1) + ". " + storage.getTaskCache().get(i).name + "\n";
+			printOut = printOut + (j++ + 1) + ". " + storage.getTaskCache().get(i).getName() + "\n";
 		}
 		
 		for (int i = 0; i < storage.getScheduleCache().size(); i++) {
-			printOut = printOut + (j++ + 1) + ". " + storage.getScheduleCache().get(i).name + "\n";
+			printOut = printOut + (j++ + 1) + ". " + storage.getScheduleCache().get(i).getName() + "\n";
 		}
 		
 		return printOut;

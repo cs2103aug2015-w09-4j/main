@@ -379,6 +379,7 @@ public class TGStorageManager {
 			e.printStackTrace();
 		}
 	}
+}
 	
 	/*public static void main(String[] args) {
 		TGStorageManager tm = new TGStorageManager("test");
@@ -398,12 +399,7 @@ public class TGStorageManager {
 			System.out.println(element.getID()+" "+element.getName() + ":" + element.getStart() + "-"
 					+ element.getEnd());
 
-		}
-<<<<<<< HEAD
-	} */
-}
-=======
-	}
-}
+		} */
+
 //jingyin was here
->>>>>>> 0694e7550b75f0148f5161d1ed802e3386c5e859
+
