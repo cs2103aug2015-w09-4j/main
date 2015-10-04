@@ -92,7 +92,7 @@ public class TGStorageManager {
 	//precon:id exists
 	public void deleteEventByID(int id){
 		for (Event element:_taskCache){
-			if (element.ID == id){
+			if (element.getID() == id){
 				_taskCache.remove(element);
 				updateStorage();
 				return;
@@ -100,7 +100,7 @@ public class TGStorageManager {
 		}
 		
 		for (Event element:_scheduleCache){
-			if (element.ID == id){
+			if (element.getID() == id){
 				_scheduleCache.remove(element);
 				updateStorage();
 				return;
@@ -108,7 +108,7 @@ public class TGStorageManager {
 		}
 		
 		for (Event element:_deadlineCache){
-			if (element.ID == id){
+			if (element.getID() == id){
 				_deadlineCache.remove(element);
 				updateStorage();
 				return;
@@ -298,36 +298,36 @@ public class TGStorageManager {
 	         xMLStreamWriter.writeAttribute("current", String.valueOf(currentIndex));
 	         for (Event element:_taskCache){
 	        	 xMLStreamWriter.writeStartElement("task");			
-	             xMLStreamWriter.writeAttribute("id", String.valueOf(element.ID));
+	             xMLStreamWriter.writeAttribute("id", String.valueOf(element.getID()));
 	             xMLStreamWriter.writeStartElement("name");	
-	             xMLStreamWriter.writeCharacters(element.name);
+	             xMLStreamWriter.writeCharacters(element.getName());
 	             xMLStreamWriter.writeEndElement();
 	             xMLStreamWriter.writeEndElement();
 	         }
 	         
 	         for (Event element:_deadlineCache){
 	        	 xMLStreamWriter.writeStartElement("deadline");			
-	             xMLStreamWriter.writeAttribute("id", String.valueOf(element.ID));
+	             xMLStreamWriter.writeAttribute("id", String.valueOf(element.getID()));
 	             xMLStreamWriter.writeStartElement("name");	
-	             xMLStreamWriter.writeCharacters(element.name);
+	             xMLStreamWriter.writeCharacters(element.getName());
 	             xMLStreamWriter.writeEndElement();
 	             xMLStreamWriter.writeStartElement("endDate");	
-	             xMLStreamWriter.writeCharacters(sdf.format(element.endDate));
+	             xMLStreamWriter.writeCharacters(sdf.format(element.getEnd()));
 	             xMLStreamWriter.writeEndElement();
 	             xMLStreamWriter.writeEndElement();
 	         }
 	         
 	         for (Event element:_scheduleCache){
 	        	 xMLStreamWriter.writeStartElement("schedule");			
-	             xMLStreamWriter.writeAttribute("id", String.valueOf(element.ID));
+	             xMLStreamWriter.writeAttribute("id", String.valueOf(element.getID()));
 	             xMLStreamWriter.writeStartElement("name");	
-	             xMLStreamWriter.writeCharacters(element.name);
+	             xMLStreamWriter.writeCharacters(element.getName());
 	             xMLStreamWriter.writeEndElement();
 	             xMLStreamWriter.writeStartElement("startDate");	
-	             xMLStreamWriter.writeCharacters(sdf.format(element.startDate));
+	             xMLStreamWriter.writeCharacters(sdf.format(element.getStart()));
 	             xMLStreamWriter.writeEndElement();
 	             xMLStreamWriter.writeStartElement("endDate");	
-	             xMLStreamWriter.writeCharacters(sdf.format(element.endDate));
+	             xMLStreamWriter.writeCharacters(sdf.format(element.getEnd()));
 	             xMLStreamWriter.writeEndElement();
 	             xMLStreamWriter.writeEndElement();
 	         }
@@ -386,18 +386,24 @@ public class TGStorageManager {
 		//tm.addDeadline("new deadline22", Calendar.getInstance().getTime());
 		tm.deleteEventByID(2);
 		for (Event element : tm.getTaskCache()) {
-			System.out.println(element.ID+" "+element.name);
+			System.out.println(element.getID()+" "+element.getName());
 		}
 		
 		System.out.println();
 		for (Event element : tm.getDeadlineCache()) {
-			System.out.println(element.ID+" "+element.name + ":" + element.endDate);
+			System.out.println(element.getID()+" "+element.getName() + ":" + element.getEnd());
 		}
 		System.out.println();
 		for (Event element : tm.getScheduleCache()) {
-			System.out.println(element.ID+" "+element.name + ":" + element.startDate + "-"
-					+ element.endDate);
+			System.out.println(element.getID()+" "+element.getName() + ":" + element.getStart() + "-"
+					+ element.getEnd());
 
 		}
+<<<<<<< HEAD
 	} */
 }
+=======
+	}
+}
+//jingyin was here
+>>>>>>> 0694e7550b75f0148f5161d1ed802e3386c5e859
