@@ -1,5 +1,20 @@
-<?xml version="1.0" encoding="UTF-8"?><calendar current="20">
+<?xml version="1.0" encoding="UTF-8"?><calendar current="24">
   <task id="19">
     <name>terence rocks</name>
   </task>
+  <task id="20">
+    <name>terence cant debug</name>
+  </task>
+  <task id="22">
+    <name>sian sia</name>
+  </task>
+  <deadline id="23">
+    <name>whatever got space also can</name>
+    <endDate>02/03/1993 16:09</endDate>
+  </deadline>
+  <schedule id="21">
+    <name>terence needs help debug</name>
+    <startDate>02/02/1993 15:02</startDate>
+    <endDate>02/03/1993 12:29</endDate>
+  </schedule>
 </calendar>
