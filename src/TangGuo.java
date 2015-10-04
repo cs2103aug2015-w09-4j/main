@@ -1,19 +1,20 @@
 //import java.io.FileReader;
-import java.io.FileWriter;
+//import java.io.FileWriter;
 import java.lang.String;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 //import java.io.BufferedReader;
-import java.io.BufferedWriter;
+//import java.io.BufferedWriter;
 import java.io.IOException;
 //import java.io.FileNotFoundException;
-import java.util.ArrayList;
+//import java.util.ArrayList;
 //import java.util.Collections; for future use
 import java.util.Scanner;
+import java.util.ArrayList;
 import java.util.Date;
 //import java.util.Locale;
-import java.util.HashMap;
+
 
 public class TangGuo {
 	
@@ -21,14 +22,14 @@ public class TangGuo {
 	private static String fileName;
 	private Scanner scanner = new Scanner(System.in);
 	private TGStorageManager storage;
-	private HashMap<Integer, Integer> idHash;
-	private int eventCounter;
+	private ArrayList<Integer> taskIDCache;
+	private ArrayList<Integer> scheduleIDCache;
+	private ArrayList<Integer> deadlineIDCache;
 	
 	public TangGuo(String file) {
 		fileName = file;
 		storage = new TGStorageManager(fileName);
-		idHash = new HashMap<Integer, Integer>();
-		eventCounter = 0;
+		initialiseIDCaches();
 	}
 	
 	public static void main(String[] args) throws IOException, ParseException {
@@ -66,8 +67,6 @@ public class TangGuo {
 				return addTask(sentence);
 			case DISPLAY:
 				return displayTangGuo();
-			case DELETE:
-				return deleteEvent(sentence);
 			case CLEAR:
 				return clearTangGuo();
 			case EXIT:
@@ -78,20 +77,18 @@ public class TangGuo {
 				return Constants.TANGGUO_INVALID_COMMAND;
 			default:
 				return "Congratulations, you won!";
-		}
+		} 
 	}
 	
 	private String addDeadline(String event) throws ParseException {
 		
 		// add into storage
-		Date endDate = extractDate(event);
-		String eventName = event.substring(0, event.length() - Constants.DATE_LENGTH);
+		String[] array = event.split("by ");
 		
-		storage.addDeadline(eventName, endDate);
+		Date endDate = dateConverter(array[array.length-1]);
 		
-		//add into hash
-		eventCounter++;
-		addToHash(eventCounter, storage.getCurrentIndex());
+		deadlineIDCache.add(storage.getCurrentIndex());
+		storage.addDeadline(event, endDate);
 		
 		//fileUpdate();
 		return String.format(Constants.TANGGUO_ADD_SUCCESS, fileName, event);
@@ -100,29 +97,26 @@ public class TangGuo {
 	private String addSchedule(String event) throws ParseException {
 		
 		// add into storage
-		Date endDate = extractDate(event);
-		Date startDate = extractDate(event.substring(0, event.length() - Constants.DATE_LENGTH));
-		String eventName = event.substring(0, event.length() - (2 * Constants.DATE_LENGTH));
+		String[] array1 = event.split("from ");
+		String[] array2 = array1[array1.length - 1].split("to ");
+
+		Date endDate = dateConverter(array2[1]);
+		Date startDate = dateConverter(array2[0]);
 		
-		storage.addSchedule(eventName, startDate, endDate);
-		
-		//add into hash
-		eventCounter++;
-		addToHash(eventCounter, storage.getCurrentIndex());
-		
+		scheduleIDCache.add(storage.getCurrentIndex());
+		storage.addSchedule(event, startDate, endDate);
+	
 		//fileUpdate();
 		return String.format(Constants.TANGGUO_ADD_SUCCESS, fileName, event);
 	}
 	
 	private String addTask(String event) {
 		// add into storage
+		taskIDCache.add(storage.getCurrentIndex());
 		storage.addTask(event);
 		
 		//add into hash
-		eventCounter++;
-		addToHash(eventCounter, storage.getCurrentIndex());
-		System.out.println(idHash);
-		
+
 		//fileUpdate();
 		return String.format(Constants.TANGGUO_ADD_SUCCESS, fileName, event);
 	}
@@ -150,31 +144,6 @@ public class TangGuo {
 		return printOut;
 	}
 	
-	private String deleteEvent(String number) {
-		System.out.println("IDHash keys: " + idHash.keySet());
-		System.out.println("IDHash values: " + idHash.values());
-		
-		String deletedLine = "";
-		int index;
-		
-		try {
-			System.out.println(idHash);	//for tutorial test
-			System.out.println(idHash.get(Integer.parseInt(number)));
-			index = idHash.get(number);
-		} catch (NumberFormatException e) {
-			return Constants.TANGGUO_WRONG_DELETE;
-		}
-		
-		try {
-			storage.deleteEventByID(index);
-		} catch (IndexOutOfBoundsException e) {
-			return Constants.TANGGUO_OUT_BOUNDS;
-		}
-		// TODO Storage deletion. (Storage ID is different from the number here)
-		return String.format(Constants.TANGGUO_DELETE_SUCCESS, fileName, deletedLine);
-		
-	}
-	
 	private String clearTangGuo() {
 		
 		storage.getTaskCache().clear();
@@ -184,41 +153,47 @@ public class TangGuo {
 		return String.format(Constants.TANGGUO_CLEAR, fileName);
 	}
 	
-	private void addToHash(int counter, int index) {
-		idHash.put(counter, index);
-	}
-	
-	private Date extractDate(String event) throws ParseException {
-		
-		boolean isFirstSpaceFound = false;
-		String date = null;
-		
-		for (int i = event.length() - 1; i >= 0; i--) {
-			
-			if (event.charAt(i) == ' ') {
-				if (!isFirstSpaceFound)
-					isFirstSpaceFound = true;
-				else {
-					date = event.substring(i);
-					break;
-				}
-			}
-		}
-		return dateConverter(date);
-	}
-	
 	private Date dateConverter(String dateString) throws ParseException {
 		DateFormat format = new SimpleDateFormat(Constants.DEFAULT_DATE_FORMAT);
 		Date date = format.parse(dateString);
 		return date;
 	}
 	
+	private void initialiseIDCaches() {
+		
+		taskIDCache = new ArrayList<Integer>();
+		scheduleIDCache = new ArrayList<Integer>();
+		deadlineIDCache = new ArrayList<Integer>();
+		
+		ArrayList<Event> tasks = storage.getTaskCache();
+		ArrayList<Event> schedules = storage.getScheduleCache(); 
+		ArrayList<Event> deadlines = storage.getDeadlineCache();
+		
+		if(!tasks.isEmpty()) {
+			for(int i = 0; i < tasks.size(); i++) {
+				taskIDCache.add(tasks.get(i).getID());
+			}
+		}
+		
+		if(!schedules.isEmpty()) {
+			for(int i = 0; i < schedules.size(); i++) {
+				scheduleIDCache.add(schedules.get(i).getID());
+			}
+		}	
+		
+		if(!deadlines.isEmpty()) {	
+			for(int i = 0; i < deadlines.size(); i++) {
+				deadlineIDCache.add(deadlines.get(i).getID());
+			}
+		}		
+	}
+	
 	private Constants.COMMAND_TYPE findCommandType(String commandTypeString) {
-		if (commandTypeString.equalsIgnoreCase("addschedule")) {
+		if (commandTypeString.equalsIgnoreCase("add schedule")) {
 			return Constants.COMMAND_TYPE.ADD_SCHEDULE;
-		} else if (commandTypeString.equalsIgnoreCase("addtask")) {
+		} else if (commandTypeString.equalsIgnoreCase("add task")) {
 			return Constants.COMMAND_TYPE.ADD_TASK;
-		} else if (commandTypeString.equalsIgnoreCase("adddeadline")) {
+		} else if (commandTypeString.equalsIgnoreCase("add deadline")) {
 			return Constants.COMMAND_TYPE.ADD_DEADLINE;
 		} else if (commandTypeString.equalsIgnoreCase("display")) {
 			return Constants.COMMAND_TYPE.DISPLAY;
@@ -235,6 +210,11 @@ public class TangGuo {
 	
 	private String getFirstWord(String input) {
 		String inputString = input.trim().split("\\s+")[0];
+		
+		if(inputString.equals("add")) {
+			inputString += " " + input.trim().split("\\s+")[1];
+		}
+		
 		return inputString;
 	}
 	
