@@ -14,6 +14,7 @@ import java.util.Scanner;
 
 import com.sun.org.apache.bcel.internal.classfile.Constant;
 import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
+import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -64,19 +65,19 @@ public class TangGuo {
 		
 		String command = getFirstWord(input);
 		Constants.COMMAND_TYPE commandType = findCommandType(command);
-		String sentence = removeFirstWord(input);
+		String arguments = removeFirstWord(input);
 		
 		switch (commandType) {
 			case ADD_DEADLINE:
-				return addDeadline(sentence);
+				return addDeadline(arguments);
 			case ADD_SCHEDULE:
-				return addSchedule(sentence);
+				return addSchedule(arguments);
 			case ADD_TASK:
-				return addTask(sentence);
+				return addTask(arguments);
 			case DISPLAY:
 				return displayTangGuo();
 			case DELETE:
-				return deleteTask(sentence);
+				return deleteEvent(arguments);
 			case CLEAR:
 				return clearTangGuo();
 			case EXIT:
@@ -135,30 +136,37 @@ public class TangGuo {
 		String printOut = "";
 		int j = 0;
 		
-		if (storage.getDeadlineCache().isEmpty() && storage.getTaskCache().isEmpty() && storage.getScheduleCache().isEmpty()) {
+		if (allCachesEmpty()) {
 			return String.format(Constants.TANGGUO_EMPTY_FILE, fileName);
 		}
 		
-		printOut += "Tasks:\n";
-		for (int i = 0; i < storage.getTaskCache().size(); i++) {
-			printOut = printOut + (i+1) + ". " + storage.getTaskCache().get(i).getName() + "\n";
-		}
-		
-		printOut += "Deadlines:\n";
-		for (int i = 0; i < storage.getDeadlineCache().size(); i++) {
-			printOut = printOut + (i+1) + ". " + storage.getDeadlineCache().get(i).getName() + "\n";
-		}
-		
-		printOut += "Schedules:\n";
-		for (int i = 0; i < storage.getScheduleCache().size(); i++) {
-			printOut = printOut + (i+1) + ". " + storage.getScheduleCache().get(i).getName() + "\n";
-		}
+		printOut += displayCache("Tasks", storage.getTaskCache());
+		printOut += displayCache("Deadlines", storage.getDeadlineCache());
+		printOut += displayCache("Schedules", storage.getScheduleCache());
 		
 		return printOut;
 	}
 	
-	//assumes caches are filled from cache[0] inclusive
-	private String deleteTask(String toBeDeleted) {
+	private boolean allCachesEmpty(){
+		return(storage.getDeadlineCache().isEmpty() && storage.getTaskCache().isEmpty()
+				&& storage.getScheduleCache().isEmpty());			
+	}
+	
+	private String displayCache(String cacheName, ArrayList<Event> cache){
+		String printOut = cacheName + ":\n";
+		for (int i = 0; i < cache.size(); i++) {
+			printOut = printOut + (i+1) + ". " + cache.get(i).getName() + "\n";
+		}
+		return printOut;
+	}
+	
+	/**
+	 * deletes an Event
+	 * @param toBeDeleted : [letter][number] 
+	 * letter refers to the type of event = {t, s, d}; number refers to index displayed
+	 * @return
+	 */
+	private String deleteEvent(String toBeDeleted) {
 		String taskType = toBeDeleted.substring(0, 1);
 		int index, IDToDelete;
 		try {
@@ -190,7 +198,6 @@ public class TangGuo {
 	}
 	
 	private String clearTangGuo() {
-		
 		storage.getTaskCache().clear();
 		storage.getDeadlineCache().clear();
 		storage.getScheduleCache().clear();
@@ -210,32 +217,24 @@ public class TangGuo {
 	
 	private void initialiseIDCaches() {
 		
-		taskIDCache = new ArrayList<Integer>();
-		scheduleIDCache = new ArrayList<Integer>();
-		deadlineIDCache = new ArrayList<Integer>();
-		
 		ArrayList<Event> tasks = storage.getTaskCache();
-		ArrayList<Event> schedules = storage.getScheduleCache(); 
 		ArrayList<Event> deadlines = storage.getDeadlineCache();
+		ArrayList<Event> schedules = storage.getScheduleCache();
 		
-		//set cache[0] = null?
-		if(!tasks.isEmpty()) {
-			for(int i = 0; i < tasks.size(); i++) {
-				taskIDCache.add(tasks.get(i).getID());
+		taskIDCache = initializeCache(tasks);
+		deadlineIDCache = initializeCache(deadlines);
+		scheduleIDCache = initializeCache(schedules);
+			
+	}
+	
+	private ArrayList<Integer> initializeCache(ArrayList<Event> cache) {
+		ArrayList<Integer> IDCache = new ArrayList<>();
+		if(!cache.isEmpty()) {
+			for(int i = 0; i < cache.size(); i++) {
+				IDCache.add(cache.get(i).getID());
 			}
 		}
-		
-		if(!schedules.isEmpty()) {
-			for(int i = 0; i < schedules.size(); i++) {
-				scheduleIDCache.add(schedules.get(i).getID());
-			}
-		}	
-		
-		if(!deadlines.isEmpty()) {	
-			for(int i = 0; i < deadlines.size(); i++) {
-				deadlineIDCache.add(deadlines.get(i).getID());
-			}
-		}		
+		return IDCache;
 	}
 	
 	private Constants.COMMAND_TYPE findCommandType(String commandTypeString) {
