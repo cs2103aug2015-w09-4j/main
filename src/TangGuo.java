@@ -11,6 +11,10 @@ import java.io.IOException;
 //import java.util.ArrayList;
 //import java.util.Collections; for future use
 import java.util.Scanner;
+
+import com.sun.org.apache.bcel.internal.classfile.Constant;
+import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
+
 import java.util.ArrayList;
 import java.util.Date;
 //import java.util.Locale;
@@ -42,7 +46,7 @@ public class TangGuo {
 	}
 	
 	private void runUserInput() throws ParseException {
-		showToUser("input: ");
+		requestInput();
 		String input = scanner.nextLine();
 		String output = executeinputs(input);
 		showToUser(output);
@@ -50,6 +54,10 @@ public class TangGuo {
 	
 	private static void showToUser(String display) {
 		System.out.println(display);
+	}
+	
+	private static void requestInput() {
+		System.out.print("input: ");
 	}
 	
 	public String executeinputs(String input) throws ParseException {
@@ -67,6 +75,8 @@ public class TangGuo {
 				return addTask(sentence);
 			case DISPLAY:
 				return displayTangGuo();
+			case DELETE:
+				return deleteTask(sentence);
 			case CLEAR:
 				return clearTangGuo();
 			case EXIT:
@@ -129,19 +139,54 @@ public class TangGuo {
 			return String.format(Constants.TANGGUO_EMPTY_FILE, fileName);
 		}
 		
-		for (int i = 0; i < storage.getDeadlineCache().size(); i++) {
-			printOut = printOut + (j++ + 1) + ". " + storage.getDeadlineCache().get(i).getName() + "\n";
-		}
-		
+		printOut += "Tasks:\n";
 		for (int i = 0; i < storage.getTaskCache().size(); i++) {
-			printOut = printOut + (j++ + 1) + ". " + storage.getTaskCache().get(i).getName() + "\n";
+			printOut = printOut + (i+1) + ". " + storage.getTaskCache().get(i).getName() + "\n";
 		}
 		
+		printOut += "Deadlines:\n";
+		for (int i = 0; i < storage.getDeadlineCache().size(); i++) {
+			printOut = printOut + (i+1) + ". " + storage.getDeadlineCache().get(i).getName() + "\n";
+		}
+		
+		printOut += "Schedules:\n";
 		for (int i = 0; i < storage.getScheduleCache().size(); i++) {
-			printOut = printOut + (j++ + 1) + ". " + storage.getScheduleCache().get(i).getName() + "\n";
+			printOut = printOut + (i+1) + ". " + storage.getScheduleCache().get(i).getName() + "\n";
 		}
 		
 		return printOut;
+	}
+	
+	//assumes caches are filled from cache[0] inclusive
+	private String deleteTask(String toBeDeleted) {
+		String taskType = toBeDeleted.substring(0, 1);
+		int index, IDToDelete;
+		try {
+			index = Integer.parseInt(toBeDeleted.substring(1));
+		} catch (Exception e) {
+			return Constants.TANGGUO_INVALID_COMMAND;
+		}
+		
+		//assuming cache[0] is non-null
+		index--;
+		
+		try{
+			if (taskType.equals("t")){
+				IDToDelete = taskIDCache.remove(index);
+			} else if (taskType.equals("d")){
+				IDToDelete = deadlineIDCache.remove(index);
+			} else if (taskType.equals("s")){
+				IDToDelete = scheduleIDCache.remove(index);
+			} else {
+				return Constants.TANGGUO_INVALID_COMMAND;
+			}
+		} catch (IndexOutOfBoundsException e){
+			return Constants.TANGGUO_OUT_BOUNDS;
+		}
+				
+		Event deletedEvent = storage.deleteEventByID(IDToDelete);
+		
+		return String.format(Constants.TANGGUO_DELETE_SUCCESS, fileName, deletedEvent.getName());
 	}
 	
 	private String clearTangGuo() {
@@ -149,6 +194,10 @@ public class TangGuo {
 		storage.getTaskCache().clear();
 		storage.getDeadlineCache().clear();
 		storage.getScheduleCache().clear();
+		
+		taskIDCache.clear();
+		deadlineIDCache.clear();
+		scheduleIDCache.clear();
 		
 		return String.format(Constants.TANGGUO_CLEAR, fileName);
 	}
@@ -169,6 +218,7 @@ public class TangGuo {
 		ArrayList<Event> schedules = storage.getScheduleCache(); 
 		ArrayList<Event> deadlines = storage.getDeadlineCache();
 		
+		//set cache[0] = null?
 		if(!tasks.isEmpty()) {
 			for(int i = 0; i < tasks.size(); i++) {
 				taskIDCache.add(tasks.get(i).getID());

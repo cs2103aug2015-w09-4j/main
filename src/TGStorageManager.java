@@ -90,12 +90,12 @@ public class TGStorageManager {
 	}
 	
 	//precon:id exists
-	public void deleteEventByID(int id){
+	public Event deleteEventByID(int id){
 		for (Event element:_taskCache){
 			if (element.getID() == id){
 				_taskCache.remove(element);
 				updateStorage();
-				return;
+				return element;
 			}
 		}
 		
@@ -103,7 +103,7 @@ public class TGStorageManager {
 			if (element.getID() == id){
 				_scheduleCache.remove(element);
 				updateStorage();
-				return;
+				return element;
 			}
 		}
 		
@@ -111,9 +111,11 @@ public class TGStorageManager {
 			if (element.getID() == id){
 				_deadlineCache.remove(element);
 				updateStorage();
-				return;
+				return element;
 			}
 		}
+		
+		return null;
 		//System.out.println("not found");
 	}
 	
