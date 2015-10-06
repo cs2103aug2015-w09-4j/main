@@ -177,8 +177,9 @@ public class TangGuo {
 		}
 				
 		Event deletedEvent = storage.deleteEventByID(IDToDelete);
-		
-		return String.format(Constants.TANGGUO_DELETE_SUCCESS, fileName, deletedEvent.getName());
+
+		System.out.println(String.format(Constants.TANGGUO_DELETE_SUCCESS, fileName, deletedEvent.getName()));
+		return displayTangGuo();
 	}
 	
 	private String clearTangGuo() {
