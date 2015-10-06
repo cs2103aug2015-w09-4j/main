@@ -1,19 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?><calendar current="24">
   <task id="19">
     <name>terence rocks</name>
+    <priority>-1</priority>
+    <category>DEFAULT</category>
   </task>
   <task id="20">
     <name>terence cant debug</name>
+    <priority>-1</priority>
+    <category>DEFAULT</category>
   </task>
   <task id="22">
     <name>sian sia</name>
+    <priority>-1</priority>
+    <category>DEFAULT</category>
   </task>
   <deadline id="23">
     <name>whatever got space also can</name>
     <endDate>02/03/1993 16:09</endDate>
+    <priority>88</priority>
+    <category>YAY</category>
   </deadline>
   <schedule id="21">
     <name>terence needs help debug</name>
+    <priority>99</priority>
+    <category>DEFAULT</category>
     <startDate>02/02/1993 15:02</startDate>
     <endDate>02/03/1993 12:29</endDate>
   </schedule>

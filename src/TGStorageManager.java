@@ -571,21 +571,21 @@ public class TGStorageManager {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static void main(String[] args) {
 		TGStorageManager tm = new TGStorageManager("test");
 		tm.deleteEventByID(2);
 		for (Event element : tm.getTaskCache()) {
-			System.out.println(element.getID()+" "+element.getName());
+			System.out.println(element.getID()+" "+element.getCategory());
 		}
 		
 		System.out.println();
 		for (Event element : tm.getDeadlineCache()) {
-			System.out.println(element.getID()+" "+element.getName() + ":" + element.getEnd());
+			System.out.println(element.getID()+" "+element.getCategory() + ":" + element.getEnd());
 		}
 		System.out.println();
 		for (Event element : tm.getScheduleCache()) {
-			System.out.println(element.getID()+" "+element.getName() + ":" + element.getStart() + "-"
+			System.out.println(element.getID()+" "+element.getCategory() + ":" + element.getStart() + "-"
 					+ element.getEnd());
 
 		}
