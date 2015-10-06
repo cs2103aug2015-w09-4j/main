@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><calendar current="24">
   <task id="19">
-    <name>terence rocks</name>
+    <name>sian sia</name>
     <category>DEFAULT</category>
     <priority>-1</priority>
   </task>
@@ -10,13 +10,13 @@
     <priority>-1</priority>
   </task>
   <deadline id="23">
-    <name>whatever got space also can</name>
+    <name>this is a test</name>
     <endDate>02/03/1993 16:09</endDate>
     <category>YAY</category>
     <priority>88</priority>
   </deadline>
   <schedule id="21">
-    <name>terence needs help debug</name>
+    <name>testing 1 1 2 3</name>
     <startDate>02/02/1993 15:02</startDate>
     <endDate>02/03/1993 12:29</endDate>
     <category>DEFAULT</category>

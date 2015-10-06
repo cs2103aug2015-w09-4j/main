@@ -62,12 +62,13 @@ public class TangGuo {
 				return addTask(arguments);
 			case DISPLAY:
 				return displayTangGuo();
+			case UPDATE:
+				return updateName(arguments);
 			case DELETE:
 				return deleteEvent(arguments);
 			case CLEAR:
 				return clearTangGuo();
 			case EXIT:
-				//fileUpdate();
 				showToUser(Constants.TANGGUO_EXIT);
 				System.exit(0);
 			case INVALID:
@@ -142,6 +143,51 @@ public class TangGuo {
 			printOut = printOut + (i+1) + ". " + cache.get(i).getName() + "\n";
 		}
 		return printOut;
+	}
+	
+	private String updateName(String event) {
+		String taskToEdit = getFirstWord(event);
+		String newName;
+		
+		String taskType = taskToEdit.substring(0, 1);
+		int index, taskID;
+		try {
+			index = Integer.parseInt(taskToEdit.substring(1));
+			index--;	//assuming cache[0] is non-null
+		} catch (Exception e) {
+			return Constants.TANGGUO_INVALID_COMMAND;
+		}
+		
+		try {
+			newName = event.split("\"")[1];
+		} catch (Exception e) {
+			return Constants.TANGGUO_INVALID_COMMAND;
+		}
+		
+		String oldVersion;
+		
+		try{
+			if (taskType.equals("t")){
+				taskID = taskIDCache.get(index);
+				oldVersion = storage.getTaskCache().get(index).getName();
+			} else if (taskType.equals("d")){
+				taskID = deadlineIDCache.get(index);
+				oldVersion = storage.getDeadlineCache().get(index).getName();
+			} else if (taskType.equals("s")){
+				taskID = scheduleIDCache.get(index);
+				oldVersion = storage.getScheduleCache().get(index).getName();
+			} else {
+				return Constants.TANGGUO_INVALID_COMMAND;
+			}
+		} catch (IndexOutOfBoundsException e){
+			return Constants.TANGGUO_OUT_BOUNDS;
+		}
+		
+		storage.updateNameByID(taskID, newName);
+		
+		return String.format(Constants.TANGGUO_UPDATE_NAME, oldVersion,
+				newName) + "\n" + displayTangGuo();
+		
 	}
 	
 	/**
@@ -237,6 +283,8 @@ public class TangGuo {
 			return Constants.COMMAND_TYPE.CLEAR;
 		} else if (commandTypeString.equalsIgnoreCase("exit")) {
 			return Constants.COMMAND_TYPE.EXIT;
+		} else if (commandTypeString.equalsIgnoreCase("update name")) {
+			return Constants.COMMAND_TYPE.UPDATE;
 		} else {
 			return Constants.COMMAND_TYPE.INVALID;
 		}
@@ -245,7 +293,7 @@ public class TangGuo {
 	private String getFirstWord(String input) {
 		String inputString = input.trim().split("\\s+")[0];
 		
-		if(inputString.equals("add")) {
+		if(inputString.equals("add") || inputString.equals("update")) {
 			inputString += " " + input.trim().split("\\s+")[1];
 		}	
 		return inputString;
