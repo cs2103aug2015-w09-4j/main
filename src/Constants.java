@@ -19,6 +19,7 @@ public class Constants {
 	public static final String TANGGUO_DELETE_SUCCESS = "Deleted from %1$s: %2$s";
 	public static final String TANGGUO_EMPTY_FILE = "%s is empty!";
 	public static final String TANGGUO_CLEAR = "All contents deleted from %s";
+	public static final String TANGGUO_INVALID_DATE = "The date format you entered seems to be invalid, try again";
 	public static final String TANGGUO_INVALID_COMMAND = "The command you entered seems to be invalid, try another command";
 	public static final String TANGGUO_EXIT = "See you again!";
 	

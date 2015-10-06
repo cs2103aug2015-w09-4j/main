@@ -1,29 +1,15 @@
-//import java.io.FileReader;
-//import java.io.FileWriter;
 import java.lang.String;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-//import java.io.BufferedReader;
-//import java.io.BufferedWriter;
 import java.io.IOException;
-//import java.io.FileNotFoundException;
-//import java.util.ArrayList;
-//import java.util.Collections; for future use
 import java.util.Scanner;
-
-import com.sun.org.apache.bcel.internal.classfile.Constant;
-import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
-import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 
 import java.util.ArrayList;
 import java.util.Date;
-//import java.util.Locale;
-
 
 public class TangGuo {
 	
-	//private static ArrayList<String> inputLines;
 	private static String fileName;
 	private Scanner scanner = new Scanner(System.in);
 	private TGStorageManager storage;
@@ -46,7 +32,7 @@ public class TangGuo {
 		}
 	}
 	
-	private void runUserInput() throws ParseException {
+	private void runUserInput(){
 		requestInput();
 		String input = scanner.nextLine();
 		String output = executeinputs(input);
@@ -61,7 +47,7 @@ public class TangGuo {
 		System.out.print("input: ");
 	}
 	
-	public String executeinputs(String input) throws ParseException {
+	public String executeinputs(String input) {
 		
 		String command = getFirstWord(input);
 		Constants.COMMAND_TYPE commandType = findCommandType(command);
@@ -87,37 +73,39 @@ public class TangGuo {
 			case INVALID:
 				return Constants.TANGGUO_INVALID_COMMAND;
 			default:
-				return "Congratulations, you won!";
+				return Constants.TANGGUO_IO_EXCEPTION;
 		} 
 	}
 	
-	private String addDeadline(String event) throws ParseException {
+	private String addDeadline(String event){
 		
 		// add into storage
 		String[] array = event.split("by ");
 		
-		Date endDate = dateConverter(array[array.length-1]);
-		
-		deadlineIDCache.add(storage.getCurrentIndex());
-		storage.addDeadline(event, endDate);
-		
-		//fileUpdate();
+		try {
+			Date endDate = dateConverter(array[array.length-1]);
+			deadlineIDCache.add(storage.getCurrentIndex());
+			storage.addDeadline(event, endDate);			
+		} catch (ParseException e){
+			return Constants.TANGGUO_INVALID_DATE;
+		}
 		return String.format(Constants.TANGGUO_ADD_SUCCESS, fileName, event);
 	}
 	
-	private String addSchedule(String event) throws ParseException {
+	private String addSchedule(String event){
 		
 		// add into storage
 		String[] array1 = event.split("from ");
 		String[] array2 = array1[array1.length - 1].split("to ");
 
-		Date endDate = dateConverter(array2[1]);
-		Date startDate = dateConverter(array2[0]);
-		
-		scheduleIDCache.add(storage.getCurrentIndex());
-		storage.addSchedule(event, startDate, endDate);
-	
-		//fileUpdate();
+		try {
+			Date endDate = dateConverter(array2[1]);
+			Date startDate = dateConverter(array2[0]);
+			scheduleIDCache.add(storage.getCurrentIndex());
+			storage.addSchedule(event, startDate, endDate);
+		} catch (ParseException e) {
+			return Constants.TANGGUO_INVALID_DATE;
+		}
 		return String.format(Constants.TANGGUO_ADD_SUCCESS, fileName, event);
 	}
 	
@@ -126,15 +114,11 @@ public class TangGuo {
 		taskIDCache.add(storage.getCurrentIndex());
 		storage.addTask(event);
 		
-		//add into hash
-
-		//fileUpdate();
 		return String.format(Constants.TANGGUO_ADD_SUCCESS, fileName, event);
 	}
 	
 	private String displayTangGuo() {
 		String printOut = "";
-		int j = 0;
 		
 		if (allCachesEmpty()) {
 			return String.format(Constants.TANGGUO_EMPTY_FILE, fileName);
@@ -262,8 +246,7 @@ public class TangGuo {
 		
 		if(inputString.equals("add")) {
 			inputString += " " + input.trim().split("\\s+")[1];
-		}
-		
+		}	
 		return inputString;
 	}
 	
