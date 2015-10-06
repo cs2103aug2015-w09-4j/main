@@ -480,7 +480,7 @@ public class TGStorageManager {
 	             xMLStreamWriter.writeEndElement();
 	             xMLStreamWriter.writeStartElement("category");
 	             xMLStreamWriter.writeCharacters(element.getCategory());
-	             xMLStreamWriter.writeEndDocument();
+	             xMLStreamWriter.writeEndElement();
 	             xMLStreamWriter.writeStartElement("priority");
 	             xMLStreamWriter.writeCharacters(String.valueOf(element.getPriority()));
 	             xMLStreamWriter.writeEndElement();
@@ -498,7 +498,7 @@ public class TGStorageManager {
 	             xMLStreamWriter.writeEndElement();
 	             xMLStreamWriter.writeStartElement("category");
 	             xMLStreamWriter.writeCharacters(element.getCategory());
-	             xMLStreamWriter.writeEndDocument();
+	             xMLStreamWriter.writeEndElement();
 	             xMLStreamWriter.writeStartElement("priority");
 	             xMLStreamWriter.writeCharacters(String.valueOf(element.getPriority()));
 	             xMLStreamWriter.writeEndElement();
@@ -519,7 +519,7 @@ public class TGStorageManager {
 	             xMLStreamWriter.writeEndElement();
 	             xMLStreamWriter.writeStartElement("category");
 	             xMLStreamWriter.writeCharacters(element.getCategory());
-	             xMLStreamWriter.writeEndDocument();
+	             xMLStreamWriter.writeEndElement();
 	             xMLStreamWriter.writeStartElement("priority");
 	             xMLStreamWriter.writeCharacters(String.valueOf(element.getPriority()));
 	             xMLStreamWriter.writeEndElement();
