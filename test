@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><calendar current="24">
+<?xml version="1.0" encoding="UTF-8"?><calendar current="25">
   <task id="19">
     <name>sian sia</name>
     <category>DEFAULT</category>
@@ -6,6 +6,11 @@
   </task>
   <task id="20">
     <name>terence cant debug</name>
+    <category>DEFAULT</category>
+    <priority>-1</priority>
+  </task>
+  <task id="24">
+    <name>yo</name>
     <category>DEFAULT</category>
     <priority>-1</priority>
   </task>

@@ -576,7 +576,7 @@ public class TGStorageManager {
 
 	public static void main(String[] args) {
 		TGStorageManager tm = new TGStorageManager("test");
-		tm.deleteEventByID(2);
+		tm.addTask("yo");
 		for (Event element : tm.getTaskCache()) {
 			System.out.println(element.getID()+" "+element.getCategory());
 		}
