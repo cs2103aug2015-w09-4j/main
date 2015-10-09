@@ -5,7 +5,7 @@ import java.util.Date;
 
 
 public class Parser {
-	static public Command executeinputs(String input) throws Exception{
+	static public Command parseCommand(String input) throws Exception{
 		Command tempCommand = new Command();
 		String command = getFirstWord(input);
 		Constants.COMMAND_TYPE commandType = findCommandType(command);
