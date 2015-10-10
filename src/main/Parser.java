@@ -6,7 +6,7 @@ import java.util.Date;
 
 
 public class Parser {
-	static public Command parseCommand(String input) throws Exception{
+	static public Command parseCommand(String input) throws ParseException, IndexOutOfBoundsException{
 		Command tempCommand = new Command();
 		String command = getFirstWord(input);
 		Constants.COMMAND_TYPE commandType = findCommandType(command);
@@ -38,8 +38,7 @@ public class Parser {
 			case UPDATE:
 				displayedIndex = getFirstWord(event);
 				String newName;
-				newName = event.split("\"")[1]; ///???dont understand this
-				//TODO
+				newName = event.split("\"")[1];
 				tempCommand.setEventName(newName);
 				tempCommand.setDisplayedIndex(displayedIndex);
 				break;

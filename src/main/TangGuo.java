@@ -1,13 +1,13 @@
 package main;
 import java.lang.String;
-import java.text.DateFormat;
+
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
+
 import java.io.IOException;
 import java.util.Scanner;
 
 import java.util.ArrayList;
-import java.util.Date;
+
 
 public class TangGuo {
 	
@@ -49,24 +49,27 @@ public class TangGuo {
 	}
 	
 	public String executeinputs(String input) {
-		
-		String command = getFirstWord(input);
-		Constants.COMMAND_TYPE commandType = findCommandType(command);
-		String arguments = removeFirstWord(input);
-		
-		switch (commandType) {
+		Command currentCommand;
+		try {
+			currentCommand = Parser.parseCommand(input);
+		} catch (ParseException e) {
+			return Constants.TANGGUO_INVALID_DATE;
+		} catch (IndexOutOfBoundsException e){
+			return Constants.TANGGUO_INVALID_COMMAND;
+		}
+		switch (currentCommand.getType()) {
 			case ADD_DEADLINE:
-				return addDeadline(arguments);
+				return addDeadline(currentCommand);
 			case ADD_SCHEDULE:
-				return addSchedule(arguments);
+				return addSchedule(currentCommand);
 			case ADD_TASK:
-				return addTask(arguments);
+				return addTask(currentCommand);
 			case DISPLAY:
 				return displayTangGuo();
 			case UPDATE:
-				return updateName(arguments);
+				return updateName(currentCommand);
 			case DELETE:
-				return deleteEvent(arguments);
+				return deleteEvent(currentCommand);
 			case EXIT:
 				showToUser(Constants.TANGGUO_EXIT);
 				System.exit(0);
@@ -77,44 +80,26 @@ public class TangGuo {
 		} 
 	}
 	
-	private String addDeadline(String event){
+	private String addDeadline(Command command){
+		deadlineIDCache.add(storage.getCurrentIndex());
+		storage.addDeadline(command.getEventName(), command.getEventEnd());			
 		
-		// add into storage
-		String[] array = event.split("by ");
-		
-		try {
-			Date endDate = dateConverter(array[array.length-1]);
-			deadlineIDCache.add(storage.getCurrentIndex());
-			storage.addDeadline(event, endDate);			
-		} catch (ParseException e){
-			return Constants.TANGGUO_INVALID_DATE;
-		}
-		return String.format(Constants.TANGGUO_ADD_SUCCESS, fileName, event);
+		return String.format(Constants.TANGGUO_ADD_SUCCESS, fileName, command.getEventName());
 	}
 	
-	private String addSchedule(String event){
-		
+	private String addSchedule(Command command){
+		scheduleIDCache.add(storage.getCurrentIndex());
 		// add into storage
-		String[] array1 = event.split("from ");
-		String[] array2 = array1[array1.length - 1].split("to ");
-
-		try {
-			Date endDate = dateConverter(array2[1]);
-			Date startDate = dateConverter(array2[0]);
-			scheduleIDCache.add(storage.getCurrentIndex());
-			storage.addSchedule(event, startDate, endDate);
-		} catch (ParseException e) {
-			return Constants.TANGGUO_INVALID_DATE;
-		}
-		return String.format(Constants.TANGGUO_ADD_SUCCESS, fileName, event);
+		storage.addSchedule(command.getEventName(), command.getEventStart(), command.getEventEnd());
+		return String.format(Constants.TANGGUO_ADD_SUCCESS, fileName, command.getEventName());
 	}
 	
-	private String addTask(String event) {
-		// add into storage
+	private String addTask(Command command) {
 		taskIDCache.add(storage.getCurrentIndex());
-		storage.addTask(event);
+		// add into storage
+		storage.addTask(command.getEventName());
 		
-		return String.format(Constants.TANGGUO_ADD_SUCCESS, fileName, event);
+		return String.format(Constants.TANGGUO_ADD_SUCCESS, fileName, command.getEventName());
 	}
 	
 	private String displayTangGuo() {
@@ -144,9 +129,9 @@ public class TangGuo {
 		return printOut;
 	}
 	
-	private String updateName(String event) {
-		String taskToEdit = getFirstWord(event);
-		String newName;
+	private String updateName(Command command) {
+		String taskToEdit = command.getDisplayedIndex();
+		String newName = command.getEventName();
 		
 		String taskType = taskToEdit.substring(0, 1);
 		int index, taskID;
@@ -156,15 +141,7 @@ public class TangGuo {
 		} catch (Exception e) {
 			return Constants.TANGGUO_INVALID_COMMAND;
 		}
-		
-		try {
-			newName = event.split("\"")[1];
-		} catch (Exception e) {
-			return Constants.TANGGUO_INVALID_COMMAND;
-		}
-		
 		String oldVersion;
-		
 		try{
 			if (taskType.equals("t")){
 				taskID = taskIDCache.get(index);
@@ -195,11 +172,11 @@ public class TangGuo {
 	 * letter refers to the type of event = {t, s, d}; number refers to index displayed
 	 * @return
 	 */
-	private String deleteEvent(String toBeDeleted) {
-		String taskType = toBeDeleted.substring(0, 1);
+	private String deleteEvent(Command command) {
+		String taskType = command.getDisplayedIndex().substring(0, 1);
 		int index, IDToDelete;
 		try {
-			index = Integer.parseInt(toBeDeleted.substring(1));
+			index = Integer.parseInt(command.getDisplayedIndex().substring(1));
 		} catch (Exception e) {
 			return Constants.TANGGUO_INVALID_COMMAND;
 		}
@@ -227,12 +204,6 @@ public class TangGuo {
 		return displayTangGuo();
 	}
 	
-	private Date dateConverter(String dateString) throws ParseException {
-		DateFormat format = new SimpleDateFormat(Constants.DEFAULT_DATE_FORMAT);
-		Date date = format.parse(dateString);
-		return date;
-	}
-	
 	private void initialiseIDCaches() {
 		
 		ArrayList<Event> tasks = storage.getTaskCache();
@@ -254,37 +225,5 @@ public class TangGuo {
 		}
 		return IDCache;
 	}
-	
-	private Constants.COMMAND_TYPE findCommandType(String commandTypeString) {
-		if (commandTypeString.equalsIgnoreCase("add schedule")) {
-			return Constants.COMMAND_TYPE.ADD_SCHEDULE;
-		} else if (commandTypeString.equalsIgnoreCase("add task")) {
-			return Constants.COMMAND_TYPE.ADD_TASK;
-		} else if (commandTypeString.equalsIgnoreCase("add deadline")) {
-			return Constants.COMMAND_TYPE.ADD_DEADLINE;
-		} else if (commandTypeString.equalsIgnoreCase("display")) {
-			return Constants.COMMAND_TYPE.DISPLAY;
-		} else if (commandTypeString.equalsIgnoreCase("delete")) {
-			return Constants.COMMAND_TYPE.DELETE;
-		} else if (commandTypeString.equalsIgnoreCase("exit")) {
-			return Constants.COMMAND_TYPE.EXIT;
-		} else if (commandTypeString.equalsIgnoreCase("update name")) {
-			return Constants.COMMAND_TYPE.UPDATE;
-		} else {
-			return Constants.COMMAND_TYPE.INVALID;
-		}
-	}
-	
-	private String getFirstWord(String input) {
-		String inputString = input.trim().split("\\s+")[0];
-		
-		if(inputString.equals("add") || inputString.equals("update")) {
-			inputString += " " + input.trim().split("\\s+")[1];
-		}	
-		return inputString;
-	}
-	
-	private String removeFirstWord(String input) {
-		return input.replace(getFirstWord(input), "").trim();
-	}
+
 }

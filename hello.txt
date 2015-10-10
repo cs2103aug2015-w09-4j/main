@@ -1,8 +1,1 @@
-<?xml version="1.0" encoding="UTF-8"?><calendar current="2">
-  <deadline id="1">
-    <name>dead by 01/01/1992 10:20</name>
-    <endDate>01/01/1992 10:20</endDate>
-    <category>DEFAULT</category>
-    <priority>-1</priority>
-  </deadline>
-</calendar>
+<?xml version="1.0" encoding="UTF-8"?><calendar current="2"/>
