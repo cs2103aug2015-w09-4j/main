@@ -1,3 +1,4 @@
+package main;
 import java.util.Date;
 
 public class Command {
@@ -5,8 +6,8 @@ public class Command {
 	private int eventType;
 	private int eventID;
 	private String eventName;
-	private Date eventStartDate;
-	private Date eventEndDate;
+	private Date eventStart;
+	private Date eventEnd;
 	private String eventCategory;
 	private int eventPriority;
 	private String displayedIndex;
@@ -35,17 +36,17 @@ public class Command {
 	public void setEventName(String eventName) {
 		this.eventName = eventName;
 	}
-	public Date getEventStartDate() {
-		return eventStartDate;
+	public Date getEventStart() {
+		return eventStart;
 	}
-	public void setEventStartDate(Date eventStartDate) {
-		this.eventStartDate = eventStartDate;
+	public void setEventStart(Date eventStartDate) {
+		this.eventStart = eventStartDate;
 	}
-	public Date getEventEndDate() {
-		return eventEndDate;
+	public Date getEventEnd() {
+		return eventEnd;
 	}
-	public void setEventEndDate(Date eventEndDate) {
-		this.eventEndDate = eventEndDate;
+	public void setEventEnd(Date eventEndDate) {
+		this.eventEnd = eventEndDate;
 	}
 	public String getEventCategory() {
 		return eventCategory;

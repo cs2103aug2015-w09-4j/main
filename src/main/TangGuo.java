@@ -1,3 +1,4 @@
+package main;
 import java.lang.String;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -66,8 +67,6 @@ public class TangGuo {
 				return updateName(arguments);
 			case DELETE:
 				return deleteEvent(arguments);
-			case CLEAR:
-				return clearTangGuo();
 			case EXIT:
 				showToUser(Constants.TANGGUO_EXIT);
 				System.exit(0);
@@ -228,18 +227,6 @@ public class TangGuo {
 		return displayTangGuo();
 	}
 	
-	private String clearTangGuo() {
-		storage.getTaskCache().clear();
-		storage.getDeadlineCache().clear();
-		storage.getScheduleCache().clear();
-		
-		taskIDCache.clear();
-		deadlineIDCache.clear();
-		scheduleIDCache.clear();
-		
-		return String.format(Constants.TANGGUO_CLEAR, fileName);
-	}
-	
 	private Date dateConverter(String dateString) throws ParseException {
 		DateFormat format = new SimpleDateFormat(Constants.DEFAULT_DATE_FORMAT);
 		Date date = format.parse(dateString);
@@ -279,8 +266,6 @@ public class TangGuo {
 			return Constants.COMMAND_TYPE.DISPLAY;
 		} else if (commandTypeString.equalsIgnoreCase("delete")) {
 			return Constants.COMMAND_TYPE.DELETE;
-		} else if (commandTypeString.equalsIgnoreCase("clear")) {
-			return Constants.COMMAND_TYPE.CLEAR;
 		} else if (commandTypeString.equalsIgnoreCase("exit")) {
 			return Constants.COMMAND_TYPE.EXIT;
 		} else if (commandTypeString.equalsIgnoreCase("update name")) {

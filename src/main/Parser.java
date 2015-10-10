@@ -1,3 +1,4 @@
+package main;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -17,7 +18,7 @@ public class Parser {
 			case ADD_DEADLINE:
 				String[] array = event.split("by ");
 				endDate = dateConverter(array[array.length-1]);
-				tempCommand.setEventEndDate(endDate);
+				tempCommand.setEventEnd(endDate);
 				tempCommand.setEventName(event);
 				break;
 			case ADD_SCHEDULE:
@@ -25,8 +26,8 @@ public class Parser {
 				String[] array2 = array1[array1.length - 1].split("to ");
 				endDate = dateConverter(array2[1]);
 				startDate = dateConverter(array2[0]);
-				tempCommand.setEventStartDate(startDate);
-				tempCommand.setEventStartDate(endDate);
+				tempCommand.setEventStart(startDate);
+				tempCommand.setEventStart(endDate);
 				tempCommand.setEventName(event);
 				break;
 			case ADD_TASK:

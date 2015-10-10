@@ -1,3 +1,4 @@
+package main;
 public class Constants {
 	public static final String XML_TASK_EXPRESSION = "/calendar/task"; 
 	public static final String XML_DEADLINE_EXPRESSION = "/calendar/deadline";
