@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.Stack;
 
 
 public class TangGuo {
@@ -13,11 +14,13 @@ public class TangGuo {
 	private Scanner scanner = new Scanner(System.in);
 	private TGStorageManager storage;
 	private HashMap<String,Integer> TGIDMap;
+	private Stack<Command> reversedCommandStack;
 	
 	public TangGuo(String file) {
 		fileName = file;
 		storage = new TGStorageManager(fileName);
 		TGIDMap = new HashMap<String,Integer>();
+		reversedCommandStack = new Stack<Command>();
 	}
 	
 	public static void main(String[] args) throws IOException, ParseException {
@@ -53,19 +56,26 @@ public class TangGuo {
 		} catch (IndexOutOfBoundsException e){
 			return Constants.TANGGUO_INVALID_COMMAND;
 		}
-		switch (currentCommand.getType()) {
+		return executeProcessedCommand(currentCommand);
+	}
+	
+	private String executeProcessedCommand(Command command){
+		switch (command.getType()) {
 			case ADD_DEADLINE:
-				return addDeadline(currentCommand);
+				
+				return addDeadline(command);
 			case ADD_SCHEDULE:
-				return addSchedule(currentCommand);
+				return addSchedule(command);
 			case ADD_TASK:
-				return addTask(currentCommand);
+				return addTask(command);
 			case DISPLAY:
 				return displayTangGuo();
 			case UPDATE:
-				return updateName(currentCommand);
+				return updateName(command);
 			case DELETE:
-				return deleteEvent(currentCommand);
+				return deleteEvent(command);
+			case UNDO:
+				return undo();
 			case EXIT:
 				showToUser(Constants.TANGGUO_EXIT);
 				System.exit(0);
@@ -77,24 +87,46 @@ public class TangGuo {
 	}
 	
 	private String addDeadline(Command command){
-		storage.addDeadline(command.getEventName(), command.getEventEnd());			
-		
+		int newID = storage.addDeadline(command.getEventName(), command.getEventEnd());
+		if (command.isUserCommand()){
+			reversedCommandStack.push(reverseAdd(newID));
+		}
 		return String.format(Constants.TANGGUO_ADD_SUCCESS, fileName, command.getEventName());
 	}
 	
 	private String addSchedule(Command command){
 		// add into storage
-		storage.addSchedule(command.getEventName(), command.getEventStart(), command.getEventEnd());
+		int newID = storage.addSchedule(command.getEventName(), command.getEventStart(), command.getEventEnd());
+		if (command.isUserCommand()){
+			reversedCommandStack.push(reverseAdd(newID));
+		}
 		return String.format(Constants.TANGGUO_ADD_SUCCESS, fileName, command.getEventName());
 	}
 	
 	private String addTask(Command command) {
 		// add into storage
-		storage.addTask(command.getEventName());
 		
+		int newID = storage.addTask(command.getEventName());
+		if (command.isUserCommand()){
+			reversedCommandStack.push(reverseAdd(newID));
+		}
 		return String.format(Constants.TANGGUO_ADD_SUCCESS, fileName, command.getEventName());
 	}
+	private Command reverseAdd(int id){
+		Command temp = new Command();
+		temp.setIsUserCommand(false);
+		temp.setType(Constants.COMMAND_TYPE.DELETE);
+		temp.setEventID(id);
+		return temp;
+	}
 	
+	private String undo(){
+		if (reversedCommandStack.isEmpty()){
+			return Constants.TANGGUO_UNDO_NO_COMMAND;
+		}
+		executeProcessedCommand(reversedCommandStack.pop());
+		return Constants.TANGGUO_UNDO_SUCCESS;
+	}
 	private String displayTangGuo() {
 		String printOut = "";
 		
@@ -124,6 +156,7 @@ public class TangGuo {
 	}
 	
 	private String updateName(Command command) {
+		//reversedCommandStack.push(reverseupdateName(command));
 		String newName = command.getEventName();
 		
 		int taskID = TGIDMap.get(command.getDisplayedIndex());
@@ -142,9 +175,13 @@ public class TangGuo {
 	 * @return
 	 */
 	private String deleteEvent(Command command) {
-		
-		int IDToDelete = TGIDMap.get(command.getDisplayedIndex());
-				
+		//reversedCommandStack.push(reverseDeleteEvent(command));
+		int IDToDelete;
+		if (command.isUserCommand()){
+			IDToDelete = TGIDMap.get(command.getDisplayedIndex());
+		}else{
+			IDToDelete = command.getEventID();
+		}
 		Event deletedEvent = storage.deleteEventByID(IDToDelete);
 
 		System.out.println(String.format(Constants.TANGGUO_DELETE_SUCCESS, fileName, deletedEvent.getName()));

@@ -1,1 +1,17 @@
-<?xml version="1.0" encoding="UTF-8"?><calendar current="4"/>
+<?xml version="1.0" encoding="UTF-8"?><calendar current="8">
+  <task id="4">
+    <name>1</name>
+    <category>DEFAULT</category>
+    <priority>-1</priority>
+  </task>
+  <task id="5">
+    <name>2</name>
+    <category>DEFAULT</category>
+    <priority>-1</priority>
+  </task>
+  <task id="6">
+    <name>3</name>
+    <category>DEFAULT</category>
+    <priority>-1</priority>
+  </task>
+</calendar>

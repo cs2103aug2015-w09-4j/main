@@ -11,7 +11,20 @@ public class Command {
 	private String eventCategory;
 	private int eventPriority;
 	private String displayedIndex;
-	
+	private boolean isUserCommand;
+	private Event event;
+	public Event getEvent() {
+		return event;
+	}
+	public void setEvent(Event event) {
+		this.event = event;
+	}
+	public void setIsUserCommand(boolean b){
+		isUserCommand = b;
+	}
+	public boolean isUserCommand(){
+		return isUserCommand;
+	}
 	public String getDisplayedIndex() {
 		return displayedIndex;
 	}

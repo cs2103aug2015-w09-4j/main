@@ -14,6 +14,7 @@ public class Parser {
 		Date endDate, startDate;
 		String displayedIndex;
 		tempCommand.setType(commandType);
+		tempCommand.setIsUserCommand(true);
 		switch (commandType) {
 			case ADD_DEADLINE:
 				String[] array = event.split("by ");
@@ -46,6 +47,8 @@ public class Parser {
 				displayedIndex = getFirstWord(event);
 				tempCommand.setDisplayedIndex(displayedIndex);
 				break;
+			case UNDO:
+				break;
 			case EXIT:
 				break;
 			case INVALID:
@@ -69,6 +72,8 @@ public class Parser {
 			return Constants.COMMAND_TYPE.DELETE;
 		} else if (commandTypeString.equalsIgnoreCase("exit")) {
 			return Constants.COMMAND_TYPE.EXIT;
+		} else if (commandTypeString.equalsIgnoreCase("undo")) {
+			return Constants.COMMAND_TYPE.UNDO;
 		} else if (commandTypeString.equalsIgnoreCase("update name")) {
 			return Constants.COMMAND_TYPE.UPDATE;
 		} else {

@@ -32,9 +32,10 @@ public class Constants {
 	public static final String TANGGUO_INVALID_DATE = "The date format you entered seems to be invalid, try again";
 	public static final String TANGGUO_INVALID_COMMAND = "The command you entered seems to be invalid, try another command";
 	public static final String TANGGUO_EXIT = "See you again!";
-	
+	public static final String TANGGUO_UNDO_NO_COMMAND ="No command to be undone!";
+	public static final String TANGGUO_UNDO_SUCCESS = "Undo successful!";
 	public enum COMMAND_TYPE {
-		ADD_DEADLINE, ADD_SCHEDULE, ADD_TASK, DISPLAY, DELETE, EXIT, INVALID, UPDATE, EXCEPTION
+		ADD_DEADLINE, ADD_SCHEDULE, ADD_TASK, DISPLAY, DELETE,UNDO, EXIT, INVALID, UPDATE, EXCEPTION
 	};
 
 }

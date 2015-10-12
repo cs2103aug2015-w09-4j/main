@@ -10,6 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Stack;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
@@ -88,25 +89,41 @@ public class TGStorageManager {
 		return currentIndex;
 	}
 	
-	public void addTask(String name){
-		Event newTask = new Event(currentIndex,name);
+	public int addTask(Event newTask){
 		_taskCache.add(newTask);
 		currentIndex++;
 		updateStorage();
+		return newTask.getID();
+	}
+	public int addTask(String name){
+		Event newTask = new Event(currentIndex,name);
+		addTask(newTask);
+		return newTask.getID();
+		
 	}	
 	
-	public void addDeadline(String name, Date endDate){
-		Event newDeadline = new Event(currentIndex, name, endDate);
+	public int addDeadline (Event newDeadline){
 		_deadlineCache.add(newDeadline);
 		currentIndex++;
 		updateStorage();
+		return newDeadline.getID();
+	}
+	public int addDeadline(String name, Date endDate){
+		Event newDeadline = new Event(currentIndex, name, endDate);
+		addDeadline(newDeadline);
+		return newDeadline.getID();
 	}
 	
-	public void addSchedule(String name, Date startDate, Date endDate){
-		Event newSchedule = new Event(currentIndex,name, startDate, endDate);
+	public int addSchedule(Event newSchedule){
 		_scheduleCache.add(newSchedule);
 		currentIndex++;
 		updateStorage();
+		return newSchedule.getID();
+	}
+	public int addSchedule(String name, Date startDate, Date endDate){
+		Event newSchedule = new Event(currentIndex,name, startDate, endDate);
+		addSchedule(newSchedule);
+		return newSchedule.getID();
 	}
 	
 	//precon:id exists
