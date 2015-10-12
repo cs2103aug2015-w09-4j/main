@@ -87,28 +87,35 @@ public class TangGuo {
 	}
 	
 	private String addDeadline(Command command){
-		int newID = storage.addDeadline(command.getEventName(), command.getEventEnd());
+		
 		if (command.isUserCommand()){
+			int newID = storage.addDeadline(command.getEventName(), command.getEventEnd());
 			reversedCommandStack.push(reverseAdd(newID));
+		}else{
+			storage.addDeadline(command.getEvent());
 		}
 		return String.format(Constants.TANGGUO_ADD_SUCCESS, fileName, command.getEventName());
 	}
 	
 	private String addSchedule(Command command){
 		// add into storage
-		int newID = storage.addSchedule(command.getEventName(), command.getEventStart(), command.getEventEnd());
+		
 		if (command.isUserCommand()){
+			int newID = storage.addSchedule(command.getEventName(), command.getEventStart(), command.getEventEnd());
 			reversedCommandStack.push(reverseAdd(newID));
+		}else{
+			storage.addSchedule(command.getEvent());
 		}
 		return String.format(Constants.TANGGUO_ADD_SUCCESS, fileName, command.getEventName());
 	}
 	
 	private String addTask(Command command) {
 		// add into storage
-		
-		int newID = storage.addTask(command.getEventName());
 		if (command.isUserCommand()){
+			int newID = storage.addTask(command.getEventName());
 			reversedCommandStack.push(reverseAdd(newID));
+		}else{
+			storage.addTask(command.getEvent());
 		}
 		return String.format(Constants.TANGGUO_ADD_SUCCESS, fileName, command.getEventName());
 	}
@@ -161,6 +168,9 @@ public class TangGuo {
 		
 		int taskID = TGIDMap.get(command.getDisplayedIndex());
 		String oldVersion = storage.getEventByID(taskID).getName();
+		if (command.isUserCommand()){
+			reversedCommandStack.push(reverseUpdateName(taskID,oldVersion));
+		}
 		storage.updateNameByID(taskID, newName);
 		
 		return String.format(Constants.TANGGUO_UPDATE_NAME, oldVersion,
@@ -168,6 +178,13 @@ public class TangGuo {
 		
 	}
 	
+	private Command reverseUpdateName(int id, String name){
+		Command temp = new Command();
+		temp.setIsUserCommand(false);
+		temp.setType(Constants.COMMAND_TYPE.UPDATE);
+		temp.setEventName(name);
+		return temp;
+	}
 	/**
 	 * deletes an Event
 	 * @param toBeDeleted : [letter][number] 
@@ -175,10 +192,10 @@ public class TangGuo {
 	 * @return
 	 */
 	private String deleteEvent(Command command) {
-		//reversedCommandStack.push(reverseDeleteEvent(command));
 		int IDToDelete;
 		if (command.isUserCommand()){
 			IDToDelete = TGIDMap.get(command.getDisplayedIndex());
+			reversedCommandStack.push(reverseDeleteEvent(IDToDelete));
 		}else{
 			IDToDelete = command.getEventID();
 		}
@@ -187,7 +204,28 @@ public class TangGuo {
 		System.out.println(String.format(Constants.TANGGUO_DELETE_SUCCESS, fileName, deletedEvent.getName()));
 		return displayTangGuo();
 	}
-
+	
+	private Command reverseDeleteEvent(int id){
+		Command temp = new Command();
+		temp.setIsUserCommand(false);
+		Event event = storage.getEventByID(id);
+		switch(event.getType()){
+			case Constants.TASK_TYPE_NUMBER:
+				temp.setType(Constants.COMMAND_TYPE.ADD_TASK);
+				break;
+			case Constants.SCHEDULE_TYPE_NUMBER:
+				temp.setType(Constants.COMMAND_TYPE.ADD_SCHEDULE);
+				break;
+			case Constants.DEADLINE_TYPE_NUMBER:
+				temp.setType(Constants.COMMAND_TYPE.ADD_DEADLINE);
+				break;
+			default:
+				break;
+		}
+		temp.setEvent(event);
+		return temp;
+		
+	}
 	
 	
 
