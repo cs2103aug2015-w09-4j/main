@@ -1,11 +1,9 @@
 package main;
 import java.lang.String;
-
 import java.text.ParseException;
-
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Scanner;
-
 import java.util.ArrayList;
 
 
@@ -14,14 +12,12 @@ public class TangGuo {
 	private static String fileName;
 	private Scanner scanner = new Scanner(System.in);
 	private TGStorageManager storage;
-	private ArrayList<Integer> taskIDCache;
-	private ArrayList<Integer> scheduleIDCache;
-	private ArrayList<Integer> deadlineIDCache;
+	private HashMap<String,Integer> TGIDMap;
 	
 	public TangGuo(String file) {
 		fileName = file;
 		storage = new TGStorageManager(fileName);
-		initialiseIDCaches();
+		TGIDMap = new HashMap<String,Integer>();
 	}
 	
 	public static void main(String[] args) throws IOException, ParseException {
@@ -81,21 +77,18 @@ public class TangGuo {
 	}
 	
 	private String addDeadline(Command command){
-		deadlineIDCache.add(storage.getCurrentIndex());
 		storage.addDeadline(command.getEventName(), command.getEventEnd());			
 		
 		return String.format(Constants.TANGGUO_ADD_SUCCESS, fileName, command.getEventName());
 	}
 	
 	private String addSchedule(Command command){
-		scheduleIDCache.add(storage.getCurrentIndex());
 		// add into storage
 		storage.addSchedule(command.getEventName(), command.getEventStart(), command.getEventEnd());
 		return String.format(Constants.TANGGUO_ADD_SUCCESS, fileName, command.getEventName());
 	}
 	
 	private String addTask(Command command) {
-		taskIDCache.add(storage.getCurrentIndex());
 		// add into storage
 		storage.addTask(command.getEventName());
 		
@@ -108,10 +101,10 @@ public class TangGuo {
 		if (allCachesEmpty()) {
 			return String.format(Constants.TANGGUO_EMPTY_FILE, fileName);
 		}
-		
-		printOut += displayCache("Tasks", storage.getTaskCache());
-		printOut += displayCache("Deadlines", storage.getDeadlineCache());
-		printOut += displayCache("Schedules", storage.getScheduleCache());
+		TGIDMap.clear();
+		printOut += displayCache("Tasks", storage.getTaskCache(),"t");
+		printOut += displayCache("Deadlines", storage.getDeadlineCache(),"d");
+		printOut += displayCache("Schedules", storage.getScheduleCache(),"s");
 		
 		return printOut;
 	}
@@ -121,44 +114,20 @@ public class TangGuo {
 				&& storage.getScheduleCache().isEmpty());			
 	}
 	
-	private String displayCache(String cacheName, ArrayList<Event> cache){
+	private String displayCache(String cacheName, ArrayList<Event> cache, String header){
 		String printOut = cacheName + ":\n";
 		for (int i = 0; i < cache.size(); i++) {
+			TGIDMap.put(header+(i+1), cache.get(i).getID());
 			printOut = printOut + (i+1) + ". " + cache.get(i).getName() + "\n";
 		}
 		return printOut;
 	}
 	
 	private String updateName(Command command) {
-		String taskToEdit = command.getDisplayedIndex();
 		String newName = command.getEventName();
 		
-		String taskType = taskToEdit.substring(0, 1);
-		int index, taskID;
-		try {
-			index = Integer.parseInt(taskToEdit.substring(1));
-			index--;	//assuming cache[0] is non-null
-		} catch (Exception e) {
-			return Constants.TANGGUO_INVALID_COMMAND;
-		}
-		String oldVersion;
-		try{
-			if (taskType.equals("t")){
-				taskID = taskIDCache.get(index);
-				oldVersion = storage.getTaskCache().get(index).getName();
-			} else if (taskType.equals("d")){
-				taskID = deadlineIDCache.get(index);
-				oldVersion = storage.getDeadlineCache().get(index).getName();
-			} else if (taskType.equals("s")){
-				taskID = scheduleIDCache.get(index);
-				oldVersion = storage.getScheduleCache().get(index).getName();
-			} else {
-				return Constants.TANGGUO_INVALID_COMMAND;
-			}
-		} catch (IndexOutOfBoundsException e){
-			return Constants.TANGGUO_OUT_BOUNDS;
-		}
-		
+		int taskID = TGIDMap.get(command.getDisplayedIndex());
+		String oldVersion = storage.getEventByID(taskID).getName();
 		storage.updateNameByID(taskID, newName);
 		
 		return String.format(Constants.TANGGUO_UPDATE_NAME, oldVersion,
@@ -173,57 +142,16 @@ public class TangGuo {
 	 * @return
 	 */
 	private String deleteEvent(Command command) {
-		String taskType = command.getDisplayedIndex().substring(0, 1);
-		int index, IDToDelete;
-		try {
-			index = Integer.parseInt(command.getDisplayedIndex().substring(1));
-		} catch (Exception e) {
-			return Constants.TANGGUO_INVALID_COMMAND;
-		}
 		
-		//assuming cache[0] is non-null
-		index--;
-		
-		try{
-			if (taskType.equals("t")){
-				IDToDelete = taskIDCache.remove(index);
-			} else if (taskType.equals("d")){
-				IDToDelete = deadlineIDCache.remove(index);
-			} else if (taskType.equals("s")){
-				IDToDelete = scheduleIDCache.remove(index);
-			} else {
-				return Constants.TANGGUO_INVALID_COMMAND;
-			}
-		} catch (IndexOutOfBoundsException e){
-			return Constants.TANGGUO_OUT_BOUNDS;
-		}
+		int IDToDelete = TGIDMap.get(command.getDisplayedIndex());
 				
 		Event deletedEvent = storage.deleteEventByID(IDToDelete);
 
 		System.out.println(String.format(Constants.TANGGUO_DELETE_SUCCESS, fileName, deletedEvent.getName()));
 		return displayTangGuo();
 	}
+
 	
-	private void initialiseIDCaches() {
-		
-		ArrayList<Event> tasks = storage.getTaskCache();
-		ArrayList<Event> deadlines = storage.getDeadlineCache();
-		ArrayList<Event> schedules = storage.getScheduleCache();
-		
-		taskIDCache = initializeCache(tasks);
-		deadlineIDCache = initializeCache(deadlines);
-		scheduleIDCache = initializeCache(schedules);
-			
-	}
 	
-	private ArrayList<Integer> initializeCache(ArrayList<Event> cache) {
-		ArrayList<Integer> IDCache = new ArrayList<>();
-		if(!cache.isEmpty()) {
-			for(int i = 0; i < cache.size(); i++) {
-				IDCache.add(cache.get(i).getID());
-			}
-		}
-		return IDCache;
-	}
 
 }

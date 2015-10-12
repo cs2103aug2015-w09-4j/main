@@ -52,7 +52,26 @@ public class TGStorageManager {
 		this._scheduleCache = new ArrayList<Event>();
 		initialize();
 	}
-
+	public Event getEventByID(int id){
+		for (Event element:_taskCache){
+			if (element.getID() == id){
+				return element;
+			}
+		}
+		
+		for (Event element:_scheduleCache){
+			if (element.getID() == id){
+				return element;
+			}
+		}
+		
+		for (Event element:_deadlineCache){
+			if (element.getID() == id){
+				return element;
+			}
+		}
+		return null;
+	}
 	public ArrayList<Event> getTaskCache() {
 		return this._taskCache;
 	}
