@@ -101,6 +101,7 @@ public class TangGuo {
 			case INVALID:
 				return Constants.TANGGUO_INVALID_COMMAND;
 			default:
+				assert false:"Unhandled command type:"+command.getType();
 				return Constants.TANGGUO_IO_EXCEPTION;
 		} 
 	}
