@@ -4,13 +4,18 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import java.util.regex.*;
+
+import com.sun.org.apache.xerces.internal.impl.xpath.regex.Match;
+
 
 public class Parser {
+	
 	static public Command parseCommand(String input) throws ParseException, IndexOutOfBoundsException{
 		Command tempCommand = new Command();
 		String command = getFirstWord(input);
 		Constants.COMMAND_TYPE commandType = findCommandType(command);
-		String event = removeFirstWord(input);
+		String event = removeFirstWord(input);		
 		Date endDate, startDate;
 		String displayedIndex;
 		tempCommand.setType(commandType);
@@ -28,7 +33,7 @@ public class Parser {
 				endDate = dateConverter(array2[1]);
 				startDate = dateConverter(array2[0]);
 				tempCommand.setEventStart(startDate);
-				tempCommand.setEventStart(endDate);
+				tempCommand.setEventEnd(endDate);
 				tempCommand.setEventName(event);
 				break;
 			case ADD_TASK:
@@ -80,6 +85,7 @@ public class Parser {
 			return Constants.COMMAND_TYPE.INVALID;
 		}
 	}
+	
 	static private String removeFirstWord(String input) {
 		return input.replace(getFirstWord(input), "").trim();
 	}
@@ -91,8 +97,8 @@ public class Parser {
 			inputString += " " + input.trim().split("\\s+")[1];
 		}	
 		return inputString;
-	}
-	
+	}	
+
 	private static Date dateConverter(String dateString) throws ParseException {
 		DateFormat format = new SimpleDateFormat(Constants.DEFAULT_DATE_FORMAT);
 		Date date = format.parse(dateString);

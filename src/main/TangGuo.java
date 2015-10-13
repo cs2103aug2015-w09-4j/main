@@ -221,8 +221,14 @@ public class TangGuo {
 	private String updateName(Command command) {
 		String newName = command.getEventName();
 		String displayedIndex = command.getDisplayedIndex();
+		int taskID = -1;
 		
-		int taskID = TGIDMap.get(displayedIndex);
+		try {
+			taskID = TGIDMap.get(displayedIndex);
+		} catch (NullPointerException e) {
+			return Constants.TANGGUO_INVALID_INDEX;
+		}
+		
 		String oldName = storage.getEventByID(taskID).getName();
 		if (command.isUserCommand()){
 			reversedCommandStack.push(reverseUpdateName(taskID, oldName, displayedIndex));
@@ -262,7 +268,7 @@ public class TangGuo {
 		if (command.isUserCommand()){
 			IDToDelete = TGIDMap.get(command.getDisplayedIndex());
 			reversedCommandStack.push(reverseDeleteEvent(IDToDelete));
-		}else{
+		} else {
 			IDToDelete = command.getEventID();
 		}
 		Event deletedEvent = storage.deleteEventByID(IDToDelete);

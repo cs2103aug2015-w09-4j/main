@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><calendar current="25">
+<?xml version="1.0" encoding="UTF-8"?><calendar current="29">
   <task id="19">
     <name>what a gr8 day</name>
     <category>DEFAULT</category>
@@ -10,7 +10,7 @@
     <priority>-1</priority>
   </task>
   <task id="24">
-    <name>yo</name>
+    <name>i walk a lonely road</name>
     <category>DEFAULT</category>
     <priority>-1</priority>
   </task>
@@ -26,5 +26,12 @@
     <endDate>02/03/1993 12:29</endDate>
     <category>DEFAULT</category>
     <priority>99</priority>
+  </schedule>
+  <schedule id="28">
+    <name>null from 10/10/2012 09:00 to 10/10/2015 09:00</name>
+    <startDate>10/10/2012 09:00</startDate>
+    <endDate>10/10/2015 09:00</endDate>
+    <category>DEFAULT</category>
+    <priority>-1</priority>
   </schedule>
 </calendar>
