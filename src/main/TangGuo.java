@@ -15,6 +15,7 @@ public class TangGuo {
 	private TGStorageManager storage;
 	private HashMap<String,Integer> TGIDMap;
 	private Stack<Command> reversedCommandStack;
+	private Logger logger;
 	
 	/**
 	 * Initialization of TGStorageManager, TGIDMap, and reversedCommandStack
@@ -22,6 +23,11 @@ public class TangGuo {
 	 */
 	public TangGuo(String file) {
 		fileName = file;
+		try {
+			logger = new Logger("Tangguo.log");
+		} catch (IOException e) {
+			System.out.println("failed to initiate log");
+		}
 		storage = new TGStorageManager(fileName);
 		TGIDMap = new HashMap<String,Integer>();
 		reversedCommandStack = new Stack<Command>();
@@ -67,8 +73,10 @@ public class TangGuo {
 		try {
 			currentCommand = Parser.parseCommand(input);
 		} catch (ParseException e) {
+			logger.writeException(e.toString());
 			return Constants.TANGGUO_INVALID_DATE;
 		} catch (IndexOutOfBoundsException e){
+			logger.writeException(e.toString());
 			return Constants.TANGGUO_INVALID_COMMAND;
 		}
 		return executeProcessedCommand(currentCommand);
@@ -298,6 +306,7 @@ public class TangGuo {
 				temp.setType(Constants.COMMAND_TYPE.ADD_DEADLINE);
 				break;
 			default:
+				assert false:"unexpected type number";
 				break;
 		}
 		temp.setEvent(event);

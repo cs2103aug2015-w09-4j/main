@@ -18,20 +18,28 @@ public class Logger {
 		
 		
 	}
-	public void writeException(String content) throws IOException{
+	public void writeException(String content) {
 		Date date = new Date();
 		String temp = dateFormat.format(date) + " exception occurs: " + content+"\n";
-		writeline(temp);
+		
+			writeline(temp);
+		
 	}
-	public void writeLogs(String content) throws IOException{
+	public void writeLog(String content){
 		Date date = new Date();
 		String temp = dateFormat.format(date) + " Log: " + content+"\n";
 		writeline(temp);
 	}
 	
-	private void writeline(String content) throws IOException{
-		Writer output = new BufferedWriter(new FileWriter(fileAdd, true));
-		output.append(content);
-		output.close();
+	private void writeline(String content){
+		try {
+			Writer output = new BufferedWriter(new FileWriter(fileAdd, true));
+			output.append(content);
+			output.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 }
