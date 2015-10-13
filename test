@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?><calendar current="25">
   <task id="19">
-    <name>sian sia</name>
+    <name>what a gr8 day</name>
     <category>DEFAULT</category>
     <priority>-1</priority>
   </task>
   <task id="20">
-    <name>terence cant debug</name>
+    <name>terence cant even</name>
     <category>DEFAULT</category>
     <priority>-1</priority>
   </task>
@@ -15,7 +15,7 @@
     <priority>-1</priority>
   </task>
   <deadline id="23">
-    <name>this is a test</name>
+    <name>this is NOT a drill, I repeat, this is NOT a drill</name>
     <endDate>02/03/1993 16:09</endDate>
     <category>YAY</category>
     <priority>88</priority>

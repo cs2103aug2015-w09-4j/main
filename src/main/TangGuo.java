@@ -16,6 +16,10 @@ public class TangGuo {
 	private HashMap<String,Integer> TGIDMap;
 	private Stack<Command> reversedCommandStack;
 	
+	/**
+	 * Initialization of TGStorageManager, TGIDMap, and reversedCommandStack
+	 * @param file
+	 */
 	public TangGuo(String file) {
 		fileName = file;
 		storage = new TGStorageManager(fileName);
@@ -32,6 +36,10 @@ public class TangGuo {
 		}
 	}
 	
+	/**
+	 * requests for user's inputs and executes the commands given, showing the 
+	 * result back to the user
+	 */
 	private void runUserInput(){
 		requestInput();
 		String input = scanner.nextLine();
@@ -39,14 +47,21 @@ public class TangGuo {
 		showToUser(output);
 	}
 	
+	//display to user
 	private static void showToUser(String display) {
 		System.out.println(display);
 	}
 	
+	//request input from the user
 	private static void requestInput() {
 		System.out.print("input: ");
 	}
 	
+	/**
+	 * Parses input String and returns the result
+	 * @param input
+	 * @return result indicating success/failure of command
+	 */
 	public String executeinputs(String input) {
 		Command currentCommand;
 		try {
@@ -59,10 +74,14 @@ public class TangGuo {
 		return executeProcessedCommand(currentCommand);
 	}
 	
+	/**
+	 * Decides which method to be executed based on parsed command
+	 * @param command
+	 * @return result indicating success/failure of command
+	 */
 	private String executeProcessedCommand(Command command){
 		switch (command.getType()) {
-			case ADD_DEADLINE:
-				
+			case ADD_DEADLINE:			
 				return addDeadline(command);
 			case ADD_SCHEDULE:
 				return addSchedule(command);
@@ -70,7 +89,7 @@ public class TangGuo {
 				return addTask(command);
 			case DISPLAY:
 				return displayTangGuo();
-			case UPDATE:
+			case UPDATE_NAME:
 				return updateName(command);
 			case DELETE:
 				return deleteEvent(command);
@@ -86,17 +105,27 @@ public class TangGuo {
 		} 
 	}
 	
+	/**
+	 * adds a Deadline event
+	 * @param command
+	 * @return
+	 */
 	private String addDeadline(Command command){
 		
-		if (command.isUserCommand()){
+		if (command.isUserCommand()){						//user command
 			int newID = storage.addDeadline(command.getEventName(), command.getEventEnd());
 			reversedCommandStack.push(reverseAdd(newID));
-		}else{
+		}else{												//undo
 			storage.addDeadline(command.getEvent());
 		}
 		return String.format(Constants.TANGGUO_ADD_SUCCESS, fileName, command.getEventName());
 	}
 	
+	/**
+	 * adds a Schedule event
+	 * @param command
+	 * @return
+	 */
 	private String addSchedule(Command command){
 		// add into storage
 		
@@ -109,6 +138,11 @@ public class TangGuo {
 		return String.format(Constants.TANGGUO_ADD_SUCCESS, fileName, command.getEventName());
 	}
 	
+	/**
+	 * adds a Floating Task event
+	 * @param command
+	 * @return
+	 */
 	private String addTask(Command command) {
 		// add into storage
 		if (command.isUserCommand()){
@@ -119,6 +153,12 @@ public class TangGuo {
 		}
 		return String.format(Constants.TANGGUO_ADD_SUCCESS, fileName, command.getEventName());
 	}
+	
+	/**
+	 * Deletes a prior Event that was added to TangGuo 
+	 * @param id	(should be a Command object of ADD_ type)
+	 * @return a Command object that deletes the Command object of the input ID
+	 */
 	private Command reverseAdd(int id){
 		Command temp = new Command();
 		temp.setIsUserCommand(false);
@@ -127,6 +167,10 @@ public class TangGuo {
 		return temp;
 	}
 	
+	/**
+	 * Undoes previous command by user
+	 * @return String indicating success/failure of undoing previous command
+	 */
 	private String undo(){
 		if (reversedCommandStack.isEmpty()){
 			return Constants.TANGGUO_UNDO_NO_COMMAND;
@@ -134,6 +178,11 @@ public class TangGuo {
 		executeProcessedCommand(reversedCommandStack.pop());
 		return Constants.TANGGUO_UNDO_SUCCESS;
 	}
+	
+	/**
+	 * Displays all events stored within TangGuo
+	 * @return
+	 */
 	private String displayTangGuo() {
 		String printOut = "";
 		
@@ -148,11 +197,13 @@ public class TangGuo {
 		return printOut;
 	}
 	
+	//checks if TangGuo has no events stored
 	private boolean allCachesEmpty(){
 		return(storage.getDeadlineCache().isEmpty() && storage.getTaskCache().isEmpty()
 				&& storage.getScheduleCache().isEmpty());			
 	}
 	
+	//Displays all events of a particular type: deadline/schedule/floating task
 	private String displayCache(String cacheName, ArrayList<Event> cache, String header){
 		String printOut = cacheName + ":\n";
 		for (int i = 0; i < cache.size(); i++) {
@@ -162,33 +213,48 @@ public class TangGuo {
 		return printOut;
 	}
 	
+	/**
+	 * Updates the name of an existing event to the new name input by user
+	 * @param command
+	 * @return
+	 */
 	private String updateName(Command command) {
-		//reversedCommandStack.push(reverseupdateName(command));
 		String newName = command.getEventName();
+		String displayedIndex = command.getDisplayedIndex();
 		
-		int taskID = TGIDMap.get(command.getDisplayedIndex());
-		String oldVersion = storage.getEventByID(taskID).getName();
+		int taskID = TGIDMap.get(displayedIndex);
+		String oldName = storage.getEventByID(taskID).getName();
 		if (command.isUserCommand()){
-			reversedCommandStack.push(reverseUpdateName(taskID,oldVersion));
+			reversedCommandStack.push(reverseUpdateName(taskID, oldName, displayedIndex));
 		}
 		storage.updateNameByID(taskID, newName);
 		
-		return String.format(Constants.TANGGUO_UPDATE_NAME, oldVersion,
-				newName) + "\n" + displayTangGuo();
-		
+		return String.format(Constants.TANGGUO_UPDATE_NAME, oldName,
+				newName) + "\n" + displayTangGuo();	
 	}
 	
-	private Command reverseUpdateName(int id, String name){
+	/**
+	 * Reverts back the name of an event
+	 * @param id
+	 * @param name
+	 * @return a Command object that updates the existing name of the Event
+	 * object of "@param id" to "@param name"
+	 */
+	private Command reverseUpdateName(int id, String name, String displayedIndex){
 		Command temp = new Command();
 		temp.setIsUserCommand(false);
-		temp.setType(Constants.COMMAND_TYPE.UPDATE);
+		temp.setType(Constants.COMMAND_TYPE.UPDATE_NAME);
 		temp.setEventName(name);
+		temp.setEventID(id);
+		temp.setDisplayedIndex(displayedIndex);
 		return temp;
 	}
+	
 	/**
 	 * deletes an Event
 	 * @param toBeDeleted : [letter][number] 
-	 * letter refers to the type of event = {t, s, d}; number refers to index displayed
+	 * letter refers to the type of event = {t: task, s: schedule, d: deadline};
+	 * number refers to index displayed
 	 * @return
 	 */
 	private String deleteEvent(Command command) {
@@ -205,6 +271,11 @@ public class TangGuo {
 		return displayTangGuo();
 	}
 	
+	/**
+	 * Add back an event that was deleted previously
+	 * @param id
+	 * @return a Command Object that adds the object of "@param id" to TangGuo
+	 */
 	private Command reverseDeleteEvent(int id){
 		Command temp = new Command();
 		temp.setIsUserCommand(false);

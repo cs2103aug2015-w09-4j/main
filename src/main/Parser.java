@@ -36,7 +36,7 @@ public class Parser {
 				break;
 			case DISPLAY:
 				break;
-			case UPDATE:
+			case UPDATE_NAME:
 				displayedIndex = getFirstWord(event);
 				String newName;
 				newName = event.split("\"")[1];
@@ -75,7 +75,7 @@ public class Parser {
 		} else if (commandTypeString.equalsIgnoreCase("undo")) {
 			return Constants.COMMAND_TYPE.UNDO;
 		} else if (commandTypeString.equalsIgnoreCase("update name")) {
-			return Constants.COMMAND_TYPE.UPDATE;
+			return Constants.COMMAND_TYPE.UPDATE_NAME;
 		} else {
 			return Constants.COMMAND_TYPE.INVALID;
 		}
