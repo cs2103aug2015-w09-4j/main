@@ -4,14 +4,4 @@
     <category>DEFAULT</category>
     <priority>-1</priority>
   </task>
-  <task id="5">
-    <name>2</name>
-    <category>DEFAULT</category>
-    <priority>-1</priority>
-  </task>
-  <task id="4">
-    <name>1</name>
-    <category>DEFAULT</category>
-    <priority>-1</priority>
-  </task>
 </calendar>

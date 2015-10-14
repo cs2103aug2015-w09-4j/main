@@ -43,6 +43,7 @@ public class TGStorageManager {
 	private ArrayList<Event> _taskCache;
 	private ArrayList<Event> _deadlineCache;
 	private ArrayList<Event> _scheduleCache;
+	private Logger logger;
 	File inputFile;
 	private int currentIndex;
 
@@ -51,6 +52,12 @@ public class TGStorageManager {
 		this._taskCache = new ArrayList<Event>();
 		this._deadlineCache = new ArrayList<Event>();
 		this._scheduleCache = new ArrayList<Event>();
+		try {
+			this.logger = new Logger("Tangguo.log");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 		initialize();
 	}
 	public Event getEventByID(int id){
@@ -90,6 +97,7 @@ public class TGStorageManager {
 	}
 	
 	public int addTask(Event newTask){
+		logger.writeLog("addTask: "+newTask.getName());
 		_taskCache.add(newTask);
 		currentIndex++;
 		updateStorage();
@@ -103,6 +111,7 @@ public class TGStorageManager {
 	}	
 	
 	public int addDeadline (Event newDeadline){
+		logger.writeLog("add deadline: "+newDeadline.getName());
 		_deadlineCache.add(newDeadline);
 		currentIndex++;
 		updateStorage();
@@ -115,6 +124,7 @@ public class TGStorageManager {
 	}
 	
 	public int addSchedule(Event newSchedule){
+		logger.writeLog("add schedule: "+newSchedule.getName());
 		_scheduleCache.add(newSchedule);
 		currentIndex++;
 		updateStorage();
@@ -130,6 +140,7 @@ public class TGStorageManager {
 	public Event deleteEventByID(int id){
 		for (Event element:_taskCache){
 			if (element.getID() == id){
+				logger.writeLog("delete Task: "+element.getName());
 				_taskCache.remove(element);
 				updateStorage();
 				return element;
@@ -138,6 +149,7 @@ public class TGStorageManager {
 		
 		for (Event element:_scheduleCache){
 			if (element.getID() == id){
+				logger.writeLog("delete schedule: "+element.getName());
 				_scheduleCache.remove(element);
 				updateStorage();
 				return element;
@@ -146,12 +158,13 @@ public class TGStorageManager {
 		
 		for (Event element:_deadlineCache){
 			if (element.getID() == id){
+				logger.writeLog("delete deadline: "+element.getName());
 				_deadlineCache.remove(element);
 				updateStorage();
 				return element;
 			}
 		}
-		
+		assert false:"no matched ID found";
 		return null;
 		//System.out.println("not found");
 	}
