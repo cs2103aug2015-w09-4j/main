@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?><calendar current="29">
+  <task id="19">
+    <name>what a gr8 day</name>
+    <category>DEFAULT</category>
+    <priority>-1</priority>
+  </task>
+  <task id="20">
+    <name>terence cant even</name>
+    <category>DEFAULT</category>
+    <priority>-1</priority>
+  </task>
+  <task id="24">
+    <name>i walk a lonely road</name>
+    <category>DEFAULT</category>
+    <priority>-1</priority>
+  </task>
+  <deadline id="23">
+    <name>this is NOT a drill, I repeat, this is NOT a drill</name>
+    <endDate>02/03/1993 16:09</endDate>
+    <category>YAY</category>
+    <priority>88</priority>
+  </deadline>
+  <schedule id="21">
+    <name>testing 1 1 2 3</name>
+    <startDate>02/02/1993 15:02</startDate>
+    <endDate>02/03/1993 12:29</endDate>
+    <category>DEFAULT</category>
+    <priority>99</priority>
+  </schedule>
+  <schedule id="28">
+    <name>null from 10/10/2012 09:00 to 10/10/2015 09:00</name>
+    <startDate>10/10/2012 09:00</startDate>
+    <endDate>10/10/2015 09:00</endDate>
+    <category>DEFAULT</category>
+    <priority>-1</priority>
+  </schedule>
+</calendar>
