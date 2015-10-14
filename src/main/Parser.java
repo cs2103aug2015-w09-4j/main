@@ -6,10 +6,14 @@ import java.util.Date;
 
 import java.util.regex.*;
 
+import com.sun.glass.ui.Pixels.Format;
 import com.sun.org.apache.xerces.internal.impl.xpath.regex.Match;
+
+import jdk.nashorn.internal.codegen.CompilerConstants;
 
 
 public class Parser {
+	private static DateFormat format = new SimpleDateFormat(Constants.DEFAULT_DATE_FORMAT);
 	
 	static public Command parseCommand(String input) throws ParseException, IndexOutOfBoundsException{
 		Command tempCommand = new Command();
@@ -21,30 +25,36 @@ public class Parser {
 		tempCommand.setType(commandType);
 		tempCommand.setIsUserCommand(true);
 		switch (commandType) {
-			case ADD_DEADLINE:
-				String[] array = event.split("by ");
-				endDate = dateConverter(array[array.length-1]);
-				tempCommand.setEventEnd(endDate);
-				tempCommand.setEventName(event);
-				break;
-			case ADD_SCHEDULE:
-				String[] array1 = event.split("from ");
-				String[] array2 = array1[array1.length - 1].split("to ");
-				endDate = dateConverter(array2[1]);
-				startDate = dateConverter(array2[0]);
-				tempCommand.setEventStart(startDate);
-				tempCommand.setEventEnd(endDate);
-				tempCommand.setEventName(event);
-				break;
-			case ADD_TASK:
-				tempCommand.setEventName(event);
-				break;
+			case ADD:				
+				String[] array = event.split("by ");			
+				try {
+					endDate = dateConverter(array[array.length-1]);
+					
+					tempCommand.setEventEnd(endDate);
+					tempCommand.setEventName(event);
+					tempCommand.setType(Constants.COMMAND_TYPE.ADD_DEADLINE);
+				} catch (ParseException e){
+					try {
+						String[] array1 = event.split("from ");
+						String[] array2 = array1[array1.length - 1].split("to ");
+						endDate = dateConverter(array2[1]);
+						startDate = dateConverter(array2[0]);
+						
+						tempCommand.setEventStart(startDate);
+						tempCommand.setEventEnd(endDate);
+						tempCommand.setEventName(event);
+						tempCommand.setType(Constants.COMMAND_TYPE.ADD_SCHEDULE);
+					} catch (Exception f){	//ParseException and IndexOutOfBoundsException
+						tempCommand.setEventName(event);
+						tempCommand.setType(Constants.COMMAND_TYPE.ADD_TASK);
+					}								
+				}
+				break;		
 			case DISPLAY:
 				break;
 			case UPDATE_NAME:
 				displayedIndex = getFirstWord(event);
-				String newName;
-				newName = event.split("\"")[1];
+				String newName = removeFirstWord(event);
 				tempCommand.setEventName(newName);
 				tempCommand.setDisplayedIndex(displayedIndex);
 				break;
@@ -65,12 +75,16 @@ public class Parser {
 		return tempCommand;
 	} 
 	private static Constants.COMMAND_TYPE findCommandType(String commandTypeString) {
-		if (commandTypeString.equalsIgnoreCase("add schedule")) {
+		if (commandTypeString.equalsIgnoreCase("add")){
+			return Constants.COMMAND_TYPE.ADD;
+			
+		/**(commandTypeString.equalsIgnoreCase("add schedule")) {
 			return Constants.COMMAND_TYPE.ADD_SCHEDULE;
 		} else if (commandTypeString.equalsIgnoreCase("add task")) {
 			return Constants.COMMAND_TYPE.ADD_TASK;
 		} else if (commandTypeString.equalsIgnoreCase("add deadline")) {
-			return Constants.COMMAND_TYPE.ADD_DEADLINE;
+			return Constants.COMMAND_TYPE.ADD_DEADLINE;**/
+			
 		} else if (commandTypeString.equalsIgnoreCase("display")) {
 			return Constants.COMMAND_TYPE.DISPLAY;
 		} else if (commandTypeString.equalsIgnoreCase("delete")) {
@@ -93,14 +107,13 @@ public class Parser {
 	static private String getFirstWord(String input) {
 		String inputString = input.trim().split("\\s+")[0];
 		
-		if(inputString.equals("add") || inputString.equals("update")) {
+		if(inputString.equals("update")) {
 			inputString += " " + input.trim().split("\\s+")[1];
 		}	
 		return inputString;
 	}	
 
-	private static Date dateConverter(String dateString) throws ParseException {
-		DateFormat format = new SimpleDateFormat(Constants.DEFAULT_DATE_FORMAT);
+	private static Date dateConverter(String dateString) throws ParseException{ 
 		Date date = format.parse(dateString);
 		return date;
 	}

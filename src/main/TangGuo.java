@@ -30,6 +30,7 @@ public class TangGuo {
 	public static void main(String[] args) throws IOException, ParseException {
 		TangGuo tg = new TangGuo(args[0]);
 		showToUser(String.format(Constants.TANGGUO_START, fileName));
+		showToUser(tg.executeinputs("display"));
 		
 		while (true) {
 			tg.runUserInput();
@@ -223,21 +224,23 @@ public class TangGuo {
 		String displayedIndex = command.getDisplayedIndex();
 		int taskID = -1;
 		
-		try {
+		if (TGIDMap.containsKey(displayedIndex)){
 			taskID = TGIDMap.get(displayedIndex);
-		} catch (NullPointerException e) {
+		} else {
 			return Constants.TANGGUO_INVALID_INDEX;
 		}
 		
 		String oldName = storage.getEventByID(taskID).getName();
+		
 		if (command.isUserCommand()){
 			reversedCommandStack.push(reverseUpdateName(taskID, oldName, displayedIndex));
 		}
 		storage.updateNameByID(taskID, newName);
 		
-		return String.format(Constants.TANGGUO_UPDATE_NAME, oldName,
-				newName) + "\n" + displayTangGuo();	
+		return String.format(Constants.TANGGUO_UPDATE_NAME_SUCCESS, oldName,
+				newName) + Constants.NEW_LINE + displayTangGuo();	
 	}
+		
 	
 	/**
 	 * Reverts back the name of an event
@@ -266,15 +269,19 @@ public class TangGuo {
 	private String deleteEvent(Command command) {
 		int IDToDelete;
 		if (command.isUserCommand()){
-			IDToDelete = TGIDMap.get(command.getDisplayedIndex());
+			if (TGIDMap.containsKey(command.getDisplayedIndex())){
+				IDToDelete = TGIDMap.get(command.getDisplayedIndex());
+			} else {
+				return Constants.TANGGUO_INVALID_INDEX;
+			}
 			reversedCommandStack.push(reverseDeleteEvent(IDToDelete));
 		} else {
 			IDToDelete = command.getEventID();
 		}
 		Event deletedEvent = storage.deleteEventByID(IDToDelete);
 
-		System.out.println(String.format(Constants.TANGGUO_DELETE_SUCCESS, fileName, deletedEvent.getName()));
-		return displayTangGuo();
+		return String.format(Constants.TANGGUO_DELETE_SUCCESS, fileName, deletedEvent.getName()) +
+				Constants.NEW_LINE + displayTangGuo();
 	}
 	
 	/**

@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?><calendar current="29">
+<?xml version="1.0" encoding="UTF-8"?><calendar current="45">
   <task id="19">
-    <name>what a gr8 day</name>
+    <name>shag</name>
     <category>DEFAULT</category>
     <priority>-1</priority>
   </task>
@@ -14,21 +14,53 @@
     <category>DEFAULT</category>
     <priority>-1</priority>
   </task>
+  <task id="35">
+    <name>BRING ME BACK TO LIFE</name>
+    <category>DEFAULT</category>
+    <priority>-1</priority>
+  </task>
+  <task id="37">
+    <name>this is a task</name>
+    <category>DEFAULT</category>
+    <priority>-1</priority>
+  </task>
+  <task id="41">
+    <name>this is not a deadline by any time</name>
+    <category>DEFAULT</category>
+    <priority>-1</priority>
+  </task>
+  <task id="43">
+    <name>this is a fake schedule from october to december</name>
+    <category>DEFAULT</category>
+    <priority>-1</priority>
+  </task>
   <deadline id="23">
     <name>this is NOT a drill, I repeat, this is NOT a drill</name>
     <endDate>02/03/1993 16:09</endDate>
     <category>YAY</category>
     <priority>88</priority>
   </deadline>
-  <schedule id="21">
-    <name>testing 1 1 2 3</name>
-    <startDate>02/02/1993 15:02</startDate>
-    <endDate>02/03/1993 12:29</endDate>
+  <deadline id="38">
+    <name>this is a deadline by 10/10/2015 09:00</name>
+    <endDate>10/10/2015 09:00</endDate>
     <category>DEFAULT</category>
-    <priority>99</priority>
-  </schedule>
+    <priority>-1</priority>
+  </deadline>
+  <deadline id="44">
+    <name>this is a deadline trying to disguise as a schedule by 10/10/2012 09:00</name>
+    <endDate>10/10/2012 09:00</endDate>
+    <category>DEFAULT</category>
+    <priority>-1</priority>
+  </deadline>
   <schedule id="28">
     <name>null from 10/10/2012 09:00 to 10/10/2015 09:00</name>
+    <startDate>10/10/2012 09:00</startDate>
+    <endDate>10/10/2015 09:00</endDate>
+    <category>DEFAULT</category>
+    <priority>-1</priority>
+  </schedule>
+  <schedule id="42">
+    <name>this is a schedule from 10/10/2012 09:00 to 10/10/2015 09:00</name>
     <startDate>10/10/2012 09:00</startDate>
     <endDate>10/10/2015 09:00</endDate>
     <category>DEFAULT</category>
