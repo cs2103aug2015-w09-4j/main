@@ -9,6 +9,7 @@ public class Event {
 	private Date endDate;
 	private String category;
 	private int priority;
+	private boolean isDone;
 	
 	public Event(int ID, String name, Date startDate, Date endDate){
 		this.type = Constants.SCHEDULE_TYPE_NUMBER;
@@ -18,6 +19,7 @@ public class Event {
 		this.endDate = endDate;
 		this.category = Constants.DEFAULT_CATEGORY;
 		this.priority = Constants.DEFAULT_PRIORITY;
+		this.isDone = false;
 	}
 	
 	public Event(int ID, String name, Date endDate){
@@ -27,6 +29,7 @@ public class Event {
 		this.endDate = endDate;
 		this.category = Constants.DEFAULT_CATEGORY;
 		this.priority = Constants.DEFAULT_PRIORITY;
+		this.isDone = false;
 	}
 	  
 	public Event(int ID, String name){
@@ -35,8 +38,16 @@ public class Event {
 		this.name = name;
 		this.category = Constants.DEFAULT_CATEGORY;
 		this.priority = Constants.DEFAULT_PRIORITY;
+		this.isDone = false;
 	}
 	
+	public boolean isDone(){
+		return this.isDone;
+	}
+	
+	public void setIsDone(boolean b){
+		this.isDone = b;
+	}
 	public int getType() {
 		return type;
 	}
@@ -83,6 +94,21 @@ public class Event {
 	
 	public void setPriority(int priority) {
 		this.priority = priority;
+	}
+	
+	public String toString(){
+		switch (type){
+		case(Constants.TASK_TYPE_NUMBER):
+			return name + " priority:" + priority + "isDone:" + isDone;
+		case(Constants.DEADLINE_TYPE_NUMBER):
+			return name + " priority:" + priority + " end date:" + endDate.toString() + "isDone:" + isDone;
+		case(Constants.SCHEDULE_TYPE_NUMBER):
+			return name + " priority:" + priority + " start date:" + startDate.toString() + " end date:" + endDate.toString() + "isDone:" + isDone;
+		default:
+			assert false:"unhandled type number";
+			return this.toString();
+		
+		}
 	}
 	
 }

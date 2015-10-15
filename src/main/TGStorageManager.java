@@ -197,6 +197,32 @@ public class TGStorageManager {
 		//System.out.println("not found");
 	}
 	
+	public void updateIsDoneByID(int id, boolean isDone){
+		for (Event element:_taskCache){
+			if (element.getID() == id){
+				element.setIsDone(isDone);
+				updateStorage();
+				return;
+			}
+		}
+		
+		for (Event element:_scheduleCache){
+			if (element.getID() == id){
+				element.setIsDone(isDone);
+				updateStorage();
+				return;
+			}
+		}
+		
+		for (Event element:_deadlineCache){
+			if (element.getID() == id){
+				element.setIsDone(isDone);
+				updateStorage();
+				return;
+			}
+		}
+		//System.out.println("not found");
+	}
 	//precon:id exists
 	public void updateStartByID(int id, Date startDate){
 		for (Event element:_taskCache){
