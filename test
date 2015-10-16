@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><calendar current="45">
+<?xml version="1.0" encoding="UTF-8"?><calendar current="52">
   <task id="19">
     <name>shag</name>
     <category>DEFAULT</category>
@@ -34,6 +34,16 @@
     <category>DEFAULT</category>
     <priority>-1</priority>
   </task>
+  <task id="49">
+    <name>test by the beach</name>
+    <category>DEFAULT</category>
+    <priority>-1</priority>
+  </task>
+  <task id="51">
+    <name>test from 1242r23235</name>
+    <category>DEFAULT</category>
+    <priority>-1</priority>
+  </task>
   <deadline id="23">
     <name>this is NOT a drill, I repeat, this is NOT a drill</name>
     <endDate>02/03/1993 16:09</endDate>
@@ -52,6 +62,24 @@
     <category>DEFAULT</category>
     <priority>-1</priority>
   </deadline>
+  <deadline id="45">
+    <name>testdatevalidation by 10/10/2015 15:09</name>
+    <endDate>10/10/2015 15:09</endDate>
+    <category>DEFAULT</category>
+    <priority>-1</priority>
+  </deadline>
+  <deadline id="46">
+    <name>datevalidationconfirmation by 29/10/2015 15:09</name>
+    <endDate>29/10/2015 15:09</endDate>
+    <category>DEFAULT</category>
+    <priority>-1</priority>
+  </deadline>
+  <deadline id="47">
+    <name>schedultesting by 15/10/2015 15:09</name>
+    <endDate>15/10/2015 15:09</endDate>
+    <category>DEFAULT</category>
+    <priority>-1</priority>
+  </deadline>
   <schedule id="28">
     <name>null from 10/10/2012 09:00 to 10/10/2015 09:00</name>
     <startDate>10/10/2012 09:00</startDate>
@@ -63,6 +91,20 @@
     <name>this is a schedule from 10/10/2012 09:00 to 10/10/2015 09:00</name>
     <startDate>10/10/2012 09:00</startDate>
     <endDate>10/10/2015 09:00</endDate>
+    <category>DEFAULT</category>
+    <priority>-1</priority>
+  </schedule>
+  <schedule id="48">
+    <name>scheduletestvalidation from 10/10/2015 15:09 to 10/10/2015 15:09</name>
+    <startDate>10/10/2015 15:09</startDate>
+    <endDate>10/10/2015 15:09</endDate>
+    <category>DEFAULT</category>
+    <priority>-1</priority>
+  </schedule>
+  <schedule id="50">
+    <name>test from 10/10/2015 23:29 to 10/10/2015 23:09</name>
+    <startDate>10/10/2015 23:29</startDate>
+    <endDate>10/10/2015 23:09</endDate>
     <category>DEFAULT</category>
     <priority>-1</priority>
   </schedule>
