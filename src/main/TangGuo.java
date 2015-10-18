@@ -5,7 +5,10 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Stack;
+
+import javax.swing.Spring;
 
 
 public class TangGuo {
@@ -100,10 +103,18 @@ public class TangGuo {
 				return displayTangGuo();
 			case UPDATE_NAME:
 				return updateName(command);
+			case UPDATE_START:
+				return updateStart(command);	
+			case UPDATE_END:
+				return updateEnd(command); 		
+		//	case UPDATE_PRIORITY:
+			//	return updatePriority(command); ///not done yet///
+		//	case DONE:
+			//	return markAsDone(command);		///not done yet///
 			case DELETE:
 				return deleteEvent(command);
 			case UNDO:
-				return undo();
+				return undo();				
 			case EXIT:
 				showToUser(Constants.TANGGUO_EXIT);
 				System.exit(0);
@@ -153,7 +164,7 @@ public class TangGuo {
 	 * @param command
 	 * @return
 	 */
-	private String addTask(Command command) {
+	private String addTask(Command command){
 		// add into storage
 		if (command.isUserCommand()){
 			int newID = storage.addTask(command.getEventName());
@@ -193,10 +204,10 @@ public class TangGuo {
 	 * Displays all events stored within TangGuo
 	 * @return
 	 */
-	private String displayTangGuo() {
+	private String displayTangGuo(){
 		String printOut = "";
 		
-		if (allCachesEmpty()) {
+		if (allCachesEmpty()){
 			return String.format(Constants.TANGGUO_EMPTY_FILE, fileName);
 		}
 		TGIDMap.clear();
@@ -216,9 +227,19 @@ public class TangGuo {
 	//Displays all events of a particular type: deadline/schedule/floating task
 	private String displayCache(String cacheName, ArrayList<Event> cache, String header){
 		String printOut = cacheName + ":\n";
-		for (int i = 0; i < cache.size(); i++) {
+		for (int i = 0; i < cache.size(); i++){
 			TGIDMap.put(header+(i+1), cache.get(i).getID());
-			printOut = printOut + (i+1) + ". " + cache.get(i).getName() + "\n";
+			printOut = printOut + (i+1) + ". ";
+			
+			//not sure if this is the right way to do it but print out the start
+			if (cache.get(i).getStart() != null){
+				printOut += "{" +cache.get(i).getStart().toString()+
+						", "+cache.get(i).getEnd().toString()+"} ";
+			} else if (cache.get(i).getEnd() != null){
+				printOut += "{"+cache.get(i).getEnd().toString()+"} ";
+			}	
+			printOut += cache.get(i).getName() + "\n";
+			////////////////////////////////////////////////////////////////////
 		}
 		return printOut;
 	}
@@ -228,14 +249,14 @@ public class TangGuo {
 	 * @param command
 	 * @return
 	 */
-	private String updateName(Command command) {
+	private String updateName(Command command){
 		String newName = command.getEventName();
 		String displayedIndex = command.getDisplayedIndex();
 		int taskID = -1;
 		
 		if (TGIDMap.containsKey(displayedIndex)){
 			taskID = TGIDMap.get(displayedIndex);
-		} else {
+		}else{
 			return Constants.TANGGUO_INVALID_INDEX;
 		}
 		
@@ -268,6 +289,154 @@ public class TangGuo {
 		return temp;
 	}
 	
+	private String updateStart(Command command) {
+		Date startDate = command.getEventStart();
+		String displayedIndex = command.getDisplayedIndex();
+		int taskID = -1;
+		
+		if (TGIDMap.containsKey(displayedIndex)){
+			taskID = TGIDMap.get(displayedIndex);
+		}else{
+			return Constants.TANGGUO_INVALID_INDEX;
+		}
+		
+		Date oldStart = storage.getEventByID(taskID).getStart();
+		
+		if (command.isUserCommand()){
+			reversedCommandStack.push(reverseUpdateStart(taskID, oldStart, displayedIndex));
+		}
+		storage.updateStartByID(taskID, startDate);
+		
+		return String.format(Constants.TANGGUO_UPDATE_START_SUCCESS, storage.getEventByID(taskID).getName(),
+				startDate.toString()) + Constants.NEW_LINE + displayTangGuo();
+	}
+	
+	/**
+	 * Reverts back the start date of an event
+	 * @param id
+	 * @param startDate
+	 * @return a Command object that updates the existing start date of the Event
+	 * object of "@param id" to "@param startDate"
+	 */
+	private Command reverseUpdateStart(int id, Date startDate, String displayedIndex){
+		Command temp = new Command();
+		temp.setIsUserCommand(false);
+		temp.setType(Constants.COMMAND_TYPE.UPDATE_START);
+		temp.setEventStart(startDate);
+		temp.setEventID(id);
+		temp.setDisplayedIndex(displayedIndex);
+		return temp;
+	}
+	
+	private String updateEnd(Command command) {
+		Date endDate = command.getEventEnd();
+		String displayedIndex = command.getDisplayedIndex();
+		int taskID = -1;
+		
+		if (TGIDMap.containsKey(displayedIndex)){
+			taskID = TGIDMap.get(displayedIndex);
+		}else{
+			return Constants.TANGGUO_INVALID_INDEX;
+		}
+		
+		Date oldEnd = storage.getEventByID(taskID).getEnd();
+		
+		if (command.isUserCommand()){
+			reversedCommandStack.push(reverseUpdateEnd(taskID, oldEnd, displayedIndex));
+		}
+		storage.updateEndByID(taskID, endDate);
+		
+		return String.format(Constants.TANGGUO_UPDATE_END_SUCCESS, storage.getEventByID(taskID).getName(),
+				endDate.toString()) + Constants.NEW_LINE + displayTangGuo();
+	}
+	
+	/**
+	 * Reverts back the end date of an event
+	 * @param id
+	 * @param endDate
+	 * @return a Command object that updates the existing end date of the Event
+	 * object of "@param id" to "@param endDate"
+	 */
+	private Command reverseUpdateEnd(int id, Date endDate, String displayedIndex){
+		Command temp = new Command();
+		temp.setIsUserCommand(false);
+		temp.setType(Constants.COMMAND_TYPE.UPDATE_END);
+		temp.setEventEnd(endDate);
+		temp.setEventID(id);
+		temp.setDisplayedIndex(displayedIndex);
+		return temp;
+	}
+	
+	/**
+	private String updatePriority(Command command) {
+		int priority = command.getEventPriority();
+		String displayedIndex = command.getDisplayedIndex();
+		int taskID = -1;
+		
+		if (TGIDMap.containsKey(displayedIndex)){
+			taskID = TGIDMap.get(displayedIndex);
+		}else{
+			return Constants.TANGGUO_INVALID_INDEX;
+		}
+		
+		int oldPriority = storage.getEventByID(taskID).getPriority();
+		
+		if (command.isUserCommand()){
+			reversedCommandStack.push(reverseUpdatePriority(taskID, oldPriority, displayedIndex));
+		}
+		storage.updatePriorityByID(taskID, priority);
+		
+		return String.format(Constants.TANGGUO_UPDATE_PRIORITY_SUCCESS, storage.getEventByID(taskID).getName(),
+				priority) + Constants.NEW_LINE + displayTangGuo();
+	}**/
+
+	/**
+	 * Reverts back the priority of an event
+	 * @param id
+	 * @param priority
+	 * @return a Command object that updates the existing name of the Event
+	 * object of "@param id" to "@param priority"
+	 */
+	/**private Command reverseUpdatePriority(int id, int priority, String displayedIndex){
+		Command temp = new Command();
+		temp.setIsUserCommand(false);
+		temp.setType(Constants.COMMAND_TYPE.UPDATE_NAME);
+		temp.setEventPriority(priority);
+		temp.setEventID(id);
+		temp.setDisplayedIndex(displayedIndex);
+		return temp;
+	}
+	
+	private String markAsDone(Command command){
+		String displayedIndex = command.getDisplayedIndex();
+		int taskID = -1;
+		
+		if (TGIDMap.containsKey(displayedIndex)){
+			taskID = TGIDMap.get(displayedIndex);
+		}else{
+			return Constants.TANGGUO_INVALID_INDEX;
+		}
+		
+		if (command.isUserCommand()){
+			reversedCommandStack.push(reverseMarkAsDone(taskID));
+			storage.updateIsDoneByID(taskID, true);
+		} else {
+			storage.updateIsDoneByID(taskID, false);
+		}	
+		
+		return String.format(Constants.TANGGUO_UPDATE_DONE_SUCCESS, storage.getEventByID(taskID).getName())
+				+ Constants.NEW_LINE + displayTangGuo();
+	}
+	
+	
+	private Command reverseMarkAsDone(int id){
+		Command temp = new Command();
+		temp.setIsUserCommand(false);
+		temp.setType(Constants.COMMAND_TYPE.DONE);
+		temp.setEventID(id);
+		return temp;
+	}**?
+	
 	/**
 	 * deletes an Event
 	 * @param toBeDeleted : [letter][number] 
@@ -284,7 +453,7 @@ public class TangGuo {
 				return Constants.TANGGUO_INVALID_INDEX;
 			}
 			reversedCommandStack.push(reverseDeleteEvent(IDToDelete));
-		} else {
+		}else{
 			IDToDelete = command.getEventID();
 		}
 		Event deletedEvent = storage.deleteEventByID(IDToDelete);

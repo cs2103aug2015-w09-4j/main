@@ -173,7 +173,7 @@ public class TGStorageManager {
 	public void updateNameByID(int id, String name){
 		for (Event element:_taskCache){
 			if (element.getID() == id){
-				element.setName(name);;
+				element.setName(name);
 				updateStorage();
 				return;
 			}
@@ -181,7 +181,7 @@ public class TGStorageManager {
 		
 		for (Event element:_scheduleCache){
 			if (element.getID() == id){
-				element.setName(name);;
+				element.setName(name);
 				updateStorage();
 				return;
 			}
@@ -189,7 +189,7 @@ public class TGStorageManager {
 		
 		for (Event element:_deadlineCache){
 			if (element.getID() == id){
-				element.setName(name);;
+				element.setName(name);
 				updateStorage();
 				return;
 			}
@@ -227,7 +227,7 @@ public class TGStorageManager {
 	public void updateStartByID(int id, Date startDate){
 		for (Event element:_taskCache){
 			if (element.getID() == id){
-				element.setStart(startDate);;
+				element.setStart(startDate);
 				updateStorage();
 				return;
 			}
@@ -235,7 +235,7 @@ public class TGStorageManager {
 		
 		for (Event element:_scheduleCache){
 			if (element.getID() == id){
-				element.setStart(startDate);;
+				element.setStart(startDate);
 				updateStorage();
 				return;
 			}
@@ -243,7 +243,7 @@ public class TGStorageManager {
 		
 		for (Event element:_deadlineCache){
 			if (element.getID() == id){
-				element.setStart(startDate);;
+				element.setStart(startDate);
 				updateStorage();
 				return;
 			}
@@ -255,7 +255,7 @@ public class TGStorageManager {
 	public void updateEndByID(int id, Date endDate){
 		for (Event element:_taskCache){
 			if (element.getID() == id){
-				element.setStart(endDate);;
+				element.setEnd(endDate);
 				updateStorage();
 				return;
 			}
@@ -263,7 +263,7 @@ public class TGStorageManager {
 		
 		for (Event element:_scheduleCache){
 			if (element.getID() == id){
-				element.setStart(endDate);;
+				element.setEnd(endDate);
 				updateStorage();
 				return;
 			}
@@ -271,7 +271,7 @@ public class TGStorageManager {
 		
 		for (Event element:_deadlineCache){
 			if (element.getID() == id){
-				element.setStart(endDate);;
+				element.setEnd(endDate);
 				updateStorage();
 				return;
 			}
@@ -283,7 +283,7 @@ public class TGStorageManager {
 	public void updateCategoryByID(int id, String category){
 		for (Event element:_taskCache){
 			if (element.getID() == id){
-				element.setCategory(category);;
+				element.setCategory(category);
 				updateStorage();
 				return;
 			}
@@ -291,7 +291,7 @@ public class TGStorageManager {
 		
 		for (Event element:_scheduleCache){
 			if (element.getID() == id){
-				element.setCategory(category);;
+				element.setCategory(category);
 				updateStorage();
 				return;
 			}
@@ -299,7 +299,7 @@ public class TGStorageManager {
 		
 		for (Event element:_deadlineCache){
 			if (element.getID() == id){
-				element.setCategory(category);;
+				element.setCategory(category);
 				updateStorage();
 				return;
 			}
@@ -311,7 +311,7 @@ public class TGStorageManager {
 	public void updatePriorityByID(int id, int priority){
 		for (Event element:_taskCache){
 			if (element.getID() == id){
-				element.setPriority(priority);;
+				element.setPriority(priority);
 				updateStorage();
 				return;
 			}
@@ -319,7 +319,7 @@ public class TGStorageManager {
 		
 		for (Event element:_scheduleCache){
 			if (element.getID() == id){
-				element.setPriority(priority);;
+				element.setPriority(priority);
 				updateStorage();
 				return;
 			}
@@ -327,7 +327,7 @@ public class TGStorageManager {
 		
 		for (Event element:_deadlineCache){
 			if (element.getID() == id){
-				element.setPriority(priority);;
+				element.setPriority(priority);
 				updateStorage();
 				return;
 			}

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?><calendar current="7">
+  <task id="0">
+    <name>school sucks</name>
+    <category>DEFAULT</category>
+    <priority>-1</priority>
+  </task>
+  <task id="6">
+    <name>balls balls balls</name>
+    <category>DEFAULT</category>
+    <priority>-1</priority>
+  </task>
+  <deadline id="1">
+    <name>i can't even sleep</name>
+    <endDate>19/10/2015 00:30</endDate>
+    <category>DEFAULT</category>
+    <priority>-1</priority>
+  </deadline>
+  <deadline id="5">
+    <name>try deadline </name>
+    <endDate>10/12/2015 00:00</endDate>
+    <category>DEFAULT</category>
+    <priority>-1</priority>
+  </deadline>
+  <schedule id="2">
+    <name>how i would wish to sleep</name>
+    <startDate>19/10/2015 00:00</startDate>
+    <endDate>19/10/2015 13:00</endDate>
+    <category>DEFAULT</category>
+    <priority>-1</priority>
+  </schedule>
+  <schedule id="4">
+    <name>CAN SLEEP???</name>
+    <startDate>19/10/2015 00:00</startDate>
+    <endDate>19/10/2015 12:00</endDate>
+    <category>DEFAULT</category>
+    <priority>-1</priority>
+  </schedule>
+</calendar>

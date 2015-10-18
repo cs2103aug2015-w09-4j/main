@@ -27,26 +27,36 @@ public class Parser {
 		switch (commandType) {
 			case ADD:				
 				String[] array = event.split("by ");			
-				try {
+				try {	//deadline
 					endDate = dateConverter(array[array.length-1]);
 					
+					StringBuilder deadlineName = new StringBuilder();
+					for (int i = 0; i < array.length-1; i++){
+						deadlineName.append(array[i]);
+					}
+					
 					tempCommand.setEventEnd(endDate);
-					tempCommand.setEventName(event);
+					tempCommand.setEventName(deadlineName.toString());
 					tempCommand.setType(Constants.COMMAND_TYPE.ADD_DEADLINE);
 				} catch (ParseException e){
-					try {
+					try {	//schedule
 						String[] array1 = event.split("from ");
 						String[] array2 = array1[array1.length - 1].split("to ");
 						endDate = dateConverter(array2[1]);
 						startDate = dateConverter(array2[0]);
 						
+						StringBuilder scheduleName = new StringBuilder();
+						for (int i = 0; i < array1.length-1; i++){
+							scheduleName.append(array1[i]);
+						}
+						
 						tempCommand.setEventStart(startDate);
 						tempCommand.setEventEnd(endDate);
-						tempCommand.setEventName(event);
+						tempCommand.setEventName(scheduleName.toString());
 						tempCommand.setType(Constants.COMMAND_TYPE.ADD_SCHEDULE);
 					} catch (Exception f){	//ParseException and IndexOutOfBoundsException
 						tempCommand.setEventName(event);
-						tempCommand.setType(Constants.COMMAND_TYPE.ADD_TASK);
+						tempCommand.setType(Constants.COMMAND_TYPE.ADD_TASK);	//task
 					}								
 				}
 				break;		
@@ -54,15 +64,37 @@ public class Parser {
 				break;
 			case UPDATE_NAME:
 				displayedIndex = getFirstWord(event);
-				String newName = removeFirstWord(event);
-				tempCommand.setEventName(newName);
+				String updatedName = removeFirstWord(event);
 				tempCommand.setDisplayedIndex(displayedIndex);
+				tempCommand.setEventName(updatedName);
+				break;
+			case UPDATE_START:
+				displayedIndex = getFirstWord(event);
+				Date updatedStart = dateConverter(removeFirstWord(event));
+				tempCommand.setDisplayedIndex(displayedIndex);
+				tempCommand.setEventStart(updatedStart);
+				break;
+			case UPDATE_END:
+				displayedIndex = getFirstWord(event);
+				Date updatedEnd = dateConverter(removeFirstWord(event));
+				tempCommand.setDisplayedIndex(displayedIndex);
+				tempCommand.setEventEnd(updatedEnd);
+				break;
+			case UPDATE_PRIORITY:
+				displayedIndex = getFirstWord(event);
+				int updatedPriority = Integer.parseInt(removeFirstWord(event));
+				tempCommand.setDisplayedIndex(displayedIndex);
+				tempCommand.setEventPriority(updatedPriority);
 				break;
 			case DELETE:
 				displayedIndex = getFirstWord(event);
 				tempCommand.setDisplayedIndex(displayedIndex);
 				break;
 			case UNDO:
+				break;
+			case DONE:
+				displayedIndex = getFirstWord(event);
+				tempCommand.setDisplayedIndex(displayedIndex);
 				break;
 			case EXIT:
 				break;
@@ -77,14 +109,6 @@ public class Parser {
 	private static Constants.COMMAND_TYPE findCommandType(String commandTypeString) {
 		if (commandTypeString.equalsIgnoreCase("add")){
 			return Constants.COMMAND_TYPE.ADD;
-			
-		/**(commandTypeString.equalsIgnoreCase("add schedule")) {
-			return Constants.COMMAND_TYPE.ADD_SCHEDULE;
-		} else if (commandTypeString.equalsIgnoreCase("add task")) {
-			return Constants.COMMAND_TYPE.ADD_TASK;
-		} else if (commandTypeString.equalsIgnoreCase("add deadline")) {
-			return Constants.COMMAND_TYPE.ADD_DEADLINE;**/
-			
 		} else if (commandTypeString.equalsIgnoreCase("display")) {
 			return Constants.COMMAND_TYPE.DISPLAY;
 		} else if (commandTypeString.equalsIgnoreCase("delete")) {
@@ -95,6 +119,14 @@ public class Parser {
 			return Constants.COMMAND_TYPE.UNDO;
 		} else if (commandTypeString.equalsIgnoreCase("update name")) {
 			return Constants.COMMAND_TYPE.UPDATE_NAME;
+		} else if (commandTypeString.equalsIgnoreCase("update end")) {
+			return Constants.COMMAND_TYPE.UPDATE_END;
+		} else if (commandTypeString.equalsIgnoreCase("update start")) {
+			return Constants.COMMAND_TYPE.UPDATE_START;
+		} else if (commandTypeString.equalsIgnoreCase("update priority")){
+			return Constants.COMMAND_TYPE.UPDATE_PRIORITY;
+		} else if (commandTypeString.equalsIgnoreCase("done")){
+			return Constants.COMMAND_TYPE.DONE;
 		} else {
 			return Constants.COMMAND_TYPE.INVALID;
 		}

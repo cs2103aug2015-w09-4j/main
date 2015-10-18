@@ -26,6 +26,11 @@ public class Constants {
 	public static final String TANGGUO_ADD_SUCCESS = "Added to %1$s: %2$s";
 	public static final String TANGGUO_DELETE_SUCCESS = "Deleted from %1$s: %2$s";
 	public static final String TANGGUO_UPDATE_NAME_SUCCESS = "%1$s updated to %2$s";
+	public static final String TANGGUO_UPDATE_START_SUCCESS = "Start date of %1$s updated to %2$s";
+	public static final String TANGGUO_UPDATE_END_SUCCESS = "End date of %1$s updated to %2$s";
+	public static final String TANGGUO_UPDATE_PRIORITY_SUCCESS = "Priority of %1$s updated to %d";	//print int?
+	public static final String TANGGUO_UPDATE_DONE_SUCCESS = "%1$s completed";
+	
 	public static final String TANGGUO_UNDO_SUCCESS = "Undo successful!";
 	public static final String TANGGUO_EXIT = "See you again!";
 	
@@ -41,7 +46,8 @@ public class Constants {
 	
 	
 	public enum COMMAND_TYPE {
-		ADD, ADD_DEADLINE, ADD_SCHEDULE, ADD_TASK, DISPLAY, DELETE, UNDO, EXIT, INVALID, UPDATE_NAME, EXCEPTION
+		ADD, ADD_DEADLINE, ADD_SCHEDULE, ADD_TASK, DISPLAY, DELETE, UNDO, EXIT, INVALID, UPDATE_NAME, 
+		UPDATE_START, UPDATE_END, DONE, UPDATE_PRIORITY, EXCEPTION
 	};
 
 }
