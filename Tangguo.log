@@ -12,6 +12,44 @@
 2015/10/14 12:01:10 Log: delete schedule: test Schedule from 11/11/2015 11:11 to 11/11/2015 12:12
 2015/10/14 12:01:10 Log: delete deadline: test Deadline by 11/11/2015 11:11
 2015/10/14 12:01:10 Log: delete Task: test Float
+2015/10/16 14:22:50 exception occurs: java.text.ParseException: Unparseable date: "10/10/2015 15L09"
+2015/10/16 14:26:26 Log: add deadline: testdatevalidation by 10/10/2015 15:09
+2015/10/16 14:27:00 exception occurs: java.text.ParseException: Unparseable date: "32/10/2015 09:00"
+2015/10/16 14:33:42 exception occurs: java.text.ParseException: Unparseable date: "32/10/2015 15:09"
+2015/10/16 14:33:59 Log: add deadline: datevalidationconfirmation by 29/10/2015 15:09
+2015/10/16 14:34:29 exception occurs: java.text.ParseException: Unparseable date: "29/02/2015 15:09"
+2015/10/16 14:36:55 exception occurs: java.text.ParseException: Unparseable date: "task 29/02/1502 15:09"
+2015/10/16 14:37:39 exception occurs: java.text.ParseException: Unparseable date: "testvalidationschedule from 32/10/2015 15:09 to 10/10/2015 15:09"
+2015/10/16 14:38:00 exception occurs: java.text.ParseException: Unparseable date: "testvalidationschedule from 10/10/2015 15:09 to 32/10/2015 15:09"
+2015/10/16 14:38:20 exception occurs: java.text.ParseException: Unparseable date: "testvalidationschedule from 10/10/2015 15:09 to 10/10/2015 15:09"
+2015/10/16 14:38:44 exception occurs: java.text.ParseException: Unparseable date: "task hi"
+2015/10/16 14:40:10 exception occurs: java.text.ParseException: Unparseable date: "schedultest from 10/10/2015 15:09 to 15/10/2015 15:09"
+2015/10/16 14:42:00 Log: add deadline: schedultesting by 15/10/2015 15:09
+2015/10/16 14:43:04 exception occurs: java.text.ParseException: Unparseable date: "scheduletest from 10/10/2015 15:09 to 10/10/2015 15:09"
+2015/10/16 14:58:35 Log: add schedule: scheduletestvalidation from 10/10/2015 15:09 to 10/10/2015 15:09
+2015/10/16 14:59:02 exception occurs: java.text.ParseException: Unparseable date: "32/10/2015 15:09 "
+2015/10/16 15:01:01 exception occurs: java.lang.ArrayIndexOutOfBoundsException: 1
+2015/10/16 15:14:27 exception occurs: java.lang.ArrayIndexOutOfBoundsException: 1
+2015/10/16 15:16:10 exception occurs: java.lang.ArrayIndexOutOfBoundsException: 1
+2015/10/16 15:20:06 Log: addTask: test by the beach
+2015/10/16 15:20:19 exception occurs: java.text.ParseException: Unparseable date: "32/10/2015 15:09"
+2015/10/16 15:20:30 exception occurs: java.text.ParseException: Unparseable date: "10/10/2015 24:01"
+2015/10/16 15:20:40 exception occurs: java.text.ParseException: Unparseable date: "10/10/2015 23:60"
+2015/10/16 15:22:33 Log: add schedule: test from 10/10/2015 23:29 to 10/10/2015 23:09
+2015/10/16 15:22:57 exception occurs: java.text.ParseException: Unparseable date: "110/20/2015 23:59 "
+2015/10/16 15:33:28 Log: addTask: test from 1242r23235
+2015/10/16 15:34:22 Log: addTask: test Float
+2015/10/16 15:34:22 Log: add deadline: test Deadline by 11/11/2015 11:11
+2015/10/16 15:34:22 Log: add schedule: test Schedule from 11/11/2015 11:11 to 11/11/2015 12:12
+2015/10/16 15:34:22 Log: delete Task: updated test Float
+2015/10/16 15:34:22 Log: delete deadline: updated test Deadline
+2015/10/16 15:34:22 Log: delete schedule: updated test Schedule
+2015/10/16 15:34:22 Log: add schedule: updated test Schedule
+2015/10/16 15:34:22 Log: add deadline: updated test Deadline
+2015/10/16 15:34:22 Log: addTask: updated test Float
+2015/10/16 15:34:22 Log: delete schedule: test Schedule from 11/11/2015 11:11 to 11/11/2015 12:12
+2015/10/16 15:34:22 Log: delete deadline: test Deadline by 11/11/2015 11:11
+2015/10/16 15:34:22 Log: delete Task: test Float
 2015/10/18 20:22:07 Log: addTask: test Float
 2015/10/18 20:22:08 Log: add deadline: test Deadline by 11/11/2015 11:11
 2015/10/18 20:22:08 Log: add schedule: test Schedule from 11/11/2015 11:11 to 11/11/2015 12:12
@@ -56,3 +94,10 @@
 2015/10/19 01:01:50 Log: add deadline: try deadline 
 2015/10/19 01:06:02 Log: delete deadline: test test by 19/10/2015 00:00
 2015/10/19 01:18:39 Log: addTask: balls balls balls
+2015/10/19 01:39:12 Log: addTask: this is how it goes
+2015/10/19 01:39:40 Log: add deadline: can i sleep now when when when 
+2015/10/19 01:42:39 Log: add deadline: eat SEAWEED SHAKER FRIES bythe bay by
+2015/10/19 01:43:24 Log: delete deadline: eat SEAWEED SHAKER FRIES bythe bay by
+2015/10/19 01:50:27 exception occurs: java.text.ParseException: Unparseable date: "2015/10/16 14:22:50 exception occurs: java.text.ParseException: Unparseable date: "10/10/2015 15L09""
+2015/10/19 01:50:58 Log: add deadline: dumd um 
+2015/10/19 01:51:09 Log: delete deadline: dumd um 

@@ -24,37 +24,47 @@ public class Parser {
 		String displayedIndex;
 		tempCommand.setType(commandType);
 		tempCommand.setIsUserCommand(true);
+		format.setLenient(false); //This allows DateFormat to prevent date overflow
+		
 		switch (commandType) {
 			case ADD:				
 				String[] array = event.split("by ");			
 				try {	//deadline
-					endDate = dateConverter(array[array.length-1]);
-					
-					StringBuilder deadlineName = new StringBuilder();
-					for (int i = 0; i < array.length-1; i++){
-						deadlineName.append(array[i]);
-					}
-					
-					tempCommand.setEventEnd(endDate);
-					tempCommand.setEventName(deadlineName.toString());
-					tempCommand.setType(Constants.COMMAND_TYPE.ADD_DEADLINE);
-				} catch (ParseException e){
-					try {	//schedule
-						String[] array1 = event.split("from ");
-						String[] array2 = array1[array1.length - 1].split("to ");
-						endDate = dateConverter(array2[1]);
-						startDate = dateConverter(array2[0]);
+					if(isNumber(array[array.length - 1])) {
+						endDate = dateConverter(array[array.length - 1]);
 						
-						StringBuilder scheduleName = new StringBuilder();
-						for (int i = 0; i < array1.length-1; i++){
-							scheduleName.append(array1[i]);
+						StringBuilder deadlineName = new StringBuilder();
+						for (int i = 0; i < array.length-1; i++){
+							deadlineName.append(array[i]);
 						}
 						
-						tempCommand.setEventStart(startDate);
 						tempCommand.setEventEnd(endDate);
-						tempCommand.setEventName(scheduleName.toString());
-						tempCommand.setType(Constants.COMMAND_TYPE.ADD_SCHEDULE);
-					} catch (Exception f){	//ParseException and IndexOutOfBoundsException
+						tempCommand.setEventName(deadlineName.toString());
+						tempCommand.setType(Constants.COMMAND_TYPE.ADD_DEADLINE);
+						break;
+					}
+				} catch (NumberFormatException | ArrayIndexOutOfBoundsException e){
+					String[] array1 = event.split("from ");
+					String[] array2 = array1[array1.length - 1].split("to ");
+					
+					try {	//schedule
+						if(isNumber(array2[1]) && isNumber(array2[0])) {
+							endDate = dateConverter(array2[1]);
+							startDate = dateConverter(array2[0]);
+							
+							StringBuilder scheduleName = new StringBuilder();
+							for (int i = 0; i < array1.length-1; i++){
+								scheduleName.append(array1[i]);
+							}
+							
+							tempCommand.setEventStart(startDate);
+							tempCommand.setEventEnd(endDate);
+							tempCommand.setEventName(scheduleName.toString());
+							tempCommand.setType(Constants.COMMAND_TYPE.ADD_SCHEDULE);
+							break;
+						}
+						
+					} catch (NumberFormatException | ArrayIndexOutOfBoundsException f){
 						tempCommand.setEventName(event);
 						tempCommand.setType(Constants.COMMAND_TYPE.ADD_TASK);	//task
 					}								
@@ -148,5 +158,38 @@ public class Parser {
 	private static Date dateConverter(String dateString) throws ParseException{ 
 		Date date = format.parse(dateString);
 		return date;
+	}
+	
+	/**
+	 * Checks whether if the time and date are integers.
+	 * This method is the first check as to whether they are in the default format  
+	 * @param num
+	 * @return
+	 * @throws NumberFormatException
+	 * @throws ArrayIndexOutOfBoundsException
+	 */
+	@SuppressWarnings("unused")
+	private static boolean isNumber(String timeAndDate) throws NumberFormatException, ArrayIndexOutOfBoundsException {
+		
+		String[] timeAndDateSplit = timeAndDate.split(" ");
+		String[] dayMonthYearSplit = timeAndDateSplit[0].split("/");
+		String[] hourMinuteSplit = timeAndDateSplit[1].split(":");
+		
+		String day = dayMonthYearSplit[0];
+		int dayInteger = Integer.parseInt(day);
+		
+		String month = dayMonthYearSplit[1];
+		int monthInteger = Integer.parseInt(month);
+		
+		String year = dayMonthYearSplit[2];
+		int yearInteger = Integer.parseInt(year);
+		
+		String hour = hourMinuteSplit[0];
+		int hourInteger = Integer.parseInt(hour);
+		
+		String minute = hourMinuteSplit[1];
+		int minuteInteger = Integer.parseInt(minute);
+
+		return true;
 	}
 }

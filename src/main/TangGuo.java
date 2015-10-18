@@ -78,6 +78,9 @@ public class TangGuo {
 			currentCommand = Parser.parseCommand(input);
 		} catch (ParseException e) {
 			logger.writeException(e.toString());
+			return Constants.TANGGUO_DATE_OUT_OF_BOUNDS;
+		} catch (NumberFormatException e) {
+			logger.writeException(e.toString());
 			return Constants.TANGGUO_INVALID_DATE;
 		} catch (IndexOutOfBoundsException e){
 			logger.writeException(e.toString());
