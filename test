@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><calendar current="54">
+<?xml version="1.0" encoding="UTF-8"?><calendar current="55">
   <task id="19">
     <name>shag</name>
     <category>DEFAULT</category>
@@ -46,6 +46,11 @@
   </task>
   <task id="52">
     <name>test from 11/10/2015 15:09 to 10/10/2015 15:09</name>
+    <category>DEFAULT</category>
+    <priority>-1</priority>
+  </task>
+  <task id="54">
+    <name>yo</name>
     <category>DEFAULT</category>
     <priority>-1</priority>
   </task>
