@@ -33,7 +33,7 @@ public class Test_Commands {
 	public static final String COMMAND_DISPLAY = "display";
 
 	public void intializeHashMap(){
-		tg.executeinputs(COMMAND_DISPLAY);
+		tg.executeInputs(COMMAND_DISPLAY);
 	}
 
 	String floatTaskNameA = "test Float";
@@ -41,7 +41,7 @@ public class Test_Commands {
 	public void AtestAddFloating() {
 		intializeHashMap();
 		
-		String actual = tg.executeinputs(COMMAND_ADD+floatTaskNameA);
+		String actual = tg.executeInputs(COMMAND_ADD+floatTaskNameA);
 		String expected = String.format(Constants.TANGGUO_ADD_SUCCESS, testFileName, floatTaskNameA);
 		assertEquals(expected, actual);
 	}
@@ -49,7 +49,7 @@ public class Test_Commands {
 	String deadlineTaskNameA = "test Deadline by 11/11/2015 11:11";
 	@Test
 	public void BtestAddDeadline() {
-		String actual = tg.executeinputs(COMMAND_ADD+deadlineTaskNameA);
+		String actual = tg.executeInputs(COMMAND_ADD+deadlineTaskNameA);
 		String expected = String.format(Constants.TANGGUO_ADD_SUCCESS, testFileName, deadlineTaskNameA);
 		assertEquals(expected, actual);
 	}
@@ -57,14 +57,14 @@ public class Test_Commands {
 	String scheduleTaskNameA = "test Schedule from 11/11/2015 11:11 to 11/11/2015 12:12";
 	@Test
 	public void CtestAddSchedule() {
-		String actual = tg.executeinputs(COMMAND_ADD+scheduleTaskNameA);
+		String actual = tg.executeInputs(COMMAND_ADD+scheduleTaskNameA);
 		String expected = String.format(Constants.TANGGUO_ADD_SUCCESS, testFileName, scheduleTaskNameA);
 		assertEquals(expected, actual);
 	}
 	
 	@Test
 	public void DtestAddedTaskTypesCorrectly(){
-		String actual = tg.executeinputs(COMMAND_DISPLAY);
+		String actual = tg.executeInputs(COMMAND_DISPLAY);
 		String expected = "Tasks:\n1. "+floatTaskNameA+"\nDeadlines:\n1. "+deadlineTaskNameA
 				+"\nSchedules:\n1. "+scheduleTaskNameA+"\n";
 		assertEquals(expected, actual);
@@ -76,21 +76,21 @@ public class Test_Commands {
 	@Test
 	public void EtestUpdateName(){
 		//test float
-		String actual = tg.executeinputs(COMMAND_UPDATE_NAME + "t1 "+ floatTaskNameB);
+		String actual = tg.executeInputs(COMMAND_UPDATE_NAME + "t1 "+ floatTaskNameB);
 		String expected = String.format(Constants.TANGGUO_UPDATE_NAME_SUCCESS, floatTaskNameA, floatTaskNameB) +
 				"\nTasks:\n1. "+floatTaskNameB+"\nDeadlines:\n1. "+deadlineTaskNameA
 				+"\nSchedules:\n1. "+scheduleTaskNameA+"\n";
 		assertEquals(expected, actual);
 		
 		//test deadline
-		actual = tg.executeinputs(COMMAND_UPDATE_NAME + "d1 " + deadlineTaskNameB);
+		actual = tg.executeInputs(COMMAND_UPDATE_NAME + "d1 " + deadlineTaskNameB);
 		expected = String.format(Constants.TANGGUO_UPDATE_NAME_SUCCESS, deadlineTaskNameA, deadlineTaskNameB) +
 				"\nTasks:\n1. "+floatTaskNameB+"\nDeadlines:\n1. "+deadlineTaskNameB
 				+"\nSchedules:\n1. "+scheduleTaskNameA+"\n";
 		assertEquals(expected, actual);
 		
 		//test schedule
-		actual = tg.executeinputs(COMMAND_UPDATE_NAME + "s1 " + scheduleTaskNameB);
+		actual = tg.executeInputs(COMMAND_UPDATE_NAME + "s1 " + scheduleTaskNameB);
 		expected = String.format(Constants.TANGGUO_UPDATE_NAME_SUCCESS, scheduleTaskNameA, scheduleTaskNameB) +
 				"\nTasks:\n1. "+floatTaskNameB+"\nDeadlines:\n1. "+deadlineTaskNameB
 				+"\nSchedules:\n1. "+scheduleTaskNameB+"\n";
@@ -100,19 +100,19 @@ public class Test_Commands {
 	@Test
 	public void FtestDelete(){
 		//test float
-		String actual = tg.executeinputs(COMMAND_DELETE + "t1");
+		String actual = tg.executeInputs(COMMAND_DELETE + "t1");
 		String expected = String.format(Constants.TANGGUO_DELETE_SUCCESS, testFileName, floatTaskNameB) +
 				"\nTasks:"+"\nDeadlines:\n1. "+deadlineTaskNameB +"\nSchedules:\n1. "+scheduleTaskNameB+"\n";
 		assertEquals(expected, actual);
 		
 		//test deadline
-		actual = tg.executeinputs(COMMAND_DELETE + "d1");
+		actual = tg.executeInputs(COMMAND_DELETE + "d1");
 		expected = String.format(Constants.TANGGUO_DELETE_SUCCESS, testFileName, deadlineTaskNameB) +
 				"\nTasks:"+"\nDeadlines:"+"\nSchedules:\n1. "+scheduleTaskNameB+"\n";
 		assertEquals(expected, actual);
 		
 		//test schedule
-		actual = tg.executeinputs(COMMAND_DELETE + "s1");
+		actual = tg.executeInputs(COMMAND_DELETE + "s1");
 		expected = String.format(Constants.TANGGUO_DELETE_SUCCESS, testFileName, scheduleTaskNameB) +
 				"\n" + String.format(Constants.TANGGUO_EMPTY_FILE, testFileName);
 		assertEquals(expected, actual);
@@ -120,17 +120,17 @@ public class Test_Commands {
 	
 	@Test
 	public void GtestUndoDelete(){
-		String actual = tg.executeinputs(COMMAND_UNDO) + tg.executeinputs(COMMAND_DISPLAY);
+		String actual = tg.executeInputs(COMMAND_UNDO) + tg.executeInputs(COMMAND_DISPLAY);
 		String expected = Constants.TANGGUO_UNDO_SUCCESS + "Tasks:"+"\nDeadlines:"+"\nSchedules:\n1. "
 				+scheduleTaskNameB+"\n";
 		assertEquals(expected, actual);
 
-		actual = tg.executeinputs(COMMAND_UNDO) + tg.executeinputs(COMMAND_DISPLAY);
+		actual = tg.executeInputs(COMMAND_UNDO) + tg.executeInputs(COMMAND_DISPLAY);
 		expected = Constants.TANGGUO_UNDO_SUCCESS + "Tasks:"+"\nDeadlines:\n1. "+deadlineTaskNameB +
 				"\nSchedules:\n1. "+scheduleTaskNameB+"\n";
 		assertEquals(expected, actual);
 		
-		actual = tg.executeinputs(COMMAND_UNDO) + tg.executeinputs(COMMAND_DISPLAY);
+		actual = tg.executeInputs(COMMAND_UNDO) + tg.executeInputs(COMMAND_DISPLAY);
 		expected = Constants.TANGGUO_UNDO_SUCCESS + "Tasks:\n1. "+floatTaskNameB+"\nDeadlines:\n1. "+
 				deadlineTaskNameB+"\nSchedules:\n1. "+scheduleTaskNameB+"\n";
 		assertEquals(expected, actual);
@@ -138,17 +138,17 @@ public class Test_Commands {
 	
 	@Test
 	public void HtestUndoUpdateName(){
-		String actual = tg.executeinputs(COMMAND_UNDO) + tg.executeinputs(COMMAND_DISPLAY);
+		String actual = tg.executeInputs(COMMAND_UNDO) + tg.executeInputs(COMMAND_DISPLAY);
 		String expected = Constants.TANGGUO_UNDO_SUCCESS + "Tasks:\n1. "+floatTaskNameB+"\nDeadlines:\n1. "+
 				deadlineTaskNameB+"\nSchedules:\n1. "+scheduleTaskNameA+"\n";
 		assertEquals(expected, actual);
 		
-		actual = tg.executeinputs(COMMAND_UNDO) + tg.executeinputs(COMMAND_DISPLAY);
+		actual = tg.executeInputs(COMMAND_UNDO) + tg.executeInputs(COMMAND_DISPLAY);
 		expected = Constants.TANGGUO_UNDO_SUCCESS + "Tasks:\n1. "+floatTaskNameB+"\nDeadlines:\n1. "+
 				deadlineTaskNameA+"\nSchedules:\n1. "+scheduleTaskNameA+"\n";
 		assertEquals(expected, actual);
 		
-		actual = tg.executeinputs(COMMAND_UNDO) + tg.executeinputs(COMMAND_DISPLAY);
+		actual = tg.executeInputs(COMMAND_UNDO) + tg.executeInputs(COMMAND_DISPLAY);
 		expected = Constants.TANGGUO_UNDO_SUCCESS + "Tasks:\n1. "+floatTaskNameA+"\nDeadlines:\n1. "+
 				deadlineTaskNameA+"\nSchedules:\n1. "+scheduleTaskNameA+"\n";
 		assertEquals(expected, actual);
@@ -156,16 +156,16 @@ public class Test_Commands {
 	
 	@Test
 	public void ItestUndoAdd(){
-		String actual = tg.executeinputs(COMMAND_UNDO) + tg.executeinputs(COMMAND_DISPLAY);
+		String actual = tg.executeInputs(COMMAND_UNDO) + tg.executeInputs(COMMAND_DISPLAY);
 		String expected = Constants.TANGGUO_UNDO_SUCCESS + "Tasks:\n1. "+floatTaskNameA+"\nDeadlines:\n1. "+
 				deadlineTaskNameA+"\nSchedules:\n";
 		assertEquals(expected, actual);
 		
-		actual = tg.executeinputs(COMMAND_UNDO) + tg.executeinputs(COMMAND_DISPLAY);
+		actual = tg.executeInputs(COMMAND_UNDO) + tg.executeInputs(COMMAND_DISPLAY);
 		expected = Constants.TANGGUO_UNDO_SUCCESS + "Tasks:\n1. "+floatTaskNameA+"\nDeadlines:"+"\nSchedules:\n";
 		assertEquals(expected, actual);
 		
-		actual = tg.executeinputs(COMMAND_UNDO) + tg.executeinputs(COMMAND_DISPLAY);
+		actual = tg.executeInputs(COMMAND_UNDO) + tg.executeInputs(COMMAND_DISPLAY);
 		expected = Constants.TANGGUO_UNDO_SUCCESS + String.format(Constants.TANGGUO_EMPTY_FILE, testFileName);
 		assertEquals(expected, actual);		
 	}

@@ -39,7 +39,7 @@ public class TangGuo {
 	public static void main(String[] args) throws IOException, ParseException {
 		TangGuo tg = new TangGuo(args[0]);
 		showToUser(String.format(Constants.TANGGUO_START, fileName));
-		showToUser(tg.executeinputs("display"));
+		showToUser(tg.executeInputs("display"));
 		
 		while (true) {
 			tg.runUserInput();
@@ -53,7 +53,7 @@ public class TangGuo {
 	private void runUserInput(){
 		requestInput();
 		String input = scanner.nextLine();
-		String output = executeinputs(input);
+		String output = executeInputs(input);
 		showToUser(output);
 	}
 	
@@ -72,7 +72,7 @@ public class TangGuo {
 	 * @param input
 	 * @return result indicating success/failure of command
 	 */
-	public String executeinputs(String input) {
+	public String executeInputs(String input) {
 		Command currentCommand;
 		try {
 			currentCommand = Parser.parseCommand(input);
