@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><calendar current="52">
+<?xml version="1.0" encoding="UTF-8"?><calendar current="54">
   <task id="19">
     <name>shag</name>
     <category>DEFAULT</category>
@@ -41,6 +41,11 @@
   </task>
   <task id="51">
     <name>test from 1242r23235</name>
+    <category>DEFAULT</category>
+    <priority>-1</priority>
+  </task>
+  <task id="52">
+    <name>test from 11/10/2015 15:09 to 10/10/2015 15:09</name>
     <category>DEFAULT</category>
     <priority>-1</priority>
   </task>
@@ -105,6 +110,13 @@
     <name>test from 10/10/2015 23:29 to 10/10/2015 23:09</name>
     <startDate>10/10/2015 23:29</startDate>
     <endDate>10/10/2015 23:09</endDate>
+    <category>DEFAULT</category>
+    <priority>-1</priority>
+  </schedule>
+  <schedule id="53">
+    <name>schedule </name>
+    <startDate>11/10/2015 15:09</startDate>
+    <endDate>12/10/2015 15:09</endDate>
     <category>DEFAULT</category>
     <priority>-1</priority>
   </schedule>

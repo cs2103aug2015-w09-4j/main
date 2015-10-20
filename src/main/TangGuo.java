@@ -85,6 +85,9 @@ public class TangGuo {
 		} catch (IndexOutOfBoundsException e){
 			logger.writeException(e.toString());
 			return Constants.TANGGUO_INVALID_COMMAND;
+		} catch (AbnormalScheduleTimeException e) {
+			logger.writeException(e.toString());
+			return Constants.TANGGUO_INVALID_SCHEDULE;
 		}
 		return executeProcessedCommand(currentCommand);
 	}

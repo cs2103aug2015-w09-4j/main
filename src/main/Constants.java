@@ -42,6 +42,7 @@ public class Constants {
 	public static final String TANGGUO_OUT_BOUNDS = "The index you entered is invalid, try again";
 	public static final String TANGGUO_INVALID_INDEX = "The task index you entered seems to be invalid, try again";
 	public static final String TANGGUO_INVALID_DATE = "The date format you entered seems to be invalid, try again";
+	public static final String TANGGUO_INVALID_SCHEDULE = "The start time you entered seem to be later than your end time, try again";
 	public static final String TANGGUO_INVALID_COMMAND = "The command you entered seems to be invalid, try another command";
 	public static final String TANGGUO_DATE_OUT_OF_BOUNDS = "The date or time you have entered is in the wrong format, try again";
 	

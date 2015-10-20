@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?><calendar current="8">
+  <task id="4">
+    <name>test Float</name>
+    <category>DEFAULT</category>
+    <priority>-1</priority>
+  </task>
+  <task id="0">
+    <name>updated test Float</name>
+    <category>DEFAULT</category>
+    <priority>-1</priority>
+  </task>
+  <deadline id="1">
+    <name>test Deadline </name>
+    <endDate>11/11/2015 11:11</endDate>
+    <category>DEFAULT</category>
+    <priority>-1</priority>
+  </deadline>
+  <deadline id="5">
+    <name>test Deadline </name>
+    <endDate>11/11/2015 11:11</endDate>
+    <category>DEFAULT</category>
+    <priority>-1</priority>
+  </deadline>
+</calendar>

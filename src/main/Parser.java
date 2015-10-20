@@ -15,7 +15,7 @@ import jdk.nashorn.internal.codegen.CompilerConstants;
 public class Parser {
 	private static DateFormat format = new SimpleDateFormat(Constants.DEFAULT_DATE_FORMAT);
 	
-	static public Command parseCommand(String input) throws ParseException, IndexOutOfBoundsException{
+	static public Command parseCommand(String input) throws ParseException, IndexOutOfBoundsException, AbnormalScheduleTimeException{
 		Command tempCommand = new Command();
 		String command = getFirstWord(input);
 		Constants.COMMAND_TYPE commandType = findCommandType(command);
@@ -48,7 +48,7 @@ public class Parser {
 					String[] array2 = array1[array1.length - 1].split("to ");
 					
 					try {	//schedule
-						if(isNumber(array2[1]) && isNumber(array2[0])) {
+						if(isNumber(array2[1]) && isNumber(array2[0]) && startAndEndTimeValidation(array2[0], array2[1])) {
 							endDate = dateConverter(array2[1]);
 							startDate = dateConverter(array2[0]);
 							
@@ -190,6 +190,14 @@ public class Parser {
 		String minute = hourMinuteSplit[1];
 		int minuteInteger = Integer.parseInt(minute);
 
+		return true;
+	}
+	public static boolean startAndEndTimeValidation(String start, String end) throws AbnormalScheduleTimeException {
+		
+		if(start.compareTo(end) >= 0) {
+			throw new AbnormalScheduleTimeException();
+		}
+		
 		return true;
 	}
 }
