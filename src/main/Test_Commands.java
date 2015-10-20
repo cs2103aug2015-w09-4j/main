@@ -73,6 +73,7 @@ public class Test_Commands {
 	String floatTaskNameB = "updated test Float";
 	String deadlineTaskNameB = "updated test Deadline";
 	String scheduleTaskNameB = "updated test Schedule";
+	//test use case of updating tasks' names
 	@Test
 	public void EtestUpdateName(){
 		//test float
