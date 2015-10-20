@@ -335,6 +335,12 @@ public class TGStorageManager {
 		//System.out.println("not found");
 	}
 	
+	public void clear(){
+		_scheduleCache.clear();
+		_deadlineCache.clear();
+		_taskCache.clear();
+		updateStorage();
+	}
 	private void initialize() {
 		try {
 			File inputFile = new File(_fileDirectory);

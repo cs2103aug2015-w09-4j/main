@@ -115,3 +115,23 @@
 2015/10/20 21:43:49 Log: addTask: yo
 2015/10/20 21:44:03 Log: addTask: ayam a test
 2015/10/20 21:44:24 Log: add deadline: ekdedk 
+2015/10/20 23:47:15 Log: addTask: hello
+2015/10/20 23:57:23 Log: addTask: hello
+2015/10/20 23:57:23 Log: addTask: hello
+2015/10/20 23:57:23 Log: addTask: hello
+2015/10/20 23:59:28 Log: addTask: hello
+2015/10/20 23:59:28 Log: addTask: hello
+2015/10/20 23:59:28 Log: addTask: hello
+2015/10/20 23:59:28 Log: delete Task: hello
+2015/10/20 23:59:59 Log: addTask: hello
+2015/10/20 23:59:59 Log: addTask: hello
+2015/10/20 23:59:59 Log: addTask: hello
+2015/10/20 23:59:59 Log: delete Task: hello
+2015/10/21 00:00:14 Log: addTask: hello
+2015/10/21 00:00:14 Log: addTask: hello
+2015/10/21 00:00:14 Log: addTask: hello
+2015/10/21 00:00:14 Log: delete Task: hello
+2015/10/21 00:00:48 Log: addTask: hello
+2015/10/21 00:00:48 Log: addTask: hello
+2015/10/21 00:00:48 Log: addTask: hello
+2015/10/21 00:00:48 Log: delete Task: hello
