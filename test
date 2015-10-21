@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><calendar current="55">
+<?xml version="1.0" encoding="UTF-8"?><calendar current="58">
   <task id="19">
     <name>shag</name>
     <category>DEFAULT</category>
@@ -54,6 +54,11 @@
     <category>DEFAULT</category>
     <priority>-1</priority>
   </task>
+  <task id="56">
+    <name>jim</name>
+    <category>DEFAULT</category>
+    <priority>-1</priority>
+  </task>
   <deadline id="23">
     <name>this is NOT a drill, I repeat, this is NOT a drill</name>
     <endDate>02/03/1993 16:09</endDate>
@@ -90,6 +95,12 @@
     <category>DEFAULT</category>
     <priority>-1</priority>
   </deadline>
+  <deadline id="57">
+    <name>ayamleapyeardeadlinetest </name>
+    <endDate>29/10/2015 23:09</endDate>
+    <category>DEFAULT</category>
+    <priority>-1</priority>
+  </deadline>
   <schedule id="28">
     <name>null from 10/10/2012 09:00 to 10/10/2015 09:00</name>
     <startDate>10/10/2012 09:00</startDate>
@@ -122,6 +133,13 @@
     <name>schedule </name>
     <startDate>11/10/2015 15:09</startDate>
     <endDate>12/10/2015 15:09</endDate>
+    <category>DEFAULT</category>
+    <priority>-1</priority>
+  </schedule>
+  <schedule id="55">
+    <name>test </name>
+    <startDate>10/10/2015 15:09</startDate>
+    <endDate>11/10/2015 15:09</endDate>
     <category>DEFAULT</category>
     <priority>-1</priority>
   </schedule>

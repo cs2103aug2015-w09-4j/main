@@ -1,1 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?><calendar current="19"/>
+<?xml version="1.0" encoding="UTF-8"?><calendar current="20">
+  <deadline id="19">
+    <name>ayamleapyeardeadlinetest </name>
+    <endDate>29/10/2015 23:09</endDate>
+    <category>DEFAULT</category>
+    <priority>-1</priority>
+  </deadline>
+</calendar>

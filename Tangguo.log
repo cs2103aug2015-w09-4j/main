@@ -139,3 +139,12 @@
 2015/10/21 00:07:02 Log: addTask: hello
 2015/10/21 00:07:02 Log: addTask: hello
 2015/10/21 00:07:02 Log: delete Task: hello
+2015/10/21 08:39:33 Log: add schedule: test 
+2015/10/21 08:39:57 Log: addTask: jim
+2015/10/21 08:42:07 exception occurs: java.text.ParseException: Unparseable date: "31/10/2015 24:09"
+2015/10/21 08:42:07 Log: add deadline: ayamleapyeardeadlinetest 
+2015/10/21 08:42:07 exception occurs: java.text.ParseException: Unparseable date: "32/10/2015 15:09"
+2015/10/21 08:43:41 Log: add deadline: ayamleapyeardeadlinetest 
+2015/10/21 08:44:40 exception occurs: java.text.ParseException: Unparseable date: "31/10/2015 24:09"
+2015/10/21 08:44:40 exception occurs: java.text.ParseException: Unparseable date: "29/02/2015 23:09"
+2015/10/21 08:44:40 exception occurs: java.text.ParseException: Unparseable date: "32/10/2015 15:09"

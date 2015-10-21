@@ -25,7 +25,7 @@ public class ExceptionsHandlingTest {
 	@Test
 	public void leapYearTest() throws Exception {
 		TangGuo tg = new TangGuo("testFile");
-		assertEquals(tg.executeInputs("add ayamleapyeardeadlinetest by 29/10/2015 23:09"), Constants.TANGGUO_DATE_OUT_OF_BOUNDS);
+		assertEquals(tg.executeInputs("add ayamleapyeardeadlinetest by 29/02/2015 23:09"), Constants.TANGGUO_DATE_OUT_OF_BOUNDS);
 	}
 
 }
