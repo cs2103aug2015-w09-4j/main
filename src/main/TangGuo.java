@@ -237,15 +237,7 @@ public class TangGuo {
 			TGIDMap.put(header+(i+1), cache.get(i).getID());
 			printOut = printOut + (i+1) + ". ";
 			
-			//not sure if this is the right way to do it but print out the start
-			if (cache.get(i).getStart() != null){
-				printOut += "{" +cache.get(i).getStart().toString()+
-						", "+cache.get(i).getEnd().toString()+"} ";
-			} else if (cache.get(i).getEnd() != null){
-				printOut += "{"+cache.get(i).getEnd().toString()+"} ";
-			}	
-			printOut += cache.get(i).getName() + "\n";
-			////////////////////////////////////////////////////////////////////
+			printOut += cache.get(i).toString();
 		}
 		return printOut;
 	}

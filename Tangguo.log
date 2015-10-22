@@ -148,3 +148,6 @@
 2015/10/21 08:44:40 exception occurs: java.text.ParseException: Unparseable date: "31/10/2015 24:09"
 2015/10/21 08:44:40 exception occurs: java.text.ParseException: Unparseable date: "29/02/2015 23:09"
 2015/10/21 08:44:40 exception occurs: java.text.ParseException: Unparseable date: "32/10/2015 15:09"
+2015/10/22 18:35:28 exception occurs: main.AbnormalScheduleTimeException
+2015/10/22 18:35:53 Log: add schedule: schedule this 
+2015/10/22 18:54:09 Log: add deadline: next year 

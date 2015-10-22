@@ -1,4 +1,8 @@
 package main;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.Year;
+import java.util.Calendar;
 import java.util.Date;
 
 public class Event {
@@ -96,19 +100,39 @@ public class Event {
 		this.priority = priority;
 	}
 	
+	/**
+	 * returns for
+	 * schedule: "{start date, end date} eventName"
+	 * deadline: "{end date} eventName"
+	 *     task: "eventName"
+	 */
 	public String toString(){
-		switch (type){
-		case(Constants.TASK_TYPE_NUMBER):
-			return name + " priority:" + priority + "isDone:" + isDone;
-		case(Constants.DEADLINE_TYPE_NUMBER):
-			return name + " priority:" + priority + " end date:" + endDate.toString() + "isDone:" + isDone;
-		case(Constants.SCHEDULE_TYPE_NUMBER):
-			return name + " priority:" + priority + " start date:" + startDate.toString() + " end date:" + endDate.toString() + "isDone:" + isDone;
-		default:
-			assert false:"unhandled type number";
-			return this.toString();
-		
-		}
+		String string = "";
+		if (getStart() != null){
+			string += "{"+formatDate(getStart())+", "+formatDate(getEnd())+"} ";
+		} else if (getEnd() != null){
+			string += "{"+formatDate(getEnd())+"} ";
+		}	
+		string += getName() + "\n";
+		return string;
 	}
 	
+	/**
+	 * returns date in the form of "DAY MONTH DATE HOUR:MINUTE" in a 24-hour format
+	 * is returned in the form of "DAY YEAR MONTH DATE HOUR:MINUTE" if year is not
+	 * current year
+	 * @param date
+	 * @return
+	 */
+	private String formatDate(Date date){
+		Calendar now = Calendar.getInstance();   // Gets the current date and time
+		int currentYear = now.get(Calendar.YEAR);
+		int dateYear = Integer.parseInt(new SimpleDateFormat("yyyy").format(date));
+		
+		if (dateYear <= currentYear){
+			return new SimpleDateFormat("E MMM dd HH:mm").format(date);
+		} else {
+			return new SimpleDateFormat("E yyyy MMM dd HH:mm").format(date);
+		}		
+	}
 }

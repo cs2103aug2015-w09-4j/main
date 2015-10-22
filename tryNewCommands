@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><calendar current="11">
+<?xml version="1.0" encoding="UTF-8"?><calendar current="13">
   <task id="0">
     <name>school sucks</name>
     <category>DEFAULT</category>
@@ -32,6 +32,12 @@
     <category>DEFAULT</category>
     <priority>-1</priority>
   </deadline>
+  <deadline id="12">
+    <name>next year </name>
+    <endDate>11/11/2016 09:54</endDate>
+    <category>DEFAULT</category>
+    <priority>-1</priority>
+  </deadline>
   <schedule id="2">
     <name>how i would wish to sleep</name>
     <startDate>19/10/2015 08:00</startDate>
@@ -43,6 +49,13 @@
     <name>CAN SLEEP???</name>
     <startDate>19/10/2015 00:00</startDate>
     <endDate>19/10/2015 12:00</endDate>
+    <category>DEFAULT</category>
+    <priority>-1</priority>
+  </schedule>
+  <schedule id="11">
+    <name>schedule this </name>
+    <startDate>22/10/2015 13:45</startDate>
+    <endDate>23/10/2015 00:58</endDate>
     <category>DEFAULT</category>
     <priority>-1</priority>
   </schedule>
