@@ -151,3 +151,11 @@
 2015/10/22 18:35:28 exception occurs: main.AbnormalScheduleTimeException
 2015/10/22 18:35:53 Log: add schedule: schedule this 
 2015/10/22 18:54:09 Log: add deadline: next year 
+2015/10/22 19:21:01 Log: add deadline: let's try by by by now 
+2015/10/22 19:29:33 Log: add deadline: now let's by try wallaby bycicle
+2015/10/22 19:35:39 Log: add schedule: from now to then from 7 to 8
+2015/10/22 19:36:28 Log: add deadline: by the lullaby of byanca by mozarella
+2015/10/22 19:40:15 Log: addTask: by the lullaby of byanca by mozarella 2 by 08/08/2015
+2015/10/22 19:40:34 Log: delete Task: by the lullaby of byanca by mozarella 2 by 08/08/2015
+2015/10/22 19:40:52 Log: add deadline: by the lullaby of byanca by mozarella 2
+2015/10/22 19:41:26 Log: add schedule: from now to then from 7 to 8 SECOND ROUND

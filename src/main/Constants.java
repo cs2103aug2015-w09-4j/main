@@ -14,6 +14,12 @@ public class Constants {
 	public static final String DEFAULT_CATEGORY = "DEFAULT";
 	public static final int DEFAULT_PRIORITY = -1;
 	
+	/*
+	 * Parser Constants
+	 */
+	public static final String DEADLINE_SPLIT = " by ";
+	public static final String SCHEDULE_FIRST_SPLIT = " from ";
+	public static final String SCHEDULE_SECOND_SPLIT = " to ";
 	
 	/*
 	 * Tanguo Constants

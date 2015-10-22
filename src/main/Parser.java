@@ -15,7 +15,7 @@ import java.util.Date;
 public class Parser {
 	private static DateFormat format = new SimpleDateFormat(Constants.DEFAULT_DATE_FORMAT);
 	
-	static public Command parseCommand(String input) throws ParseException, IndexOutOfBoundsException, AbnormalScheduleTimeException{
+	public static Command parseCommand(String input) throws ParseException, IndexOutOfBoundsException, AbnormalScheduleTimeException{
 		Command tempCommand = new Command();
 		String command = getFirstWord(input);
 		Constants.COMMAND_TYPE commandType = findCommandType(command);
@@ -28,38 +28,28 @@ public class Parser {
 		
 		switch (commandType) {
 			case ADD:				
-				String[] array = event.split("by ");			
-				try {	//deadline
+				String[] array = event.split(Constants.DEADLINE_SPLIT);			
+				try {														//deadline
 					if(isNumber(array[array.length - 1])) {
 						endDate = dateConverter(array[array.length - 1]);
 						
-						StringBuilder deadlineName = new StringBuilder();
-						for (int i = 0; i < array.length-1; i++){
-							deadlineName.append(array[i]);
-						}
-						
 						tempCommand.setEventEnd(endDate);
-						tempCommand.setEventName(deadlineName.toString());
+						tempCommand.setEventName(getName(Constants.DEADLINE_SPLIT, array));
 						tempCommand.setType(Constants.COMMAND_TYPE.ADD_DEADLINE);
 						break;
 					}
 				} catch (NumberFormatException | ArrayIndexOutOfBoundsException e){
-					String[] array1 = event.split("from ");
-					String[] array2 = array1[array1.length - 1].split("to ");
+					String[] array1 = event.split(Constants.SCHEDULE_FIRST_SPLIT);
+					String[] array2 = array1[array1.length - 1].split(Constants.SCHEDULE_SECOND_SPLIT);
 					
-					try {	//schedule
+					try {													//schedule
 						if(isNumber(array2[1]) && isNumber(array2[0]) && startAndEndTimeValidation(array2[0], array2[1])) {
 							endDate = dateConverter(array2[1]);
 							startDate = dateConverter(array2[0]);
 							
-							StringBuilder scheduleName = new StringBuilder();
-							for (int i = 0; i < array1.length-1; i++){
-								scheduleName.append(array1[i]);
-							}
-							
 							tempCommand.setEventStart(startDate);
 							tempCommand.setEventEnd(endDate);
-							tempCommand.setEventName(scheduleName.toString());
+							tempCommand.setEventName(getName(Constants.SCHEDULE_FIRST_SPLIT, array1));
 							tempCommand.setType(Constants.COMMAND_TYPE.ADD_SCHEDULE);
 							break;
 						}
@@ -116,6 +106,18 @@ public class Parser {
 		} 
 		return tempCommand;
 	} 
+	
+	private static String getName(String splitSeq, String[] array){
+		StringBuilder name = new StringBuilder();
+		for (int i = 0; i < array.length-1; i++){
+			name.append(array[i]);
+			if (i != array.length-2){
+				name.append(splitSeq);
+			}
+		}
+		return name.toString();
+	}
+	
 	private static Constants.COMMAND_TYPE findCommandType(String commandTypeString) {
 		if (commandTypeString.equalsIgnoreCase("add")){
 			return Constants.COMMAND_TYPE.ADD;
