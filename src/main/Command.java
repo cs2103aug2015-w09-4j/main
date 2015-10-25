@@ -79,5 +79,4 @@ public class Command {
 	public void setType(Constants.COMMAND_TYPE type) {
 		this.type = type;
 	}
-	
 }

@@ -14,6 +14,7 @@ public class Constants {
 	public static final String DEFAULT_CATEGORY = "DEFAULT";
 	public static final int DEFAULT_PRIORITY = -1;
 	
+	
 	/*
 	 * Parser Constants
 	 */
@@ -33,8 +34,10 @@ public class Constants {
 	public static final String TANGGUO_DELETE_SUCCESS = "Deleted from %1$s: %2$s";
 	public static final String TANGGUO_UPDATE_NAME_SUCCESS = "%1$s updated to %2$s";
 	public static final String TANGGUO_UPDATE_START_SUCCESS = "Start date of %1$s updated to %2$s";
+	public static final String TANGGUO_UPDATE_START_FAIL = "Unable to update Start date, try again";
 	public static final String TANGGUO_UPDATE_END_SUCCESS = "End date of %1$s updated to %2$s";
-	public static final String TANGGUO_UPDATE_PRIORITY_SUCCESS = "Priority of %1$s updated to %d";	//print int?
+	public static final String TANGGUO_UPDATE_END_FAIL = "Unable to update End date, try again";
+	public static final String TANGGUO_UPDATE_PRIORITY_SUCCESS = "Priority of %1$s updated to %2$s";	//print int?
 	public static final String TANGGUO_UPDATE_DONE_SUCCESS = "%1$s completed";
 	
 	public static final String TANGGUO_UNDO_SUCCESS = "Undo successful!";
