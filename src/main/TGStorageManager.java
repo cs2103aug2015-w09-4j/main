@@ -224,58 +224,84 @@ public class TGStorageManager {
 		//System.out.println("not found");
 	}
 	//precon:id exists
-	public void updateStartByID(int id, Date startDate){
+	public boolean updateStartByID(int id, Date startDate){
 		for (Event element:_taskCache){
 			if (element.getID() == id){
-				element.setStart(startDate);
-				updateStorage();
-				return;
+				if (startDate.before(element.getEnd())) {
+					element.setStart(startDate);
+					updateStorage();
+					return true;
+				} else {
+					return false;
+				}
 			}
 		}
 		
 		for (Event element:_scheduleCache){
 			if (element.getID() == id){
-				element.setStart(startDate);
-				updateStorage();
-				return;
+				if (startDate.before(element.getEnd())) {
+					element.setStart(startDate);
+					updateStorage();
+					return true;
+				} else {
+					return false;
+				}
 			}
 		}
 		
 		for (Event element:_deadlineCache){
 			if (element.getID() == id){
-				element.setStart(startDate);
-				updateStorage();
-				return;
+				if (startDate.before(element.getEnd())) {
+					element.setStart(startDate);
+					updateStorage();
+					return true;
+				} else {
+					return false;
+				}
 			}
 		}
+		return false;
 		//System.out.println("not found");
 	}
 	
 	//precon:id exists
-	public void updateEndByID(int id, Date endDate){
+	public boolean updateEndByID(int id, Date endDate){
 		for (Event element:_taskCache){
 			if (element.getID() == id){
-				element.setEnd(endDate);
-				updateStorage();
-				return;
+				if (endDate.after(element.getStart())) {
+					element.setEnd(endDate);
+					updateStorage();
+					return true;
+				} else {
+					return false;
+				}
 			}
 		}
 		
 		for (Event element:_scheduleCache){
 			if (element.getID() == id){
-				element.setEnd(endDate);
-				updateStorage();
-				return;
+				if (endDate.after(element.getStart())) {
+					element.setEnd(endDate);
+					updateStorage();
+					return true;
+				} else {
+					return false;
+				}
 			}
 		}
 		
 		for (Event element:_deadlineCache){
 			if (element.getID() == id){
-				element.setEnd(endDate);
-				updateStorage();
-				return;
+				if (endDate.after(element.getStart())) {
+					element.setEnd(endDate);
+					updateStorage();
+					return true;
+				} else {
+					return false;
+				}
 			}
 		}
+		return false;
 		//System.out.println("not found");
 	}
 	
