@@ -86,6 +86,12 @@ public class Parser {
 				tempCommand.setDisplayedIndex(displayedIndex);
 				tempCommand.setEventPriority(updatedPriority);
 				break;
+			case UPDATE_CATEGORY:
+				displayedIndex = getFirstWord(event);
+				String updatedCategory = removeFirstWord(event);
+				tempCommand.setDisplayedIndex(displayedIndex);
+				tempCommand.setEventCategory(updatedCategory);
+				break;
 			case DELETE:
 				displayedIndex = getFirstWord(event);
 				tempCommand.setDisplayedIndex(displayedIndex);
@@ -95,6 +101,14 @@ public class Parser {
 			case DONE:
 				displayedIndex = getFirstWord(event);
 				tempCommand.setDisplayedIndex(displayedIndex);
+				break;
+			case SORT_NAME:
+				break;
+			case SORT_START:
+				break;
+			case SORT_END:
+				break;
+			case SORT_PRIORITY:
 				break;
 			case EXIT:
 				break;
@@ -135,10 +149,22 @@ public class Parser {
 			return Constants.COMMAND_TYPE.UPDATE_END;
 		} else if (commandTypeString.equalsIgnoreCase("update start")) {
 			return Constants.COMMAND_TYPE.UPDATE_START;
-		} else if (commandTypeString.equalsIgnoreCase("update priority")){
+		} else if (commandTypeString.equalsIgnoreCase("update priority")) {
 			return Constants.COMMAND_TYPE.UPDATE_PRIORITY;
+		} else if (commandTypeString.equalsIgnoreCase("update category")) {
+			return Constants.COMMAND_TYPE.UPDATE_CATEGORY;
 		} else if (commandTypeString.equalsIgnoreCase("done")){
 			return Constants.COMMAND_TYPE.DONE;
+		} else if (commandTypeString.equalsIgnoreCase("sort name")) {
+			return Constants.COMMAND_TYPE.SORT_NAME;
+		} else if (commandTypeString.equalsIgnoreCase("sort start")) {
+			return Constants.COMMAND_TYPE.SORT_START;
+		} else if (commandTypeString.equalsIgnoreCase("sort end")) {
+			return Constants.COMMAND_TYPE.SORT_END;
+		} else if (commandTypeString.equalsIgnoreCase("sort priority")) {
+			return Constants.COMMAND_TYPE.SORT_PRIORITY;
+		} else if (commandTypeString.equalsIgnoreCase("search")) {
+			return Constants.COMMAND_TYPE.SEARCH;
 		} else {
 			return Constants.COMMAND_TYPE.INVALID;
 		}
@@ -151,7 +177,7 @@ public class Parser {
 	static private String getFirstWord(String input) {
 		String inputString = input.trim().split("\\s+")[0];
 		
-		if(inputString.equals("update")) {
+		if(inputString.equals("update") || inputString.equals("sort")) {
 			inputString += " " + input.trim().split("\\s+")[1];
 		}	
 		return inputString;

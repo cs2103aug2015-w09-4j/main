@@ -115,12 +115,22 @@ public class TangGuo {
 				return updateEnd(command); 		
 			case UPDATE_PRIORITY:
 				return updatePriority(command); ///not done yet///
+			case UPDATE_CATEGORY:
+				return updateCategory(command);
 		//	case DONE:
 		//		return markAsDone(command);		///not done yet///
 			case DELETE:
 				return deleteEvent(command);
 			case UNDO:
-				return undo();				
+				return undo();
+			case SORT_NAME:
+				return sortName();
+			case SORT_START:
+				return sortStart();
+			case SORT_END:
+				return sortEnd();
+			case SORT_PRIORITY:
+				return sortPriority();
 			case EXIT:
 				showToUser(Constants.TANGGUO_EXIT);
 				System.exit(0);
@@ -408,6 +418,38 @@ public class TangGuo {
 		temp.setDisplayedIndex(displayedIndex);
 		return temp;
 	}
+	
+	private String updateCategory(Command command) {
+		String newCategory = command.getEventCategory();
+		String displayedIndex = command.getDisplayedIndex();
+		int taskID = -1;
+		
+		if (TGIDMap.containsKey(displayedIndex)){
+			taskID = TGIDMap.get(displayedIndex);
+		}else{
+			return Constants.TANGGUO_INVALID_INDEX;
+		}
+		
+		String oldCategory = storage.getEventByID(taskID).getCategory();
+		
+		if (command.isUserCommand()){
+			reversedCommandStack.push(reverseUpdateCategory(taskID, oldCategory, displayedIndex));
+		}
+		storage.updateCategoryByID(taskID, newCategory);
+		
+		return String.format(Constants.TANGGUO_UPDATE_CATEGORY_SUCCESS, storage.getEventByID(taskID).getName(),
+				newCategory) + Constants.NEW_LINE + displayTangGuo();	
+	}
+	
+	private Command reverseUpdateCategory(int id, String category, String displayedIndex) {
+		Command temp = new Command();
+		temp.setIsUserCommand(false);
+		temp.setType(Constants.COMMAND_TYPE.UPDATE_CATEGORY);
+		temp.setEventCategory(category);
+		temp.setEventID(id);
+		temp.setDisplayedIndex(displayedIndex);
+		return temp;
+	}
 	/*
 	private String markAsDone(Command command){
 		String displayedIndex = command.getDisplayedIndex();
@@ -489,6 +531,25 @@ public class TangGuo {
 		}
 		temp.setEvent(event);
 		return temp;
-		
+	}
+	
+	private String sortName() {
+		storage.sortName();
+		return String.format(Constants.TANGGUO_SORT_SUCCESS, "NAME") + Constants.NEW_LINE + displayTangGuo();
+	}
+	
+	private String sortStart() {
+		storage.sortStart();
+		return String.format(Constants.TANGGUO_SORT_SUCCESS, "START DATE") + Constants.NEW_LINE + displayTangGuo();
+	}
+	
+	private String sortEnd() {
+		storage.sortEnd();
+		return String.format(Constants.TANGGUO_SORT_SUCCESS, "END DATE") + Constants.NEW_LINE + displayTangGuo();
+	}
+	
+	private String sortPriority() {
+		storage.sortPriority();
+		return String.format(Constants.TANGGUO_SORT_SUCCESS, "PRIORITY") + Constants.NEW_LINE + displayTangGuo();
 	}
 }
