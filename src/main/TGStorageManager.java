@@ -9,6 +9,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Stack;
 
@@ -361,12 +362,34 @@ public class TGStorageManager {
 		//System.out.println("not found");
 	}
 	
+	public void sortName() {
+		Collections.sort(_taskCache, Sorters.sortName());
+		Collections.sort(_deadlineCache, Sorters.sortName());
+		Collections.sort(_scheduleCache, Sorters.sortName());
+	}
+	
+	public void sortStart() {
+		Collections.sort(_scheduleCache, Sorters.sortStart());
+	}
+	
+	public void sortEnd() {
+		Collections.sort(_deadlineCache, Sorters.sortEnd());
+		Collections.sort(_scheduleCache, Sorters.sortEnd());
+	}
+	
+	public void sortPriority() {
+		Collections.sort(_taskCache, Sorters.sortPriority());
+		Collections.sort(_deadlineCache, Sorters.sortPriority());
+		Collections.sort(_scheduleCache, Sorters.sortPriority());
+	}
+	
 	public void clear(){
 		_scheduleCache.clear();
 		_deadlineCache.clear();
 		_taskCache.clear();
 		updateStorage();
 	}
+	
 	private void initialize() {
 		try {
 			File inputFile = new File(_fileDirectory);

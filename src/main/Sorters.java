@@ -3,6 +3,14 @@ import java.util.Comparator;
 
 public class Sorters {
 
+	static Comparator<Event> sortName() {
+		return new Comparator<Event>() {
+			public int compare(Event x, Event y) {
+				return x.getName().compareTo(y.getName());
+			}
+		};
+	}
+	
 	static Comparator<Event> sortPriority() {
 		return new Comparator<Event>() {
 			public int compare(Event x, Event y) {

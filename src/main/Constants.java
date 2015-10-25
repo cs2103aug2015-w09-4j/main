@@ -32,13 +32,15 @@ public class Constants {
 	public static final String TANGGUO_START = "Welcome to TangGuo. %s is ready for use";
 	public static final String TANGGUO_ADD_SUCCESS = "Added to %1$s: %2$s";
 	public static final String TANGGUO_DELETE_SUCCESS = "Deleted from %1$s: %2$s";
-	public static final String TANGGUO_UPDATE_NAME_SUCCESS = "%1$s updated to %2$s";
+	public static final String TANGGUO_UPDATE_NAME_SUCCESS = "Name of %1$s updated to %2$s";
 	public static final String TANGGUO_UPDATE_START_SUCCESS = "Start date of %1$s updated to %2$s";
 	public static final String TANGGUO_UPDATE_START_FAIL = "Unable to update Start date, try again";
 	public static final String TANGGUO_UPDATE_END_SUCCESS = "End date of %1$s updated to %2$s";
 	public static final String TANGGUO_UPDATE_END_FAIL = "Unable to update End date, try again";
 	public static final String TANGGUO_UPDATE_PRIORITY_SUCCESS = "Priority of %1$s updated to %2$s";	//print int?
+	public static final String TANGGUO_UPDATE_CATEGORY_SUCCESS = "Category of %1$s updated to %2$s";
 	public static final String TANGGUO_UPDATE_DONE_SUCCESS = "%1$s completed";
+	public static final String TANGGUO_SORT_SUCCESS = "Sorted by %1$s!";
 	
 	public static final String TANGGUO_UNDO_SUCCESS = "Undo successful!";
 	public static final String TANGGUO_EXIT = "See you again!";
@@ -56,9 +58,9 @@ public class Constants {
 	public static final String TANGGUO_DATE_OUT_OF_BOUNDS = "The date or time you have entered is in the wrong format, try again";
 	
 	public enum COMMAND_TYPE {
-		ADD, ADD_DEADLINE, ADD_SCHEDULE, ADD_TASK, DISPLAY, DELETE, UNDO, EXIT, INVALID, UPDATE_NAME, 
-		UPDATE_START, UPDATE_END, DONE, UPDATE_PRIORITY, EXCEPTION
+		ADD, ADD_DEADLINE, ADD_SCHEDULE, ADD_TASK, DISPLAY, DELETE, 
+		UPDATE_NAME, UPDATE_START, UPDATE_END, UPDATE_PRIORITY, UPDATE_CATEGORY, 
+		UNDO, DONE, SORT_NAME, SORT_START, SORT_END, SORT_PRIORITY, SEARCH, EXCEPTION, INVALID, EXIT
 	};
 
 }
-
