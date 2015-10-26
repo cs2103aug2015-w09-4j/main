@@ -24,7 +24,7 @@ import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
 public class Test_Commands {
 	
 	public static String testFileName = "JUnit testing2";
-	public static TangGuo tg = new TangGuo(testFileName);
+	public static Logic tg = new Logic(testFileName);
 	
 	public static final String COMMAND_ADD = "add ";
 	public static final String COMMAND_UPDATE_NAME = "update name ";
