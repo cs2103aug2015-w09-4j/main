@@ -168,3 +168,26 @@
 2015/10/26 21:21:26 exception occurs: java.text.ParseException: Unparseable date: "31/10/2015 24:09"
 2015/10/26 21:21:26 exception occurs: java.text.ParseException: Unparseable date: "29/02/2015 23:09"
 2015/10/26 21:21:26 exception occurs: java.text.ParseException: Unparseable date: "32/10/2015 15:09"
+2015/10/28 00:00:19 Log: add schedule: 2010 Written Quiz
+2015/10/28 00:00:57 Log: add schedule: Halloween
+2015/10/28 00:02:36 Log: add deadline: buy Curry Ayam
+2015/10/28 00:02:51 Log: addTask: walk by the beach with +1
+2015/10/28 00:03:32 Log: add deadline: buy booze for drunkard Ter
+2015/10/28 00:03:58 Log: addTask: buy chair from ikea and deliver to TangHao's place
+2015/10/28 00:04:40 Log: add schedule: set fire to the rain
+2015/10/28 00:04:47 Log: addTask: hometown glory
+2015/10/28 00:05:07 Log: add deadline: say hello to Lionel Ritche
+2015/10/28 00:07:03 Log: add deadline: Soc SpringCleaning
+2015/10/28 00:07:19 Log: addTask: there is no limit to work, by hook or by crook, you shall finish it!
+2015/10/28 00:07:25 Log: addTask: testdates shall never end
+2015/10/28 00:07:58 Log: addTask: Goliath's birthday from 13/12/2015 17:09 to 22:09
+2015/10/28 00:08:16 Log: add deadline: Spray neighbours with waste water
+2015/10/28 00:08:46 Log: addTask: Deepavali Celebrations from 10/11/2015 00"00
+2015/10/28 00:08:57 Log: delete Task: Deepavali Celebrations from 10/11/2015 00"00
+2015/10/28 00:09:21 Log: addTask: Deepavali Celebrations from 10/11/2015 00:00
+2015/10/28 00:09:59 Log: add schedule: Make her feel my love
+2015/10/28 00:11:09 Log: add schedule: schedules are actually quite hard to type in
+2015/10/28 00:11:17 Log: delete Task: Deepavali Celebrations from 10/11/2015 00:00
+2015/10/28 00:11:20 Log: delete Task: Goliath's birthday from 13/12/2015 17:09 to 22:09
+2015/10/28 00:11:29 Log: addTask: Goliath's birthday from 13/12/2015 17:09 to 22:09
+2015/10/28 00:11:31 Log: addTask: Deepavali Celebrations from 10/11/2015 00:00
