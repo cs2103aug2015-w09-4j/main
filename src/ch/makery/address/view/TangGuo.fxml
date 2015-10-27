@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.web.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane minHeight="600.0" minWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.makery.address.view.TangGuoController">
+   <children>
+      <TextField fx:id="commandLine" layoutX="375.0" layoutY="547.0" minHeight="30.0" prefHeight="30.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="135.0" AnchorPane.rightAnchor="5.0" />
+      <Label layoutX="7.0" layoutY="567.0" text="Command Line:" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="7.0" />
+      <TabPane layoutX="35.0" layoutY="148.0" prefHeight="200.0" prefWidth="200.0" side="LEFT" tabClosingPolicy="UNAVAILABLE" tabMaxHeight="200.0" tabMaxWidth="200.0" tabMinHeight="123.0" tabMinWidth="100.0" AnchorPane.bottomAnchor="36.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <tabs>
+          <Tab fx:id="today">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <ImageView fitHeight="67.0" fitWidth="162.0" layoutX="42.0" layoutY="16.0" AnchorPane.leftAnchor="42.0" AnchorPane.topAnchor="16.0">
+                           <image>
+                              <Image url="@../../../../../GUI%20images/HEADER_Today.gif" />
+                           </image>
+                        </ImageView>
+                        <TextArea fx:id="display" layoutX="52.0" layoutY="95.0" prefHeight="444.0" prefWidth="759.0" />
+                     </children></AnchorPane>
+            </content>
+               <graphic>
+                  <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../../../GUI%20images/TAB_today.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+          </Tab>
+          <Tab fx:id="deadline">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <ImageView fitHeight="68.0" fitWidth="224.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="42.0" AnchorPane.topAnchor="14.0">
+                           <image>
+                              <Image url="@../../../../../GUI%20images/HEADER_Deadlines.gif" />
+                           </image>
+                        </ImageView>
+                     </children></AnchorPane>
+            </content>
+               <graphic>
+                  <ImageView fitHeight="78.0" fitWidth="87.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../../../GUI%20images/TAB_deadline.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+          </Tab>
+            <Tab fx:id="schedule">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="42.0" AnchorPane.topAnchor="14.0">
+                           <image>
+                              <Image url="@../../../../../GUI%20images/HEADER_Schedule.gif" />
+                           </image>
+                        </ImageView>
+                     </children></AnchorPane>
+              </content>
+               <graphic>
+                  <ImageView fitHeight="98.0" fitWidth="91.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../../../GUI%20images/TAB_schedule.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Tab>
+            <Tab fx:id="floating">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <ImageView fitHeight="72.0" fitWidth="148.0" layoutX="21.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="42.0" AnchorPane.topAnchor="14.0">
+                           <image>
+                              <Image url="@../../../../../GUI%20images/HEADER_Tasks.gif" />
+                           </image>
+                        </ImageView>
+                     </children></AnchorPane>
+              </content>
+               <graphic>
+                  <ImageView fitHeight="79.0" fitWidth="84.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../../../GUI%20images/TAB_tasks.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>

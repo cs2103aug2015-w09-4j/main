@@ -187,7 +187,12 @@ public class Parser {
 	}	
 
 	private static Date dateConverter(String dateString) throws ParseException{ 
-		Date date = format.parse(dateString);
+	//	Date date = null;
+		
+		//if(isRightDateFormat(dateString)) {
+		 Date date = format.parse(dateString);
+	//	}
+		
 		return date;
 	}
 	
@@ -231,4 +236,28 @@ public class Parser {
 		
 		return true;
 	}
+	
+/*	private static boolean isRightDateFormat(String dateString) {
+		
+		String[] imbaTestArray = dateString.split("/");
+		
+		if(imbaTestArray.length != 3)
+			return false;
+		
+		String[] imbaTestTimeArray = imbaTestArray[2].split(":");
+		
+		if(imbaTestTimeArray.length != 2)
+			return false;
+		
+		try {
+			Integer.parseInt(imbaTestArray[0]);
+			Integer.parseInt(imbaTestArray[1]);
+			Integer.parseInt(imbaTestTimeArray[0]);
+			Integer.parseInt(imbaTestTimeArray[1]);
+		} catch (NumberFormatException e) {
+			return false;
+		}
+		
+		return true;
+	} */
 }

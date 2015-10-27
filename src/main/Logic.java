@@ -13,7 +13,7 @@ import javax.swing.Spring;
 import jdk.nashorn.internal.runtime.regexp.joni.SearchAlgorithm;
 
 
-public class TangGuo {
+public class Logic {
 	
 	private static String fileName;
 	private Scanner scanner = new Scanner(System.in);
@@ -26,7 +26,7 @@ public class TangGuo {
 	 * Initialization of TGStorageManager, TGIDMap, and reversedCommandStack
 	 * @param file
 	 */
-	public TangGuo(String file) {
+	public Logic(String file) {
 		fileName = file;
 		try {
 			logger = new Logger("Tangguo.log");
@@ -39,7 +39,7 @@ public class TangGuo {
 	}
 	
 	public static void main(String[] args) throws IOException, ParseException {
-		TangGuo tg = new TangGuo(args[0]);
+		Logic tg = new Logic(args[0]);
 		showToUser(String.format(Constants.TANGGUO_START, fileName));
 		showToUser(tg.executeInputs("display"));
 		

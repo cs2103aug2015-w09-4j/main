@@ -159,3 +159,12 @@
 2015/10/22 19:40:34 Log: delete Task: by the lullaby of byanca by mozarella 2 by 08/08/2015
 2015/10/22 19:40:52 Log: add deadline: by the lullaby of byanca by mozarella 2
 2015/10/22 19:41:26 Log: add schedule: from now to then from 7 to 8 SECOND ROUND
+2015/10/26 18:45:26 Log: addTask: something
+2015/10/26 19:59:05 Log: addTask: task by 10/10/2015
+2015/10/26 19:59:25 Log: add deadline: task
+2015/10/26 20:04:38 Log: addTask: task from 1231513 to 13125123
+2015/10/26 20:49:14 Log: delete Task: task from 1231513 to 13125123
+2015/10/26 20:49:52 exception occurs: java.lang.NumberFormatException: For input string: ""
+2015/10/26 21:21:26 exception occurs: java.text.ParseException: Unparseable date: "31/10/2015 24:09"
+2015/10/26 21:21:26 exception occurs: java.text.ParseException: Unparseable date: "29/02/2015 23:09"
+2015/10/26 21:21:26 exception occurs: java.text.ParseException: Unparseable date: "32/10/2015 15:09"
