@@ -191,3 +191,8 @@
 2015/10/28 00:11:20 Log: delete Task: Goliath's birthday from 13/12/2015 17:09 to 22:09
 2015/10/28 00:11:29 Log: addTask: Goliath's birthday from 13/12/2015 17:09 to 22:09
 2015/10/28 00:11:31 Log: addTask: Deepavali Celebrations from 10/11/2015 00:00
+2015/10/28 02:00:41 Log: add deadline: upate end
+2015/10/28 02:03:18 Log: addTask: 
+2015/10/28 02:03:45 Log: addTask: add
+2015/10/28 02:12:28 Log: add schedule: this
+2015/10/28 02:12:36 exception occurs: java.text.ParseException: Unparseable date: "07:00"

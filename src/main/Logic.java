@@ -351,6 +351,8 @@ public class Logic {
 		
 		Date oldEnd = storage.getEventByID(taskID).getEnd();
 		
+		System.out.println(endDate.toString());
+		
 		if (storage.updateEndByID(taskID, endDate)) {
 			if (command.isUserCommand()){
 				reversedCommandStack.push(reverseUpdateEnd(taskID, oldEnd, displayedIndex));

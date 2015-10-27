@@ -171,7 +171,7 @@ public class Parser {
 	}
 	
 	static private String removeFirstWord(String input) {
-		return input.replace(getFirstWord(input), "").trim();
+		return input.replaceFirst(getFirstWord(input), "").trim();
 	}
 	
 	static private String getFirstWord(String input) {

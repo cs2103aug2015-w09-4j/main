@@ -103,7 +103,7 @@
   </schedule>
   <schedule id="20">
     <name>Make her feel my love</name>
-    <startDate>02/02/2015 12:00</startDate>
+    <startDate>09/09/2015 08:00</startDate>
     <endDate>03/03/3000 12:00</endDate>
     <category>DEFAULT</category>
     <priority>-1</priority>
@@ -111,7 +111,7 @@
   <schedule id="21">
     <name>schedules are actually quite hard to type in</name>
     <startDate>01/01/2015 15:09</startDate>
-    <endDate>01/01/2016 15:09</endDate>
+    <endDate>09/09/2016 08:00</endDate>
     <category>DEFAULT</category>
     <priority>-1</priority>
   </schedule>
