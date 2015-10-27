@@ -383,6 +383,36 @@ public class TGStorageManager {
 		Collections.sort(_scheduleCache, Sorters.sortPriority());
 	}
 	
+	public ArrayList<Event> searchTask(String key) {
+		ArrayList<Event> result = new ArrayList<Event>();
+		for (Event element:_taskCache){
+			if (element.contains(key)) {
+				result.add(element);
+			}
+		}
+		return result;
+	}
+	
+	public ArrayList<Event> searchDeadline(String key) {
+		ArrayList<Event> result = new ArrayList<Event>();
+		for (Event element:_deadlineCache){
+			if (element.contains(key)) {
+				result.add(element);
+			}
+		}
+		return result;
+	}
+	
+	public ArrayList<Event> searchSchedule(String key) {
+		ArrayList<Event> result = new ArrayList<Event>();
+		for (Event element:_scheduleCache){
+			if (element.contains(key)) {
+				result.add(element);
+			}
+		}
+		return result;
+	}
+	
 	public void clear(){
 		_scheduleCache.clear();
 		_deadlineCache.clear();
