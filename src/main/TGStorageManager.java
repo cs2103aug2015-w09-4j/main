@@ -1,3 +1,4 @@
+package main;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -8,7 +9,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
+import java.util.Stack;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
@@ -41,6 +44,7 @@ public class TGStorageManager {
 	private ArrayList<Event> _taskCache;
 	private ArrayList<Event> _deadlineCache;
 	private ArrayList<Event> _scheduleCache;
+	private Logger logger;
 	File inputFile;
 	private int currentIndex;
 
@@ -49,9 +53,34 @@ public class TGStorageManager {
 		this._taskCache = new ArrayList<Event>();
 		this._deadlineCache = new ArrayList<Event>();
 		this._scheduleCache = new ArrayList<Event>();
+		try {
+			this.logger = new Logger("Tangguo.log");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 		initialize();
 	}
-
+	public Event getEventByID(int id){
+		for (Event element:_taskCache){
+			if (element.getID() == id){
+				return element;
+			}
+		}
+		
+		for (Event element:_scheduleCache){
+			if (element.getID() == id){
+				return element;
+			}
+		}
+		
+		for (Event element:_deadlineCache){
+			if (element.getID() == id){
+				return element;
+			}
+		}
+		return null;
+	}
 	public ArrayList<Event> getTaskCache() {
 		return this._taskCache;
 	}
@@ -68,31 +97,51 @@ public class TGStorageManager {
 		return currentIndex;
 	}
 	
-	public void addTask(String name){
-		Event newTask = new Event(currentIndex,name);
+	public int addTask(Event newTask){
+		logger.writeLog("addTask: "+newTask.getName());
 		_taskCache.add(newTask);
 		currentIndex++;
 		updateStorage();
+		return newTask.getID();
+	}
+	public int addTask(String name){
+		Event newTask = new Event(currentIndex,name);
+		addTask(newTask);
+		return newTask.getID();
+		
 	}	
 	
-	public void addDeadline(String name, Date endDate){
-		Event newDeadline = new Event(currentIndex, name, endDate);
+	public int addDeadline (Event newDeadline){
+		logger.writeLog("add deadline: "+newDeadline.getName());
 		_deadlineCache.add(newDeadline);
 		currentIndex++;
 		updateStorage();
+		return newDeadline.getID();
+	}
+	public int addDeadline(String name, Date endDate){
+		Event newDeadline = new Event(currentIndex, name, endDate);
+		addDeadline(newDeadline);
+		return newDeadline.getID();
 	}
 	
-	public void addSchedule(String name, Date startDate, Date endDate){
-		Event newSchedule = new Event(currentIndex,name, startDate, endDate);
+	public int addSchedule(Event newSchedule){
+		logger.writeLog("add schedule: "+newSchedule.getName());
 		_scheduleCache.add(newSchedule);
 		currentIndex++;
 		updateStorage();
+		return newSchedule.getID();
+	}
+	public int addSchedule(String name, Date startDate, Date endDate){
+		Event newSchedule = new Event(currentIndex,name, startDate, endDate);
+		addSchedule(newSchedule);
+		return newSchedule.getID();
 	}
 	
 	//precon:id exists
 	public Event deleteEventByID(int id){
 		for (Event element:_taskCache){
 			if (element.getID() == id){
+				logger.writeLog("delete Task: "+element.getName());
 				_taskCache.remove(element);
 				updateStorage();
 				return element;
@@ -101,6 +150,7 @@ public class TGStorageManager {
 		
 		for (Event element:_scheduleCache){
 			if (element.getID() == id){
+				logger.writeLog("delete schedule: "+element.getName());
 				_scheduleCache.remove(element);
 				updateStorage();
 				return element;
@@ -109,12 +159,13 @@ public class TGStorageManager {
 		
 		for (Event element:_deadlineCache){
 			if (element.getID() == id){
+				logger.writeLog("delete deadline: "+element.getName());
 				_deadlineCache.remove(element);
 				updateStorage();
 				return element;
 			}
 		}
-		
+		assert false:"no matched ID found";
 		return null;
 		//System.out.println("not found");
 	}
@@ -123,7 +174,7 @@ public class TGStorageManager {
 	public void updateNameByID(int id, String name){
 		for (Event element:_taskCache){
 			if (element.getID() == id){
-				element.setName(name);;
+				element.setName(name);
 				updateStorage();
 				return;
 			}
@@ -131,7 +182,7 @@ public class TGStorageManager {
 		
 		for (Event element:_scheduleCache){
 			if (element.getID() == id){
-				element.setName(name);;
+				element.setName(name);
 				updateStorage();
 				return;
 			}
@@ -139,7 +190,7 @@ public class TGStorageManager {
 		
 		for (Event element:_deadlineCache){
 			if (element.getID() == id){
-				element.setName(name);;
+				element.setName(name);
 				updateStorage();
 				return;
 			}
@@ -147,11 +198,10 @@ public class TGStorageManager {
 		//System.out.println("not found");
 	}
 	
-	//precon:id exists
-	public void updateStartByID(int id, Date startDate){
+	public void updateIsDoneByID(int id, boolean isDone){
 		for (Event element:_taskCache){
 			if (element.getID() == id){
-				element.setStart(startDate);;
+				element.setIsDone(isDone);
 				updateStorage();
 				return;
 			}
@@ -159,7 +209,7 @@ public class TGStorageManager {
 		
 		for (Event element:_scheduleCache){
 			if (element.getID() == id){
-				element.setStart(startDate);;
+				element.setIsDone(isDone);
 				updateStorage();
 				return;
 			}
@@ -167,39 +217,53 @@ public class TGStorageManager {
 		
 		for (Event element:_deadlineCache){
 			if (element.getID() == id){
-				element.setStart(startDate);;
+				element.setIsDone(isDone);
 				updateStorage();
 				return;
 			}
 		}
 		//System.out.println("not found");
 	}
-	
 	//precon:id exists
-	public void updateEndByID(int id, Date endDate){
-		for (Event element:_taskCache){
+	public boolean updateStartByID(int id, Date startDate){
+		for (Event element:_scheduleCache){
 			if (element.getID() == id){
-				element.setStart(endDate);;
-				updateStorage();
-				return;
+				if (startDate.before(element.getEnd())) {
+					element.setStart(startDate);
+					updateStorage();
+					return true;
+				} else {
+					return false;
+				}
 			}
 		}
+		return false;
+		//System.out.println("not found");
+	}
+	
+	//precon:id exists
+	public boolean updateEndByID(int id, Date endDate){
 		
 		for (Event element:_scheduleCache){
 			if (element.getID() == id){
-				element.setStart(endDate);;
+				element.setEnd(endDate);
 				updateStorage();
-				return;
+				return true;
 			}
 		}
 		
 		for (Event element:_deadlineCache){
 			if (element.getID() == id){
-				element.setStart(endDate);;
-				updateStorage();
-				return;
+				if (endDate.after(element.getStart())) {
+					element.setEnd(endDate);
+					updateStorage();
+					return true;
+				} else {
+					return false;
+				}
 			}
 		}
+		return false;
 		//System.out.println("not found");
 	}
 	
@@ -207,7 +271,7 @@ public class TGStorageManager {
 	public void updateCategoryByID(int id, String category){
 		for (Event element:_taskCache){
 			if (element.getID() == id){
-				element.setCategory(category);;
+				element.setCategory(category);
 				updateStorage();
 				return;
 			}
@@ -215,7 +279,7 @@ public class TGStorageManager {
 		
 		for (Event element:_scheduleCache){
 			if (element.getID() == id){
-				element.setCategory(category);;
+				element.setCategory(category);
 				updateStorage();
 				return;
 			}
@@ -223,7 +287,7 @@ public class TGStorageManager {
 		
 		for (Event element:_deadlineCache){
 			if (element.getID() == id){
-				element.setCategory(category);;
+				element.setCategory(category);
 				updateStorage();
 				return;
 			}
@@ -235,7 +299,7 @@ public class TGStorageManager {
 	public void updatePriorityByID(int id, int priority){
 		for (Event element:_taskCache){
 			if (element.getID() == id){
-				element.setPriority(priority);;
+				element.setPriority(priority);
 				updateStorage();
 				return;
 			}
@@ -243,7 +307,7 @@ public class TGStorageManager {
 		
 		for (Event element:_scheduleCache){
 			if (element.getID() == id){
-				element.setPriority(priority);;
+				element.setPriority(priority);
 				updateStorage();
 				return;
 			}
@@ -251,12 +315,40 @@ public class TGStorageManager {
 		
 		for (Event element:_deadlineCache){
 			if (element.getID() == id){
-				element.setPriority(priority);;
+				element.setPriority(priority);
 				updateStorage();
 				return;
 			}
 		}
 		//System.out.println("not found");
+	}
+	
+	public void sortName() {
+		Collections.sort(_taskCache, Sorters.sortName());
+		Collections.sort(_deadlineCache, Sorters.sortName());
+		Collections.sort(_scheduleCache, Sorters.sortName());
+	}
+	
+	public void sortStart() {
+		Collections.sort(_scheduleCache, Sorters.sortStart());
+	}
+	
+	public void sortEnd() {
+		Collections.sort(_deadlineCache, Sorters.sortEnd());
+		Collections.sort(_scheduleCache, Sorters.sortEnd());
+	}
+	
+	public void sortPriority() {
+		Collections.sort(_taskCache, Sorters.sortPriority());
+		Collections.sort(_deadlineCache, Sorters.sortPriority());
+		Collections.sort(_scheduleCache, Sorters.sortPriority());
+	}
+	
+	public void clear(){
+		_scheduleCache.clear();
+		_deadlineCache.clear();
+		_taskCache.clear();
+		updateStorage();
 	}
 	
 	private void initialize() {
@@ -480,7 +572,7 @@ public class TGStorageManager {
 	             xMLStreamWriter.writeEndElement();
 	             xMLStreamWriter.writeStartElement("category");
 	             xMLStreamWriter.writeCharacters(element.getCategory());
-	             xMLStreamWriter.writeEndDocument();
+	             xMLStreamWriter.writeEndElement();
 	             xMLStreamWriter.writeStartElement("priority");
 	             xMLStreamWriter.writeCharacters(String.valueOf(element.getPriority()));
 	             xMLStreamWriter.writeEndElement();
@@ -498,7 +590,7 @@ public class TGStorageManager {
 	             xMLStreamWriter.writeEndElement();
 	             xMLStreamWriter.writeStartElement("category");
 	             xMLStreamWriter.writeCharacters(element.getCategory());
-	             xMLStreamWriter.writeEndDocument();
+	             xMLStreamWriter.writeEndElement();
 	             xMLStreamWriter.writeStartElement("priority");
 	             xMLStreamWriter.writeCharacters(String.valueOf(element.getPriority()));
 	             xMLStreamWriter.writeEndElement();
@@ -519,7 +611,7 @@ public class TGStorageManager {
 	             xMLStreamWriter.writeEndElement();
 	             xMLStreamWriter.writeStartElement("category");
 	             xMLStreamWriter.writeCharacters(element.getCategory());
-	             xMLStreamWriter.writeEndDocument();
+	             xMLStreamWriter.writeEndElement();
 	             xMLStreamWriter.writeStartElement("priority");
 	             xMLStreamWriter.writeCharacters(String.valueOf(element.getPriority()));
 	             xMLStreamWriter.writeEndElement();
@@ -576,7 +668,7 @@ public class TGStorageManager {
 
 	public static void main(String[] args) {
 		TGStorageManager tm = new TGStorageManager("test");
-		tm.deleteEventByID(2);
+		tm.addTask("yo");
 		for (Event element : tm.getTaskCache()) {
 			System.out.println(element.getID()+" "+element.getCategory());
 		}

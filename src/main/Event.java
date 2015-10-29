@@ -1,3 +1,8 @@
+package main;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.Year;
+import java.util.Calendar;
 import java.util.Date;
 
 public class Event {
@@ -8,6 +13,7 @@ public class Event {
 	private Date endDate;
 	private String category;
 	private int priority;
+	private boolean isDone;
 	
 	public Event(int ID, String name, Date startDate, Date endDate){
 		this.type = Constants.SCHEDULE_TYPE_NUMBER;
@@ -17,6 +23,7 @@ public class Event {
 		this.endDate = endDate;
 		this.category = Constants.DEFAULT_CATEGORY;
 		this.priority = Constants.DEFAULT_PRIORITY;
+		this.isDone = false;
 	}
 	
 	public Event(int ID, String name, Date endDate){
@@ -26,6 +33,7 @@ public class Event {
 		this.endDate = endDate;
 		this.category = Constants.DEFAULT_CATEGORY;
 		this.priority = Constants.DEFAULT_PRIORITY;
+		this.isDone = false;
 	}
 	  
 	public Event(int ID, String name){
@@ -34,8 +42,16 @@ public class Event {
 		this.name = name;
 		this.category = Constants.DEFAULT_CATEGORY;
 		this.priority = Constants.DEFAULT_PRIORITY;
+		this.isDone = false;
 	}
 	
+	public boolean isDone(){
+		return this.isDone;
+	}
+	
+	public void setIsDone(boolean b){
+		this.isDone = b;
+	}
 	public int getType() {
 		return type;
 	}
@@ -84,4 +100,39 @@ public class Event {
 		this.priority = priority;
 	}
 	
+	/**
+	 * returns for
+	 * schedule: "{start date, end date} eventName"
+	 * deadline: "{end date} eventName"
+	 *     task: "eventName"
+	 */
+	public String toString(){
+		String string = "";
+		if (getStart() != null){
+			string += "{"+formatDate(getStart())+", "+formatDate(getEnd())+"} ";
+		} else if (getEnd() != null){
+			string += "{"+formatDate(getEnd())+"} ";
+		}	
+		string += getName() + "\n";
+		return string;
+	}
+	
+	/**
+	 * returns date in the form of "DAY MONTH DATE HOUR:MINUTE" in a 24-hour format
+	 * is returned in the form of "DAY YEAR MONTH DATE HOUR:MINUTE" if year is not
+	 * current year
+	 * @param date
+	 * @return
+	 */
+	private String formatDate(Date date){
+		Calendar now = Calendar.getInstance();   // Gets the current date and time
+		int currentYear = now.get(Calendar.YEAR);
+		int dateYear = Integer.parseInt(new SimpleDateFormat("yyyy").format(date));
+		
+		if (dateYear <= currentYear){
+			return new SimpleDateFormat("E MMM dd HH:mm").format(date);
+		} else {
+			return new SimpleDateFormat("E yyyy MMM dd HH:mm").format(date);
+		}		
+	}
 }

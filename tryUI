@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?><calendar current="24">
+  <task id="0">
+    <name>something</name>
+    <category>DEFAULT</category>
+    <priority>-1</priority>
+  </task>
+  <task id="1">
+    <name>task by 10/10/2015</name>
+    <category>DEFAULT</category>
+    <priority>-1</priority>
+  </task>
+  <task id="7">
+    <name>walk by the beach with +1</name>
+    <category>DEFAULT</category>
+    <priority>-1</priority>
+  </task>
+  <task id="9">
+    <name>buy chair from ikea and deliver to TangHao's place</name>
+    <category>DEFAULT</category>
+    <priority>-1</priority>
+  </task>
+  <task id="11">
+    <name>hometown glory</name>
+    <category>DEFAULT</category>
+    <priority>-1</priority>
+  </task>
+  <task id="14">
+    <name>there is no limit to work, by hook or by crook, you shall finish it!</name>
+    <category>DEFAULT</category>
+    <priority>-1</priority>
+  </task>
+  <task id="15">
+    <name>testdates shall never end</name>
+    <category>DEFAULT</category>
+    <priority>-1</priority>
+  </task>
+  <task id="16">
+    <name>Goliath's birthday from 13/12/2015 17:09 to 22:09</name>
+    <category>DEFAULT</category>
+    <priority>-1</priority>
+  </task>
+  <task id="19">
+    <name>Deepavali Celebrations from 10/11/2015 00:00</name>
+    <category>DEFAULT</category>
+    <priority>-1</priority>
+  </task>
+  <deadline id="2">
+    <name>task</name>
+    <endDate>10/10/2015 15:09</endDate>
+    <category>DEFAULT</category>
+    <priority>-1</priority>
+  </deadline>
+  <deadline id="6">
+    <name>buy Curry Ayam</name>
+    <endDate>29/10/2015 15:00</endDate>
+    <category>DEFAULT</category>
+    <priority>-1</priority>
+  </deadline>
+  <deadline id="8">
+    <name>buy booze for drunkard Ter</name>
+    <endDate>01/11/2015 15:09</endDate>
+    <category>DEFAULT</category>
+    <priority>-1</priority>
+  </deadline>
+  <deadline id="12">
+    <name>say hello to Lionel Ritche</name>
+    <endDate>12/12/2015 02:00</endDate>
+    <category>DEFAULT</category>
+    <priority>-1</priority>
+  </deadline>
+  <deadline id="13">
+    <name>Soc SpringCleaning</name>
+    <endDate>01/01/2017 01:00</endDate>
+    <category>DEFAULT</category>
+    <priority>-1</priority>
+  </deadline>
+  <deadline id="17">
+    <name>Spray neighbours with waste water</name>
+    <endDate>15/12/2015 12:00</endDate>
+    <category>DEFAULT</category>
+    <priority>-1</priority>
+  </deadline>
+  <schedule id="4">
+    <name>2010 Written Quiz</name>
+    <startDate>31/10/2015 10:00</startDate>
+    <endDate>31/10/2015 11:30</endDate>
+    <category>DEFAULT</category>
+    <priority>-1</priority>
+  </schedule>
+  <schedule id="5">
+    <name>Halloween</name>
+    <startDate>30/10/2015 11:00</startDate>
+    <endDate>30/10/2015 19:00</endDate>
+    <category>DEFAULT</category>
+    <priority>-1</priority>
+  </schedule>
+  <schedule id="10">
+    <name>set fire to the rain</name>
+    <startDate>09/11/2015 14:00</startDate>
+    <endDate>09/11/2015 19:00</endDate>
+    <category>DEFAULT</category>
+    <priority>-1</priority>
+  </schedule>
+  <schedule id="20">
+    <name>Make her feel my love</name>
+    <startDate>09/09/2015 08:00</startDate>
+    <endDate>03/03/3000 12:00</endDate>
+    <category>DEFAULT</category>
+    <priority>-1</priority>
+  </schedule>
+  <schedule id="21">
+    <name>schedules are actually quite hard to type in</name>
+    <startDate>01/01/2015 15:09</startDate>
+    <endDate>09/09/2016 08:00</endDate>
+    <category>DEFAULT</category>
+    <priority>-1</priority>
+  </schedule>
+</calendar>
