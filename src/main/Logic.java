@@ -1,6 +1,7 @@
 package main;
 import java.lang.String;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -40,6 +41,16 @@ public class Logic {
 	 * Displays all events stored within TangGuo
 	 * @return
 	 */
+
+	public ArrayList<ArrayList<Event>> updateTodayDisplay(){
+		ArrayList<ArrayList<Event>> displayEvent = new ArrayList<ArrayList<Event>>();
+		TGIDMap.clear();
+		displayEvent.add(displayTodayCache("Tasks", storage.getTaskCache(),"t"));
+		displayEvent.add(displayTodayCache("Deadlines", storage.getDeadlineCache(),"d"));
+		displayEvent.add(displayTodayCache("Schedules", storage.getScheduleCache(),"s"));
+
+		return displayEvent;
+	}
 	public ArrayList<ArrayList<Event>> updateDisplay(){
 		ArrayList<ArrayList<Event>> displayEvent = new ArrayList<ArrayList<Event>>();
 		/*
@@ -252,6 +263,36 @@ public class Logic {
 		return temp;
 	}
 
+	private ArrayList<Event> displayTodayCache(String cacheName, ArrayList<Event> cache, String header){
+		ArrayList<Event> temp = new ArrayList<Event>();
+		int counter = 1;
+		for (int i = 0; i < cache.size(); i++){
+			if (isTodayEvent(cache.get(i))){
+				TGIDMap.put(header+(counter++), cache.get(i).getID());
+				temp.add(cache.get(i));
+			}
+		}
+		return temp;
+	}
+
+	private boolean isTodayEvent(Event event){
+		Date today = new Date();
+		if (event.getType()==Constants.TASK_TYPE_NUMBER){
+			return true;
+		}else if (event.getType()==Constants.DEADLINE_TYPE_NUMBER){
+			return isSameDay(today,event.getEnd());
+		}else if (event.getType()==Constants.SCHEDULE_TYPE_NUMBER){
+			return isSameDay(today,event.getEnd()) || isSameDay(today,event.getStart());
+		}else{
+			return false;
+		}
+	}
+
+	private boolean isSameDay(Date date1, Date date2){
+		SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMdd");
+		return fmt.format(date1).equals(fmt.format(date2));
+
+	}
 	/**
 	 * Updates the name of an existing event to the new name input by user
 	 * @param command

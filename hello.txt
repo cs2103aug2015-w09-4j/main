@@ -1,44 +1,33 @@
-<?xml version="1.0" encoding="UTF-8"?><calendar current="20">
-  <task id="6">
-    <name>3</name>
-    <category>DEFAULT</category>
-    <priority>-1</priority>
-  </task>
-  <task id="14">
-    <name>ayam a test</name>
-    <category>DEFAULT</category>
-    <priority>-1</priority>
-  </task>
-  <task id="16">
-    <name>1ko2</name>
-    <category>DEFAULT</category>
-    <priority>-1</priority>
-  </task>
+<?xml version="1.0" encoding="UTF-8"?><calendar current="27">
   <task id="17">
     <name>jaidajie</name>
     <category>DEFAULT</category>
     <priority>-1</priority>
   </task>
-  <task id="18">
-    <name>deadline this thing 01/01/1994 10:00</name>
+  <task id="22">
+    <name>task</name>
     <category>DEFAULT</category>
     <priority>-1</priority>
   </task>
-  <deadline id="13">
-    <name>deadline dododo </name>
-    <endDate>01/02/1994 18:00</endDate>
+  <task id="23">
+    <name>task</name>
+    <category>DEFAULT</category>
+    <priority>-1</priority>
+  </task>
+  <task id="25">
+    <name>yo</name>
+    <category>DEFAULT</category>
+    <priority>-1</priority>
+  </task>
+  <deadline id="19">
+    <name>deadline this thing</name>
+    <endDate>01/01/1994 10:00</endDate>
     <category>DEFAULT</category>
     <priority>-1</priority>
   </deadline>
   <deadline id="15">
     <name>ekdedk </name>
     <endDate>05/07/1993 19:00</endDate>
-    <category>DEFAULT</category>
-    <priority>-1</priority>
-  </deadline>
-  <deadline id="19">
-    <name>deadline this thing</name>
-    <endDate>01/01/1994 10:00</endDate>
     <category>DEFAULT</category>
     <priority>-1</priority>
   </deadline>

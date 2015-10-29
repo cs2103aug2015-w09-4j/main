@@ -21,7 +21,11 @@ public class GUITools {
 			data[i][4] = curr.getCategory();
 			data[i][5] = curr.getPriority();
 		}
-		JTable table = new JTable(data, columnNames);
+		JTable table = new JTable(data, columnNames){
+		      public boolean isCellEditable(int row, int column){
+		          return false;
+		        }
+		      };  ;
 		table.setFillsViewportHeight(true);
         JScrollPane scrollPane = new JScrollPane(table);
         return scrollPane;

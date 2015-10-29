@@ -14,24 +14,24 @@ import javax.swing.JTable;
 import main.Event;
 import main.Logic;
 
-public class TodayComponent extends JPanel {
-	Logic logic;
-	public TodayComponent(Logic logic) {
+public class EventComponent extends JPanel {
+	int eventType;
+	public EventComponent(Logic logic, int eventType) {
 		super();
-		this.logic = logic;
-		refresh();
+		//refresh(logic.updateDisplay());
+		this.eventType = eventType;
 	}
 
-	public void refresh(){
+	public void refresh(ArrayList<ArrayList<Event>> eventList){
 		removeAll();
-		ArrayList<ArrayList<Event>> eventList = logic.updateTodayDisplay();
-		String[] labels = {"Tasks","Deadline","Schedules"};
+
+		//String[] labels = {"tasks","deadline","schedules"};
 
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		for (int i = 0;i<3;i++){
-			add(new JLabel(labels[i]));
-			add(GUITools.createEventTable(eventList.get(i)));
-		}
+
+		//add(new JLabel(labels[i]));
+		add(GUITools.createEventTable(eventList.get(this.eventType-1)));
+
 		revalidate();
 		repaint();
 	}

@@ -200,3 +200,19 @@
 2015/10/29 21:01:36 Log: addTask: jaidajie
 2015/10/29 21:02:01 Log: addTask: deadline this thing 01/01/1994 10:00
 2015/10/29 21:02:09 Log: add deadline: deadline this thing
+2015/10/29 21:15:54 Log: addTask: bla from 01/01/2016 10:00 02/01/2017 11:00
+2015/10/29 21:16:23 Log: delete Task: bla from 01/01/2016 10:00 02/01/2017 11:00
+2015/10/29 21:19:27 Log: add schedule: schedud
+2015/10/29 22:03:26 Log: addTask: task
+2015/10/29 23:04:40 Log: addTask: task
+2015/10/29 23:06:55 Log: addTask: hello
+2015/10/29 23:33:47 Log: addTask: yo
+2015/10/29 23:35:04 Log: delete Task: 3
+2015/10/29 23:35:54 Log: delete Task: ayam a test
+2015/10/29 23:36:07 Log: delete Task: 1ko2
+2015/10/29 23:36:19 Log: delete Task: deadline this thing 01/01/1994 10:00
+2015/10/30 00:39:49 Log: add deadline: sotm
+2015/10/30 00:41:40 Log: delete deadline: sotm
+2015/10/30 00:43:55 Log: delete Task: hello
+2015/10/30 00:44:56 Log: delete schedule: schedud
+2015/10/30 00:45:03 Log: delete deadline: deadline dododo 
