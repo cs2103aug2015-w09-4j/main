@@ -2,6 +2,7 @@ package GUI;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
 import javax.swing.JComponent;
@@ -10,41 +11,28 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
+import main.Event;
+import main.Logic;
+
 public class TodayComponent extends JPanel {
 
-	public TodayComponent() {
+	public TodayComponent(Logic logic) {
 		super();
-		refresh();
+		refresh(logic.updateDisplay());
 	}
 
-	public void refresh(){
+	public void refresh(ArrayList<ArrayList<Event>> eventList){
 		removeAll();
-		String[] columnNames = { "ID", "Event Name", "Start Date", "End Date", "Category"};
 
-		Object[][] data = { { "Kathy", "Smith", "Snowboarding", new Integer(5), new Boolean(false) },
-				{ "John", "Doe", "Rowing", new Integer(3), new Boolean(true) },
-				{ "Sue", "Black", "Knitting", new Integer(2), new Boolean(false) },
-				{ "Jane", "White", "Speed reading", new Integer(20), new Boolean(true) },
-				{ "Joe", "Brown", "Pool", new Integer(10), new Boolean(false) } };
-		JTable table = new JTable(data, columnNames);
-		JTable  table1 = new JTable(data, columnNames);
-		JTable  table2 = new JTable(data, columnNames);
+		String[] labels = {"tasks","deadline","schedules"};
 
-	        table.setFillsViewportHeight(true);
-	        JScrollPane scrollPane = new JScrollPane(table);
-	        JScrollPane scrollPane1 = new JScrollPane(table1);
-	        JScrollPane scrollPane2 = new JScrollPane(table2);
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		JLabel taskLabel = new JLabel("tasks");
-		JLabel scheduleLabel = new JLabel("scedules");
-		JLabel deadlineLabel = new JLabel("deadlines");
-		add(taskLabel);
-		add(scrollPane);
-		add(scheduleLabel);
-		add(scrollPane1);
-		add(deadlineLabel);
-		add(scrollPane2);
+		for (int i = 0;i<3;i++){
+			add(new JLabel(labels[i]));
+			add(GUITools.createEventTable(eventList.get(i)));
+		}
 		revalidate();
 		repaint();
 	}
+
 }

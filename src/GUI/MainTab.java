@@ -3,20 +3,24 @@ package GUI;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
+import main.Event;
+import main.Logic;
+
 public class MainTab extends JTabbedPane {
 	TodayComponent panel1;
 	JComponent panel2;
 	JComponent panel3;
 	JComponent panel4;
-	public MainTab(){
+	public MainTab(Logic logic){
 		super();
-		 panel1 = new TodayComponent();
+		 panel1 = new TodayComponent(logic);
 		addTab("Today",panel1);
 		setMnemonicAt(0, KeyEvent.VK_1);
 
@@ -43,7 +47,7 @@ public class MainTab extends JTabbedPane {
         panel.add(filler);
         return panel;
     }
-	public void refresh(){
-		panel1.refresh();
+	public void refresh(ArrayList<ArrayList<Event>> eventList){
+		panel1.refresh(eventList);
 	}
 }

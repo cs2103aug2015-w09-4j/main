@@ -18,11 +18,15 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import main.Command;
+import main.Logic;
+
 public class MainFrame extends JFrame{
-	public MainFrame(String title){
+	public MainFrame(String title, String fileAddress){
 		super(title);
+		Logic TGlogic = new Logic(fileAddress);
 		setLayout(new BorderLayout());
-		MainTab tabbedPane = new MainTab();
+		MainTab tabbedPane = new MainTab(TGlogic);
 		final JPanel commandPane = new JPanel();
 		commandPane.setLayout(new FlowLayout());
 		final JTextField textArea = new JTextField();
@@ -42,7 +46,10 @@ public class MainFrame extends JFrame{
 
             public void actionPerformed(ActionEvent e){
             	tabbedPane.setSelectedIndex(0);
-            	tabbedPane.refresh();
+
+            	Command command = TGlogic.executeInputs(textArea.getText());
+            	tabbedPane.refresh(command.getDisplayedEventList());
+            	System.out.println(textArea.getText());
             }});
 	}
 }
