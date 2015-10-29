@@ -106,13 +106,13 @@ public class Event {
 		} else if (getCategory().indexOf(input) > -1) {
 			return true;
 		} else if (getStart() != null) {
-			if (formatDate(getStart()).indexOf(input) > -1 || formatDate(getEnd()).indexOf(input) > -1) {
+			if (formatDate(getStart()).toLowerCase().indexOf(input) > -1 || formatDate(getEnd()).toLowerCase().indexOf(input) > -1) {
 				return true;
 			} else {
 				return false;
 			}
 		} else if (getEnd() != null) {
-			if (formatDate(getEnd()).indexOf(input) > -1) {
+			if (formatDate(getEnd()).toLowerCase().indexOf(input) > -1) {
 				return true;
 			} else {
 				return false;
