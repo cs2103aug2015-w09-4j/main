@@ -11,11 +11,12 @@ public class Command {
 	private Date eventEnd;
 	private String eventCategory;
 	private int eventPriority;
+	private String searchKey;
 	private String displayedIndex;
 	private boolean isUserCommand;
 	private Event event;
 	private String displayMessage;
-	private String displayedTab;
+	private int displayedTab=-1;
 	private ArrayList<ArrayList<Event>> displayedEventList;
 	public Event getEvent() {
 		return event;
@@ -34,6 +35,12 @@ public class Command {
 	}
 	public void setDisplayedIndex(String displayedIndex) {
 		this.displayedIndex = displayedIndex;
+	}
+	public void setSearchKey(String searchKey) {
+		this.searchKey = searchKey;
+	}
+	public String getSearchKey() {
+		return searchKey;
 	}
 	public int getEventType() {
 		return eventType;
@@ -89,10 +96,10 @@ public class Command {
 	public void setDisplayMessage(String displayMessage) {
 		this.displayMessage = displayMessage;
 	}
-	public String getDisplayedTab() {
+	public int getDisplayedTab() {
 		return displayedTab;
 	}
-	public void setDisplayedTab(String displayedTab) {
+	public void setDisplayedTab(int displayedTab) {
 		this.displayedTab = displayedTab;
 	}
 	public ArrayList<ArrayList<Event>> getDisplayedEventList() {

@@ -29,7 +29,7 @@ public class MainFrame extends JFrame{
 		inputPane.setLayout(new FlowLayout());
 		final JTextField textArea = new JTextField();
 		final JLabel commandLabel = new JLabel("Command:");
-		final JLabel messageLabel = new JLabel("");
+		final JLabel messageLabel = new JLabel("Welcome back to TangGuo");
 		textArea.setPreferredSize(new Dimension(550,20));
 		JButton button = new JButton("Submit");
 		Container c = getContentPane();
@@ -50,6 +50,9 @@ public class MainFrame extends JFrame{
 
             	Command command = TGlogic.executeInputs(textArea.getText());
             	System.out.println(command.getDisplayedEventList());
+            	if (command.getDisplayedTab()!=-1){
+            		tabbedPane.setSelectedIndex(command.getDisplayedTab());
+            	}
             	if (command.getDisplayedEventList()!=null){ //valid command
             		tabbedPane.refresh(command.getDisplayedEventList());
             	}

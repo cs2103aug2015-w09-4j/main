@@ -1,5 +1,14 @@
 package main;
 public class Constants {
+	/*
+	 * GUI Tabs
+	 */
+	public static final int TODAY_TAB_NUMBER = 0;
+	public static final int TASK_TAB_NUMBER = 1;
+	public static final int DEADLINE_TAB_NUMBER = 2;
+	public static final int SCHEDULE_TAB_NUMBER = 3;
+	public static final int SEARCH_TAB_NUMBER = 4;
+
 	public static final String XML_TASK_EXPRESSION = "/calendar/task";
 	public static final String XML_DEADLINE_EXPRESSION = "/calendar/deadline";
 	public static final String XML_SCHEDULE_EXPRESSION = "/calendar/schedule";
@@ -48,6 +57,8 @@ public class Constants {
 	public static final String TANGGUO_UNDO_NO_COMMAND ="No command to be undone!";
 	public static final String TANGGUO_EMPTY_FILE = "%s is empty!";
 
+	public static final String TANGGUO_SEARCH_SUCCESS = "Search results for %1$s ";
+	public static final String TANGGUO_SEARCH_FAIL = "The keyword: %1$s is not found!";
 
 	public static final String TANGGUO_IO_EXCEPTION = "An unexpected error has occurred";
 	public static final String TANGGUO_OUT_BOUNDS = "The index you entered is invalid, try again";

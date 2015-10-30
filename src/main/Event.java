@@ -99,6 +99,28 @@ public class Event {
 		this.priority = priority;
 	}
 
+	public boolean contains(String input) {
+		if (getName().indexOf(input) > -1) {
+			return true;
+		} else if (getCategory().indexOf(input) > -1) {
+			return true;
+		} else if (getStart() != null) {
+			if (formatDate(getStart()).toLowerCase().indexOf(input) > -1 || formatDate(getEnd()).toLowerCase().indexOf(input) > -1) {
+				return true;
+			} else {
+				return false;
+			}
+		} else if (getEnd() != null) {
+			if (formatDate(getEnd()).toLowerCase().indexOf(input) > -1) {
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			return false;
+		}
+	}
+
 	/**
 	 * returns for
 	 * schedule: "{start date, end date} eventName"

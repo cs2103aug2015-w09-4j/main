@@ -11,6 +11,8 @@ import java.util.Stack;
 
 import javax.swing.Spring;
 
+import jdk.nashorn.internal.runtime.regexp.joni.SearchAlgorithm;
+
 
 public class Logic {
 
@@ -20,6 +22,7 @@ public class Logic {
 	private HashMap<String,Integer> TGIDMap;
 	private Stack<Command> reversedCommandStack;
 	private Logger logger;
+	private String lastSearchKey;
 
 	/**
 	 * Initialization of TGStorageManager, TGIDMap, and reversedCommandStack
@@ -41,7 +44,13 @@ public class Logic {
 	 * Displays all events stored within TangGuo
 	 * @return
 	 */
-
+	public ArrayList<ArrayList<Event>> updateSearchDisplay(){
+		if (lastSearchKey==null){
+			return null;
+		}else{
+			return updateSearchResult(lastSearchKey);
+		}
+	}
 	public ArrayList<ArrayList<Event>> updateTodayDisplay(){
 		ArrayList<ArrayList<Event>> displayEvent = new ArrayList<ArrayList<Event>>();
 		TGIDMap.clear();
@@ -149,6 +158,8 @@ public class Logic {
 				return sortEnd();
 			case SORT_PRIORITY:
 				return sortPriority();
+			case SEARCH:
+				return search(command);
 			case EXIT:
 				showToUser(Constants.TANGGUO_EXIT);
 				System.exit(0);
@@ -629,5 +640,39 @@ public class Logic {
 		returnedCommand.setDisplayMessage(String.format(Constants.TANGGUO_SORT_SUCCESS, "PRIORITY"));
 		returnedCommand.setDisplayedEventList(updateDisplay());
 		return returnedCommand;
+	}
+
+	private Command search(Command command) {
+
+		lastSearchKey = command.getSearchKey();
+		ArrayList<ArrayList<Event>> displayedEvent = updateSearchResult(lastSearchKey);
+
+		if (displayedEvent==null) {
+			return getErrorCommand(String.format(Constants.TANGGUO_SEARCH_FAIL, command.getSearchKey()));
+		}
+		TGIDMap.clear();
+		Command returnedCommand = new Command();
+		returnedCommand.setDisplayedTab(Constants.SEARCH_TAB_NUMBER);
+		returnedCommand.setDisplayedTab(Constants.SEARCH_TAB_NUMBER);
+		returnedCommand.setDisplayMessage(String.format(Constants.TANGGUO_SEARCH_SUCCESS, command.getSearchKey()));
+		returnedCommand.setDisplayedEventList(displayedEvent);
+
+		return returnedCommand;
+	}
+
+	private ArrayList<ArrayList<Event>> updateSearchResult(String searchKey){
+		ArrayList<Event> task = storage.searchTask(searchKey);
+		ArrayList<Event> deadline = storage.searchDeadline(searchKey);
+		ArrayList<Event> schedule = storage.searchSchedule(searchKey);
+		if (task.isEmpty() && deadline.isEmpty() && schedule.isEmpty()) {
+			return null;
+		}
+		TGIDMap.clear();
+		ArrayList<ArrayList<Event>> displayEvent = new ArrayList<ArrayList<Event>>();
+		TGIDMap.clear();
+		displayEvent.add(displayCache("Tasks", task,"t"));
+		displayEvent.add(displayCache("Deadlines", deadline,"d"));
+		displayEvent.add(displayCache("Schedules", schedule,"s"));
+		return displayEvent;
 	}
 }

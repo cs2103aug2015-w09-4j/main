@@ -21,7 +21,7 @@ public class MainTab extends JTabbedPane {
 	EventComponent panel2;
 	EventComponent panel3;
 	EventComponent panel4;
-	JComponent panel5;
+	SearchComponent panel5;
 	public MainTab(Logic logic){
 		super();
 		panel1 = new TodayComponent(logic);
@@ -39,7 +39,7 @@ public class MainTab extends JTabbedPane {
 		addTab("Schedules",panel4);
 		setMnemonicAt(3, KeyEvent.VK_4);
 
-		panel5 = makeTextPanel("Panel #3");
+		panel5 = new SearchComponent(logic);
 		addTab("Search",panel5);
 		setMnemonicAt(4, KeyEvent.VK_5);
 		addChangeListener(new ChangeListener() {
@@ -49,7 +49,7 @@ public class MainTab extends JTabbedPane {
 				if (getSelectedIndex()==0){ //today
 					panel1.refresh();
 				}else if (getSelectedIndex()==4){ //search result
-					//TODO
+					panel5.refresh();
 				}else{
 					refreshAllEventTabs(logic.updateDisplay());
 				}

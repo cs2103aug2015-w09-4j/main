@@ -1,22 +1,17 @@
 package GUI;
 
-import java.awt.Dimension;
-import java.awt.GridLayout;
 import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
-import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
 
 import main.Event;
 import main.Logic;
 
-public class TodayComponent extends JPanel {
+public class SearchComponent extends JPanel {
 	Logic logic;
-	public TodayComponent(Logic logic) {
+	public SearchComponent(Logic logic) {
 		super();
 		this.logic = logic;
 		refresh();
@@ -24,8 +19,10 @@ public class TodayComponent extends JPanel {
 
 	public void refresh(){
 		removeAll();
-		ArrayList<ArrayList<Event>> eventList = logic.updateTodayDisplay();
-
+		ArrayList<ArrayList<Event>> eventList = logic.updateSearchDisplay();
+		if (eventList == null){
+			return;
+		}
 		String[] labels = {"Tasks","Deadline","Schedules"};
 
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
