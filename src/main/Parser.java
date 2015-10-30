@@ -110,6 +110,9 @@ public class Parser {
 				break;
 			case SORT_PRIORITY:
 				break;
+			case SEARCH:
+				tempCommand.setSearchKey(event);
+				break;
 			case EXIT:
 				break;
 			case INVALID:

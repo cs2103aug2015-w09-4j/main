@@ -10,6 +10,7 @@ public class Command {
 	private Date eventEnd;
 	private String eventCategory;
 	private int eventPriority;
+	private String searchKey;
 	private String displayedIndex;
 	private boolean isUserCommand;
 	private Event event;
@@ -30,6 +31,12 @@ public class Command {
 	}
 	public void setDisplayedIndex(String displayedIndex) {
 		this.displayedIndex = displayedIndex;
+	}
+	public void setSearchKey(String searchKey) {
+		this.searchKey = searchKey;
+	}
+	public String getSearchKey() {
+		return searchKey;
 	}
 	public int getEventType() {
 		return eventType;
