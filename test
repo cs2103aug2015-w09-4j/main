@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?><calendar current="58">
+<?xml version="1.0" encoding="UTF-8"?><calendar current="59">
   <task id="19">
-    <name>shag</name>
+    <name>222</name>
     <category>DEFAULT</category>
     <priority>-1</priority>
   </task>
@@ -56,6 +56,11 @@
   </task>
   <task id="56">
     <name>jim</name>
+    <category>DEFAULT</category>
+    <priority>-1</priority>
+  </task>
+  <task id="58">
+    <name>yo</name>
     <category>DEFAULT</category>
     <priority>-1</priority>
   </task>

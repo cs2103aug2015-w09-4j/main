@@ -1,6 +1,7 @@
 package main;
 import java.lang.String;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -14,14 +15,15 @@ import jdk.nashorn.internal.runtime.regexp.joni.SearchAlgorithm;
 
 
 public class Logic {
-	
+
 	private static String fileName;
 	private Scanner scanner = new Scanner(System.in);
 	private TGStorageManager storage;
 	private HashMap<String,Integer> TGIDMap;
 	private Stack<Command> reversedCommandStack;
 	private Logger logger;
-	
+	private String lastSearchKey;
+
 	/**
 	 * Initialization of TGStorageManager, TGIDMap, and reversedCommandStack
 	 * @param file
@@ -35,86 +37,109 @@ public class Logic {
 		}
 		storage = new TGStorageManager(fileName);
 		TGIDMap = new HashMap<String,Integer>();
+
 		reversedCommandStack = new Stack<Command>();
 	}
-	
-	public static void main(String[] args) throws IOException, ParseException {
-		Logic tg = new Logic(args[0]);
-		showToUser(String.format(Constants.TANGGUO_START, fileName));
-		showToUser(tg.executeInputs("display"));
-		
-		while (true) {
-			tg.runUserInput();
+	/**
+	 * Displays all events stored within TangGuo
+	 * @return
+	 */
+	public ArrayList<ArrayList<Event>> updateSearchDisplay(){
+		if (lastSearchKey==null){
+			return null;
+		}else{
+			return updateSearchResult(lastSearchKey);
 		}
 	}
-	
+	public ArrayList<ArrayList<Event>> updateTodayDisplay(){
+		ArrayList<ArrayList<Event>> displayEvent = new ArrayList<ArrayList<Event>>();
+		TGIDMap.clear();
+		displayEvent.add(displayTodayCache("Tasks", storage.getTaskCache(),"t"));
+		displayEvent.add(displayTodayCache("Deadlines", storage.getDeadlineCache(),"d"));
+		displayEvent.add(displayTodayCache("Schedules", storage.getScheduleCache(),"s"));
+
+		return displayEvent;
+	}
+	public ArrayList<ArrayList<Event>> updateDisplay(){
+		ArrayList<ArrayList<Event>> displayEvent = new ArrayList<ArrayList<Event>>();
+		/*
+		if (allCachesEmpty()){
+			return String.format(Constants.TANGGUO_EMPTY_FILE, fileName);
+		}*/
+		TGIDMap.clear();
+		displayEvent.add(displayCache("Tasks", storage.getTaskCache(),"t"));
+		displayEvent.add(displayCache("Deadlines", storage.getDeadlineCache(),"d"));
+		displayEvent.add(displayCache("Schedules", storage.getScheduleCache(),"s"));
+
+		return displayEvent;
+	}
 	/**
-	 * requests for user's inputs and executes the commands given, showing the 
+	 * requests for user's inputs and executes the commands given, showing the
 	 * result back to the user
 	 */
-	private void runUserInput(){
-		requestInput();
-		String input = scanner.nextLine();
-		String output = executeInputs(input);
-		showToUser(output);
-	}
-	
+
 	//display to user
 	private static void showToUser(String display) {
 		System.out.println(display);
 	}
-	
+
 	//request input from the user
 	private static void requestInput() {
 		System.out.print("input: ");
 	}
-	
+
 	/**
 	 * Parses input String and returns the result
 	 * @param input
 	 * @return result indicating success/failure of command
 	 */
-	public String executeInputs(String input) {
+	public Command executeInputs(String input) {
 		Command currentCommand;
+		Command returnedCommand = new Command();
 		try {
 			currentCommand = Parser.parseCommand(input);
 		} catch (ParseException e) {
 			logger.writeException(e.toString());
-			return Constants.TANGGUO_DATE_OUT_OF_BOUNDS;
+			returnedCommand.setDisplayMessage(Constants.TANGGUO_DATE_OUT_OF_BOUNDS);
+			return returnedCommand;
 		} catch (NumberFormatException e) {
 			logger.writeException(e.toString());
-			return Constants.TANGGUO_INVALID_DATE;
+			returnedCommand.setDisplayMessage(Constants.TANGGUO_INVALID_DATE);
+			return returnedCommand;
 		} catch (IndexOutOfBoundsException e){
 			logger.writeException(e.toString());
-			return Constants.TANGGUO_INVALID_COMMAND;
+			returnedCommand.setDisplayMessage(Constants.TANGGUO_INVALID_COMMAND);
+			return returnedCommand;
 		} catch (AbnormalScheduleTimeException e) {
 			logger.writeException(e.toString());
-			return Constants.TANGGUO_INVALID_SCHEDULE;
+			returnedCommand.setDisplayMessage(Constants.TANGGUO_INVALID_SCHEDULE);
+			return returnedCommand;
 		}
-		return executeProcessedCommand(currentCommand);
+		returnedCommand = executeProcessedCommand(currentCommand);
+		return returnedCommand;
 	}
-	
+
 	/**
 	 * Decides which method to be executed based on parsed command
 	 * @param command
 	 * @return result indicating success/failure of command
 	 */
-	private String executeProcessedCommand(Command command){
+	private Command executeProcessedCommand(Command command){
 		switch (command.getType()) {
-			case ADD_DEADLINE:			
+			case ADD_DEADLINE:
 				return addDeadline(command);
 			case ADD_SCHEDULE:
 				return addSchedule(command);
 			case ADD_TASK:
 				return addTask(command);
 			case DISPLAY:
-				return displayTangGuo();
+				//return displayTangGuo();
 			case UPDATE_NAME:
 				return updateName(command);
 			case UPDATE_START:
-				return updateStart(command);	
+				return updateStart(command);
 			case UPDATE_END:
-				return updateEnd(command); 		
+				return updateEnd(command);
 			case UPDATE_PRIORITY:
 				return updatePriority(command); ///not done yet///
 			case UPDATE_CATEGORY:
@@ -139,64 +164,71 @@ public class Logic {
 				showToUser(Constants.TANGGUO_EXIT);
 				System.exit(0);
 			case INVALID:
-				return Constants.TANGGUO_INVALID_COMMAND;
+				return getErrorCommand(Constants.TANGGUO_INVALID_COMMAND);
 			default:
-				assert false:"Unhandled command type:"+command.getType();
-				return Constants.TANGGUO_IO_EXCEPTION;
-		} 
+				return getErrorCommand(Constants.TANGGUO_INVALID_COMMAND);
+
+		}
 	}
-	
+
 	/**
 	 * adds a Deadline event
 	 * @param command
 	 * @return
 	 */
-	private String addDeadline(Command command){
-		
+	private Command addDeadline(Command command){
+		Command returnedCommand = new Command();
+		returnedCommand.setDisplayMessage(String.format(Constants.TANGGUO_ADD_SUCCESS, fileName, command.getEventName()));
 		if (command.isUserCommand()){						//user command
 			int newID = storage.addDeadline(command.getEventName(), command.getEventEnd());
 			reversedCommandStack.push(reverseAdd(newID));
 		}else{												//undo
 			storage.addDeadline(command.getEvent());
 		}
-		return String.format(Constants.TANGGUO_ADD_SUCCESS, fileName, command.getEventName());
+		returnedCommand.setDisplayedEventList(updateDisplay());
+		return returnedCommand;
 	}
-	
+
 	/**
 	 * adds a Schedule event
 	 * @param command
 	 * @return
 	 */
-	private String addSchedule(Command command){
+	private Command addSchedule(Command command){
 		// add into storage
-		
+		Command returnedCommand = new Command();
+		returnedCommand.setDisplayMessage(String.format(Constants.TANGGUO_ADD_SUCCESS, fileName, command.getEventName()));
 		if (command.isUserCommand()){
 			int newID = storage.addSchedule(command.getEventName(), command.getEventStart(), command.getEventEnd());
 			reversedCommandStack.push(reverseAdd(newID));
 		}else{
 			storage.addSchedule(command.getEvent());
 		}
-		return String.format(Constants.TANGGUO_ADD_SUCCESS, fileName, command.getEventName());
+		returnedCommand.setDisplayedEventList(updateDisplay());
+		return returnedCommand;
 	}
-	
+
 	/**
 	 * adds a Floating Task event
 	 * @param command
 	 * @return
 	 */
-	private String addTask(Command command){
+	private Command addTask(Command command){
 		// add into storage
+		Command returnedCommand = new Command();
+		returnedCommand.setDisplayMessage(String.format(Constants.TANGGUO_ADD_SUCCESS, fileName, command.getEventName()));
 		if (command.isUserCommand()){
 			int newID = storage.addTask(command.getEventName());
 			reversedCommandStack.push(reverseAdd(newID));
 		}else{
 			storage.addTask(command.getEvent());
 		}
-		return String.format(Constants.TANGGUO_ADD_SUCCESS, fileName, command.getEventName());
+		returnedCommand.setDisplayedEventList(updateDisplay());
+		return returnedCommand;
 	}
-	
+
 	/**
-	 * Deletes a prior Event that was added to TangGuo 
+	 * Deletes a prior Event that was added to TangGuo
 	 * @param id	(should be a Command object of ADD_ type)
 	 * @return a Command object that deletes the Command object of the input ID
 	 */
@@ -207,83 +239,110 @@ public class Logic {
 		temp.setEventID(id);
 		return temp;
 	}
-	
+
 	/**
 	 * Undoes previous command by user
 	 * @return String indicating success/failure of undoing previous command
 	 */
-	private String undo(){
+	private Command undo(){
 		if (reversedCommandStack.isEmpty()){
-			return Constants.TANGGUO_UNDO_NO_COMMAND;
+			return getErrorCommand(Constants.TANGGUO_UNDO_NO_COMMAND);
 		}
 		executeProcessedCommand(reversedCommandStack.pop());
-		return Constants.TANGGUO_UNDO_SUCCESS;
+		Command returnedCommand = new Command();
+		returnedCommand.setDisplayedEventList(updateDisplay());
+		returnedCommand.setDisplayMessage(Constants.TANGGUO_UNDO_SUCCESS);
+		return returnedCommand;
 	}
-	
-	/**
-	 * Displays all events stored within TangGuo
-	 * @return
-	 */
-	private String displayTangGuo(){
-		String printOut = "";
-		
-		if (allCachesEmpty()){
-			return String.format(Constants.TANGGUO_EMPTY_FILE, fileName);
-		}
-		TGIDMap.clear();
-		printOut += displayCache("Tasks", storage.getTaskCache(),"t");
-		printOut += displayCache("Deadlines", storage.getDeadlineCache(),"d");
-		printOut += displayCache("Schedules", storage.getScheduleCache(),"s");
-		
-		return printOut;
-	}
-	
+
+
+
 	//checks if TangGuo has no events stored
 	private boolean allCachesEmpty(){
 		return(storage.getDeadlineCache().isEmpty() && storage.getTaskCache().isEmpty()
-				&& storage.getScheduleCache().isEmpty());			
+				&& storage.getScheduleCache().isEmpty());
 	}
-	
+
 	//Displays all events of a particular type: deadline/schedule/floating task
-	private String displayCache(String cacheName, ArrayList<Event> cache, String header){
-		String printOut = cacheName + ":\n";
+	private ArrayList<Event> displayCache(String cacheName, ArrayList<Event> cache, String header){
+		ArrayList<Event> temp = new ArrayList<Event>();
 		for (int i = 0; i < cache.size(); i++){
 			TGIDMap.put(header+(i+1), cache.get(i).getID());
-			printOut = printOut + (i+1) + ". ";
-			
-			printOut += cache.get(i).toString();
+
+			temp.add(cache.get(i));
 		}
-		return printOut;
+		return temp;
 	}
-	
+
+	private ArrayList<Event> displayTodayCache(String cacheName, ArrayList<Event> cache, String header){
+		ArrayList<Event> temp = new ArrayList<Event>();
+		int counter = 1;
+		for (int i = 0; i < cache.size(); i++){
+			if (isTodayEvent(cache.get(i))){
+				TGIDMap.put(header+(counter++), cache.get(i).getID());
+				temp.add(cache.get(i));
+			}
+		}
+		return temp;
+	}
+
+	private boolean isTodayEvent(Event event){
+		Date today = new Date();
+		if (event.getType()==Constants.TASK_TYPE_NUMBER){
+			return true;
+		}else if (event.getType()==Constants.DEADLINE_TYPE_NUMBER){
+			return isSameDay(today,event.getEnd());
+		}else if (event.getType()==Constants.SCHEDULE_TYPE_NUMBER){
+			return isSameDay(today,event.getEnd()) || isSameDay(today,event.getStart());
+		}else{
+			return false;
+		}
+	}
+
+	private boolean isSameDay(Date date1, Date date2){
+		SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMdd");
+		return fmt.format(date1).equals(fmt.format(date2));
+
+	}
 	/**
 	 * Updates the name of an existing event to the new name input by user
 	 * @param command
 	 * @return
 	 */
-	private String updateName(Command command){
+	private Command updateName(Command command){
+		Command returnedCommand = new Command();
+
 		String newName = command.getEventName();
 		String displayedIndex = command.getDisplayedIndex();
 		int taskID = -1;
-		
+
 		if (TGIDMap.containsKey(displayedIndex)){
 			taskID = TGIDMap.get(displayedIndex);
 		}else{
-			return Constants.TANGGUO_INVALID_INDEX;
+			return getErrorCommand(Constants.TANGGUO_INVALID_INDEX);
 		}
-		
+
 		String oldName = storage.getEventByID(taskID).getName();
-		
+
 		if (command.isUserCommand()){
 			reversedCommandStack.push(reverseUpdateName(taskID, oldName, displayedIndex));
 		}
 		storage.updateNameByID(taskID, newName);
-		
-		return String.format(Constants.TANGGUO_UPDATE_NAME_SUCCESS, oldName,
-				newName) + Constants.NEW_LINE + displayTangGuo();	
+		returnedCommand.setDisplayMessage(String.format(Constants.TANGGUO_UPDATE_NAME_SUCCESS, oldName,
+				newName));
+		returnedCommand.setDisplayedEventList(updateDisplay());
+		return returnedCommand;
+
+
 	}
-		
-	
+
+	private Command getErrorCommand(String ErrorMessage){
+		Command c = new Command();
+		c.setDisplayMessage(ErrorMessage);
+		return c;
+	}
+
+
 	/**
 	 * Reverts back the name of an event
 	 * @param id
@@ -300,31 +359,35 @@ public class Logic {
 		temp.setDisplayedIndex(displayedIndex);
 		return temp;
 	}
-	
-	private String updateStart(Command command) {
+
+	private Command updateStart(Command command) {
+		Command returnedCommand = new Command();
 		Date startDate = command.getEventStart();
 		String displayedIndex = command.getDisplayedIndex();
 		int taskID = -1;
-		
+
 		if (TGIDMap.containsKey(displayedIndex)){
 			taskID = TGIDMap.get(displayedIndex);
 		}else{
-			return Constants.TANGGUO_INVALID_INDEX;
+			return getErrorCommand(Constants.TANGGUO_INVALID_INDEX);
 		}
-		
+
 		Date oldStart = storage.getEventByID(taskID).getStart();
-		
+
 		if (storage.updateStartByID(taskID, startDate)) {
 			if (command.isUserCommand()){
 				reversedCommandStack.push(reverseUpdateStart(taskID, oldStart, displayedIndex));
 			}
-			return String.format(Constants.TANGGUO_UPDATE_START_SUCCESS, storage.getEventByID(taskID).getName(),
-					startDate.toString()) + Constants.NEW_LINE + displayTangGuo();
+			returnedCommand.setDisplayMessage(String.format(Constants.TANGGUO_UPDATE_START_SUCCESS, storage.getEventByID(taskID).getName(),
+					startDate.toString()));
+			returnedCommand.setDisplayedEventList(updateDisplay());
+			return returnedCommand;
 		} else {
-			return Constants.TANGGUO_UPDATE_START_FAIL;
+			return getErrorCommand(Constants.TANGGUO_UPDATE_START_FAIL);
 		}
+
 	}
-	
+
 	/**
 	 * Reverts back the start date of an event
 	 * @param id
@@ -341,33 +404,36 @@ public class Logic {
 		temp.setDisplayedIndex(displayedIndex);
 		return temp;
 	}
-	
-	private String updateEnd(Command command) {
+
+	private Command updateEnd(Command command) {
 		Date endDate = command.getEventEnd();
+		Command returnedCommand = new Command();
 		String displayedIndex = command.getDisplayedIndex();
 		int taskID = -1;
-		
+
 		if (TGIDMap.containsKey(displayedIndex)){
 			taskID = TGIDMap.get(displayedIndex);
 		}else{
-			return Constants.TANGGUO_INVALID_INDEX;
+			return getErrorCommand(Constants.TANGGUO_INVALID_INDEX);
 		}
-		
+
 		Date oldEnd = storage.getEventByID(taskID).getEnd();
-		
+
 		System.out.println(endDate.toString());
-		
+
 		if (storage.updateEndByID(taskID, endDate)) {
 			if (command.isUserCommand()){
 				reversedCommandStack.push(reverseUpdateEnd(taskID, oldEnd, displayedIndex));
 			}
-			return String.format(Constants.TANGGUO_UPDATE_END_SUCCESS, storage.getEventByID(taskID).getName(),
-					endDate.toString()) + Constants.NEW_LINE + displayTangGuo();
+			returnedCommand.setDisplayMessage(String.format(Constants.TANGGUO_UPDATE_END_SUCCESS, storage.getEventByID(taskID).getName(),
+					endDate.toString()));
+			returnedCommand.setDisplayedEventList(updateDisplay());
+			return returnedCommand;
 		} else {
-			return Constants.TANGGUO_UPDATE_END_FAIL;
+			return getErrorCommand(Constants.TANGGUO_UPDATE_END_FAIL);
 		}
 	}
-	
+
 	/**
 	 * Reverts back the end date of an event
 	 * @param id
@@ -384,28 +450,30 @@ public class Logic {
 		temp.setDisplayedIndex(displayedIndex);
 		return temp;
 	}
-	
-	
-	private String updatePriority(Command command) {
+
+
+	private Command updatePriority(Command command) {
 		int priority = command.getEventPriority();
 		String displayedIndex = command.getDisplayedIndex();
+		Command returnedCommand = new Command();
 		int taskID = -1;
-		
+
 		if (TGIDMap.containsKey(displayedIndex)){
 			taskID = TGIDMap.get(displayedIndex);
 		}else{
-			return Constants.TANGGUO_INVALID_INDEX;
+			return getErrorCommand(Constants.TANGGUO_INVALID_INDEX);
 		}
-		
+
 		int oldPriority = storage.getEventByID(taskID).getPriority();
-		
+
 		if (command.isUserCommand()){
 			reversedCommandStack.push(reverseUpdatePriority(taskID, oldPriority, displayedIndex));
 		}
 		storage.updatePriorityByID(taskID, priority);
-		
-		return String.format(Constants.TANGGUO_UPDATE_PRIORITY_SUCCESS, storage.getEventByID(taskID).getName(),
-				priority) + Constants.NEW_LINE + displayTangGuo();
+		returnedCommand.setDisplayMessage(String.format(Constants.TANGGUO_UPDATE_PRIORITY_SUCCESS, storage.getEventByID(taskID).getName(),
+				priority));
+		returnedCommand.setDisplayedEventList(updateDisplay());
+		return returnedCommand;
 	}
 
 	/**
@@ -424,29 +492,31 @@ public class Logic {
 		temp.setDisplayedIndex(displayedIndex);
 		return temp;
 	}
-	
-	private String updateCategory(Command command) {
+
+	private Command updateCategory(Command command) {
 		String newCategory = command.getEventCategory();
 		String displayedIndex = command.getDisplayedIndex();
 		int taskID = -1;
-		
+		Command returnedCommand = new Command();
+
 		if (TGIDMap.containsKey(displayedIndex)){
 			taskID = TGIDMap.get(displayedIndex);
 		}else{
-			return Constants.TANGGUO_INVALID_INDEX;
+			return getErrorCommand(Constants.TANGGUO_INVALID_INDEX);
 		}
-		
+
 		String oldCategory = storage.getEventByID(taskID).getCategory();
-		
+
 		if (command.isUserCommand()){
 			reversedCommandStack.push(reverseUpdateCategory(taskID, oldCategory, displayedIndex));
 		}
 		storage.updateCategoryByID(taskID, newCategory);
-		
-		return String.format(Constants.TANGGUO_UPDATE_CATEGORY_SUCCESS, storage.getEventByID(taskID).getName(),
-				newCategory) + Constants.NEW_LINE + displayTangGuo();	
+		returnedCommand.setDisplayMessage(String.format(Constants.TANGGUO_UPDATE_CATEGORY_SUCCESS, storage.getEventByID(taskID).getName(),
+				newCategory));
+		returnedCommand.setDisplayedEventList(updateDisplay());
+		return returnedCommand;
 	}
-	
+
 	private Command reverseUpdateCategory(int id, String category, String displayedIndex) {
 		Command temp = new Command();
 		temp.setIsUserCommand(false);
@@ -460,25 +530,25 @@ public class Logic {
 	private String markAsDone(Command command){
 		String displayedIndex = command.getDisplayedIndex();
 		int taskID = -1;
-		
+
 		if (TGIDMap.containsKey(displayedIndex)){
 			taskID = TGIDMap.get(displayedIndex);
 		}else{
 			return Constants.TANGGUO_INVALID_INDEX;
 		}
-		
+
 		if (command.isUserCommand()){
 			reversedCommandStack.push(reverseMarkAsDone(taskID));
 			storage.updateIsDoneByID(taskID, true);
 		} else {
 			storage.updateIsDoneByID(taskID, false);
-		}	
-		
+		}
+
 		return String.format(Constants.TANGGUO_UPDATE_DONE_SUCCESS, storage.getEventByID(taskID).getName())
 				+ Constants.NEW_LINE + displayTangGuo();
 	}
-	
-	
+
+
 	private Command reverseMarkAsDone(int id){
 		Command temp = new Command();
 		temp.setIsUserCommand(false);
@@ -489,29 +559,30 @@ public class Logic {
 	*/
 	/**
 	 * deletes an Event
-	 * @param toBeDeleted : [letter][number] 
+	 * @param toBeDeleted : [letter][number]
 	 * letter refers to the type of event = {t: task, s: schedule, d: deadline};
 	 * number refers to index displayed
 	 * @return
 	 */
-	private String deleteEvent(Command command) {
+	private Command deleteEvent(Command command) {
 		int IDToDelete;
+		Command returnedCommand = new Command();
 		if (command.isUserCommand()){
 			if (TGIDMap.containsKey(command.getDisplayedIndex())){
 				IDToDelete = TGIDMap.get(command.getDisplayedIndex());
 			} else {
-				return Constants.TANGGUO_INVALID_INDEX;
+				return getErrorCommand(Constants.TANGGUO_INVALID_INDEX);
 			}
 			reversedCommandStack.push(reverseDeleteEvent(IDToDelete));
 		}else{
 			IDToDelete = command.getEventID();
 		}
 		Event deletedEvent = storage.deleteEventByID(IDToDelete);
-
-		return String.format(Constants.TANGGUO_DELETE_SUCCESS, fileName, deletedEvent.getName()) +
-				Constants.NEW_LINE + displayTangGuo();
+		returnedCommand.setDisplayMessage(String.format(Constants.TANGGUO_DELETE_SUCCESS, fileName, deletedEvent.getName()));
+		returnedCommand.setDisplayedEventList(updateDisplay());
+		return returnedCommand;
 	}
-	
+
 	/**
 	 * Add back an event that was deleted previously
 	 * @param id
@@ -538,43 +609,70 @@ public class Logic {
 		temp.setEvent(event);
 		return temp;
 	}
-	
-	private String sortName() {
+
+	private Command sortName() {
 		storage.sortName();
-		return String.format(Constants.TANGGUO_SORT_SUCCESS, "NAME") + Constants.NEW_LINE + displayTangGuo();
+		Command returnedCommand = new Command();
+		returnedCommand.setDisplayMessage(String.format(Constants.TANGGUO_SORT_SUCCESS, "NAME"));
+		returnedCommand.setDisplayedEventList(updateDisplay());
+		return returnedCommand;
 	}
-	
-	private String sortStart() {
+
+	private Command sortStart() {
 		storage.sortStart();
-		return String.format(Constants.TANGGUO_SORT_SUCCESS, "START DATE") + Constants.NEW_LINE + displayTangGuo();
+		Command returnedCommand = new Command();
+		returnedCommand.setDisplayMessage(String.format(Constants.TANGGUO_SORT_SUCCESS, "START DATE"));
+		returnedCommand.setDisplayedEventList(updateDisplay());
+		return returnedCommand;
 	}
-	
-	private String sortEnd() {
+
+	private Command sortEnd() {
 		storage.sortEnd();
-		return String.format(Constants.TANGGUO_SORT_SUCCESS, "END DATE") + Constants.NEW_LINE + displayTangGuo();
+		Command returnedCommand = new Command();
+		returnedCommand.setDisplayMessage(String.format(Constants.TANGGUO_SORT_SUCCESS, "END DATE"));
+		returnedCommand.setDisplayedEventList(updateDisplay());
+		return returnedCommand;
 	}
-	
-	private String sortPriority() {
+
+	private Command sortPriority() {
 		storage.sortPriority();
-		return String.format(Constants.TANGGUO_SORT_SUCCESS, "PRIORITY") + Constants.NEW_LINE + displayTangGuo();
+		Command returnedCommand = new Command();
+		returnedCommand.setDisplayMessage(String.format(Constants.TANGGUO_SORT_SUCCESS, "PRIORITY"));
+		returnedCommand.setDisplayedEventList(updateDisplay());
+		return returnedCommand;
 	}
-	
-	private String search(Command command) {
-		String printOut = "";
-		
-		ArrayList<Event> task = storage.searchTask(command.getSearchKey());
-		ArrayList<Event> deadline = storage.searchDeadline(command.getSearchKey());
-		ArrayList<Event> schedule = storage.searchSchedule(command.getSearchKey());
-		
-		if (task.isEmpty() && deadline.isEmpty() && schedule.isEmpty()) {
-			return String.format(Constants.TANGGUO_SEARCH_FAIL, command.getSearchKey());
+
+	private Command search(Command command) {
+
+		lastSearchKey = command.getSearchKey();
+		ArrayList<ArrayList<Event>> displayedEvent = updateSearchResult(lastSearchKey);
+
+		if (displayedEvent==null) {
+			return getErrorCommand(String.format(Constants.TANGGUO_SEARCH_FAIL, command.getSearchKey()));
 		}
 		TGIDMap.clear();
-		printOut += String.format(Constants.TANGGUO_SEARCH_SUCCESS, command.getSearchKey()) + Constants.NEW_LINE;
-		printOut += displayCache("Tasks", task,"t");
-		printOut += displayCache("Deadlines", deadline,"d");
-		printOut += displayCache("Schedules", schedule,"s");
-		
-		return printOut;
+		Command returnedCommand = new Command();
+		returnedCommand.setDisplayedTab(Constants.SEARCH_TAB_NUMBER);
+		returnedCommand.setDisplayedTab(Constants.SEARCH_TAB_NUMBER);
+		returnedCommand.setDisplayMessage(String.format(Constants.TANGGUO_SEARCH_SUCCESS, command.getSearchKey()));
+		returnedCommand.setDisplayedEventList(displayedEvent);
+
+		return returnedCommand;
+	}
+
+	private ArrayList<ArrayList<Event>> updateSearchResult(String searchKey){
+		ArrayList<Event> task = storage.searchTask(searchKey);
+		ArrayList<Event> deadline = storage.searchDeadline(searchKey);
+		ArrayList<Event> schedule = storage.searchSchedule(searchKey);
+		if (task.isEmpty() && deadline.isEmpty() && schedule.isEmpty()) {
+			return null;
+		}
+		TGIDMap.clear();
+		ArrayList<ArrayList<Event>> displayEvent = new ArrayList<ArrayList<Event>>();
+		TGIDMap.clear();
+		displayEvent.add(displayCache("Tasks", task,"t"));
+		displayEvent.add(displayCache("Deadlines", deadline,"d"));
+		displayEvent.add(displayCache("Schedules", schedule,"s"));
+		return displayEvent;
 	}
 }

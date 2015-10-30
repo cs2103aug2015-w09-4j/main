@@ -1,4 +1,5 @@
 package main;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Command {
@@ -14,6 +15,9 @@ public class Command {
 	private String displayedIndex;
 	private boolean isUserCommand;
 	private Event event;
+	private String displayMessage;
+	private int displayedTab=-1;
+	private ArrayList<ArrayList<Event>> displayedEventList;
 	public Event getEvent() {
 		return event;
 	}
@@ -85,5 +89,23 @@ public class Command {
 	}
 	public void setType(Constants.COMMAND_TYPE type) {
 		this.type = type;
+	}
+	public String getDisplayMessage() {
+		return displayMessage;
+	}
+	public void setDisplayMessage(String displayMessage) {
+		this.displayMessage = displayMessage;
+	}
+	public int getDisplayedTab() {
+		return displayedTab;
+	}
+	public void setDisplayedTab(int displayedTab) {
+		this.displayedTab = displayedTab;
+	}
+	public ArrayList<ArrayList<Event>> getDisplayedEventList() {
+		return displayedEventList;
+	}
+	public void setDisplayedEventList(ArrayList<ArrayList<Event>> displayedEventList) {
+		this.displayedEventList = displayedEventList;
 	}
 }
