@@ -8,7 +8,6 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Stack;
@@ -45,6 +44,7 @@ public class TGStorageManager {
 	private ArrayList<Event> _deadlineCache;
 	private ArrayList<Event> _scheduleCache;
 	private Logger logger;
+	private Calendar calendar;
 	File inputFile;
 	private int currentIndex;
 
@@ -53,6 +53,7 @@ public class TGStorageManager {
 		this._taskCache = new ArrayList<Event>();
 		this._deadlineCache = new ArrayList<Event>();
 		this._scheduleCache = new ArrayList<Event>();
+		this.calendar = new Calendar();
 		try {
 			this.logger = new Logger("Tangguo.log");
 		} catch (IOException e) {
@@ -60,6 +61,7 @@ public class TGStorageManager {
 		}
 		
 		initialize();
+		this.calendar.updateCalendar(this._scheduleCache);
 	}
 	public Event getEventByID(int id){
 		for (Event element:_taskCache){
@@ -129,12 +131,17 @@ public class TGStorageManager {
 		_scheduleCache.add(newSchedule);
 		currentIndex++;
 		updateStorage();
+		calendar.updateCalendar(_scheduleCache);
 		return newSchedule.getID();
 	}
 	public int addSchedule(String name, Date startDate, Date endDate){
 		Event newSchedule = new Event(currentIndex,name, startDate, endDate);
-		addSchedule(newSchedule);
-		return newSchedule.getID();
+		if (calendar.addSchedule(newSchedule)) {
+			addSchedule(newSchedule);
+			return newSchedule.getID();
+		} else {
+			return -1;
+		}
 	}
 	
 	//precon:id exists

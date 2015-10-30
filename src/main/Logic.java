@@ -168,7 +168,11 @@ public class Logic {
 		
 		if (command.isUserCommand()){
 			int newID = storage.addSchedule(command.getEventName(), command.getEventStart(), command.getEventEnd());
-			reversedCommandStack.push(reverseAdd(newID));
+			if (newID > -1) {
+				reversedCommandStack.push(reverseAdd(newID));
+			} else {
+				return String.format(Constants.TANGGUO_SCHEDULE_CLASH, command.getEventName());
+			}
 		}else{
 			storage.addSchedule(command.getEvent());
 		}

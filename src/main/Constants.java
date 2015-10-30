@@ -45,6 +45,7 @@ public class Constants {
 	public static final String TANGGUO_UNDO_SUCCESS = "Undo successful!";
 	public static final String TANGGUO_EXIT = "See you again!";
 	
+	public static final String TANGGUO_SCHEDULE_CLASH = "Cannot add : %1$s because that time slot is already taken!";
 	public static final String TANGGUO_UNDO_NO_COMMAND ="No command to be undone!";
 	public static final String TANGGUO_EMPTY_FILE = "%s is empty!";
 
