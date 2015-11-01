@@ -217,3 +217,13 @@
 2015/10/30 00:44:56 Log: delete schedule: schedud
 2015/10/30 00:45:03 Log: delete deadline: deadline dododo 
 2015/10/30 15:26:42 Log: addTask: yo
+2015/11/01 11:30:50 Log: add deadline: deadline
+2015/11/01 11:31:23 exception occurs: java.text.ParseException: Unparseable date: "12/10/2015"
+2015/11/01 11:31:43 Log: add deadline: time to test deadlin
+2015/11/01 12:28:17 Log: add schedule: deadline
+2015/11/01 15:38:12 Log: addTask: schedule from melbourne to tennesse
+2015/11/01 15:38:24 Log: add schedule: schedule
+2015/11/01 15:38:46 Log: add deadline: testing
+2015/11/01 15:38:57 Log: add deadline: testing settings
+2015/11/01 15:44:17 Log: add schedule: schedule
+2015/11/01 15:44:48 Log: add schedule: schedultest2
