@@ -160,6 +160,7 @@ public class TGStorageManager {
 				logger.writeLog("delete schedule: "+element.getName());
 				_scheduleCache.remove(element);
 				updateStorage();
+				calendar.updateCalendar(_scheduleCache);
 				return element;
 			}
 		}
@@ -191,6 +192,7 @@ public class TGStorageManager {
 			if (element.getID() == id){
 				element.setName(name);
 				updateStorage();
+				calendar.updateCalendar(_scheduleCache);
 				return;
 			}
 		}
@@ -212,6 +214,7 @@ public class TGStorageManager {
 				if (startDate.before(element.getEnd()) && calendar.updateStart(id, startDate)) {
 					element.setStart(startDate);
 					updateStorage();
+					calendar.updateCalendar(_scheduleCache);
 					return true;
 				} else {
 					return false;
@@ -229,6 +232,7 @@ public class TGStorageManager {
 				if (endDate.after(element.getStart()) && calendar.updateEnd(id, endDate)) {
 					element.setEnd(endDate);
 					updateStorage();
+					calendar.updateCalendar(_scheduleCache);
 					return true;
 				} else {
 					return false;
@@ -261,6 +265,7 @@ public class TGStorageManager {
 			if (element.getID() == id){
 				element.setCategory(category);
 				updateStorage();
+				calendar.updateCalendar(_scheduleCache);
 				return;
 			}
 		}
@@ -289,6 +294,7 @@ public class TGStorageManager {
 			if (element.getID() == id){
 				element.setPriority(priority);
 				updateStorage();
+				calendar.updateCalendar(_scheduleCache);
 				return;
 			}
 		}
@@ -316,6 +322,7 @@ public class TGStorageManager {
 			if (element.getID() == id){
 				element.setIsDone(isDone);
 				updateStorage();
+				calendar.updateCalendar(_scheduleCache);
 				return;
 			}
 		}

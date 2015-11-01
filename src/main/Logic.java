@@ -116,7 +116,7 @@ public class Logic {
 			case UPDATE_END:
 				return updateEnd(command); 		
 			case UPDATE_PRIORITY:
-				return updatePriority(command); ///not done yet///
+				return updatePriority(command);
 			case UPDATE_CATEGORY:
 				return updateCategory(command);
 		//	case DONE:
