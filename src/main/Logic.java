@@ -562,9 +562,10 @@ public class Logic {
 	private String search(Command command) {
 		String printOut = "";
 		
-		ArrayList<Event> task = storage.searchTask(command.getSearchKey());
-		ArrayList<Event> deadline = storage.searchDeadline(command.getSearchKey());
-		ArrayList<Event> schedule = storage.searchSchedule(command.getSearchKey());
+		String input = command.getSearchKey().toLowerCase();
+		ArrayList<Event> task = storage.searchTask(input);
+		ArrayList<Event> deadline = storage.searchDeadline(input);
+		ArrayList<Event> schedule = storage.searchSchedule(input);
 		
 		if (task.isEmpty() && deadline.isEmpty() && schedule.isEmpty()) {
 			return String.format(Constants.TANGGUO_SEARCH_FAIL, command.getSearchKey());

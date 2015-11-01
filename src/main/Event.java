@@ -101,9 +101,9 @@ public class Event {
 	}
 	
 	public boolean contains(String input) {
-		if (getName().indexOf(input) > -1) {
+		if (getName().toLowerCase().indexOf(input) > -1) {
 			return true;
-		} else if (getCategory().indexOf(input) > -1) {
+		} else if (getCategory().toLowerCase().indexOf(input) > -1) {
 			return true;
 		} else if (getStart() != null) {
 			if (formatDate(getStart()).toLowerCase().indexOf(input) > -1 || formatDate(getEnd()).toLowerCase().indexOf(input) > -1) {
