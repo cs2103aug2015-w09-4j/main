@@ -34,7 +34,7 @@ public class Parser {
 				try {														//deadline
 					if(isNumber(array[array.length - 1])) {	
 						
-						modifiedEndDateString = defaultDateTimeCheck(array[array.length - 1]);
+						modifiedEndDateString = defaultDateTimeCheck(array[array.length - 1], "deadline");
 						
 						endDate = dateConverter(modifiedEndDateString);
 						
@@ -49,8 +49,8 @@ public class Parser {
 					
 					try {													//schedule
 						if(isNumber(array2[1]) && isNumber(array2[0]) && startAndEndTimeValidation(array2[0], array2[1])) {
-							modifiedEndDateString = defaultDateTimeCheck(array2[1]);
-							modifiedStartDateString = defaultDateTimeCheck(array2[0]);
+							modifiedEndDateString = defaultDateTimeCheck(array2[1], "schedule");
+							modifiedStartDateString = defaultDateTimeCheck(array2[0], "schedule");
 							
 							endDate = dateConverter(modifiedEndDateString);
 							startDate = dateConverter(modifiedStartDateString);
@@ -289,7 +289,7 @@ public class Parser {
 	 * @param date
 	 * @return String
 	 */	
-	private static String defaultDateTimeCheck(String date) {
+	private static String defaultDateTimeCheck(String date, String eventType) {
 		
 		String modifiedString = date;
 		String todayDate = getTodayDate();
@@ -301,7 +301,10 @@ public class Parser {
 			modifiedString = modifiedString.substring(0, modifiedString.length() - 5) + todayDate + modifiedString.substring(modifiedString.length() - 5);
 			//code above is abit hard-coded yes yes, but it literally adds current date to the string in our format.
 		} else if (hourMinuteSplit.length == 1) {
-			modifiedString = modifiedString + " 00:00";
+			if(eventType.equals("deadline"))
+				modifiedString = modifiedString + " 23:59";
+			else if(eventType.equals("schedule"))
+				modifiedString = modifiedString + " 00:00";
 		}
 		
 		return modifiedString;	
