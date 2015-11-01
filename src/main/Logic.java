@@ -10,6 +10,8 @@ import java.util.Stack;
 
 import javax.swing.Spring;
 
+import jdk.nashorn.internal.runtime.regexp.joni.SearchAlgorithm;
+
 
 public class Logic {
 	
@@ -131,6 +133,8 @@ public class Logic {
 				return sortEnd();
 			case SORT_PRIORITY:
 				return sortPriority();
+			case SEARCH:
+				return search(command);
 			case EXIT:
 				showToUser(Constants.TANGGUO_EXIT);
 				System.exit(0);
@@ -355,6 +359,8 @@ public class Logic {
 		
 		Date oldEnd = storage.getEventByID(taskID).getEnd();
 		
+		System.out.println(endDate.toString());
+		
 		if (storage.updateEndByID(taskID, endDate)) {
 			if (command.isUserCommand()){
 				reversedCommandStack.push(reverseUpdateEnd(taskID, oldEnd, displayedIndex));
@@ -555,5 +561,25 @@ public class Logic {
 	private String sortPriority() {
 		storage.sortPriority();
 		return String.format(Constants.TANGGUO_SORT_SUCCESS, "PRIORITY") + Constants.NEW_LINE + displayTangGuo();
+	}
+	
+	private String search(Command command) {
+		String printOut = "";
+		
+		String input = command.getSearchKey().toLowerCase();
+		ArrayList<Event> task = storage.searchTask(input);
+		ArrayList<Event> deadline = storage.searchDeadline(input);
+		ArrayList<Event> schedule = storage.searchSchedule(input);
+		
+		if (task.isEmpty() && deadline.isEmpty() && schedule.isEmpty()) {
+			return String.format(Constants.TANGGUO_SEARCH_FAIL, command.getSearchKey());
+		}
+		TGIDMap.clear();
+		printOut += String.format(Constants.TANGGUO_SEARCH_SUCCESS, command.getSearchKey()) + Constants.NEW_LINE;
+		printOut += displayCache("Tasks", task,"t");
+		printOut += displayCache("Deadlines", deadline,"d");
+		printOut += displayCache("Schedules", schedule,"s");
+		
+		return printOut;
 	}
 }
