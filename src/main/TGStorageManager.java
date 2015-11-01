@@ -233,34 +233,10 @@ public class TGStorageManager {
 	}
 	//precon:id exists
 	public boolean updateStartByID(int id, Date startDate){
-		for (Event element:_taskCache){
-			if (element.getID() == id){
-				if (startDate.before(element.getEnd())) {
-					element.setStart(startDate);
-					updateStorage();
-					return true;
-				} else {
-					return false;
-				}
-			}
-		}
-		
 		for (Event element:_scheduleCache){
 			if (element.getID() == id){
-				if (startDate.before(element.getEnd())) {
-					element.setStart(startDate);
-					updateStorage();
-					return true;
-				} else {
-					return false;
-				}
-			}
-		}
-		
-		for (Event element:_deadlineCache){
-			if (element.getID() == id){
-				if (startDate.before(element.getEnd())) {
-					element.setStart(startDate);
+				if (startDate.before(element.getEnd()) && calendar.updateStart(id, startDate)) {
+					element.setEnd(startDate);
 					updateStorage();
 					return true;
 				} else {
@@ -274,21 +250,9 @@ public class TGStorageManager {
 	
 	//precon:id exists
 	public boolean updateEndByID(int id, Date endDate){
-		for (Event element:_taskCache){
-			if (element.getID() == id){
-				if (endDate.after(element.getStart())) {
-					element.setEnd(endDate);
-					updateStorage();
-					return true;
-				} else {
-					return false;
-				}
-			}
-		}
-		
 		for (Event element:_scheduleCache){
 			if (element.getID() == id){
-				if (endDate.after(element.getStart())) {
+				if (endDate.after(element.getStart()) && calendar.updateEnd(id, endDate)) {
 					element.setEnd(endDate);
 					updateStorage();
 					return true;
@@ -300,13 +264,9 @@ public class TGStorageManager {
 		
 		for (Event element:_deadlineCache){
 			if (element.getID() == id){
-				if (endDate.after(element.getStart())) {
-					element.setEnd(endDate);
-					updateStorage();
-					return true;
-				} else {
-					return false;
-				}
+				element.setEnd(endDate);
+				updateStorage();
+				return true;
 			}
 		}
 		return false;
