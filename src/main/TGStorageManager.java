@@ -210,7 +210,7 @@ public class TGStorageManager {
 		for (Event element:_scheduleCache){
 			if (element.getID() == id){
 				if (startDate.before(element.getEnd()) && calendar.updateStart(id, startDate)) {
-					element.setEnd(startDate);
+					element.setStart(startDate);
 					updateStorage();
 					return true;
 				} else {
