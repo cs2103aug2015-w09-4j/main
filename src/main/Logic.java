@@ -119,12 +119,12 @@ public class Logic {
 				return updatePriority(command);
 			case UPDATE_CATEGORY:
 				return updateCategory(command);
-		//	case DONE:
-		//		return markAsDone(command);		///not done yet///
+			case DONE:
+				return markAsDone(command);		///not done yet///
 			case DELETE:
 				return deleteEvent(command);
 			case UNDO:
-				return undo();
+				return undo();					//needs error handling
 			case SORT_NAME:
 				return sortName();
 			case SORT_START:
@@ -159,7 +159,8 @@ public class Logic {
 		}else{												//undo
 			storage.addDeadline(command.getEvent());
 		}
-		return String.format(Constants.TANGGUO_ADD_SUCCESS, fileName, command.getEventName());
+		return String.format(Constants.TANGGUO_ADD_SUCCESS, fileName, command.getEventName())
+				+ displayTangGuo();
 	}
 	
 	/**
@@ -180,7 +181,8 @@ public class Logic {
 		}else{
 			storage.addSchedule(command.getEvent());
 		}
-		return String.format(Constants.TANGGUO_ADD_SUCCESS, fileName, command.getEventName());
+		return String.format(Constants.TANGGUO_ADD_SUCCESS, fileName, command.getEventName())
+				+ displayTangGuo();
 	}
 	
 	/**
@@ -196,7 +198,8 @@ public class Logic {
 		}else{
 			storage.addTask(command.getEvent());
 		}
-		return String.format(Constants.TANGGUO_ADD_SUCCESS, fileName, command.getEventName());
+		return String.format(Constants.TANGGUO_ADD_SUCCESS, fileName, command.getEventName())
+				+ displayTangGuo();
 	}
 	
 	/**
@@ -221,7 +224,8 @@ public class Logic {
 			return Constants.TANGGUO_UNDO_NO_COMMAND;
 		}
 		executeProcessedCommand(reversedCommandStack.pop());
-		return Constants.TANGGUO_UNDO_SUCCESS;
+		//need to check for error
+		return Constants.TANGGUO_UNDO_SUCCESS + displayTangGuo();
 	}
 	
 	/**
@@ -251,11 +255,15 @@ public class Logic {
 	//Displays all events of a particular type: deadline/schedule/floating task
 	private String displayCache(String cacheName, ArrayList<Event> cache, String header){
 		String printOut = cacheName + ":\n";
+		int count = 1;
 		for (int i = 0; i < cache.size(); i++){
-			TGIDMap.put(header+(i+1), cache.get(i).getID());
-			printOut = printOut + (i+1) + ". ";
-			
+			if (cache.get(i).isDone()){
+				continue;
+			}
+			TGIDMap.put(header+(count), cache.get(i).getID());
+			printOut = printOut + (count) + ". ";
 			printOut += cache.get(i).toString();
+			count++;
 		}
 		return printOut;
 	}
@@ -464,21 +472,24 @@ public class Logic {
 		temp.setDisplayedIndex(displayedIndex);
 		return temp;
 	}
-	/*
+	
 	private String markAsDone(Command command){
-		String displayedIndex = command.getDisplayedIndex();
-		int taskID = -1;
-		
-		if (TGIDMap.containsKey(displayedIndex)){
-			taskID = TGIDMap.get(displayedIndex);
-		}else{
-			return Constants.TANGGUO_INVALID_INDEX;
-		}
+		int taskID;
 		
 		if (command.isUserCommand()){
+			String displayedIndex = command.getDisplayedIndex();
+			taskID = -1;
+			
+			if (TGIDMap.containsKey(displayedIndex)){
+				taskID = TGIDMap.get(displayedIndex);
+			}else{
+				return Constants.TANGGUO_INVALID_INDEX;
+			}
+			
 			reversedCommandStack.push(reverseMarkAsDone(taskID));
 			storage.updateIsDoneByID(taskID, true);
 		} else {
+			taskID = command.getEventID();
 			storage.updateIsDoneByID(taskID, false);
 		}	
 		
@@ -494,7 +505,7 @@ public class Logic {
 		temp.setEventID(id);
 		return temp;
 	}
-	*/
+	
 	/**
 	 * deletes an Event
 	 * @param toBeDeleted : [letter][number] 

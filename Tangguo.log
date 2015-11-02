@@ -196,3 +196,25 @@
 2015/10/28 02:03:45 Log: addTask: add
 2015/10/28 02:12:28 Log: add schedule: this
 2015/10/28 02:12:36 exception occurs: java.text.ParseException: Unparseable date: "07:00"
+2015/11/02 13:55:39 Log: addTask: this
+2015/11/02 13:55:41 Log: addTask: tahat
+2015/11/02 13:55:50 Log: add deadline: this
+2015/11/02 13:56:04 Log: add deadline: that
+2015/11/02 13:56:53 Log: addTask: this 09/09/2015 10:00
+2015/11/02 19:21:01 Log: add schedule: this
+2015/11/02 19:21:16 Log: add schedule: that
+2015/11/02 19:21:25 Log: add deadline: this
+2015/11/02 19:21:30 Log: add deadline: that
+2015/11/02 19:21:33 Log: addTask: this
+2015/11/02 19:21:34 Log: addTask: that
+2015/11/02 19:24:19 Log: addTask: now how bout this
+2015/11/02 19:24:22 Log: addTask: and how bout that
+2015/11/02 19:24:42 Log: add deadline: deadline 1
+2015/11/02 19:24:58 Log: add deadline: deadline 2
+2015/11/02 19:25:18 Log: add schedule: scehdule 1
+2015/11/02 19:25:34 Log: addTask: schedule 2 2/11/2105 09:09 to 2/11/2105 09:10
+2015/11/02 19:26:42 Log: add schedule: this 2
+2015/11/02 19:30:01 Log: addTask: this
+2015/11/02 19:34:31 Log: addTask: try this
+2015/11/02 19:34:34 Log: addTask: try that
+2015/11/02 19:34:47 Log: addTask: xtra
