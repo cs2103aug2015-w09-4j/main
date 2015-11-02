@@ -8,8 +8,8 @@ public class Command {
 	private String eventName;
 	private Date eventStart;
 	private Date eventEnd;
-	private String eventCategory;
-	private int eventPriority;
+	private String eventCategory = Constants.DEFAULT_CATEGORY;
+	private int eventPriority = Constants.DEFAULT_PRIORITY;
 	private String searchKey;
 	private String displayedIndex;
 	private boolean isUserCommand;

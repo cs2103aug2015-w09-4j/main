@@ -28,7 +28,13 @@ public class Parser {
 		
 		switch (commandType) {
 			case ADD:				
-				String[] array = event.split(Constants.DEADLINE_SPLIT);			
+				String[] array = event.split(Constants.DEADLINE_SPLIT);
+				
+				int eventPriority = checkPriority(array[array.length - 1]);
+				if (eventPriority != -1) {
+					tempCommand.setEventPriority(eventPriority);
+				}
+				
 				try {														//deadline
 					if(isNumber(array[array.length - 1])) {
 						endDate = dateConverter(array[array.length - 1]);
@@ -82,7 +88,7 @@ public class Parser {
 				break;
 			case UPDATE_PRIORITY:
 				displayedIndex = getFirstWord(event);
-				int updatedPriority = Integer.parseInt(removeFirstWord(event));
+				int updatedPriority = checkPriority(removeFirstWord(event));
 				tempCommand.setDisplayedIndex(displayedIndex);
 				tempCommand.setEventPriority(updatedPriority);
 				break;
@@ -235,6 +241,18 @@ public class Parser {
 		}
 		
 		return true;
+	}
+	
+	private static int checkPriority(String input) {
+		if (input.equalsIgnoreCase("HIGH")) {
+			return 3;
+		} else if (input.equalsIgnoreCase("MID")) {
+			return 2;
+		} else if (input.equalsIgnoreCase("LOW")) {
+			return 1;
+		} else {
+			return -1;
+		}
 	}
 	
 /*	private static boolean isRightDateFormat(String dateString) {
