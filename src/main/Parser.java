@@ -2,6 +2,7 @@ package main;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 //import java.util.regex.*;
@@ -15,7 +16,7 @@ import java.util.Date;
 public class Parser {
 	private static DateFormat format = new SimpleDateFormat(Constants.DEFAULT_DATE_FORMAT);
 	
-	public static Command parseCommand(String input) throws ParseException, IndexOutOfBoundsException, AbnormalScheduleTimeException{
+	public static Command parseCommand(String input) throws ParseException, IndexOutOfBoundsException, AbnormalScheduleTimeException, TaskDateExistenceException{
 		Command tempCommand = new Command();
 		String command = getFirstWord(input);
 		Constants.COMMAND_TYPE commandType = findCommandType(command);
@@ -25,13 +26,17 @@ public class Parser {
 		tempCommand.setType(commandType);
 		tempCommand.setIsUserCommand(true);
 		format.setLenient(false); //This allows DateFormat to prevent date overflow
+		String modifiedStartDateString, modifiedEndDateString;
 		
 		switch (commandType) {
 			case ADD:				
 				String[] array = event.split(Constants.DEADLINE_SPLIT);			
 				try {														//deadline
-					if(isNumber(array[array.length - 1])) {
-						endDate = dateConverter(array[array.length - 1]);
+					if(isNumber(array[array.length - 1])) {	
+						
+						modifiedEndDateString = defaultDateTimeCheck(array[array.length - 1], "deadline");
+						
+						endDate = dateConverter(modifiedEndDateString);
 						
 						tempCommand.setEventEnd(endDate);
 						tempCommand.setEventName(getName(Constants.DEADLINE_SPLIT, array));
@@ -44,8 +49,11 @@ public class Parser {
 					
 					try {													//schedule
 						if(isNumber(array2[1]) && isNumber(array2[0]) && startAndEndTimeValidation(array2[0], array2[1])) {
-							endDate = dateConverter(array2[1]);
-							startDate = dateConverter(array2[0]);
+							modifiedEndDateString = defaultDateTimeCheck(array2[1], "schedule");
+							modifiedStartDateString = defaultDateTimeCheck(array2[0], "schedule");
+							
+							endDate = dateConverter(modifiedEndDateString);
+							startDate = dateConverter(modifiedStartDateString);
 							
 							tempCommand.setEventStart(startDate);
 							tempCommand.setEventEnd(endDate);
@@ -55,6 +63,18 @@ public class Parser {
 						}
 						
 					} catch (NumberFormatException | ArrayIndexOutOfBoundsException f){
+						
+						if(array.length > 1) {
+							checkTaskValidity(array[array.length - 1]);
+						}
+						
+						if(array1.length > 1 && array2.length > 1) {
+						
+							checkTaskValidity(array2[1]);
+							checkTaskValidity(array2[0]);
+						}
+									
+						
 						tempCommand.setEventName(event);
 						tempCommand.setType(Constants.COMMAND_TYPE.ADD_TASK);	//task
 					}								
@@ -187,15 +207,20 @@ public class Parser {
 	}	
 
 	private static Date dateConverter(String dateString) throws ParseException{ 
-	//	Date date = null;
-		
-		//if(isRightDateFormat(dateString)) {
-		 Date date = format.parse(dateString);
-	//	}
-		
+
+		Date date = format.parse(dateString);
+
 		return date;
 	}
 	
+	/**
+	 * Checks whether if the time and date are integers.
+	 * This method is the first check as to whether they are in the default format  
+	 * @param num
+	 * @return
+	 * @throws NumberFormatException
+	 * @throws ArrayIndexOutOfBoundsException
+	 */
 	/**
 	 * Checks whether if the time and date are integers.
 	 * This method is the first check as to whether they are in the default format  
@@ -208,25 +233,105 @@ public class Parser {
 	private static boolean isNumber(String timeAndDate) throws NumberFormatException, ArrayIndexOutOfBoundsException {
 		
 		String[] timeAndDateSplit = timeAndDate.split(" ");
-		String[] dayMonthYearSplit = timeAndDateSplit[0].split("/");
-		String[] hourMinuteSplit = timeAndDateSplit[1].split(":");
 		
-		String day = dayMonthYearSplit[0];
-		int dayInteger = Integer.parseInt(day);
+		if (timeAndDateSplit.length == 1) {
+			
+			String[] dayMonthYearSplit = timeAndDateSplit[0].split("/");
+			String[] hourMinuteSplit = timeAndDateSplit[0].split(":");
+			
+			if(dayMonthYearSplit.length == 1) {
+				
+				String hour = hourMinuteSplit[0];
+				int hourInteger = Integer.parseInt(hour);
+				
+				String minute = hourMinuteSplit[1];
+				int minuteInteger = Integer.parseInt(minute);
+				
+			} else if (hourMinuteSplit.length == 1) {
+				
+				String day = dayMonthYearSplit[0];
+				int dayInteger = Integer.parseInt(day);
+			
+				String month = dayMonthYearSplit[1];
+				int monthInteger = Integer.parseInt(month);
+				
+				String year = dayMonthYearSplit[2];
+				int yearInteger = Integer.parseInt(year);
+				
+			}
+			
+		} else {
+			
+			String[] dayMonthYearSplit = timeAndDateSplit[0].split("/");
+			String[] hourMinuteSplit = timeAndDateSplit[1].split(":");
+			
+			String day = dayMonthYearSplit[0];
+			int dayInteger = Integer.parseInt(day);
 		
-		String month = dayMonthYearSplit[1];
-		int monthInteger = Integer.parseInt(month);
+			String month = dayMonthYearSplit[1];
+			int monthInteger = Integer.parseInt(month);
+			
+			String year = dayMonthYearSplit[2];
+			int yearInteger = Integer.parseInt(year);
+			
+			String hour = hourMinuteSplit[0];
+			int hourInteger = Integer.parseInt(hour);
 		
-		String year = dayMonthYearSplit[2];
-		int yearInteger = Integer.parseInt(year);
+			String minute = hourMinuteSplit[1];
+			int minuteInteger = Integer.parseInt(minute);
+		}
 		
-		String hour = hourMinuteSplit[0];
-		int hourInteger = Integer.parseInt(hour);
-		
-		String minute = hourMinuteSplit[1];
-		int minuteInteger = Integer.parseInt(minute);
-
 		return true;
+	}
+	/**
+	 * Fills in default date and/or time according to the user inputs
+	 * 
+	 * @param date
+	 * @return String
+	 */	
+	private static String defaultDateTimeCheck(String date, String eventType) {
+		
+		String modifiedString = date;
+		String todayDate = getTodayDate();
+		
+		String[] dayMonthYearSplit = date.split("/");
+		String[] hourMinuteSplit = date.split(":");
+		
+		if(dayMonthYearSplit.length == 1) {
+			modifiedString = modifiedString.substring(0, modifiedString.length() - 5) + todayDate + modifiedString.substring(modifiedString.length() - 5);
+			//code above is abit hard-coded yes yes, but it literally adds current date to the string in our format.
+		} else if (hourMinuteSplit.length == 1) {
+			if(eventType.equals("deadline"))
+				modifiedString = modifiedString + " 23:59";
+			else if(eventType.equals("schedule"))
+				modifiedString = modifiedString + " 00:00";
+		}
+		
+		return modifiedString;	
+	}
+	
+	private static String getTodayDate() {
+		
+		DateFormat df = new SimpleDateFormat(Constants.DEFAULT_DATE_FORMAT);
+		Calendar cal = Calendar.getInstance();
+		
+		String today = df.format(cal.getTime());
+		return today.substring(0, today.length() - 6) + " "; //to remove the unwanted time from today	
+	}
+	
+	private static void checkTaskValidity(String input) throws TaskDateExistenceException {
+		
+		int inputLength = input.length();
+		int inputLengthCheck = input.replaceAll("[0-9]/[0-9]", "").length();
+		
+		if(inputLength - inputLengthCheck != 0)
+			throw new TaskDateExistenceException();
+		
+		inputLengthCheck = input.replaceAll("[0-9]:[0-9]", "").length();
+		
+		if(inputLength - inputLengthCheck != 0)
+			throw new TaskDateExistenceException();
+		
 	}
 	public static boolean startAndEndTimeValidation(String start, String end) throws AbnormalScheduleTimeException {
 		
@@ -236,28 +341,5 @@ public class Parser {
 		
 		return true;
 	}
-	
-/*	private static boolean isRightDateFormat(String dateString) {
-		
-		String[] imbaTestArray = dateString.split("/");
-		
-		if(imbaTestArray.length != 3)
-			return false;
-		
-		String[] imbaTestTimeArray = imbaTestArray[2].split(":");
-		
-		if(imbaTestTimeArray.length != 2)
-			return false;
-		
-		try {
-			Integer.parseInt(imbaTestArray[0]);
-			Integer.parseInt(imbaTestArray[1]);
-			Integer.parseInt(imbaTestTimeArray[0]);
-			Integer.parseInt(imbaTestTimeArray[1]);
-		} catch (NumberFormatException e) {
-			return false;
-		}
-		
-		return true;
-	} */
+
 }
