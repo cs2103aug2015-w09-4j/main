@@ -103,20 +103,12 @@ public class Event {
 	public boolean contains(String input) {
 		if (getName().toLowerCase().indexOf(input) > -1) {
 			return true;
+		} else if (getStart() != null && formatDate(getStart()).toLowerCase().indexOf(input) > -1) {
+			return true;
+		} else if (getEnd() != null && formatDate(getEnd()).toLowerCase().indexOf(input) > -1) {
+			return true;
 		} else if (getCategory().toLowerCase().indexOf(input) > -1) {
 			return true;
-		} else if (getStart() != null) {
-			if (formatDate(getStart()).toLowerCase().indexOf(input) > -1 || formatDate(getEnd()).toLowerCase().indexOf(input) > -1) {
-				return true;
-			} else {
-				return false;
-			}
-		} else if (getEnd() != null) {
-			if (formatDate(getEnd()).toLowerCase().indexOf(input) > -1) {
-				return true;
-			} else {
-				return false;
-			}
 		} else {
 			return false;
 		}

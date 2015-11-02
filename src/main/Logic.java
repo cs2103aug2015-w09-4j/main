@@ -116,7 +116,7 @@ public class Logic {
 			case UPDATE_END:
 				return updateEnd(command); 		
 			case UPDATE_PRIORITY:
-				return updatePriority(command); ///not done yet///
+				return updatePriority(command);
 			case UPDATE_CATEGORY:
 				return updateCategory(command);
 		//	case DONE:
@@ -172,7 +172,11 @@ public class Logic {
 		
 		if (command.isUserCommand()){
 			int newID = storage.addSchedule(command.getEventName(), command.getEventStart(), command.getEventEnd());
-			reversedCommandStack.push(reverseAdd(newID));
+			if (newID > -1) {
+				reversedCommandStack.push(reverseAdd(newID));
+			} else {
+				return String.format(Constants.TANGGUO_SCHEDULE_CLASH, command.getEventName());
+			}
 		}else{
 			storage.addSchedule(command.getEvent());
 		}
