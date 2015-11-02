@@ -64,7 +64,7 @@ public class TimeBlock {
 			if (_scheduleCache.get(i).getID() == id) {
 				if (i == _scheduleCache.size() - 1) {
 					return true;
-				} else if (_scheduleCache.get(i + 1).getEnd().before(endDate)) {
+				} else if (_scheduleCache.get(i + 1).getEnd().after(endDate)) {
 					return true;
 				}
 			}
