@@ -2,6 +2,7 @@ package main;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 
 
@@ -22,7 +23,16 @@ public class Parser {
 		
 		switch (commandType) {
 			case ADD:				
-				String[] array = event.split(Constants.DEADLINE_SPLIT);			
+				String[] array = event.split(Constants.DEADLINE_SPLIT);
+				
+				String[] inputArray = event.split(" ");
+				int eventPriority = checkPriority(inputArray[inputArray.length - 1]);
+				if (eventPriority != -1) {
+					tempCommand.setEventPriority(eventPriority);
+					inputArray[inputArray.length - 1] = "";
+					event = toString(inputArray);
+				}
+				
 				try {														//deadline
 					if(isNumber(array[array.length - 1])) {
 						endDate = dateConverter(array[array.length - 1]);
@@ -76,7 +86,7 @@ public class Parser {
 				break;
 			case UPDATE_PRIORITY:
 				displayedIndex = getFirstWord(event);
-				int updatedPriority = Integer.parseInt(removeFirstWord(event));
+				int updatedPriority = checkPriority(removeFirstWord(event));
 				tempCommand.setDisplayedIndex(displayedIndex);
 				tempCommand.setEventPriority(updatedPriority);
 				break;
@@ -234,6 +244,28 @@ public class Parser {
 		}
 		
 		return true;
+	}
+	
+	private static int checkPriority(String input) {
+		if (input.equalsIgnoreCase("HIGH")) {
+			return 3;
+		} else if (input.equalsIgnoreCase("MID")) {
+			return 2;
+		} else if (input.equalsIgnoreCase("LOW")) {
+			return 1;
+		} else {
+			return -1;
+		}
+	}
+	
+	private static String toString(String[] array) {
+		String result = "";
+		
+		for (String s : array) {
+			result += s;
+		}
+		
+		return result;
 	}
 	
 /*	private static boolean isRightDateFormat(String dateString) {

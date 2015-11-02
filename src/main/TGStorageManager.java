@@ -115,8 +115,8 @@ public class TGStorageManager {
 		return newTask.getID();
 	}
 	
-	public int addTask(String name){
-		Event newTask = new Event(currentIndex,name);
+	public int addTask(String name, String category, int priority){
+		Event newTask = new Event(currentIndex, name, category, priority);
 		addTask(newTask);
 		return newTask.getID();
 
@@ -130,8 +130,8 @@ public class TGStorageManager {
 		return newDeadline.getID();
 	}
 	
-	public int addDeadline(String name, Date endDate){
-		Event newDeadline = new Event(currentIndex, name, endDate);
+	public int addDeadline(String name, Date endDate, String category, int priority){
+		Event newDeadline = new Event(currentIndex, name, endDate, category, priority);
 		addDeadline(newDeadline);
 		return newDeadline.getID();
 	}
@@ -145,8 +145,8 @@ public class TGStorageManager {
 		return newSchedule.getID();
 	}
 	
-	public int addSchedule(String name, Date startDate, Date endDate){
-		Event newSchedule = new Event(currentIndex,name, startDate, endDate);
+	public int addSchedule(String name, Date startDate, Date endDate, String category, int priority){
+		Event newSchedule = new Event(currentIndex, name, startDate, endDate, category, priority);
 		if (tb.addSchedule(newSchedule)) {
 			addSchedule(newSchedule);
 			return newSchedule.getID();
@@ -507,13 +507,9 @@ public class TGStorageManager {
 					isDone = Boolean.parseBoolean(eElement.getElementsByTagName("isDone").item(0)
 							.getTextContent());
 					
-					event = new Event(ID, nameString);
+					event = new Event(ID, nameString, categoryString, priority);
 					event.setIsDone(isDone);
 
-					if (!categoryString.equals(Constants.DEFAULT_CATEGORY))
-						event.setCategory(categoryString);
-					if (priority != Constants.DEFAULT_PRIORITY)
-						event.setPriority(priority);
 					_taskCache.add(event);
 				}
 			}
@@ -557,13 +553,9 @@ public class TGStorageManager {
 					isDone = Boolean.parseBoolean(eElement.getElementsByTagName("isDone").item(0)
 							.getTextContent());
 					
-					event = new Event(ID, nameString, endDate);
+					event = new Event(ID, nameString, endDate, categoryString, priority);
 					event.setIsDone(isDone);
 
-					if (!categoryString.equals(Constants.DEFAULT_CATEGORY))
-						event.setCategory(categoryString);
-					if (priority != Constants.DEFAULT_PRIORITY)
-						event.setPriority(priority);
 					_deadlineCache.add(event);
 				}
 			}
@@ -610,14 +602,9 @@ public class TGStorageManager {
 							.getTextContent());
 					isDone = Boolean.parseBoolean(eElement.getElementsByTagName("isDone").item(0)
 							.getTextContent());
-					
-					event = new Event(ID, nameString, startDate, endDate);
+					event = new Event(ID, nameString, startDate, endDate, categoryString, priority);
 					event.setIsDone(isDone);
-
-					if (!categoryString.equals(Constants.DEFAULT_CATEGORY))
-						event.setCategory(categoryString);
-					if (priority != Constants.DEFAULT_PRIORITY)
-						event.setPriority(priority);
+					
 					_scheduleCache.add(event);
 				}
 			}
@@ -758,7 +745,7 @@ public class TGStorageManager {
 
 	public static void main(String[] args) {
 		TGStorageManager tm = new TGStorageManager("", "test");
-		tm.addTask("yo");
+		tm.addTask("yo", "boss", 3);
 		for (Event element : tm.getTaskCache()) {
 			System.out.println(element.getID()+" "+element.getCategory());
 		}

@@ -170,7 +170,7 @@ public class Logic {
 	private String addDeadline(Command command){
 		
 		if (command.isUserCommand()){						//user command
-			int newID = storage.addDeadline(command.getEventName(), command.getEventEnd());
+			int newID = storage.addDeadline(command.getEventName(), command.getEventEnd(), command.getEventCategory(), command.getEventPriority());
 			reversedCommandStack.push(reverseAdd(newID));
 		}else{												//undo
 			storage.addDeadline(command.getEvent());
@@ -188,7 +188,7 @@ public class Logic {
 		// add into storage
 		
 		if (command.isUserCommand()){
-			int newID = storage.addSchedule(command.getEventName(), command.getEventStart(), command.getEventEnd());
+			int newID = storage.addSchedule(command.getEventName(), command.getEventStart(), command.getEventEnd(), command.getEventCategory(), command.getEventPriority());
 			if (newID > -1) {
 				reversedCommandStack.push(reverseAdd(newID));
 			} else {
@@ -209,7 +209,7 @@ public class Logic {
 	private String addTask(Command command){
 		// add into storage
 		if (command.isUserCommand()){
-			int newID = storage.addTask(command.getEventName());
+			int newID = storage.addTask(command.getEventName(), command.getEventCategory(), command.getEventPriority());
 			reversedCommandStack.push(reverseAdd(newID));
 		}else{
 			storage.addTask(command.getEvent());
@@ -418,6 +418,10 @@ public class Logic {
 		int priority = command.getEventPriority();
 		String displayedIndex = command.getDisplayedIndex();
 		int taskID = -1;
+		
+		if (priority == -1) {
+			return Constants.TANGGUO_INVALID_PRIORITY;
+		}
 		
 		if (TGIDMap.containsKey(displayedIndex)){
 			taskID = TGIDMap.get(displayedIndex);
