@@ -489,6 +489,7 @@ public class TGStorageManager {
 					.evaluate(doc, XPathConstants.NODESET);
 			String nameString, categoryString;
 			int ID, priority;
+			boolean isDone;
 			Event event;
 			for (int i = 0; i < nodeList.getLength(); i++) {
 				Node nNode = nodeList.item(i);
@@ -503,7 +504,11 @@ public class TGStorageManager {
 							.getTextContent();
 					priority = Integer.parseInt(eElement.getElementsByTagName("priority").item(0)
 							.getTextContent());
+					isDone = Boolean.parseBoolean(eElement.getElementsByTagName("isDone").item(0)
+							.getTextContent());
+					
 					event = new Event(ID, nameString);
+					event.setIsDone(isDone);
 
 					if (!categoryString.equals(Constants.DEFAULT_CATEGORY))
 						event.setCategory(categoryString);
@@ -530,6 +535,7 @@ public class TGStorageManager {
 			String nameString, endDateString, categoryString;
 			Date endDate;
 			int ID, priority;
+			boolean isDone;
 			Event event;
 			for (int i = 0; i < nodeList.getLength(); i++) {
 				Node nNode = nodeList.item(i);
@@ -548,7 +554,11 @@ public class TGStorageManager {
 							.getTextContent();
 					priority = Integer.parseInt(eElement.getElementsByTagName("priority").item(0)
 							.getTextContent());
+					isDone = Boolean.parseBoolean(eElement.getElementsByTagName("isDone").item(0)
+							.getTextContent());
+					
 					event = new Event(ID, nameString, endDate);
+					event.setIsDone(isDone);
 
 					if (!categoryString.equals(Constants.DEFAULT_CATEGORY))
 						event.setCategory(categoryString);
@@ -578,6 +588,7 @@ public class TGStorageManager {
 			String nameString, startDateString, endDateString, categoryString;
 			Date startDate, endDate;
 			int ID, priority;
+			boolean isDone;
 			Event event;
 			for (int i = 0; i < nodeList.getLength(); i++) {
 				Node nNode = nodeList.item(i);
@@ -597,7 +608,11 @@ public class TGStorageManager {
 							.getTextContent();
 					priority = Integer.parseInt(eElement.getElementsByTagName("priority").item(0)
 							.getTextContent());
+					isDone = Boolean.parseBoolean(eElement.getElementsByTagName("isDone").item(0)
+							.getTextContent());
+					
 					event = new Event(ID, nameString, startDate, endDate);
+					event.setIsDone(isDone);
 
 					if (!categoryString.equals(Constants.DEFAULT_CATEGORY))
 						event.setCategory(categoryString);
@@ -636,6 +651,9 @@ public class TGStorageManager {
 	             xMLStreamWriter.writeStartElement("priority");
 	             xMLStreamWriter.writeCharacters(String.valueOf(element.getPriority()));
 	             xMLStreamWriter.writeEndElement();
+	             xMLStreamWriter.writeStartElement("isDone");
+	             xMLStreamWriter.writeCharacters(String.valueOf(element.isDone()));
+	             xMLStreamWriter.writeEndElement();
 	             xMLStreamWriter.writeEndElement();
 	         }
 
@@ -653,6 +671,9 @@ public class TGStorageManager {
 	             xMLStreamWriter.writeEndElement();
 	             xMLStreamWriter.writeStartElement("priority");
 	             xMLStreamWriter.writeCharacters(String.valueOf(element.getPriority()));
+	             xMLStreamWriter.writeEndElement();
+	             xMLStreamWriter.writeStartElement("isDone");
+	             xMLStreamWriter.writeCharacters(String.valueOf(element.isDone()));
 	             xMLStreamWriter.writeEndElement();
 	             xMLStreamWriter.writeEndElement();
 	         }
@@ -674,6 +695,9 @@ public class TGStorageManager {
 	             xMLStreamWriter.writeEndElement();
 	             xMLStreamWriter.writeStartElement("priority");
 	             xMLStreamWriter.writeCharacters(String.valueOf(element.getPriority()));
+	             xMLStreamWriter.writeEndElement();
+	             xMLStreamWriter.writeStartElement("isDone");
+	             xMLStreamWriter.writeCharacters(String.valueOf(element.isDone()));
 	             xMLStreamWriter.writeEndElement();
 	             xMLStreamWriter.writeEndElement();
 	         }
