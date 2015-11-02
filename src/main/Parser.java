@@ -2,6 +2,7 @@ package main;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 
 
@@ -24,9 +25,12 @@ public class Parser {
 			case ADD:				
 				String[] array = event.split(Constants.DEADLINE_SPLIT);
 				
-				int eventPriority = checkPriority(array[array.length - 1]);
+				String[] inputArray = event.split(" ");
+				int eventPriority = checkPriority(inputArray[inputArray.length - 1]);
 				if (eventPriority != -1) {
 					tempCommand.setEventPriority(eventPriority);
+					inputArray[inputArray.length - 1] = "";
+					event = toString(inputArray);
 				}
 				
 				try {														//deadline
@@ -247,6 +251,16 @@ public class Parser {
 		} else {
 			return -1;
 		}
+	}
+	
+	private static String toString(String[] array) {
+		String result = "";
+		
+		for (String s : array) {
+			result += s;
+		}
+		
+		return result;
 	}
 	
 /*	private static boolean isRightDateFormat(String dateString) {
