@@ -18,6 +18,9 @@ public class TimeBlock {
 	}
 	
 	public boolean addSchedule(Event newSchedule) {
+		if (_scheduleCache.isEmpty()){
+			return true;
+		}
 		for (int i = 0; i < _scheduleCache.size(); i++) {
 			if (i == 0 && i == _scheduleCache.size() - 1) {
 				if (newSchedule.getEnd().before(_scheduleCache.get(i).getStart())) {
