@@ -18,6 +18,7 @@ public class Logic {
 	private static String fileName;
 	private Scanner scanner = new Scanner(System.in);
 	private TGStorageManager storage;
+	private Config config;
 	private HashMap<String,Integer> TGIDMap;
 	private Stack<Command> reversedCommandStack;
 	private Logger logger;
@@ -26,20 +27,33 @@ public class Logic {
 	 * Initialization of TGStorageManager, TGIDMap, and reversedCommandStack
 	 * @param file
 	 */
-	public Logic(String file) {
-		fileName = file;
+	public Logic(String input) {
+		fileName = input;
 		try {
 			logger = new Logger("Tangguo.log");
 		} catch (IOException e) {
 			System.out.println("failed to initiate log");
 		}
-		storage = new TGStorageManager(fileName);
+		storage = new TGStorageManager("", fileName);
+		TGIDMap = new HashMap<String,Integer>();
+		reversedCommandStack = new Stack<Command>();
+	}
+	
+	public Logic() {
+		try {
+			logger = new Logger("Tangguo.log");
+		} catch (IOException e) {
+			System.out.println("failed to initiate log");
+		}
+		config = new Config();
+		fileName = config.getFileName();
+		storage = new TGStorageManager(config.getFilePath(), fileName);
 		TGIDMap = new HashMap<String,Integer>();
 		reversedCommandStack = new Stack<Command>();
 	}
 	
 	public static void main(String[] args) throws IOException, ParseException {
-		Logic tg = new Logic(args[0]);
+		Logic tg = new Logic();
 		showToUser(String.format(Constants.TANGGUO_START, fileName));
 		showToUser(tg.executeInputs("display"));
 		
@@ -135,6 +149,8 @@ public class Logic {
 				return sortPriority();
 			case SEARCH:
 				return search(command);
+			case PATH:
+				return setPath(command);
 			case EXIT:
 				showToUser(Constants.TANGGUO_EXIT);
 				System.exit(0);
@@ -581,5 +597,13 @@ public class Logic {
 		printOut += displayCache("Schedules", schedule,"s");
 		
 		return printOut;
+	}
+	
+	private String setPath(Command command) {
+		config.setFilePath(command.getPath());
+		storage.setFilePath(command.getPath());
+		config.writeConfig();
+		
+		return String.format(Constants.TANGGUO_PATH_SET, fileName, command.getPath());
 	}
 }

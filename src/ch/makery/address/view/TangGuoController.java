@@ -19,7 +19,7 @@ public class TangGuoController {
 	private TextArea display;
 	
 	public TangGuoController() {
-		logic = new Logic("tryUI");
+		logic = new Logic();
 	}
 	
 	public void setMainApp(MainApp mainApp) {

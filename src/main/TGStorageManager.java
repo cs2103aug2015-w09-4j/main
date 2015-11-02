@@ -39,7 +39,8 @@ import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 
 public class TGStorageManager {
-	private String _fileDirectory;
+	private String _filePath;
+	private String _fileName;
 	private ArrayList<Event> _taskCache;
 	private ArrayList<Event> _deadlineCache;
 	private ArrayList<Event> _scheduleCache;
@@ -48,8 +49,9 @@ public class TGStorageManager {
 	File inputFile;
 	private int currentIndex;
 
-	public TGStorageManager(String fileDirectory) {
-		this._fileDirectory = fileDirectory;
+	public TGStorageManager(String filePath, String fileName) {
+		this._filePath = filePath;
+		this._fileName = fileName;
 		this._taskCache = new ArrayList<Event>();
 		this._deadlineCache = new ArrayList<Event>();
 		this._scheduleCache = new ArrayList<Event>();
@@ -63,6 +65,11 @@ public class TGStorageManager {
 		initialize();
 		this.tb.updateCache(this._scheduleCache);
 	}
+	
+	public void setFilePath(String filePath) {
+		this._filePath = filePath;
+	}
+	
 	public Event getEventByID(int id){
 		for (Event element:_taskCache){
 			if (element.getID() == id){
@@ -83,6 +90,7 @@ public class TGStorageManager {
 		}
 		return null;
 	}
+	
 	public ArrayList<Event> getTaskCache() {
 		return this._taskCache;
 	}
@@ -106,6 +114,7 @@ public class TGStorageManager {
 		updateStorage();
 		return newTask.getID();
 	}
+	
 	public int addTask(String name){
 		Event newTask = new Event(currentIndex,name);
 		addTask(newTask);
@@ -120,6 +129,7 @@ public class TGStorageManager {
 		updateStorage();
 		return newDeadline.getID();
 	}
+	
 	public int addDeadline(String name, Date endDate){
 		Event newDeadline = new Event(currentIndex, name, endDate);
 		addDeadline(newDeadline);
@@ -134,6 +144,7 @@ public class TGStorageManager {
 		tb.updateCache(_scheduleCache);
 		return newSchedule.getID();
 	}
+	
 	public int addSchedule(String name, Date startDate, Date endDate){
 		Event newSchedule = new Event(currentIndex,name, startDate, endDate);
 		if (tb.addSchedule(newSchedule)) {
@@ -397,7 +408,12 @@ public class TGStorageManager {
 
 	private void initialize() {
 		try {
-			File inputFile = new File(_fileDirectory);
+			File inputFile;
+			if (_filePath.equals("")) {
+				inputFile = new File(_fileName);
+			} else {
+				inputFile = new File(_filePath, _fileName);
+			}
 			// TODO file existence
 			// System.out.println(inputFile.exists());
 			if (!inputFile.exists()) {
@@ -692,7 +708,13 @@ public class TGStorageManager {
             Transformer transformer = transformerFactory.newTransformer();
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");
             transformer.transform(xmlInput, xmlOutput);
-			FileWriter fw = new FileWriter(_fileDirectory);
+			File outputFile;
+			if (_filePath.equals("")) {
+				outputFile = new File(_fileName);
+			} else {
+				outputFile = new File(_filePath, _fileName);
+			}
+			FileWriter fw = new FileWriter(outputFile);
 			fw.write(xmlOutput.getWriter().toString());
 			fw.close();
 		} catch (IOException e) {
@@ -711,7 +733,7 @@ public class TGStorageManager {
 	}
 
 	public static void main(String[] args) {
-		TGStorageManager tm = new TGStorageManager("test");
+		TGStorageManager tm = new TGStorageManager("", "test");
 		tm.addTask("yo");
 		for (Event element : tm.getTaskCache()) {
 			System.out.println(element.getID()+" "+element.getCategory());

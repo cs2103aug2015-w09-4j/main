@@ -113,6 +113,9 @@ public class Parser {
 			case SEARCH:
 				tempCommand.setSearchKey(event);
 				break;
+			case PATH:
+				tempCommand.setPath(event);
+				break;
 			case EXIT:
 				break;
 			case INVALID:
@@ -168,6 +171,8 @@ public class Parser {
 			return Constants.COMMAND_TYPE.SORT_PRIORITY;
 		} else if (commandTypeString.equalsIgnoreCase("search")) {
 			return Constants.COMMAND_TYPE.SEARCH;
+		} else if (commandTypeString.equalsIgnoreCase("path")) {
+			return Constants.COMMAND_TYPE.PATH;
 		} else {
 			return Constants.COMMAND_TYPE.INVALID;
 		}
