@@ -1,4 +1,5 @@
 package main;
+import java.beans.EventSetDescriptor;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.Year;
@@ -15,34 +16,70 @@ public class Event {
 	private int priority;
 	private boolean isDone;
 	
-	public Event(int ID, String name, Date startDate, Date endDate){
+	public Event(int ID, String name, Date startDate, Date endDate, String category, int priority){
 		this.type = Constants.SCHEDULE_TYPE_NUMBER;
 		this.ID = ID;
 		this.name = name;
 		this.startDate = startDate;
 		this.endDate = endDate;
-		this.category = Constants.DEFAULT_CATEGORY;
-		this.priority = Constants.DEFAULT_PRIORITY;
+		this.category = category;
+		this.priority = priority;
 		this.isDone = false;
 	}
 	
-	public Event(int ID, String name, Date endDate){
+	public Event(int ID, String name, Date endDate, String category, int priority){
 		this.type = Constants.DEADLINE_TYPE_NUMBER;
 		this.ID = ID;
 		this.name = name;
 		this.endDate = endDate;
-		this.category = Constants.DEFAULT_CATEGORY;
-		this.priority = Constants.DEFAULT_PRIORITY;
+		this.category = category;
+		this.priority = priority;
 		this.isDone = false;
 	}
 	  
-	public Event(int ID, String name){
+	public Event(int ID, String name, String category, int priority){
 		this.type = Constants.TASK_TYPE_NUMBER;
 		this.ID = ID;
 		this.name = name;
-		this.category = Constants.DEFAULT_CATEGORY;
-		this.priority = Constants.DEFAULT_PRIORITY;
+		this.category = category;
+		this.priority = priority;
 		this.isDone = false;
+	}
+	
+	public Event(int ID, String name, Date startDate, Date endDate, String category) {
+		new Event(ID, name, startDate, endDate, category, Constants.DEFAULT_PRIORITY);
+	}
+	
+	public Event(int ID, String name, Date endDate, String category) {
+		new Event(ID, name, endDate, category, Constants.DEFAULT_PRIORITY);
+	}
+	
+	public Event(int ID, String name, String category) {
+		new Event(ID, name, category, Constants.DEFAULT_PRIORITY);
+	}
+	
+	public Event(int ID, String name, Date startDate, Date endDate, int priority) {
+		new Event(ID, name, startDate, endDate, Constants.DEFAULT_CATEGORY, priority);
+	}
+	
+	public Event(int ID, String name, Date endDate, int priority) {
+		new Event(ID, name, endDate, Constants.DEFAULT_CATEGORY, priority);
+	}
+	
+	public Event(int ID, String name, int priority) {
+		new Event(ID, name, Constants.DEFAULT_CATEGORY, priority);
+	}
+	
+	public Event(int ID, String name, Date startDate, Date endDate) {
+		new Event(ID, name, startDate, endDate, Constants.DEFAULT_CATEGORY, Constants.DEFAULT_PRIORITY);
+	}
+	
+	public Event(int ID, String name, Date endDate) {
+		new Event(ID, name, endDate, Constants.DEFAULT_CATEGORY, Constants.DEFAULT_PRIORITY);
+	}
+	
+	public Event(int ID, String name) {
+		new Event(ID, name, Constants.DEFAULT_CATEGORY, Constants.DEFAULT_PRIORITY);
 	}
 	
 	public boolean isDone(){
