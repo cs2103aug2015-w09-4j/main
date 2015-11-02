@@ -5,6 +5,7 @@ import java.awt.GridLayout;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
+import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -17,15 +18,16 @@ import main.Event;
 import main.Logic;
 import main.Constants;
 public class MainTab extends JTabbedPane {
-	TodayComponent panel1;
+	TodayComponent todayPanel;
 	EventComponent panel2;
 	EventComponent panel3;
 	EventComponent panel4;
 	SearchComponent panel5;
 	public MainTab(Logic logic){
 		super();
-		panel1 = new TodayComponent(logic);
-		addTab("Today",panel1);
+		todayPanel = new TodayComponent(logic);
+		ImageIcon todayIcon = createImageIcon("img/HEADER_today.png");
+		addTab("",todayIcon,todayPanel);
 		setMnemonicAt(0, KeyEvent.VK_1);
 		panel2 = new EventComponent(logic,Constants.TASK_TYPE_NUMBER);
 		addTab("Tasks",panel2);
@@ -47,7 +49,7 @@ public class MainTab extends JTabbedPane {
 			public void stateChanged(ChangeEvent e) {
 				System.out.println(getSelectedIndex());
 				if (getSelectedIndex()==0){ //today
-					panel1.refresh();
+					todayPanel.refresh();
 				}else if (getSelectedIndex()==4){ //search result
 					panel5.refresh();
 				}else{
@@ -68,7 +70,7 @@ public class MainTab extends JTabbedPane {
         return panel;
     }
 	public void refresh(ArrayList<ArrayList<Event>> eventList){
-		panel1.refresh();
+		todayPanel.refresh();
 		refreshAllEventTabs(eventList);
 	}
 
@@ -77,4 +79,13 @@ public class MainTab extends JTabbedPane {
 		panel3.refresh(eventList);
 		panel4.refresh(eventList);
 	}
+	 protected static ImageIcon createImageIcon(String path) {
+	        java.net.URL imgURL = MainTab.class.getResource(path);
+	        if (imgURL != null) {
+	            return new ImageIcon(imgURL);
+	        } else {
+	            System.err.println("Couldn't find file: " + path);
+	            return null;
+	        }
+	    }
 }
