@@ -4,15 +4,15 @@ import java.util.Date;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class Calendar {
+public class TimeBlock {
 	
 	private ArrayList<Event> _scheduleCache;
 	
-	public Calendar() {
+	public TimeBlock() {
 		_scheduleCache = new ArrayList<Event>();
 	}
 	
-	public void updateCalendar(ArrayList<Event> newCache) {
+	public void updateCache(ArrayList<Event> newCache) {
 		_scheduleCache = newCache;
 		Collections.sort(_scheduleCache, Sorters.sortEnd());
 	}

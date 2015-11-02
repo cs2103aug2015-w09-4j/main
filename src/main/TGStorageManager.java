@@ -44,7 +44,7 @@ public class TGStorageManager {
 	private ArrayList<Event> _deadlineCache;
 	private ArrayList<Event> _scheduleCache;
 	private Logger logger;
-	private Calendar calendar;
+	private TimeBlock tb;
 	File inputFile;
 	private int currentIndex;
 
@@ -53,7 +53,7 @@ public class TGStorageManager {
 		this._taskCache = new ArrayList<Event>();
 		this._deadlineCache = new ArrayList<Event>();
 		this._scheduleCache = new ArrayList<Event>();
-		this.calendar = new Calendar();
+		this.tb = new TimeBlock();
 		try {
 			this.logger = new Logger("Tangguo.log");
 		} catch (IOException e) {
@@ -61,7 +61,7 @@ public class TGStorageManager {
 		}
 
 		initialize();
-		this.calendar.updateCalendar(this._scheduleCache);
+		this.tb.updateCache(this._scheduleCache);
 	}
 	public Event getEventByID(int id){
 		for (Event element:_taskCache){
@@ -131,12 +131,12 @@ public class TGStorageManager {
 		_scheduleCache.add(newSchedule);
 		currentIndex++;
 		updateStorage();
-		calendar.updateCalendar(_scheduleCache);
+		tb.updateCache(_scheduleCache);
 		return newSchedule.getID();
 	}
 	public int addSchedule(String name, Date startDate, Date endDate){
 		Event newSchedule = new Event(currentIndex,name, startDate, endDate);
-		if (calendar.addSchedule(newSchedule)) {
+		if (tb.addSchedule(newSchedule)) {
 			addSchedule(newSchedule);
 			return newSchedule.getID();
 		} else {
@@ -160,7 +160,7 @@ public class TGStorageManager {
 				logger.writeLog("delete schedule: "+element.getName());
 				_scheduleCache.remove(element);
 				updateStorage();
-				calendar.updateCalendar(_scheduleCache);
+				tb.updateCache(_scheduleCache);
 				return element;
 			}
 		}
@@ -192,7 +192,7 @@ public class TGStorageManager {
 			if (element.getID() == id){
 				element.setName(name);
 				updateStorage();
-				calendar.updateCalendar(_scheduleCache);
+				tb.updateCache(_scheduleCache);
 				return;
 			}
 		}
@@ -211,10 +211,10 @@ public class TGStorageManager {
 	public boolean updateStartByID(int id, Date startDate){
 		for (Event element:_scheduleCache){
 			if (element.getID() == id){
-				if (startDate.before(element.getEnd()) && calendar.updateStart(id, startDate)) {
+				if (startDate.before(element.getEnd()) && tb.updateStart(id, startDate)) {
 					element.setStart(startDate);
 					updateStorage();
-					calendar.updateCalendar(_scheduleCache);
+					tb.updateCache(_scheduleCache);
 					return true;
 				} else {
 					return false;
@@ -229,10 +229,10 @@ public class TGStorageManager {
 	public boolean updateEndByID(int id, Date endDate){
 		for (Event element:_scheduleCache){
 			if (element.getID() == id){
-				if (endDate.after(element.getStart()) && calendar.updateEnd(id, endDate)) {
+				if (endDate.after(element.getStart()) && tb.updateEnd(id, endDate)) {
 					element.setEnd(endDate);
 					updateStorage();
-					calendar.updateCalendar(_scheduleCache);
+					tb.updateCache(_scheduleCache);
 					return true;
 				} else {
 					return false;
@@ -265,7 +265,7 @@ public class TGStorageManager {
 			if (element.getID() == id){
 				element.setCategory(category);
 				updateStorage();
-				calendar.updateCalendar(_scheduleCache);
+				tb.updateCache(_scheduleCache);
 				return;
 			}
 		}
@@ -294,7 +294,7 @@ public class TGStorageManager {
 			if (element.getID() == id){
 				element.setPriority(priority);
 				updateStorage();
-				calendar.updateCalendar(_scheduleCache);
+				tb.updateCache(_scheduleCache);
 				return;
 			}
 		}
@@ -322,7 +322,7 @@ public class TGStorageManager {
 			if (element.getID() == id){
 				element.setIsDone(isDone);
 				updateStorage();
-				calendar.updateCalendar(_scheduleCache);
+				tb.updateCache(_scheduleCache);
 				return;
 			}
 		}
