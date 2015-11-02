@@ -8,7 +8,6 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Stack;
@@ -45,6 +44,7 @@ public class TGStorageManager {
 	private ArrayList<Event> _deadlineCache;
 	private ArrayList<Event> _scheduleCache;
 	private Logger logger;
+	private TimeBlock tb;
 	File inputFile;
 	private int currentIndex;
 
@@ -53,6 +53,7 @@ public class TGStorageManager {
 		this._taskCache = new ArrayList<Event>();
 		this._deadlineCache = new ArrayList<Event>();
 		this._scheduleCache = new ArrayList<Event>();
+		this.tb = new TimeBlock();
 		try {
 			this.logger = new Logger("Tangguo.log");
 		} catch (IOException e) {
@@ -60,6 +61,7 @@ public class TGStorageManager {
 		}
 
 		initialize();
+		this.tb.updateCache(this._scheduleCache);
 	}
 	public Event getEventByID(int id){
 		for (Event element:_taskCache){
@@ -129,12 +131,17 @@ public class TGStorageManager {
 		_scheduleCache.add(newSchedule);
 		currentIndex++;
 		updateStorage();
+		tb.updateCache(_scheduleCache);
 		return newSchedule.getID();
 	}
 	public int addSchedule(String name, Date startDate, Date endDate){
 		Event newSchedule = new Event(currentIndex,name, startDate, endDate);
-		addSchedule(newSchedule);
-		return newSchedule.getID();
+		if (tb.addSchedule(newSchedule)) {
+			addSchedule(newSchedule);
+			return newSchedule.getID();
+		} else {
+			return -1;
+		}
 	}
 
 	//precon:id exists
@@ -153,6 +160,7 @@ public class TGStorageManager {
 				logger.writeLog("delete schedule: "+element.getName());
 				_scheduleCache.remove(element);
 				updateStorage();
+				tb.updateCache(_scheduleCache);
 				return element;
 			}
 		}
@@ -184,6 +192,7 @@ public class TGStorageManager {
 			if (element.getID() == id){
 				element.setName(name);
 				updateStorage();
+				tb.updateCache(_scheduleCache);
 				return;
 			}
 		}
@@ -202,9 +211,10 @@ public class TGStorageManager {
 	public boolean updateStartByID(int id, Date startDate){
 		for (Event element:_scheduleCache){
 			if (element.getID() == id){
-				if (startDate.before(element.getEnd())) {
+				if (startDate.before(element.getEnd()) && tb.updateStart(id, startDate)) {
 					element.setStart(startDate);
 					updateStorage();
+					tb.updateCache(_scheduleCache);
 					return true;
 				} else {
 					return false;
@@ -219,9 +229,14 @@ public class TGStorageManager {
 	public boolean updateEndByID(int id, Date endDate){
 		for (Event element:_scheduleCache){
 			if (element.getID() == id){
-				element.setEnd(endDate);
-				updateStorage();
-				return true;
+				if (endDate.after(element.getStart()) && tb.updateEnd(id, endDate)) {
+					element.setEnd(endDate);
+					updateStorage();
+					tb.updateCache(_scheduleCache);
+					return true;
+				} else {
+					return false;
+				}
 			}
 		}
 
@@ -250,6 +265,7 @@ public class TGStorageManager {
 			if (element.getID() == id){
 				element.setCategory(category);
 				updateStorage();
+				tb.updateCache(_scheduleCache);
 				return;
 			}
 		}
@@ -278,6 +294,7 @@ public class TGStorageManager {
 			if (element.getID() == id){
 				element.setPriority(priority);
 				updateStorage();
+				tb.updateCache(_scheduleCache);
 				return;
 			}
 		}
@@ -305,6 +322,7 @@ public class TGStorageManager {
 			if (element.getID() == id){
 				element.setIsDone(isDone);
 				updateStorage();
+				tb.updateCache(_scheduleCache);
 				return;
 			}
 		}
