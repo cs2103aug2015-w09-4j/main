@@ -142,6 +142,12 @@ public class Parser {
 			case SEARCH:
 				tempCommand.setSearchKey(event);
 				break;
+			case PATH:
+				tempCommand.setPath(event);
+				break;
+			case IMPORT:
+				tempCommand.setPath(event);
+				break;
 			case EXIT:
 				break;
 			case INVALID:
@@ -197,6 +203,12 @@ public class Parser {
 			return Constants.COMMAND_TYPE.SORT_PRIORITY;
 		} else if (commandTypeString.equalsIgnoreCase("search")) {
 			return Constants.COMMAND_TYPE.SEARCH;
+		} else if (commandTypeString.equalsIgnoreCase("path")) {
+			return Constants.COMMAND_TYPE.PATH;
+		} else if (commandTypeString.equalsIgnoreCase("import")) {
+			return Constants.COMMAND_TYPE.IMPORT;
+		} else if (commandTypeString.equalsIgnoreCase("toggle")) {
+			return Constants.COMMAND_TYPE.TOGGLE;
 		} else {
 			return Constants.COMMAND_TYPE.INVALID;
 		}

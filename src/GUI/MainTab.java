@@ -34,17 +34,17 @@ public class MainTab extends JTabbedPane {
 		taskPanel = new EventComponent(logic,Constants.TASK_TYPE_NUMBER);
 		addTab("Tasks",taskPanel);
 		setMnemonicAt(1, KeyEvent.VK_2);
-		setMnemonicAt(1, KeyEvent.VK_T);
+		//setMnemonicAt(1, KeyEvent.VK_T);
 
 		deadlinePanel = new EventComponent(logic,Constants.DEADLINE_TYPE_NUMBER);
 		addTab("Deadlines",deadlinePanel);
 		setMnemonicAt(2, KeyEvent.VK_3);
-		setMnemonicAt(1, KeyEvent.VK_D);
+		//setMnemonicAt(1, KeyEvent.VK_D);
 
 		schedulePanel = new EventComponent(logic,Constants.SCHEDULE_TYPE_NUMBER);
 		addTab("Schedules",schedulePanel);
 		setMnemonicAt(3, KeyEvent.VK_4);
-		setMnemonicAt(1, KeyEvent.VK_S);
+		//setMnemonicAt(1, KeyEvent.VK_S);
 
 		searchPanel = new SearchComponent(logic);
 		addTab("Search",searchPanel);
@@ -53,7 +53,7 @@ public class MainTab extends JTabbedPane {
 		helpPanel = new HelpComponent();
 		addTab("Help",helpPanel);
 		setMnemonicAt(5, KeyEvent.VK_6);
-		setMnemonicAt(5, KeyEvent.VK_H);
+		//setMnemonicAt(5, KeyEvent.VK_H);
 
 
 		addChangeListener(new ChangeListener() {

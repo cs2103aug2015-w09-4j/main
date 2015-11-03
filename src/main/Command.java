@@ -12,6 +12,7 @@ public class Command {
 	private String eventCategory = Constants.DEFAULT_CATEGORY;
 	private int eventPriority = Constants.DEFAULT_PRIORITY;
 	private String searchKey;
+	private String path;
 	private String displayedIndex;
 	private boolean isUserCommand;
 	private Event event;
@@ -60,6 +61,10 @@ public class Command {
 		return searchKey;
 	}
 
+	public String getPath() {
+		return path;
+	}
+	
 	public String getDisplayedIndex() {
 		return displayedIndex;
 	}
@@ -108,6 +113,10 @@ public class Command {
 		this.searchKey = searchKey;
 	}
 
+	public void setPath(String path) {
+		this.path = path;
+	}
+	
 	public void setDisplayedIndex(String displayedIndex) {
 		this.displayedIndex = displayedIndex;
 	}

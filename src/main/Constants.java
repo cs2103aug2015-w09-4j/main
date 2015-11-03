@@ -61,7 +61,9 @@ public class Constants {
 
 	public static final String TANGGUO_SEARCH_SUCCESS = "Search results for %1$s ";
 	public static final String TANGGUO_SEARCH_FAIL = "The keyword: %1$s is not found!";
-
+	public static final String TANGGUO_PATH_SET = "%1$s data saved to \"%2$s\"!";
+	public static final String TANGGUO_IMPORT_SUCCESS = "TangGuo data successfully imported from \"%1$s\"!";
+	
 	public static final String TANGGUO_IO_EXCEPTION = "An unexpected error has occurred";
 	public static final String TANGGUO_OUT_BOUNDS = "The index you entered is invalid, try again";
 	public static final String TANGGUO_INVALID_INDEX = "The task index you entered seems to be invalid, try again";
@@ -77,9 +79,9 @@ public class Constants {
 
 
 	public enum COMMAND_TYPE {
-		ADD, ADD_DEADLINE, ADD_SCHEDULE, ADD_TASK, DISPLAY, DELETE,
-		UPDATE_NAME, UPDATE_START, UPDATE_END, UPDATE_PRIORITY, UPDATE_CATEGORY,
-		UNDO, DONE, SORT_NAME, SORT_START, SORT_END, SORT_PRIORITY, SEARCH, EXCEPTION, INVALID, EXIT,TOGGLE
+		ADD, ADD_DEADLINE, ADD_SCHEDULE, ADD_TASK, DISPLAY, DELETE, 
+		UPDATE_NAME, UPDATE_START, UPDATE_END, UPDATE_PRIORITY, UPDATE_CATEGORY, UNDO, DONE, 
+		SORT_NAME, SORT_START, SORT_END, SORT_PRIORITY, SEARCH, TOGGLE, PATH, IMPORT, EXCEPTION, INVALID, EXIT
 	};
 
 }
