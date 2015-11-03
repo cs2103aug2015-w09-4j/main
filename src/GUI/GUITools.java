@@ -22,7 +22,23 @@ public class GUITools {
 			data[i][2] = curr.getStart() == null ? '-' : curr.getStart();
 			data[i][3] = curr.getEnd() == null ? '-' : curr.getEnd();
 			data[i][4] = curr.getCategory();
-			data[i][5] = curr.getPriority();
+			switch ((int) curr.getPriority()){
+				case 3:
+					data[i][5]="HIGH";
+					break;
+				case 2:
+					data[i][5]="MEDIUM";
+					break;
+				case 1:
+					data[i][5]="LOW";
+					break;
+				default:
+					data[i][5]="LOW";
+					break;
+
+
+			}
+			//data[i][5] = curr.getPriority();
 		}
 		JTable table = new JTable(data, columnNames) {
 			public boolean isCellEditable(int row, int column) {
@@ -35,19 +51,23 @@ public class GUITools {
 			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
 					boolean hasFocus, int row, int column) {
 				Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-				switch ((int) table.getModel().getValueAt(row, 5)){
-					case 3:
+				if (column==5){
+				switch ( table.getModel().getValueAt(row, 5).toString()){
+					case "HIGH":
 						c.setBackground(Color.red);
 						break;
-					case 2:
+					case "MEDIUM":
 						c.setBackground(Color.yellow);
 						break;
-					case 1:
+					case "LOW":
 						c.setBackground(Color.green);
 						break;
 					default:
 						c.setBackground(Color.white);
 						break;
+				}
+				}else{
+					c.setBackground(Color.white);
 				}
 				return c;
 			};

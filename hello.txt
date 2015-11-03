@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><calendar current="27">
+<?xml version="1.0" encoding="UTF-8"?><calendar current="28">
   <task id="17">
     <name>jaidajie</name>
     <category>DEFAULT</category>
@@ -16,6 +16,11 @@
   </task>
   <task id="25">
     <name>yo</name>
+    <category>DEFAULT</category>
+    <priority>-1</priority>
+  </task>
+  <task id="27">
+    <name>the dat by tmr</name>
     <category>DEFAULT</category>
     <priority>-1</priority>
   </task>

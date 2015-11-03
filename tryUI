@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><calendar current="24">
+<?xml version="1.0" encoding="UTF-8"?><calendar current="26">
   <task id="0">
     <name>something</name>
     <category>DEFAULT</category>
@@ -80,6 +80,12 @@
     <category>DEFAULT</category>
     <priority>-1</priority>
   </deadline>
+  <deadline id="24">
+    <name>testing</name>
+    <endDate>10/10/2015 23:59</endDate>
+    <category>DEFAULT</category>
+    <priority>-1</priority>
+  </deadline>
   <schedule id="4">
     <name>2010 Written Quiz</name>
     <startDate>31/10/2015 10:00</startDate>
@@ -112,6 +118,13 @@
     <name>schedules are actually quite hard to type in</name>
     <startDate>01/01/2015 15:09</startDate>
     <endDate>09/09/2016 08:00</endDate>
+    <category>DEFAULT</category>
+    <priority>-1</priority>
+  </schedule>
+  <schedule id="25">
+    <name>testing</name>
+    <startDate>10/10/2015 00:00</startDate>
+    <endDate>10/10/2015 19:00</endDate>
     <category>DEFAULT</category>
     <priority>-1</priority>
   </schedule>
