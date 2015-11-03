@@ -9,7 +9,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
 import main.Event;
-
+//test commit
 public class GUITools {
 	public static JScrollPane createEventTable(ArrayList<Event> eventList) {
 		String[] columnNames = { "ID", "Event Name", "Start Date", "End Date", "Category", "Priority" };
