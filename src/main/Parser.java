@@ -25,16 +25,22 @@ public class Parser {
 
 		switch (commandType) {
 			case ADD:
-				String[] array = event.split(Constants.DEADLINE_SPLIT);
 
 				String[] inputArray = event.split(" ");
 				int eventPriority = checkPriority(inputArray[inputArray.length - 1]);
 				if (eventPriority != -1) {
 					tempCommand.setEventPriority(eventPriority);
 					inputArray[inputArray.length - 1] = "";
-					event = toString(inputArray);
+					String temp = "";
+					
+					for(int i = 0; i < inputArray.length - 1; i++) {
+						temp = temp + inputArray[i] + " ";
+					}
+					
+					event = temp;
 				}
-
+				
+				String[] array = event.split(Constants.DEADLINE_SPLIT);
 				try {														//deadline
 					if(isNumber(array[array.length - 1])) {
 
@@ -85,6 +91,8 @@ public class Parser {
 				}
 				break;
 			case DISPLAY:
+				break;
+			case TOGGLE:
 				break;
 			case UPDATE_NAME:
 				displayedIndex = getFirstWord(event);
@@ -197,6 +205,8 @@ public class Parser {
 			return Constants.COMMAND_TYPE.SEARCH;
 		} else if (commandTypeString.equalsIgnoreCase("path")) {
 			return Constants.COMMAND_TYPE.PATH;
+		} else if (commandTypeString.equalsIgnoreCase("toggle")) {
+			return Constants.COMMAND_TYPE.TOGGLE;
 		} else {
 			return Constants.COMMAND_TYPE.INVALID;
 		}

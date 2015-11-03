@@ -1,4 +1,22 @@
-<?xml version="1.0" encoding="UTF-8"?><calendar current="2">
+<?xml version="1.0" encoding="UTF-8"?><calendar current="5">
+  <task id="2">
+    <name>task blah</name>
+    <category>DEFAULT</category>
+    <priority>1</priority>
+    <isDone>true</isDone>
+  </task>
+  <task id="3">
+    <name>adskaj</name>
+    <category>DEFAULT</category>
+    <priority>1</priority>
+    <isDone>true</isDone>
+  </task>
+  <task id="4">
+    <name>task</name>
+    <category>DEFAULT</category>
+    <priority>1</priority>
+    <isDone>true</isDone>
+  </task>
   <deadline id="1">
     <name>new</name>
     <endDate>10/10/2015 23:59</endDate>

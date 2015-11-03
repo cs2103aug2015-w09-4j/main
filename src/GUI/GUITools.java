@@ -2,7 +2,11 @@ package GUI;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Font;
+import java.awt.font.TextAttribute;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.jar.Attributes;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -10,9 +14,12 @@ import javax.swing.table.DefaultTableCellRenderer;
 
 import main.Event;
 //test commit
+
 public class GUITools {
+
 	public static JScrollPane createEventTable(ArrayList<Event> eventList) {
-		String[] columnNames = { "ID", "Event Name", "Start Date", "End Date", "Category", "Priority" };
+
+		String[] columnNames = { "ID", "Event Name", "From", "To", "Category", "Priority" };
 
 		Object[][] data = new Object[eventList.size()][6];
 		for (int i = 0; i < eventList.size(); i++) {
@@ -69,11 +76,27 @@ public class GUITools {
 				}else{
 					c.setBackground(Color.white);
 				}
+				if (eventList.get(row).isDone()){
+					c.setFont(getStrikeThroughFont());
+				}else{
+					c.setFont(getDefaultFont());
+				}
 				return c;
 			};
 		});
 		table.setFillsViewportHeight(true);
 		JScrollPane scrollPane = new JScrollPane(table);
 		return scrollPane;
+	}
+
+	private static Font getDefaultFont(){
+		return new Font("arial", Font.PLAIN, 12);
+	}
+
+	private static Font getStrikeThroughFont(){
+		Map fontAttributes = getDefaultFont().getAttributes();
+		fontAttributes.put(TextAttribute.STRIKETHROUGH,
+	            TextAttribute.STRIKETHROUGH_ON);
+		return new Font(fontAttributes);
 	}
 }
