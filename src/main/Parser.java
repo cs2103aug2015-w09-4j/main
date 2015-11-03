@@ -3,41 +3,45 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Arrays;
 import java.util.Date;
 
-//import java.util.regex.*;
-
-//import com.sun.glass.ui.Pixels.Format;
-//import com.sun.org.apache.xerces.internal.impl.xpath.regex.Match;
-
-//import jdk.nashorn.internal.codegen.CompilerConstants;
 
 
 public class Parser {
 	private static DateFormat format = new SimpleDateFormat(Constants.DEFAULT_DATE_FORMAT);
-	
+
 	public static Command parseCommand(String input) throws ParseException, IndexOutOfBoundsException, AbnormalScheduleTimeException, TaskDateExistenceException{
 		Command tempCommand = new Command();
 		String command = getFirstWord(input);
 		Constants.COMMAND_TYPE commandType = findCommandType(command);
-		String event = removeFirstWord(input);		
+		String event = removeFirstWord(input);
 		Date endDate, startDate;
 		String displayedIndex;
 		tempCommand.setType(commandType);
 		tempCommand.setIsUserCommand(true);
 		format.setLenient(false); //This allows DateFormat to prevent date overflow
 		String modifiedStartDateString, modifiedEndDateString;
-		
+
 		switch (commandType) {
-			case ADD:				
-				String[] array = event.split(Constants.DEADLINE_SPLIT);			
+			case ADD:
+				String[] array = event.split(Constants.DEADLINE_SPLIT);
+
+				String[] inputArray = event.split(" ");
+				int eventPriority = checkPriority(inputArray[inputArray.length - 1]);
+				if (eventPriority != -1) {
+					tempCommand.setEventPriority(eventPriority);
+					inputArray[inputArray.length - 1] = "";
+					event = toString(inputArray);
+				}
+
 				try {														//deadline
-					if(isNumber(array[array.length - 1])) {	
-						
+					if(isNumber(array[array.length - 1])) {
+
 						modifiedEndDateString = defaultDateTimeCheck(array[array.length - 1], "deadline");
-						
+
 						endDate = dateConverter(modifiedEndDateString);
-						
+
 						tempCommand.setEventEnd(endDate);
 						tempCommand.setEventName(getName(Constants.DEADLINE_SPLIT, array));
 						tempCommand.setType(Constants.COMMAND_TYPE.ADD_DEADLINE);
@@ -46,40 +50,40 @@ public class Parser {
 				} catch (NumberFormatException | ArrayIndexOutOfBoundsException e){
 					String[] array1 = event.split(Constants.SCHEDULE_FIRST_SPLIT);
 					String[] array2 = array1[array1.length - 1].split(Constants.SCHEDULE_SECOND_SPLIT);
-					
+
 					try {													//schedule
 						if(isNumber(array2[1]) && isNumber(array2[0]) && startAndEndTimeValidation(array2[0], array2[1])) {
 							modifiedEndDateString = defaultDateTimeCheck(array2[1], "schedule");
 							modifiedStartDateString = defaultDateTimeCheck(array2[0], "schedule");
-							
+
 							endDate = dateConverter(modifiedEndDateString);
 							startDate = dateConverter(modifiedStartDateString);
-							
+
 							tempCommand.setEventStart(startDate);
 							tempCommand.setEventEnd(endDate);
 							tempCommand.setEventName(getName(Constants.SCHEDULE_FIRST_SPLIT, array1));
 							tempCommand.setType(Constants.COMMAND_TYPE.ADD_SCHEDULE);
 							break;
 						}
-						
+
 					} catch (NumberFormatException | ArrayIndexOutOfBoundsException f){
-						
+
 						if(array.length > 1) {
 							checkTaskValidity(array[array.length - 1]);
 						}
-						
+
 						if(array1.length > 1 && array2.length > 1) {
-						
+
 							checkTaskValidity(array2[1]);
 							checkTaskValidity(array2[0]);
 						}
-									
-						
+
+
 						tempCommand.setEventName(event);
 						tempCommand.setType(Constants.COMMAND_TYPE.ADD_TASK);	//task
-					}								
+					}
 				}
-				break;		
+				break;
 			case DISPLAY:
 				break;
 			case UPDATE_NAME:
@@ -102,7 +106,7 @@ public class Parser {
 				break;
 			case UPDATE_PRIORITY:
 				displayedIndex = getFirstWord(event);
-				int updatedPriority = Integer.parseInt(removeFirstWord(event));
+				int updatedPriority = checkPriority(removeFirstWord(event));
 				tempCommand.setDisplayedIndex(displayedIndex);
 				tempCommand.setEventPriority(updatedPriority);
 				break;
@@ -140,10 +144,10 @@ public class Parser {
 			default:
 				//throw new exception?
 				tempCommand.setType(Constants.COMMAND_TYPE.EXCEPTION);
-		} 
+		}
 		return tempCommand;
-	} 
-	
+	}
+
 	private static String getName(String splitSeq, String[] array){
 		StringBuilder name = new StringBuilder();
 		for (int i = 0; i < array.length-1; i++){
@@ -154,7 +158,7 @@ public class Parser {
 		}
 		return name.toString();
 	}
-	
+
 	private static Constants.COMMAND_TYPE findCommandType(String commandTypeString) {
 		if (commandTypeString.equalsIgnoreCase("add")){
 			return Constants.COMMAND_TYPE.ADD;
@@ -192,30 +196,30 @@ public class Parser {
 			return Constants.COMMAND_TYPE.INVALID;
 		}
 	}
-	
+
 	static private String removeFirstWord(String input) {
 		return input.replaceFirst(getFirstWord(input), "").trim();
 	}
-	
+
 	static private String getFirstWord(String input) {
 		String inputString = input.trim().split("\\s+")[0];
-		
+
 		if(inputString.equals("update") || inputString.equals("sort")) {
 			inputString += " " + input.trim().split("\\s+")[1];
-		}	
+		}
 		return inputString;
-	}	
+	}
 
-	private static Date dateConverter(String dateString) throws ParseException{ 
+	private static Date dateConverter(String dateString) throws ParseException{
 
 		Date date = format.parse(dateString);
 
 		return date;
 	}
-	
+
 	/**
 	 * Checks whether if the time and date are integers.
-	 * This method is the first check as to whether they are in the default format  
+	 * This method is the first check as to whether they are in the default format
 	 * @param num
 	 * @return
 	 * @throws NumberFormatException
@@ -223,7 +227,7 @@ public class Parser {
 	 */
 	/**
 	 * Checks whether if the time and date are integers.
-	 * This method is the first check as to whether they are in the default format  
+	 * This method is the first check as to whether they are in the default format
 	 * @param num
 	 * @return
 	 * @throws NumberFormatException
@@ -231,72 +235,72 @@ public class Parser {
 	 */
 	@SuppressWarnings("unused")
 	private static boolean isNumber(String timeAndDate) throws NumberFormatException, ArrayIndexOutOfBoundsException {
-		
+
 		String[] timeAndDateSplit = timeAndDate.split(" ");
-		
+
 		if (timeAndDateSplit.length == 1) {
-			
+
 			String[] dayMonthYearSplit = timeAndDateSplit[0].split("/");
 			String[] hourMinuteSplit = timeAndDateSplit[0].split(":");
-			
+
 			if(dayMonthYearSplit.length == 1) {
-				
+
 				String hour = hourMinuteSplit[0];
 				int hourInteger = Integer.parseInt(hour);
-				
+
 				String minute = hourMinuteSplit[1];
 				int minuteInteger = Integer.parseInt(minute);
-				
+
 			} else if (hourMinuteSplit.length == 1) {
-				
+
 				String day = dayMonthYearSplit[0];
 				int dayInteger = Integer.parseInt(day);
-			
+
 				String month = dayMonthYearSplit[1];
 				int monthInteger = Integer.parseInt(month);
-				
+
 				String year = dayMonthYearSplit[2];
 				int yearInteger = Integer.parseInt(year);
-				
+
 			}
-			
+
 		} else {
-			
+
 			String[] dayMonthYearSplit = timeAndDateSplit[0].split("/");
 			String[] hourMinuteSplit = timeAndDateSplit[1].split(":");
-			
+
 			String day = dayMonthYearSplit[0];
 			int dayInteger = Integer.parseInt(day);
-		
+
 			String month = dayMonthYearSplit[1];
 			int monthInteger = Integer.parseInt(month);
-			
+
 			String year = dayMonthYearSplit[2];
 			int yearInteger = Integer.parseInt(year);
-			
+
 			String hour = hourMinuteSplit[0];
 			int hourInteger = Integer.parseInt(hour);
-		
+
 			String minute = hourMinuteSplit[1];
 			int minuteInteger = Integer.parseInt(minute);
 		}
-		
+
 		return true;
 	}
 	/**
 	 * Fills in default date and/or time according to the user inputs
-	 * 
+	 *
 	 * @param date
 	 * @return String
-	 */	
+	 */
 	private static String defaultDateTimeCheck(String date, String eventType) {
-		
+
 		String modifiedString = date;
 		String todayDate = getTodayDate();
-		
+
 		String[] dayMonthYearSplit = date.split("/");
 		String[] hourMinuteSplit = date.split(":");
-		
+
 		if(dayMonthYearSplit.length == 1) {
 			modifiedString = modifiedString.substring(0, modifiedString.length() - 5) + todayDate + modifiedString.substring(modifiedString.length() - 5);
 			//code above is abit hard-coded yes yes, but it literally adds current date to the string in our format.
@@ -306,39 +310,61 @@ public class Parser {
 			else if(eventType.equals("schedule"))
 				modifiedString = modifiedString + " 00:00";
 		}
-		
-		return modifiedString;	
+
+		return modifiedString;
 	}
-	
+
+	private static int checkPriority(String input) {
+		if (input.equalsIgnoreCase("HIGH")) {
+			return 3;
+		} else if (input.equalsIgnoreCase("MID")) {
+			return 2;
+		} else if (input.equalsIgnoreCase("LOW")) {
+			return 1;
+		} else {
+			return -1;
+		}
+	}
+
+	private static String toString(String[] array) {
+		String result = "";
+
+		for (String s : array) {
+			result += s;
+		}
+
+		return result;
+	}
+
+
 	private static String getTodayDate() {
-		
 		DateFormat df = new SimpleDateFormat(Constants.DEFAULT_DATE_FORMAT);
 		Calendar cal = Calendar.getInstance();
-		
+
 		String today = df.format(cal.getTime());
-		return today.substring(0, today.length() - 6) + " "; //to remove the unwanted time from today	
+		return today.substring(0, today.length() - 6) + " "; //to remove the unwanted time from today
 	}
-	
+
 	private static void checkTaskValidity(String input) throws TaskDateExistenceException {
-		
+
 		int inputLength = input.length();
 		int inputLengthCheck = input.replaceAll("[0-9]/[0-9]", "").length();
-		
+
 		if(inputLength - inputLengthCheck != 0)
 			throw new TaskDateExistenceException();
-		
+
 		inputLengthCheck = input.replaceAll("[0-9]:[0-9]", "").length();
-		
+
 		if(inputLength - inputLengthCheck != 0)
 			throw new TaskDateExistenceException();
-		
+
 	}
 	public static boolean startAndEndTimeValidation(String start, String end) throws AbnormalScheduleTimeException {
-		
+
 		if(start.compareTo(end) >= 0) {
 			throw new AbnormalScheduleTimeException();
 		}
-		
+
 		return true;
 	}
 

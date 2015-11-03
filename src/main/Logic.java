@@ -35,7 +35,7 @@ public class Logic {
 		} catch (IOException e) {
 			System.out.println("failed to initiate log");
 		}
-		storage = new TGStorageManager(fileName);
+		storage = new TGStorageManager("", fileName);
 		TGIDMap = new HashMap<String,Integer>();
 
 		reversedCommandStack = new Stack<Command>();
@@ -141,15 +141,15 @@ public class Logic {
 			case UPDATE_END:
 				return updateEnd(command);
 			case UPDATE_PRIORITY:
-				return updatePriority(command); ///not done yet///
+				return updatePriority(command);
 			case UPDATE_CATEGORY:
 				return updateCategory(command);
-		//	case DONE:
-		//		return markAsDone(command);		///not done yet///
+			case DONE:
+				return markAsDone(command);		///not done yet///
 			case DELETE:
 				return deleteEvent(command);
 			case UNDO:
-				return undo();
+				return undo();					//needs error handling
 			case SORT_NAME:
 				return sortName();
 			case SORT_START:
@@ -180,11 +180,12 @@ public class Logic {
 		Command returnedCommand = new Command();
 		returnedCommand.setDisplayMessage(String.format(Constants.TANGGUO_ADD_SUCCESS, fileName, command.getEventName()));
 		if (command.isUserCommand()){						//user command
-			int newID = storage.addDeadline(command.getEventName(), command.getEventEnd());
+			int newID = storage.addDeadline(command.getEventName(), command.getEventEnd(), command.getEventCategory(), command.getEventPriority());
 			reversedCommandStack.push(reverseAdd(newID));
 		}else{												//undo
 			storage.addDeadline(command.getEvent());
 		}
+
 		returnedCommand.setDisplayedEventList(updateDisplay());
 		return returnedCommand;
 	}
@@ -199,13 +200,19 @@ public class Logic {
 		Command returnedCommand = new Command();
 		returnedCommand.setDisplayMessage(String.format(Constants.TANGGUO_ADD_SUCCESS, fileName, command.getEventName()));
 		if (command.isUserCommand()){
-			int newID = storage.addSchedule(command.getEventName(), command.getEventStart(), command.getEventEnd());
-			reversedCommandStack.push(reverseAdd(newID));
+			int newID = storage.addSchedule(command.getEventName(), command.getEventStart(), command.getEventEnd(), command.getEventCategory(), command.getEventPriority());
+			if (newID > -1) {
+				reversedCommandStack.push(reverseAdd(newID));
+			} else {
+				return getErrorCommand(String.format(Constants.TANGGUO_SCHEDULE_CLASH, command.getEventName()));
+			}
 		}else{
 			storage.addSchedule(command.getEvent());
 		}
+
 		returnedCommand.setDisplayedEventList(updateDisplay());
 		return returnedCommand;
+
 	}
 
 	/**
@@ -218,7 +225,7 @@ public class Logic {
 		Command returnedCommand = new Command();
 		returnedCommand.setDisplayMessage(String.format(Constants.TANGGUO_ADD_SUCCESS, fileName, command.getEventName()));
 		if (command.isUserCommand()){
-			int newID = storage.addTask(command.getEventName());
+			int newID = storage.addTask(command.getEventName(), command.getEventCategory(), command.getEventPriority());
 			reversedCommandStack.push(reverseAdd(newID));
 		}else{
 			storage.addTask(command.getEvent());
@@ -253,6 +260,25 @@ public class Logic {
 		returnedCommand.setDisplayedEventList(updateDisplay());
 		returnedCommand.setDisplayMessage(Constants.TANGGUO_UNDO_SUCCESS);
 		return returnedCommand;
+
+	}
+
+	/**
+	 * Displays all events stored within TangGuo
+	 * @return
+	 */
+	private String displayTangGuo(){
+		String printOut = "";
+
+		if (allCachesEmpty()){
+			return String.format(Constants.TANGGUO_EMPTY_FILE, fileName);
+		}
+		TGIDMap.clear();
+		printOut += displayCache("Tasks", storage.getTaskCache(),"t");
+		printOut += displayCache("Deadlines", storage.getDeadlineCache(),"d");
+		printOut += displayCache("Schedules", storage.getScheduleCache(),"s");
+
+		return printOut;
 	}
 
 
@@ -264,6 +290,7 @@ public class Logic {
 	}
 
 	//Displays all events of a particular type: deadline/schedule/floating task
+
 	private ArrayList<Event> displayCache(String cacheName, ArrayList<Event> cache, String header){
 		ArrayList<Event> temp = new ArrayList<Event>();
 		for (int i = 0; i < cache.size(); i++){
@@ -458,6 +485,9 @@ public class Logic {
 		Command returnedCommand = new Command();
 		int taskID = -1;
 
+		if (priority == -1) {
+			return getErrorCommand(Constants.TANGGUO_INVALID_PRIORITY);
+		}
 		if (TGIDMap.containsKey(displayedIndex)){
 			taskID = TGIDMap.get(displayedIndex);
 		}else{
@@ -526,26 +556,30 @@ public class Logic {
 		temp.setDisplayedIndex(displayedIndex);
 		return temp;
 	}
-	/*
-	private String markAsDone(Command command){
-		String displayedIndex = command.getDisplayedIndex();
-		int taskID = -1;
 
-		if (TGIDMap.containsKey(displayedIndex)){
-			taskID = TGIDMap.get(displayedIndex);
-		}else{
-			return Constants.TANGGUO_INVALID_INDEX;
-		}
-
+	private Command markAsDone(Command command){
+		Command returnedCommand = new Command();
+		int taskID;
 		if (command.isUserCommand()){
+			String displayedIndex = command.getDisplayedIndex();
+			taskID = -1;
+
+			if (TGIDMap.containsKey(displayedIndex)){
+				taskID = TGIDMap.get(displayedIndex);
+			}else{
+				return getErrorCommand(Constants.TANGGUO_INVALID_INDEX);
+			}
+
 			reversedCommandStack.push(reverseMarkAsDone(taskID));
 			storage.updateIsDoneByID(taskID, true);
 		} else {
+			taskID = command.getEventID();
 			storage.updateIsDoneByID(taskID, false);
 		}
 
-		return String.format(Constants.TANGGUO_UPDATE_DONE_SUCCESS, storage.getEventByID(taskID).getName())
-				+ Constants.NEW_LINE + displayTangGuo();
+		returnedCommand.setDisplayMessage(String.format(Constants.TANGGUO_UPDATE_DONE_SUCCESS, storage.getEventByID(taskID).getName()));
+		returnedCommand.setDisplayedEventList(updateDisplay());
+		return returnedCommand;
 	}
 
 
@@ -556,7 +590,7 @@ public class Logic {
 		temp.setEventID(id);
 		return temp;
 	}
-	*/
+
 	/**
 	 * deletes an Event
 	 * @param toBeDeleted : [letter][number]
@@ -664,6 +698,7 @@ public class Logic {
 		ArrayList<Event> task = storage.searchTask(searchKey);
 		ArrayList<Event> deadline = storage.searchDeadline(searchKey);
 		ArrayList<Event> schedule = storage.searchSchedule(searchKey);
+
 		if (task.isEmpty() && deadline.isEmpty() && schedule.isEmpty()) {
 			return null;
 		}
