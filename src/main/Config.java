@@ -13,7 +13,7 @@ public class Config {
 	private String _fileName = "TangGuo";
 	private String _filePath = "";
 		
-	public Config() {	
+	public Config() {
 		readConfig();
 	}
 	

@@ -23,7 +23,7 @@ public class SearchComponent extends JPanel {
 		if (eventList == null){
 			return;
 		}
-		String[] labels = {"Tasks","Deadline","Schedules"};
+		String[] labels = {"Tasks","Deadlines","Schedules"};
 
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		for (int i = 0;i<3;i++){

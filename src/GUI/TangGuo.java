@@ -12,8 +12,9 @@ public class TangGuo {
 				| UnsupportedLookAndFeelException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}*/
-		JFrame frame = new MainFrame("TangGuo",args[0]);
+		}
+		*/
+		JFrame frame = new MainFrame("TangGuo");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(1000, 800);
 		frame.setVisible(true);

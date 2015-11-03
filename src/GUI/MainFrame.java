@@ -25,9 +25,9 @@ import main.Command;
 import main.Logic;
 
 public class MainFrame extends JFrame{
-	public MainFrame(String title, String fileAddress){
+	public MainFrame(String title){
 		super(title);
-		Logic TGlogic = new Logic(fileAddress);
+		Logic TGlogic = new Logic();
 		setLayout(new BorderLayout());
 		MainTab tabbedPane = new MainTab(TGlogic);
 		final JPanel commandPane = new JPanel();
@@ -36,7 +36,7 @@ public class MainFrame extends JFrame{
 		inputPane.setLayout(new FlowLayout());
 		final JTextField textArea = new JTextField();
 		final JLabel commandLabel = new JLabel("Command:");
-		final JLabel messageLabel = new JLabel("Welcome back to TangGuo");
+		final JLabel messageLabel = new JLabel("Welcome Back to TangGuo");
 		textArea.setPreferredSize(new Dimension(550,20));
 		JButton button = new JButton("Submit");
 		Container c = getContentPane();

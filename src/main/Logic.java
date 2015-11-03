@@ -31,32 +31,20 @@ public class Logic {
 	 * Initialization of TGStorageManager, TGIDMap, and reversedCommandStack
 	 * @param file
 	 */
-	public Logic(String input) {
-		fileName = input;
+	public Logic() {
+		config = new Config();
+		fileName = config.getFileName();
 		try {
 			logger = new Logger("Tangguo.log");
 		} catch (IOException e) {
 			System.out.println("failed to initiate log");
 		}
-		storage = new TGStorageManager("", fileName);
+		storage = new TGStorageManager(config.getFilePath(), fileName);
 		TGIDMap = new HashMap<String,Integer>();
 		showDoneEvent = false;
 		reversedCommandStack = new Stack<Command>();
 	}
 
-	public Logic() {
-		try {
-			logger = new Logger("Tangguo.log");
-		} catch (IOException e) {
-			System.out.println("failed to initiate log");
-		}
-		config = new Config();
-		fileName = config.getFileName();
-		storage = new TGStorageManager(config.getFilePath(), fileName);
-		TGIDMap = new HashMap<String,Integer>();
-		reversedCommandStack = new Stack<Command>();
-	}
-	
 	/**
 	 * Displays all events stored within TangGuo
 	 * @return
@@ -763,8 +751,10 @@ public class Logic {
 		fileName = command.getPath().substring(div + 1);
 		config.setFilePath(filePath);
 		config.setFileName(fileName);
+		config.writeConfig();
 		
 		storage = new TGStorageManager(filePath, fileName);
+		filePath = (filePath.equals(""))? "default" : filePath;
 		Command returnedCommand = new Command();
 		returnedCommand.setDisplayMessage(String.format(Constants.TANGGUO_IMPORT_SUCCESS, filePath));
 		returnedCommand.setDisplayedEventList(updateDisplay());
