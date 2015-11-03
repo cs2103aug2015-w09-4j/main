@@ -23,7 +23,7 @@ public class Logic {
 	private Stack<Command> reversedCommandStack;
 	private Logger logger;
 	private String lastSearchKey;
-
+	private boolean showDoneEvent;
 	/**
 	 * Initialization of TGStorageManager, TGIDMap, and reversedCommandStack
 	 * @param file
@@ -37,7 +37,7 @@ public class Logic {
 		}
 		storage = new TGStorageManager("", fileName);
 		TGIDMap = new HashMap<String,Integer>();
-
+		showDoneEvent = false;
 		reversedCommandStack = new Stack<Command>();
 	}
 	/**
@@ -148,6 +148,8 @@ public class Logic {
 				return markAsDone(command);		///not done yet///
 			case DELETE:
 				return deleteEvent(command);
+			case TOGGLE:
+				return toggleDoneDisplay();
 			case UNDO:
 				return undo();					//needs error handling
 			case SORT_NAME:
@@ -171,6 +173,17 @@ public class Logic {
 		}
 	}
 
+	private Command toggleDoneDisplay() {
+		Command returnedCommand = new Command();
+		showDoneEvent = !showDoneEvent;
+		if (showDoneEvent){
+			returnedCommand.setDisplayMessage(Constants.TANGGUO_SHOW_DONE);
+		}else{
+			returnedCommand.setDisplayMessage(Constants.TANGGUO_HIDE_DONE);
+		}
+		returnedCommand.setDisplayedEventList(updateDisplay());
+		return returnedCommand;
+	}
 	/**
 	 * adds a Deadline event
 	 * @param command
@@ -294,6 +307,7 @@ public class Logic {
 	private ArrayList<Event> displayCache(String cacheName, ArrayList<Event> cache, String header){
 		ArrayList<Event> temp = new ArrayList<Event>();
 		for (int i = 0; i < cache.size(); i++){
+			if (cache.get(i).isDone() && !showDoneEvent) continue;
 			TGIDMap.put(header+(i+1), cache.get(i).getID());
 
 			temp.add(cache.get(i));
@@ -305,6 +319,7 @@ public class Logic {
 		ArrayList<Event> temp = new ArrayList<Event>();
 		int counter = 1;
 		for (int i = 0; i < cache.size(); i++){
+			if (cache.get(i).isDone() && !showDoneEvent) continue;
 			if (isTodayEvent(cache.get(i))){
 				TGIDMap.put(header+(counter++), cache.get(i).getID());
 				temp.add(cache.get(i));

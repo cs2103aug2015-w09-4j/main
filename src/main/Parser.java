@@ -92,6 +92,8 @@ public class Parser {
 				break;
 			case DISPLAY:
 				break;
+			case TOGGLE:
+				break;
 			case UPDATE_NAME:
 				displayedIndex = getFirstWord(event);
 				String updatedName = removeFirstWord(event);
@@ -198,6 +200,8 @@ public class Parser {
 			return Constants.COMMAND_TYPE.SORT_PRIORITY;
 		} else if (commandTypeString.equalsIgnoreCase("search")) {
 			return Constants.COMMAND_TYPE.SEARCH;
+		} else if (commandTypeString.equalsIgnoreCase("toggle")) {
+			return Constants.COMMAND_TYPE.TOGGLE;
 		} else {
 			return Constants.COMMAND_TYPE.INVALID;
 		}

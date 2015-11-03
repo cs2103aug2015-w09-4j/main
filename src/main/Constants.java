@@ -72,11 +72,14 @@ public class Constants {
 
 	public static final String TANGGUO_INVALID_PRIORITY = "The priority level you entered seems to be invalid, try again";
 
+	public static final String TANGGUO_SHOW_DONE = "The completed events are now shown!";
+	public static final String TANGGUO_HIDE_DONE = "The completed events are now hidden!";
+
 
 	public enum COMMAND_TYPE {
 		ADD, ADD_DEADLINE, ADD_SCHEDULE, ADD_TASK, DISPLAY, DELETE,
 		UPDATE_NAME, UPDATE_START, UPDATE_END, UPDATE_PRIORITY, UPDATE_CATEGORY,
-		UNDO, DONE, SORT_NAME, SORT_START, SORT_END, SORT_PRIORITY, SEARCH, EXCEPTION, INVALID, EXIT
+		UNDO, DONE, SORT_NAME, SORT_START, SORT_END, SORT_PRIORITY, SEARCH, EXCEPTION, INVALID, EXIT,TOGGLE
 	};
 
 }
