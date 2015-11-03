@@ -1,2 +1,223 @@
 2015/10/14 01:46:25 Log: delete Task: 2
 2015/10/14 02:02:32 Log: delete Task: 1
+2015/10/14 12:01:10 Log: addTask: test Float
+2015/10/14 12:01:10 Log: add deadline: test Deadline by 11/11/2015 11:11
+2015/10/14 12:01:10 Log: add schedule: test Schedule from 11/11/2015 11:11 to 11/11/2015 12:12
+2015/10/14 12:01:10 Log: delete Task: updated test Float
+2015/10/14 12:01:10 Log: delete deadline: updated test Deadline
+2015/10/14 12:01:10 Log: delete schedule: updated test Schedule
+2015/10/14 12:01:10 Log: add schedule: updated test Schedule
+2015/10/14 12:01:10 Log: add deadline: updated test Deadline
+2015/10/14 12:01:10 Log: addTask: updated test Float
+2015/10/14 12:01:10 Log: delete schedule: test Schedule from 11/11/2015 11:11 to 11/11/2015 12:12
+2015/10/14 12:01:10 Log: delete deadline: test Deadline by 11/11/2015 11:11
+2015/10/14 12:01:10 Log: delete Task: test Float
+2015/10/16 14:22:50 exception occurs: java.text.ParseException: Unparseable date: "10/10/2015 15L09"
+2015/10/16 14:26:26 Log: add deadline: testdatevalidation by 10/10/2015 15:09
+2015/10/16 14:27:00 exception occurs: java.text.ParseException: Unparseable date: "32/10/2015 09:00"
+2015/10/16 14:33:42 exception occurs: java.text.ParseException: Unparseable date: "32/10/2015 15:09"
+2015/10/16 14:33:59 Log: add deadline: datevalidationconfirmation by 29/10/2015 15:09
+2015/10/16 14:34:29 exception occurs: java.text.ParseException: Unparseable date: "29/02/2015 15:09"
+2015/10/16 14:36:55 exception occurs: java.text.ParseException: Unparseable date: "task 29/02/1502 15:09"
+2015/10/16 14:37:39 exception occurs: java.text.ParseException: Unparseable date: "testvalidationschedule from 32/10/2015 15:09 to 10/10/2015 15:09"
+2015/10/16 14:38:00 exception occurs: java.text.ParseException: Unparseable date: "testvalidationschedule from 10/10/2015 15:09 to 32/10/2015 15:09"
+2015/10/16 14:38:20 exception occurs: java.text.ParseException: Unparseable date: "testvalidationschedule from 10/10/2015 15:09 to 10/10/2015 15:09"
+2015/10/16 14:38:44 exception occurs: java.text.ParseException: Unparseable date: "task hi"
+2015/10/16 14:40:10 exception occurs: java.text.ParseException: Unparseable date: "schedultest from 10/10/2015 15:09 to 15/10/2015 15:09"
+2015/10/16 14:42:00 Log: add deadline: schedultesting by 15/10/2015 15:09
+2015/10/16 14:43:04 exception occurs: java.text.ParseException: Unparseable date: "scheduletest from 10/10/2015 15:09 to 10/10/2015 15:09"
+2015/10/16 14:58:35 Log: add schedule: scheduletestvalidation from 10/10/2015 15:09 to 10/10/2015 15:09
+2015/10/16 14:59:02 exception occurs: java.text.ParseException: Unparseable date: "32/10/2015 15:09 "
+2015/10/16 15:01:01 exception occurs: java.lang.ArrayIndexOutOfBoundsException: 1
+2015/10/16 15:14:27 exception occurs: java.lang.ArrayIndexOutOfBoundsException: 1
+2015/10/16 15:16:10 exception occurs: java.lang.ArrayIndexOutOfBoundsException: 1
+2015/10/16 15:20:06 Log: addTask: test by the beach
+2015/10/16 15:20:19 exception occurs: java.text.ParseException: Unparseable date: "32/10/2015 15:09"
+2015/10/16 15:20:30 exception occurs: java.text.ParseException: Unparseable date: "10/10/2015 24:01"
+2015/10/16 15:20:40 exception occurs: java.text.ParseException: Unparseable date: "10/10/2015 23:60"
+2015/10/16 15:22:33 Log: add schedule: test from 10/10/2015 23:29 to 10/10/2015 23:09
+2015/10/16 15:22:57 exception occurs: java.text.ParseException: Unparseable date: "110/20/2015 23:59 "
+2015/10/16 15:33:28 Log: addTask: test from 1242r23235
+2015/10/16 15:34:22 Log: addTask: test Float
+2015/10/16 15:34:22 Log: add deadline: test Deadline by 11/11/2015 11:11
+2015/10/16 15:34:22 Log: add schedule: test Schedule from 11/11/2015 11:11 to 11/11/2015 12:12
+2015/10/16 15:34:22 Log: delete Task: updated test Float
+2015/10/16 15:34:22 Log: delete deadline: updated test Deadline
+2015/10/16 15:34:22 Log: delete schedule: updated test Schedule
+2015/10/16 15:34:22 Log: add schedule: updated test Schedule
+2015/10/16 15:34:22 Log: add deadline: updated test Deadline
+2015/10/16 15:34:22 Log: addTask: updated test Float
+2015/10/16 15:34:22 Log: delete schedule: test Schedule from 11/11/2015 11:11 to 11/11/2015 12:12
+2015/10/16 15:34:22 Log: delete deadline: test Deadline by 11/11/2015 11:11
+2015/10/16 15:34:22 Log: delete Task: test Float
+2015/10/18 20:22:07 Log: addTask: test Float
+2015/10/18 20:22:08 Log: add deadline: test Deadline by 11/11/2015 11:11
+2015/10/18 20:22:08 Log: add schedule: test Schedule from 11/11/2015 11:11 to 11/11/2015 12:12
+2015/10/18 20:22:08 Log: delete Task: updated test Float
+2015/10/18 20:22:08 Log: delete deadline: updated test Deadline
+2015/10/18 20:22:08 Log: delete schedule: updated test Schedule
+2015/10/18 20:22:08 Log: add schedule: updated test Schedule
+2015/10/18 20:22:08 Log: add deadline: updated test Deadline
+2015/10/18 20:22:08 Log: addTask: updated test Float
+2015/10/18 20:22:08 Log: delete schedule: test Schedule from 11/11/2015 11:11 to 11/11/2015 12:12
+2015/10/18 20:22:08 Log: delete deadline: test Deadline by 11/11/2015 11:11
+2015/10/18 20:22:08 Log: delete Task: test Float
+2015/10/18 23:58:09 Log: addTask: school sucks
+2015/10/18 23:58:29 Log: add deadline: i can't even sleep by 19/10/2015 01:00
+2015/10/18 23:58:55 Log: add schedule: how i would wish to sleep from 19/10/2015 00:00 to 19/10/2015 12:00
+2015/10/19 00:01:43 Log: addTask: test Float
+2015/10/19 00:01:43 Log: add deadline: test Deadline by 11/11/2015 11:11
+2015/10/19 00:01:43 Log: add schedule: test Schedule from 11/11/2015 11:11 to 11/11/2015 12:12
+2015/10/19 00:01:43 Log: delete Task: updated test Float
+2015/10/19 00:01:43 Log: delete deadline: updated test Deadline
+2015/10/19 00:01:43 Log: delete schedule: updated test Schedule
+2015/10/19 00:01:43 Log: add schedule: updated test Schedule
+2015/10/19 00:01:43 Log: add deadline: updated test Deadline
+2015/10/19 00:01:43 Log: addTask: updated test Float
+2015/10/19 00:01:43 Log: delete schedule: test Schedule from 11/11/2015 11:11 to 11/11/2015 12:12
+2015/10/19 00:01:43 Log: delete deadline: test Deadline by 11/11/2015 11:11
+2015/10/19 00:01:43 Log: delete Task: test Float
+2015/10/19 00:01:57 Log: addTask: test Float
+2015/10/19 00:01:57 Log: add deadline: test Deadline by 11/11/2015 11:11
+2015/10/19 00:01:57 Log: add schedule: test Schedule from 11/11/2015 11:11 to 11/11/2015 12:12
+2015/10/19 00:01:57 Log: delete Task: updated test Float
+2015/10/19 00:01:57 Log: delete deadline: updated test Deadline
+2015/10/19 00:01:57 Log: delete schedule: updated test Schedule
+2015/10/19 00:01:57 Log: add schedule: updated test Schedule
+2015/10/19 00:01:57 Log: add deadline: updated test Deadline
+2015/10/19 00:01:57 Log: addTask: updated test Float
+2015/10/19 00:01:57 Log: delete schedule: test Schedule from 11/11/2015 11:11 to 11/11/2015 12:12
+2015/10/19 00:01:57 Log: delete deadline: test Deadline by 11/11/2015 11:11
+2015/10/19 00:01:57 Log: delete Task: test Float
+2015/10/19 00:45:14 Log: add deadline: test test by 19/10/2015 00:00
+2015/10/19 00:46:28 Log: add schedule: test test
+2015/10/19 01:01:50 Log: add deadline: try deadline
+2015/10/19 01:06:02 Log: delete deadline: test test by 19/10/2015 00:00
+2015/10/19 01:18:39 Log: addTask: balls balls balls
+2015/10/19 01:39:12 Log: addTask: this is how it goes
+2015/10/19 01:39:40 Log: add deadline: can i sleep now when when when
+2015/10/19 01:42:39 Log: add deadline: eat SEAWEED SHAKER FRIES bythe bay by
+2015/10/19 01:43:24 Log: delete deadline: eat SEAWEED SHAKER FRIES bythe bay by
+2015/10/19 01:50:27 exception occurs: java.text.ParseException: Unparseable date: "2015/10/16 14:22:50 exception occurs: java.text.ParseException: Unparseable date: "10/10/2015 15L09""
+2015/10/19 01:50:58 Log: add deadline: dumd um
+2015/10/19 01:51:09 Log: delete deadline: dumd um
+2015/10/20 20:32:18 Log: addTask: test from 11/10/2015 15:09 to 10/10/2015 15:09
+2015/10/20 20:36:18 exception occurs: main.AbnormalScheduleTimeException
+2015/10/20 20:36:42 exception occurs: main.AbnormalScheduleTimeException
+2015/10/20 20:37:09 Log: add schedule: schedule
+2015/10/20 20:40:36 Log: addTask: test Float
+2015/10/20 20:40:36 Log: add deadline: test Deadline
+2015/10/20 20:40:36 Log: add schedule: test Schedule
+2015/10/20 20:40:36 Log: delete Task: updated test Float
+2015/10/20 20:40:36 Log: addTask: updated test Float
+2015/10/20 20:40:36 Log: delete schedule: test Schedule
+2015/10/20 21:40:12 Log: add deadline: deadline dododo
+2015/10/20 21:43:49 Log: addTask: yo
+2015/10/20 21:44:03 Log: addTask: ayam a test
+2015/10/20 21:44:24 Log: add deadline: ekdedk
+2015/10/20 23:47:15 Log: addTask: hello
+2015/10/20 23:57:23 Log: addTask: hello
+2015/10/20 23:57:23 Log: addTask: hello
+2015/10/20 23:57:23 Log: addTask: hello
+2015/10/20 23:59:28 Log: addTask: hello
+2015/10/20 23:59:28 Log: addTask: hello
+2015/10/20 23:59:28 Log: addTask: hello
+2015/10/20 23:59:28 Log: delete Task: hello
+2015/10/20 23:59:59 Log: addTask: hello
+2015/10/20 23:59:59 Log: addTask: hello
+2015/10/20 23:59:59 Log: addTask: hello
+2015/10/20 23:59:59 Log: delete Task: hello
+2015/10/21 00:00:14 Log: addTask: hello
+2015/10/21 00:00:14 Log: addTask: hello
+2015/10/21 00:00:14 Log: addTask: hello
+2015/10/21 00:00:14 Log: delete Task: hello
+2015/10/21 00:00:48 Log: addTask: hello
+2015/10/21 00:00:48 Log: addTask: hello
+2015/10/21 00:00:48 Log: addTask: hello
+2015/10/21 00:00:48 Log: delete Task: hello
+2015/10/21 00:07:02 Log: addTask: hello
+2015/10/21 00:07:02 Log: addTask: hello
+2015/10/21 00:07:02 Log: addTask: hello
+2015/10/21 00:07:02 Log: delete Task: hello
+2015/10/21 08:39:33 Log: add schedule: test
+2015/10/21 08:39:57 Log: addTask: jim
+2015/10/21 08:42:07 exception occurs: java.text.ParseException: Unparseable date: "31/10/2015 24:09"
+2015/10/21 08:42:07 Log: add deadline: ayamleapyeardeadlinetest
+2015/10/21 08:42:07 exception occurs: java.text.ParseException: Unparseable date: "32/10/2015 15:09"
+2015/10/21 08:43:41 Log: add deadline: ayamleapyeardeadlinetest
+2015/10/21 08:44:40 exception occurs: java.text.ParseException: Unparseable date: "31/10/2015 24:09"
+2015/10/21 08:44:40 exception occurs: java.text.ParseException: Unparseable date: "29/02/2015 23:09"
+2015/10/21 08:44:40 exception occurs: java.text.ParseException: Unparseable date: "32/10/2015 15:09"
+2015/10/22 18:35:28 exception occurs: main.AbnormalScheduleTimeException
+2015/10/22 18:35:53 Log: add schedule: schedule this
+2015/10/22 18:54:09 Log: add deadline: next year
+2015/10/22 19:21:01 Log: add deadline: let's try by by by now
+2015/10/22 19:29:33 Log: add deadline: now let's by try wallaby bycicle
+2015/10/22 19:35:39 Log: add schedule: from now to then from 7 to 8
+2015/10/22 19:36:28 Log: add deadline: by the lullaby of byanca by mozarella
+2015/10/22 19:40:15 Log: addTask: by the lullaby of byanca by mozarella 2 by 08/08/2015
+2015/10/22 19:40:34 Log: delete Task: by the lullaby of byanca by mozarella 2 by 08/08/2015
+2015/10/22 19:40:52 Log: add deadline: by the lullaby of byanca by mozarella 2
+2015/10/22 19:41:26 Log: add schedule: from now to then from 7 to 8 SECOND ROUND
+2015/10/26 18:45:26 Log: addTask: something
+2015/10/26 19:59:05 Log: addTask: task by 10/10/2015
+2015/10/26 19:59:25 Log: add deadline: task
+2015/10/26 20:04:38 Log: addTask: task from 1231513 to 13125123
+2015/10/26 20:49:14 Log: delete Task: task from 1231513 to 13125123
+2015/10/26 20:49:52 exception occurs: java.lang.NumberFormatException: For input string: ""
+2015/10/26 21:21:26 exception occurs: java.text.ParseException: Unparseable date: "31/10/2015 24:09"
+2015/10/26 21:21:26 exception occurs: java.text.ParseException: Unparseable date: "29/02/2015 23:09"
+2015/10/26 21:21:26 exception occurs: java.text.ParseException: Unparseable date: "32/10/2015 15:09"
+2015/10/28 00:00:19 Log: add schedule: 2010 Written Quiz
+2015/10/28 00:00:57 Log: add schedule: Halloween
+2015/10/28 00:02:36 Log: add deadline: buy Curry Ayam
+2015/10/28 00:02:51 Log: addTask: walk by the beach with +1
+2015/10/28 00:03:32 Log: add deadline: buy booze for drunkard Ter
+2015/10/28 00:03:58 Log: addTask: buy chair from ikea and deliver to TangHao's place
+2015/10/28 00:04:40 Log: add schedule: set fire to the rain
+2015/10/28 00:04:47 Log: addTask: hometown glory
+2015/10/28 00:05:07 Log: add deadline: say hello to Lionel Ritche
+2015/10/28 00:07:03 Log: add deadline: Soc SpringCleaning
+2015/10/28 00:07:19 Log: addTask: there is no limit to work, by hook or by crook, you shall finish it!
+2015/10/28 00:07:25 Log: addTask: testdates shall never end
+2015/10/28 00:07:58 Log: addTask: Goliath's birthday from 13/12/2015 17:09 to 22:09
+2015/10/28 00:08:16 Log: add deadline: Spray neighbours with waste water
+2015/10/28 00:08:46 Log: addTask: Deepavali Celebrations from 10/11/2015 00"00
+2015/10/28 00:08:57 Log: delete Task: Deepavali Celebrations from 10/11/2015 00"00
+2015/10/28 00:09:21 Log: addTask: Deepavali Celebrations from 10/11/2015 00:00
+2015/10/28 00:09:59 Log: add schedule: Make her feel my love
+2015/10/28 00:11:09 Log: add schedule: schedules are actually quite hard to type in
+2015/10/28 00:11:17 Log: delete Task: Deepavali Celebrations from 10/11/2015 00:00
+2015/10/28 00:11:20 Log: delete Task: Goliath's birthday from 13/12/2015 17:09 to 22:09
+2015/10/28 00:11:29 Log: addTask: Goliath's birthday from 13/12/2015 17:09 to 22:09
+2015/10/28 00:11:31 Log: addTask: Deepavali Celebrations from 10/11/2015 00:00
+2015/10/28 02:00:41 Log: add deadline: upate end
+2015/10/28 02:03:18 Log: addTask:
+2015/10/28 02:03:45 Log: addTask: add
+2015/10/28 02:12:28 Log: add schedule: this
+2015/10/28 02:12:36 exception occurs: java.text.ParseException: Unparseable date: "07:00"
+2015/11/02 13:55:39 Log: addTask: this
+2015/11/02 13:55:41 Log: addTask: tahat
+2015/11/02 13:55:50 Log: add deadline: this
+2015/11/02 13:56:04 Log: add deadline: that
+2015/11/02 13:56:53 Log: addTask: this 09/09/2015 10:00
+2015/11/02 19:21:01 Log: add schedule: this
+2015/11/02 19:21:16 Log: add schedule: that
+2015/11/02 19:21:25 Log: add deadline: this
+2015/11/02 19:21:30 Log: add deadline: that
+2015/11/02 19:21:33 Log: addTask: this
+2015/11/02 19:21:34 Log: addTask: that
+2015/11/02 19:24:19 Log: addTask: now how bout this
+2015/11/02 19:24:22 Log: addTask: and how bout that
+2015/11/02 19:24:42 Log: add deadline: deadline 1
+2015/11/02 19:24:58 Log: add deadline: deadline 2
+2015/11/02 19:25:18 Log: add schedule: scehdule 1
+2015/11/02 19:25:34 Log: addTask: schedule 2 2/11/2105 09:09 to 2/11/2105 09:10
+2015/11/02 19:26:42 Log: add schedule: this 2
+2015/11/02 19:30:01 Log: addTask: this
+2015/11/02 19:34:31 Log: addTask: try this
+2015/11/02 19:34:34 Log: addTask: try that
+2015/11/02 19:34:47 Log: addTask: xtra
+2015/11/03 11:55:35 Log: addTask: new
+2015/11/03 11:55:46 Log: delete Task: new
+2015/11/03 11:55:55 Log: add deadline: new
