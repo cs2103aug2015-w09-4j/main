@@ -30,6 +30,7 @@ public class MainTab extends JTabbedPane {
 		//ImageIcon todayIcon = createImageIcon("img/HEADER_today.png");
 		addTab("Today",todayPanel);
 		setMnemonicAt(0, KeyEvent.VK_1);
+		
 		taskPanel = new EventComponent(logic,Constants.TASK_TYPE_NUMBER);
 		addTab("Tasks",taskPanel);
 		setMnemonicAt(1, KeyEvent.VK_2);

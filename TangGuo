@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?><calendar current="14">
+  <task id="9">
+    <name>CS2103T software demo</name>
+    <category>DEFAULT</category>
+    <priority>3</priority>
+    <isDone>false</isDone>
+  </task>
+  <task id="10">
+    <name>receive goods from NUSSU</name>
+    <category>DEFAULT</category>
+    <priority>2</priority>
+    <isDone>false</isDone>
+  </task>
+  <deadline id="1">
+    <name>complete IS1103 Essay</name>
+    <endDate>07/11/2015 23:59</endDate>
+    <category>DEFAULT</category>
+    <priority>2</priority>
+    <isDone>false</isDone>
+  </deadline>
+  <deadline id="8">
+    <name>Welfare Pack packing</name>
+    <endDate>06/11/2015 22:00</endDate>
+    <category>DEFAULT</category>
+    <priority>2</priority>
+    <isDone>false</isDone>
+  </deadline>
+  <deadline id="11">
+    <name>IS1103 essay part 2</name>
+    <endDate>04/11/2015 23:59</endDate>
+    <category>DEFAULT</category>
+    <priority>1</priority>
+    <isDone>false</isDone>
+  </deadline>
+  <schedule id="12">
+    <name>meet professor</name>
+    <startDate>04/11/2015 13:00</startDate>
+    <endDate>04/11/2015 17:00</endDate>
+    <category>DEFAULT</category>
+    <priority>1</priority>
+    <isDone>false</isDone>
+  </schedule>
+  <schedule id="7">
+    <name>Welfare Pack Distribution</name>
+    <startDate>09/11/2015 00:00</startDate>
+    <endDate>13/11/2015 00:00</endDate>
+    <category>DEFAULT</category>
+    <priority>3</priority>
+    <isDone>false</isDone>
+  </schedule>
+</calendar>
