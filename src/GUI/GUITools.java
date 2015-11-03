@@ -202,6 +202,7 @@ public class GUITools {
 			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
 					boolean hasFocus, int row, int column) {
 				Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+
 				if (column==5){
 				switch ( table.getModel().getValueAt(row, 5).toString()){
 					case "HIGH":
@@ -230,7 +231,10 @@ public class GUITools {
 		});
 		
 		table.setFillsViewportHeight(true);
+		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+		table.setRowSelectionAllowed(false);
 		JScrollPane scrollPane = new JScrollPane(table);
+
 		return scrollPane;
 	}
 	
