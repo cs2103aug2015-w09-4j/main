@@ -20,7 +20,7 @@ import main.Logic;
 public class MainFrame extends JFrame{
 	public MainFrame(String title, String fileAddress){
 		super(title);
-		Logic TGlogic = new Logic();
+		Logic TGlogic = new Logic(fileAddress);
 		setLayout(new BorderLayout());
 		MainTab tabbedPane = new MainTab(TGlogic);
 		final JPanel commandPane = new JPanel();

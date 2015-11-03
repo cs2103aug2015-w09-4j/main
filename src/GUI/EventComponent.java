@@ -19,7 +19,7 @@ public class EventComponent extends JPanel {
 	public EventComponent(Logic logic, int eventType) {
 		super();
 		//refresh(logic.updateDisplay());
-		this.eventType = eventType;
+		this.eventType = eventType - 1;
 	}
 
 	public void refresh(ArrayList<ArrayList<Event>> eventList){
@@ -30,8 +30,14 @@ public class EventComponent extends JPanel {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
 		//add(new JLabel(labels[i]));
-		add(GUITools.createEventTable(eventList.get(this.eventType-1)));
-
+		//add(GUITools.createEventTable(eventList.get(this.eventType-1)));
+		if (eventType == 0)
+			add(GUITools.createTaskTable(eventList.get(eventType)));
+		if (eventType == 1)
+			add(GUITools.createDeadlineTable(eventList.get(eventType)));
+		if (eventType == 2)
+			add(GUITools.createScheduleTable(eventList.get(eventType)));
+		
 		revalidate();
 		repaint();
 	}
