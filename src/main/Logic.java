@@ -11,6 +11,8 @@ import java.util.Stack;
 
 import javax.swing.Spring;
 
+import com.sun.xml.internal.bind.v2.schemagen.xmlschema.Import;
+
 import jdk.nashorn.internal.runtime.regexp.joni.SearchAlgorithm;
 
 
@@ -179,6 +181,8 @@ public class Logic {
 				return search(command);
 			case PATH:
 				return setPath(command);
+			case IMPORT:
+				return importData(command);
 			case EXIT:
 				showToUser(Constants.TANGGUO_EXIT);
 				System.exit(0);
@@ -750,6 +754,20 @@ public class Logic {
 		
 		Command returnedCommand = new Command();
 		returnedCommand.setDisplayMessage(String.format(Constants.TANGGUO_PATH_SET, fileName, command.getPath()));
+		return returnedCommand;
+	}
+	
+	private Command importData(Command command) {
+		int div = command.getPath().lastIndexOf("/");
+		String filePath = command.getPath().substring(0, div + 1);
+		fileName = command.getPath().substring(div + 1);
+		config.setFilePath(filePath);
+		config.setFileName(fileName);
+		
+		storage = new TGStorageManager(filePath, fileName);
+		Command returnedCommand = new Command();
+		returnedCommand.setDisplayMessage(String.format(Constants.TANGGUO_IMPORT_SUCCESS, filePath));
+		returnedCommand.setDisplayedEventList(updateDisplay());
 		return returnedCommand;
 	}
 }
