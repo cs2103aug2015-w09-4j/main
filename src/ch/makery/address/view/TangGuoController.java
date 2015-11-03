@@ -1,3 +1,4 @@
+/*
 package ch.makery.address.view;
 
 import javafx.scene.control.TextField;
@@ -39,3 +40,4 @@ public class TangGuoController {
 	}
 	
 }
+*/

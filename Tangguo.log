@@ -90,31 +90,31 @@
 2015/10/19 00:01:57 Log: delete deadline: test Deadline by 11/11/2015 11:11
 2015/10/19 00:01:57 Log: delete Task: test Float
 2015/10/19 00:45:14 Log: add deadline: test test by 19/10/2015 00:00
-2015/10/19 00:46:28 Log: add schedule: test test 
-2015/10/19 01:01:50 Log: add deadline: try deadline 
+2015/10/19 00:46:28 Log: add schedule: test test
+2015/10/19 01:01:50 Log: add deadline: try deadline
 2015/10/19 01:06:02 Log: delete deadline: test test by 19/10/2015 00:00
 2015/10/19 01:18:39 Log: addTask: balls balls balls
 2015/10/19 01:39:12 Log: addTask: this is how it goes
-2015/10/19 01:39:40 Log: add deadline: can i sleep now when when when 
+2015/10/19 01:39:40 Log: add deadline: can i sleep now when when when
 2015/10/19 01:42:39 Log: add deadline: eat SEAWEED SHAKER FRIES bythe bay by
 2015/10/19 01:43:24 Log: delete deadline: eat SEAWEED SHAKER FRIES bythe bay by
 2015/10/19 01:50:27 exception occurs: java.text.ParseException: Unparseable date: "2015/10/16 14:22:50 exception occurs: java.text.ParseException: Unparseable date: "10/10/2015 15L09""
-2015/10/19 01:50:58 Log: add deadline: dumd um 
-2015/10/19 01:51:09 Log: delete deadline: dumd um 
+2015/10/19 01:50:58 Log: add deadline: dumd um
+2015/10/19 01:51:09 Log: delete deadline: dumd um
 2015/10/20 20:32:18 Log: addTask: test from 11/10/2015 15:09 to 10/10/2015 15:09
 2015/10/20 20:36:18 exception occurs: main.AbnormalScheduleTimeException
 2015/10/20 20:36:42 exception occurs: main.AbnormalScheduleTimeException
-2015/10/20 20:37:09 Log: add schedule: schedule 
+2015/10/20 20:37:09 Log: add schedule: schedule
 2015/10/20 20:40:36 Log: addTask: test Float
-2015/10/20 20:40:36 Log: add deadline: test Deadline 
-2015/10/20 20:40:36 Log: add schedule: test Schedule 
+2015/10/20 20:40:36 Log: add deadline: test Deadline
+2015/10/20 20:40:36 Log: add schedule: test Schedule
 2015/10/20 20:40:36 Log: delete Task: updated test Float
 2015/10/20 20:40:36 Log: addTask: updated test Float
-2015/10/20 20:40:36 Log: delete schedule: test Schedule 
-2015/10/20 21:40:12 Log: add deadline: deadline dododo 
+2015/10/20 20:40:36 Log: delete schedule: test Schedule
+2015/10/20 21:40:12 Log: add deadline: deadline dododo
 2015/10/20 21:43:49 Log: addTask: yo
 2015/10/20 21:44:03 Log: addTask: ayam a test
-2015/10/20 21:44:24 Log: add deadline: ekdedk 
+2015/10/20 21:44:24 Log: add deadline: ekdedk
 2015/10/20 23:47:15 Log: addTask: hello
 2015/10/20 23:57:23 Log: addTask: hello
 2015/10/20 23:57:23 Log: addTask: hello
@@ -139,19 +139,19 @@
 2015/10/21 00:07:02 Log: addTask: hello
 2015/10/21 00:07:02 Log: addTask: hello
 2015/10/21 00:07:02 Log: delete Task: hello
-2015/10/21 08:39:33 Log: add schedule: test 
+2015/10/21 08:39:33 Log: add schedule: test
 2015/10/21 08:39:57 Log: addTask: jim
 2015/10/21 08:42:07 exception occurs: java.text.ParseException: Unparseable date: "31/10/2015 24:09"
-2015/10/21 08:42:07 Log: add deadline: ayamleapyeardeadlinetest 
+2015/10/21 08:42:07 Log: add deadline: ayamleapyeardeadlinetest
 2015/10/21 08:42:07 exception occurs: java.text.ParseException: Unparseable date: "32/10/2015 15:09"
-2015/10/21 08:43:41 Log: add deadline: ayamleapyeardeadlinetest 
+2015/10/21 08:43:41 Log: add deadline: ayamleapyeardeadlinetest
 2015/10/21 08:44:40 exception occurs: java.text.ParseException: Unparseable date: "31/10/2015 24:09"
 2015/10/21 08:44:40 exception occurs: java.text.ParseException: Unparseable date: "29/02/2015 23:09"
 2015/10/21 08:44:40 exception occurs: java.text.ParseException: Unparseable date: "32/10/2015 15:09"
 2015/10/22 18:35:28 exception occurs: main.AbnormalScheduleTimeException
-2015/10/22 18:35:53 Log: add schedule: schedule this 
-2015/10/22 18:54:09 Log: add deadline: next year 
-2015/10/22 19:21:01 Log: add deadline: let's try by by by now 
+2015/10/22 18:35:53 Log: add schedule: schedule this
+2015/10/22 18:54:09 Log: add deadline: next year
+2015/10/22 19:21:01 Log: add deadline: let's try by by by now
 2015/10/22 19:29:33 Log: add deadline: now let's by try wallaby bycicle
 2015/10/22 19:35:39 Log: add schedule: from now to then from 7 to 8
 2015/10/22 19:36:28 Log: add deadline: by the lullaby of byanca by mozarella
@@ -192,7 +192,7 @@
 2015/10/28 00:11:29 Log: addTask: Goliath's birthday from 13/12/2015 17:09 to 22:09
 2015/10/28 00:11:31 Log: addTask: Deepavali Celebrations from 10/11/2015 00:00
 2015/10/28 02:00:41 Log: add deadline: upate end
-2015/10/28 02:03:18 Log: addTask: 
+2015/10/28 02:03:18 Log: addTask:
 2015/10/28 02:03:45 Log: addTask: add
 2015/10/28 02:12:28 Log: add schedule: this
 2015/10/28 02:12:36 exception occurs: java.text.ParseException: Unparseable date: "07:00"
@@ -218,3 +218,6 @@
 2015/11/02 19:34:31 Log: addTask: try this
 2015/11/02 19:34:34 Log: addTask: try that
 2015/11/02 19:34:47 Log: addTask: xtra
+2015/11/03 11:55:35 Log: addTask: new
+2015/11/03 11:55:46 Log: delete Task: new
+2015/11/03 11:55:55 Log: add deadline: new
