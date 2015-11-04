@@ -19,7 +19,7 @@ public class TangGuo {
 		*/
 		JFrame frame = new MainFrame("TangGuo");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(1000, 800);
+		frame.setSize(800, 600);
 		frame.setVisible(true);
 		/*
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
