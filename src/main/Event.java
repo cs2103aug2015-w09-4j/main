@@ -180,7 +180,7 @@ public class Event {
 	 * @param date
 	 * @return
 	 */
-	private String formatDate(Date date){
+	public String formatDate(Date date){
 		Calendar now = Calendar.getInstance();   // Gets the current date and time
 		int currentYear = now.get(Calendar.YEAR);
 		int dateYear = Integer.parseInt(new SimpleDateFormat("yyyy").format(date));

@@ -27,7 +27,7 @@ public class TodayComponent extends JPanel {
 		ArrayList<ArrayList<Event>> eventList = logic.updateTodayDisplay();
 
 		String[] labels = {"Tasks","Deadlines","Schedules"};
-
+		
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		for (int i = 0;i<3;i++){
 			add(new JLabel(labels[i]));
