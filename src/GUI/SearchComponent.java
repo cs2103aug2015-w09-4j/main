@@ -23,12 +23,17 @@ public class SearchComponent extends JPanel {
 		if (eventList == null){
 			return;
 		}
-		String[] labels = {"Tasks","Deadline","Schedules"};
+		String[] labels = {"Tasks","Deadlines","Schedules"};
 
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		for (int i = 0;i<3;i++){
 			add(new JLabel(labels[i]));
-			add(GUITools.createEventTable(eventList.get(i)));
+			if (i == 0)
+				add(GUITools.createTaskTable(eventList.get(i)));
+			if (i == 1)
+				add(GUITools.createDeadlineTable(eventList.get(i)));
+			if (i == 2)
+				add(GUITools.createScheduleTable(eventList.get(i)));
 		}
 		revalidate();
 		repaint();

@@ -9,16 +9,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Stack;
 
-import javax.swing.Spring;
-
-import jdk.nashorn.internal.runtime.regexp.joni.SearchAlgorithm;
-
 
 public class Logic {
 
 	private static String fileName;
 	private Scanner scanner = new Scanner(System.in);
 	private TGStorageManager storage;
+	private Config config;
 	private HashMap<String,Integer> TGIDMap;
 	private Stack<Command> reversedCommandStack;
 	private Logger logger;
@@ -28,18 +25,20 @@ public class Logic {
 	 * Initialization of TGStorageManager, TGIDMap, and reversedCommandStack
 	 * @param file
 	 */
-	public Logic(String file) {
-		fileName = file;
+	public Logic() {
+		config = new Config();
+		fileName = config.getFileName();
 		try {
 			logger = new Logger("Tangguo.log");
 		} catch (IOException e) {
 			System.out.println("failed to initiate log");
 		}
-		storage = new TGStorageManager("", fileName);
+		storage = new TGStorageManager(config.getFilePath(), fileName);
 		TGIDMap = new HashMap<String,Integer>();
 		showDoneEvent = false;
 		reversedCommandStack = new Stack<Command>();
 	}
+
 	/**
 	 * Displays all events stored within TangGuo
 	 * @return
@@ -162,6 +161,10 @@ public class Logic {
 				return sortPriority();
 			case SEARCH:
 				return search(command);
+			case PATH:
+				return setPath(command);
+			case IMPORT:
+				return importData(command);
 			case EXIT:
 				showToUser(Constants.TANGGUO_EXIT);
 				System.exit(0);
@@ -724,5 +727,31 @@ public class Logic {
 		displayEvent.add(displayCache("Deadlines", deadline,"d"));
 		displayEvent.add(displayCache("Schedules", schedule,"s"));
 		return displayEvent;
+	}
+	
+	private Command setPath(Command command) {
+		config.setFilePath(command.getPath());
+		storage.setFilePath(command.getPath());
+		config.writeConfig();
+		
+		Command returnedCommand = new Command();
+		returnedCommand.setDisplayMessage(String.format(Constants.TANGGUO_PATH_SET, fileName, command.getPath()));
+		return returnedCommand;
+	}
+	
+	private Command importData(Command command) {
+		int div = command.getPath().lastIndexOf("/");
+		String filePath = command.getPath().substring(0, div + 1);
+		fileName = command.getPath().substring(div + 1);
+		config.setFilePath(filePath);
+		config.setFileName(fileName);
+		config.writeConfig();
+		
+		storage = new TGStorageManager(filePath, fileName);
+		filePath = (filePath.equals(""))? "default" : filePath;
+		Command returnedCommand = new Command();
+		returnedCommand.setDisplayMessage(String.format(Constants.TANGGUO_IMPORT_SUCCESS, filePath));
+		returnedCommand.setDisplayedEventList(updateDisplay());
+		return returnedCommand;
 	}
 }

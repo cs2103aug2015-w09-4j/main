@@ -36,8 +36,7 @@ public class Parser {
 					for(int i = 0; i < inputArray.length - 1; i++) {
 						temp = temp + inputArray[i] + " ";
 					}
-					
-					event = temp;
+					event = temp.substring(0, temp.length() - 1);
 				}
 				
 				String[] array = event.split(Constants.DEADLINE_SPLIT);
@@ -92,8 +91,6 @@ public class Parser {
 				break;
 			case DISPLAY:
 				break;
-			case TOGGLE:
-				break;
 			case UPDATE_NAME:
 				displayedIndex = getFirstWord(event);
 				String updatedName = removeFirstWord(event);
@@ -144,6 +141,12 @@ public class Parser {
 				break;
 			case SEARCH:
 				tempCommand.setSearchKey(event);
+				break;
+			case PATH:
+				tempCommand.setPath(event);
+				break;
+			case IMPORT:
+				tempCommand.setPath(event);
 				break;
 			case EXIT:
 				break;
@@ -200,6 +203,10 @@ public class Parser {
 			return Constants.COMMAND_TYPE.SORT_PRIORITY;
 		} else if (commandTypeString.equalsIgnoreCase("search")) {
 			return Constants.COMMAND_TYPE.SEARCH;
+		} else if (commandTypeString.equalsIgnoreCase("path")) {
+			return Constants.COMMAND_TYPE.PATH;
+		} else if (commandTypeString.equalsIgnoreCase("import")) {
+			return Constants.COMMAND_TYPE.IMPORT;
 		} else if (commandTypeString.equalsIgnoreCase("toggle")) {
 			return Constants.COMMAND_TYPE.TOGGLE;
 		} else {
@@ -245,54 +252,68 @@ public class Parser {
 	 */
 	@SuppressWarnings("unused")
 	private static boolean isNumber(String timeAndDate) throws NumberFormatException, ArrayIndexOutOfBoundsException {
-
+		
+		int hourInteger, minuteInteger, dayInteger, monthInteger, yearInteger;
+		String hour, minute, day, month, year;
+		String[] dayMonthYearSplit, hourMinuteSplit;
+		
 		String[] timeAndDateSplit = timeAndDate.split(" ");
 
 		if (timeAndDateSplit.length == 1) {
 
-			String[] dayMonthYearSplit = timeAndDateSplit[0].split("/");
-			String[] hourMinuteSplit = timeAndDateSplit[0].split(":");
+		    dayMonthYearSplit = timeAndDateSplit[0].split("/");
+			hourMinuteSplit = timeAndDateSplit[0].split(":");
 
 			if(dayMonthYearSplit.length == 1) {
 
-				String hour = hourMinuteSplit[0];
-				int hourInteger = Integer.parseInt(hour);
+				hour = hourMinuteSplit[0];
+				hourInteger = Integer.parseInt(hour);
 
-				String minute = hourMinuteSplit[1];
-				int minuteInteger = Integer.parseInt(minute);
+				minute = hourMinuteSplit[1];
+				minuteInteger = Integer.parseInt(minute);
 
 			} else if (hourMinuteSplit.length == 1) {
+				if(dayMonthYearSplit.length == 2) {
+				
+					day = dayMonthYearSplit[0];
+					dayInteger = Integer.parseInt(day);
 
-				String day = dayMonthYearSplit[0];
-				int dayInteger = Integer.parseInt(day);
+					month = dayMonthYearSplit[1];
+					monthInteger = Integer.parseInt(month);
+					
+				} else {
+					
+					day = dayMonthYearSplit[0];
+					dayInteger = Integer.parseInt(day);
 
-				String month = dayMonthYearSplit[1];
-				int monthInteger = Integer.parseInt(month);
+					month = dayMonthYearSplit[1];
+					monthInteger = Integer.parseInt(month);
 
-				String year = dayMonthYearSplit[2];
-				int yearInteger = Integer.parseInt(year);
-
+					year = dayMonthYearSplit[2];
+					yearInteger = Integer.parseInt(year);
+				
+				}
 			}
 
 		} else {
 
-			String[] dayMonthYearSplit = timeAndDateSplit[0].split("/");
-			String[] hourMinuteSplit = timeAndDateSplit[1].split(":");
+			dayMonthYearSplit = timeAndDateSplit[0].split("/");
+			hourMinuteSplit = timeAndDateSplit[1].split(":");
 
-			String day = dayMonthYearSplit[0];
-			int dayInteger = Integer.parseInt(day);
+			day = dayMonthYearSplit[0];
+			dayInteger = Integer.parseInt(day);
 
-			String month = dayMonthYearSplit[1];
-			int monthInteger = Integer.parseInt(month);
+			month = dayMonthYearSplit[1];
+			monthInteger = Integer.parseInt(month);
 
-			String year = dayMonthYearSplit[2];
-			int yearInteger = Integer.parseInt(year);
+		/*	year = dayMonthYearSplit[2];
+			yearInteger = Integer.parseInt(year); */
 
-			String hour = hourMinuteSplit[0];
-			int hourInteger = Integer.parseInt(hour);
+			hour = hourMinuteSplit[0];
+			hourInteger = Integer.parseInt(hour);
 
-			String minute = hourMinuteSplit[1];
-			int minuteInteger = Integer.parseInt(minute);
+			minute = hourMinuteSplit[1];
+			minuteInteger = Integer.parseInt(minute);
 		}
 
 		return true;
@@ -307,18 +328,28 @@ public class Parser {
 
 		String modifiedString = date;
 		String todayDate = getTodayDate();
+		String thisYear = getThisYear();
 
 		String[] dayMonthYearSplit = date.split("/");
 		String[] hourMinuteSplit = date.split(":");
 
-		if(dayMonthYearSplit.length == 1) {
+		if(dayMonthYearSplit.length == 1) { //case 1: when a user does not enter a date, but with time.
 			modifiedString = modifiedString.substring(0, modifiedString.length() - 5) + todayDate + modifiedString.substring(modifiedString.length() - 5);
 			//code above is abit hard-coded yes yes, but it literally adds current date to the string in our format.
-		} else if (hourMinuteSplit.length == 1) {
+		} else if (hourMinuteSplit.length == 2 && dayMonthYearSplit.length == 2) {//case 2, when the user provides a time and date without year
+			modifiedString = modifiedString.substring(0, modifiedString.length() - 6) + thisYear + modifiedString.substring(modifiedString.length() - 5);
+		
+		} else if (hourMinuteSplit.length == 1 && dayMonthYearSplit.length != 2) {//case 3: when a user does not enter a time, but with a full date with year.
 			if(eventType.equals("deadline"))
 				modifiedString = modifiedString + " 23:59";
 			else if(eventType.equals("schedule"))
 				modifiedString = modifiedString + " 00:00";
+		
+		} else if (hourMinuteSplit.length == 1 && dayMonthYearSplit.length == 2) {//case 4: when a user does not enter a time, but with a date without year.
+			if(eventType.equals("deadline"))
+				modifiedString = modifiedString + thisYear + "23:59";
+			else if(eventType.equals("schedule"))
+				modifiedString = modifiedString + thisYear + "00:00";
 		}
 
 		return modifiedString;
@@ -353,6 +384,14 @@ public class Parser {
 
 		String today = df.format(cal.getTime());
 		return today.substring(0, today.length() - 6) + " "; //to remove the unwanted time from today
+	}
+	
+	private static String getThisYear() {
+		DateFormat df = new SimpleDateFormat(Constants.DEFAULT_DATE_FORMAT);
+		Calendar cal = Calendar.getInstance();
+
+		String today = df.format(cal.getTime());
+		return "/" + today.substring(6, today.length() - 6) + " "; //to remove the unwanted time from today		
 	}
 
 	private static void checkTaskValidity(String input) throws TaskDateExistenceException {

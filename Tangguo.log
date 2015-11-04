@@ -224,6 +224,39 @@
 2015/11/03 15:12:43 Log: addTask: task blah
 2015/11/03 15:36:27 Log: addTask: adskaj
 2015/11/03 15:48:37 Log: addTask: task
+2015/11/03 16:16:58 Log: addTask: task
+2015/11/03 16:17:26 Log: addTask: jjjjjjjjjjjjjjjjjjjjjjjjjiejdijeiadlaedjaeldalejdljaedje
 2015/11/03 18:25:51 Log: addTask: now this from 9pm to 11pm
 2015/11/03 18:26:08 Log: add schedule: this
 2015/11/03 18:27:35 Log: add schedule: huh
+2015/11/03 23:43:13 Log: addTask: 
+2015/11/03 23:43:36 exception occurs: main.TaskDateExistenceException
+2015/11/03 23:43:44 Log: delete Task: 
+2015/11/03 23:43:51 exception occurs: main.TaskDateExistenceException
+2015/11/03 23:43:58 exception occurs: main.TaskDateExistenceException
+2015/11/03 23:46:45 exception occurs: main.AbnormalScheduleTimeException
+2015/11/03 23:47:01 exception occurs: main.AbnormalScheduleTimeException
+2015/11/03 23:47:40 Log: add deadline: complete IS1103 Essay
+2015/11/03 23:49:13 Log: add schedule: schedule
+2015/11/03 23:49:29 exception occurs: main.AbnormalScheduleTimeException
+2015/11/03 23:49:42 exception occurs: main.AbnormalScheduleTimeException
+2015/11/03 23:49:51 Log: delete schedule: schedule
+2015/11/03 23:49:57 exception occurs: main.AbnormalScheduleTimeException
+2015/11/03 23:50:12 exception occurs: main.AbnormalScheduleTimeException
+2015/11/03 23:51:25 Log: add schedule: schedule
+2015/11/03 23:51:29 Log: delete schedule: schedule
+2015/11/03 23:51:35 Log: add schedule: schedule
+2015/11/03 23:51:39 Log: delete schedule: schedule
+2015/11/03 23:52:00 Log: add schedule: Welfare Pack Distribution
+2015/11/03 23:52:02 Log: delete schedule: Welfare Pack Distribution
+2015/11/03 23:52:12 exception occurs: main.AbnormalScheduleTimeException
+2015/11/03 23:52:15 Log: add schedule: Welfare Pack Distribution
+2015/11/03 23:52:24 Log: delete schedule: Welfare Pack Distribution
+2015/11/03 23:52:39 Log: add schedule: Welfare Pack Distribution
+2015/11/03 23:53:19 Log: add deadline: Welfare Pack packing
+2015/11/03 23:53:57 Log: addTask: CS2103T software demo
+2015/11/03 23:54:16 Log: addTask: receive goods from NUSSU
+2015/11/03 23:55:05 Log: add deadline: IS1103 essay part 2
+2015/11/03 23:55:32 Log: add schedule: meet professor
+2015/11/03 23:55:53 Log: addTask: add
+2015/11/03 23:56:03 Log: delete Task: add

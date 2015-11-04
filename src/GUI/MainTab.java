@@ -19,31 +19,43 @@ import main.Logic;
 import main.Constants;
 public class MainTab extends JTabbedPane {
 	TodayComponent todayPanel;
-	EventComponent panel2;
-	EventComponent panel3;
-	EventComponent panel4;
-	SearchComponent panel5;
+	EventComponent taskPanel;
+	EventComponent deadlinePanel;
+	EventComponent schedulePanel;
+	SearchComponent searchPanel;
+	HelpComponent helpPanel;
 	public MainTab(Logic logic){
 		super();
 		todayPanel = new TodayComponent(logic);
-		ImageIcon todayIcon = createImageIcon("img/HEADER_today.png");
-		addTab("",todayIcon,todayPanel);
+		//ImageIcon todayIcon = createImageIcon("img/HEADER_today.png");
+		addTab("Today",todayPanel);
 		setMnemonicAt(0, KeyEvent.VK_1);
-		panel2 = new EventComponent(logic,Constants.TASK_TYPE_NUMBER);
-		addTab("Tasks",panel2);
+		
+		taskPanel = new EventComponent(logic,Constants.TASK_TYPE_NUMBER);
+		addTab("Tasks",taskPanel);
 		setMnemonicAt(1, KeyEvent.VK_2);
+		//setMnemonicAt(1, KeyEvent.VK_T);
 
-		panel3 = new EventComponent(logic,Constants.DEADLINE_TYPE_NUMBER);
-		addTab("Deadlines",panel3);
+		deadlinePanel = new EventComponent(logic,Constants.DEADLINE_TYPE_NUMBER);
+		addTab("Deadlines",deadlinePanel);
 		setMnemonicAt(2, KeyEvent.VK_3);
+		//setMnemonicAt(1, KeyEvent.VK_D);
 
-		panel4 = new EventComponent(logic,Constants.SCHEDULE_TYPE_NUMBER);
-		addTab("Schedules",panel4);
+		schedulePanel = new EventComponent(logic,Constants.SCHEDULE_TYPE_NUMBER);
+		addTab("Schedules",schedulePanel);
 		setMnemonicAt(3, KeyEvent.VK_4);
+		//setMnemonicAt(1, KeyEvent.VK_S);
 
-		panel5 = new SearchComponent(logic);
-		addTab("Search",panel5);
+		searchPanel = new SearchComponent(logic);
+		addTab("Search",searchPanel);
 		setMnemonicAt(4, KeyEvent.VK_5);
+
+		helpPanel = new HelpComponent();
+		addTab("Help",helpPanel);
+		setMnemonicAt(5, KeyEvent.VK_6);
+		//setMnemonicAt(5, KeyEvent.VK_H);
+
+
 		addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent e) {
@@ -51,7 +63,7 @@ public class MainTab extends JTabbedPane {
 				if (getSelectedIndex()==0){ //today
 					todayPanel.refresh();
 				}else if (getSelectedIndex()==4){ //search result
-					panel5.refresh();
+					searchPanel.refresh();
 				}else{
 					refreshAllEventTabs(logic.updateDisplay());
 				}
@@ -75,9 +87,9 @@ public class MainTab extends JTabbedPane {
 	}
 
 	private void refreshAllEventTabs(ArrayList<ArrayList<Event>> eventList){
-		panel2.refresh(eventList);
-		panel3.refresh(eventList);
-		panel4.refresh(eventList);
+		taskPanel.refresh(eventList);
+		deadlinePanel.refresh(eventList);
+		schedulePanel.refresh(eventList);
 	}
 	 protected static ImageIcon createImageIcon(String path) {
 	        java.net.URL imgURL = MainTab.class.getResource(path);

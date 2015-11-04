@@ -63,7 +63,6 @@ public class TGStorageManager {
 		}
 
 		initialize();
-		this.tb.updateCache(this._scheduleCache);
 	}
 	
 	public void setFilePath(String filePath) {
@@ -429,6 +428,7 @@ public class TGStorageManager {
 			initializeTaskCache(doc);
 			initializeDeadlineCache(doc);
 			initializeScheduleCache(doc);
+			tb.updateCache(this._scheduleCache);
 
 		} catch (ParserConfigurationException e) {
 			e.printStackTrace();

@@ -12,19 +12,19 @@ public class ExceptionsHandlingTest {
 	
 	@Test
 	public void dateOutOfBoundsTest() throws Exception {
-		Logic tg = new Logic("testFile");
+		Logic tg = new Logic();
 		assertEquals(tg.executeInputs("add ayamdatedeadlinetest by 32/10/2015 15:09"), Constants.TANGGUO_DATE_OUT_OF_BOUNDS);
 	}
 	
 	@Test
 	public void timeOutOfBoundsTest() throws Exception {
-		Logic tg = new Logic("testFile");
+		Logic tg = new Logic();
 		assertEquals(tg.executeInputs("add ayamtimedeadlinetest by 31/10/2015 24:09"), Constants.TANGGUO_DATE_OUT_OF_BOUNDS);
 	}
 
 	@Test
 	public void leapYearTest() throws Exception {
-		Logic tg = new Logic("testFile");
+		Logic tg = new Logic();
 		assertEquals(tg.executeInputs("add ayamleapyeardeadlinetest by 29/02/2015 23:09"), Constants.TANGGUO_DATE_OUT_OF_BOUNDS);
 	}
 
