@@ -23,24 +23,24 @@ public class TimeBlock {
 		}
 		for (int i = 0; i < _scheduleCache.size(); i++) {
 			if (i == 0 && i == _scheduleCache.size() - 1) {
-				if (newSchedule.getEnd().before(_scheduleCache.get(i).getStart())) {
+				if (!newSchedule.getEnd().after(_scheduleCache.get(i).getStart())) {
 					return true;
-				} else if (newSchedule.getStart().after(_scheduleCache.get(i).getEnd())) {
+				} else if (!newSchedule.getStart().before(_scheduleCache.get(i).getEnd())) {
 					return true;
 				}
 			} else if (i == 0) {
-				if (newSchedule.getEnd().before(_scheduleCache.get(i).getStart())) {
+				if (!newSchedule.getEnd().after(_scheduleCache.get(i).getStart())) {
 					return true;
 				}
 			} else if (i == _scheduleCache.size() - 1) {
-				if (newSchedule.getStart().after(_scheduleCache.get(i).getEnd())) {
+				if (!newSchedule.getStart().before(_scheduleCache.get(i).getEnd())) {
 					return true;
 				}
 			} else {
-				if (newSchedule.getStart().after(_scheduleCache.get(i-1).getEnd()) && 
-						newSchedule.getEnd().before(_scheduleCache.get(i).getStart())) {
+				if (!newSchedule.getStart().before(_scheduleCache.get(i-1).getEnd()) && 
+						!newSchedule.getEnd().after(_scheduleCache.get(i).getStart())) {
 					return true;
-				}
+				} 
 			}
 		}
 		return false;
@@ -51,7 +51,7 @@ public class TimeBlock {
 			if (_scheduleCache.get(i).getID() == id) {
 				if (i == 0) {
 					return true;
-				} else if (_scheduleCache.get(i - 1).getEnd().before(startDate)) {
+				} else if (!_scheduleCache.get(i-1).getEnd().after(startDate)) {
 					return true;
 				}
 			}
@@ -64,7 +64,7 @@ public class TimeBlock {
 			if (_scheduleCache.get(i).getID() == id) {
 				if (i == _scheduleCache.size() - 1) {
 					return true;
-				} else if (_scheduleCache.get(i + 1).getEnd().after(endDate)) {
+				} else if (!_scheduleCache.get(i+1).getEnd().before(endDate)) {
 					return true;
 				}
 			}

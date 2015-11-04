@@ -87,12 +87,6 @@ public class MainTab extends JTabbedPane {
 	}
 
 	private void refreshAllEventTabs(ArrayList<ArrayList<Event>> eventList){
-		for(int i = 0; i < eventList.size(); i ++) {
-			System.out.println(i);
-			for(int j = 0; j < eventList.get(i).size(); j ++) {
-				System.out.println(j + " " + eventList.get(i).get(j).getName());
-			}
-		}
 		taskPanel.refresh(eventList);
 		deadlinePanel.refresh(eventList);
 		schedulePanel.refresh(eventList);

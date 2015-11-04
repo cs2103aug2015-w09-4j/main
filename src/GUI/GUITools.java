@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.font.TextAttribute;
 import java.util.ArrayList;
 import java.util.Map;
@@ -17,8 +18,9 @@ import main.Event;
 //test commit
 
 public class GUITools {
-
-	private static int tableWidth = 1000;
+	
+	private static int tableWidth = 1280;
+	//private static int tableWidth = 1000;
 	private static int tableHeight = 112;
 	private static int ID_SIZE = 25;
 	private static int CATEGORY_SIZE = 100;
@@ -274,7 +276,7 @@ public class GUITools {
 	}
 	
 	private static Font getDefaultFont(){
-		return new Font("arial", Font.PLAIN, 12);
+		return new Font("Futura", Font.PLAIN, 12);
 	}
 
 	private static Font getStrikeThroughFont(){

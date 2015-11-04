@@ -142,6 +142,8 @@ public class Parser {
 			case SEARCH:
 				tempCommand.setSearchKey(event.toLowerCase());
 				break;
+			case TOGGLE:
+				break;
 			case PATH:
 				tempCommand.setPath(event);
 				break;
