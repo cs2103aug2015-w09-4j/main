@@ -4,7 +4,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Stack;
@@ -13,7 +12,6 @@ import java.util.Stack;
 public class Logic {
 
 	private static String fileName;
-	private Scanner scanner = new Scanner(System.in);
 	private TGStorageManager storage;
 	private Config config;
 	private HashMap<String,Integer> TGIDMap;
@@ -53,9 +51,9 @@ public class Logic {
 	public ArrayList<ArrayList<Event>> updateTodayDisplay(){
 		ArrayList<ArrayList<Event>> displayEvent = new ArrayList<ArrayList<Event>>();
 		TGIDMap.clear();
-		displayEvent.add(displayTodayCache("Tasks", storage.getTaskCache(),"t"));
-		displayEvent.add(displayTodayCache("Deadlines", storage.getDeadlineCache(),"d"));
-		displayEvent.add(displayTodayCache("Schedules", storage.getScheduleCache(),"s"));
+		displayEvent.add(getTodayCache("Tasks", storage.getTaskCache(),"t"));
+		displayEvent.add(getTodayCache("Deadlines", storage.getDeadlineCache(),"d"));
+		displayEvent.add(getTodayCache("Schedules", storage.getScheduleCache(),"s"));
 
 		return displayEvent;
 	}
@@ -66,9 +64,9 @@ public class Logic {
 			return String.format(Constants.TANGGUO_EMPTY_FILE, fileName);
 		}*/
 		TGIDMap.clear();
-		displayEvent.add(displayCache("Tasks", storage.getTaskCache(),"t"));
-		displayEvent.add(displayCache("Deadlines", storage.getDeadlineCache(),"d"));
-		displayEvent.add(displayCache("Schedules", storage.getScheduleCache(),"s"));
+		displayEvent.add(getCache("Tasks", storage.getTaskCache(),"t"));
+		displayEvent.add(getCache("Deadlines", storage.getDeadlineCache(),"d"));
+		displayEvent.add(getCache("Schedules", storage.getScheduleCache(),"s"));
 
 		return displayEvent;
 	}
@@ -144,7 +142,7 @@ public class Logic {
 			case UPDATE_CATEGORY:
 				return updateCategory(command);
 			case DONE:
-				return markAsDone(command);		///not done yet///
+				return markAsDone(command);
 			case DELETE:
 				return deleteEvent(command);
 			case TOGGLE:
@@ -290,9 +288,9 @@ public class Logic {
 			return String.format(Constants.TANGGUO_EMPTY_FILE, fileName);
 		}
 		TGIDMap.clear();
-		printOut += displayCache("Tasks", storage.getTaskCache(),"t");
-		printOut += displayCache("Deadlines", storage.getDeadlineCache(),"d");
-		printOut += displayCache("Schedules", storage.getScheduleCache(),"s");
+		printOut += getCache("Tasks", storage.getTaskCache(),"t");
+		printOut += getCache("Deadlines", storage.getDeadlineCache(),"d");
+		printOut += getCache("Schedules", storage.getScheduleCache(),"s");
 
 		return printOut;
 	}
@@ -307,7 +305,7 @@ public class Logic {
 
 	//Displays all events of a particular type: deadline/schedule/floating task
 
-	private ArrayList<Event> displayCache(String cacheName, ArrayList<Event> cache, String header){
+	private ArrayList<Event> getCache(String cacheName, ArrayList<Event> cache, String header){
 		ArrayList<Event> temp = new ArrayList<Event>();
 		for (int i = 0; i < cache.size(); i++){
 			if (cache.get(i).isDone() && !showDoneEvent) continue;
@@ -318,7 +316,7 @@ public class Logic {
 		return temp;
 	}
 
-	private ArrayList<Event> displayTodayCache(String cacheName, ArrayList<Event> cache, String header){
+	private ArrayList<Event> getTodayCache(String cacheName, ArrayList<Event> cache, String header){
 		ArrayList<Event> temp = new ArrayList<Event>();
 		int counter = 1;
 		for (int i = 0; i < cache.size(); i++){
@@ -345,10 +343,10 @@ public class Logic {
 	}
 
 	private boolean isSameDay(Date date1, Date date2){
-		SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMdd");
-		return fmt.format(date1).equals(fmt.format(date2));
-
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		return sdf.format(date1).equals(sdf.format(date2));
 	}
+	
 	/**
 	 * Updates the name of an existing event to the new name input by user
 	 * @param command
@@ -723,9 +721,9 @@ public class Logic {
 		TGIDMap.clear();
 		ArrayList<ArrayList<Event>> displayEvent = new ArrayList<ArrayList<Event>>();
 		TGIDMap.clear();
-		displayEvent.add(displayCache("Tasks", task,"t"));
-		displayEvent.add(displayCache("Deadlines", deadline,"d"));
-		displayEvent.add(displayCache("Schedules", schedule,"s"));
+		displayEvent.add(getCache("Tasks", task,"t"));
+		displayEvent.add(getCache("Deadlines", deadline,"d"));
+		displayEvent.add(getCache("Schedules", schedule,"s"));
 		return displayEvent;
 	}
 	

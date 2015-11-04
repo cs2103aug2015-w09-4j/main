@@ -260,3 +260,12 @@
 2015/11/03 23:55:32 Log: add schedule: meet professor
 2015/11/03 23:55:53 Log: addTask: add
 2015/11/03 23:56:03 Log: delete Task: add
+2015/11/04 09:51:35 Log: addTask: refactor
+2015/11/04 09:52:16 Log: add deadline: refactor
+2015/11/04 12:35:19 Log: addTask: this is how it's done
+2015/11/04 12:35:59 Log: add schedule: schedule
+2015/11/04 12:38:11 Log: add deadline: deadline
+2015/11/04 12:39:50 exception occurs: java.text.ParseException: Unparseable date: "11/10"
+2015/11/04 12:40:10 exception occurs: java.text.ParseException: Unparseable date: "11/10"
+2015/11/04 12:41:20 exception occurs: java.text.ParseException: Unparseable date: ""
+2015/11/04 12:57:57 Log: add schedule: neverrrr
