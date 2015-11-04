@@ -107,7 +107,7 @@ public class TGStorageManager {
 		return currentIndex;
 	}
 
-	public int addTask(Event newTask){
+	public int addTaskToStorage(Event newTask){
 		logger.writeLog("addTask: "+newTask.getName());
 		_taskCache.add(newTask);
 		currentIndex++;
@@ -117,12 +117,12 @@ public class TGStorageManager {
 	
 	public int addTask(String name, String category, int priority){
 		Event newTask = new Event(currentIndex, name, category, priority);
-		addTask(newTask);
+		addTaskToStorage(newTask);
 		return newTask.getID();
 
 	}
 
-	public int addDeadline (Event newDeadline){
+	public int addDeadlineToStorage (Event newDeadline){
 		logger.writeLog("add deadline: "+newDeadline.getName());
 		_deadlineCache.add(newDeadline);
 		currentIndex++;
@@ -132,11 +132,11 @@ public class TGStorageManager {
 	
 	public int addDeadline(String name, Date endDate, String category, int priority){
 		Event newDeadline = new Event(currentIndex, name, endDate, category, priority);
-		addDeadline(newDeadline);
+		addDeadlineToStorage(newDeadline);
 		return newDeadline.getID();
 	}
 
-	public int addSchedule(Event newSchedule){
+	public int addScheduleToStorage(Event newSchedule){
 		logger.writeLog("add schedule: "+newSchedule.getName());
 		_scheduleCache.add(newSchedule);
 		currentIndex++;
@@ -147,8 +147,8 @@ public class TGStorageManager {
 	
 	public int addSchedule(String name, Date startDate, Date endDate, String category, int priority){
 		Event newSchedule = new Event(currentIndex, name, startDate, endDate, category, priority);
-		if (tb.addSchedule(newSchedule)) {
-			addSchedule(newSchedule);
+		if (tb.canFitSchedule(newSchedule)) {
+			addScheduleToStorage(newSchedule);
 			return newSchedule.getID();
 		} else {
 			return -1;

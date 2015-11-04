@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><calendar current="17">
+<?xml version="1.0" encoding="UTF-8"?><calendar current="20">
   <task id="4">
     <name>this</name>
     <category>DEFAULT</category>
@@ -53,6 +53,12 @@
     <priority>-1</priority>
     <isDone>false</isDone>
   </task>
+  <task id="17">
+    <name>now this from 9pm to 11pm</name>
+    <category>DEFAULT</category>
+    <priority>1</priority>
+    <isDone>false</isDone>
+  </task>
   <deadline id="2">
     <name>this</name>
     <endDate>02/11/2105 09:00</endDate>
@@ -89,6 +95,14 @@
     <priority>-1</priority>
     <isDone>true</isDone>
   </schedule>
+  <schedule id="18">
+    <name>this</name>
+    <startDate>03/11/2015 09:00</startDate>
+    <endDate>03/11/2015 11:00</endDate>
+    <category>DEFAULT</category>
+    <priority>1</priority>
+    <isDone>false</isDone>
+  </schedule>
   <schedule id="0">
     <name>this</name>
     <startDate>02/11/2105 09:00</startDate>
@@ -112,5 +126,13 @@
     <category>DEFAULT</category>
     <priority>-1</priority>
     <isDone>true</isDone>
+  </schedule>
+  <schedule id="19">
+    <name>huh</name>
+    <startDate>03/11/2015 17:00</startDate>
+    <endDate>03/11/2015 21:00</endDate>
+    <category>DEFAULT</category>
+    <priority>1</priority>
+    <isDone>false</isDone>
   </schedule>
 </calendar>

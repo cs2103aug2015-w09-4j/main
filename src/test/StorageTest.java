@@ -21,7 +21,7 @@ public class StorageTest {
 	public void addtest() {
 		TGStorageManager tm = new TGStorageManager("", "testFile");
 		Event e = new Event(1,"hello");
-		tm.addTask(e);
+		tm.addTaskToStorage(e);
 		assertEquals(tm.getTaskCache().size(),1);
 		assertEquals(tm.getTaskCache().get(0), e);
 	}
@@ -29,7 +29,7 @@ public class StorageTest {
 	public void deleteTest() {
 		TGStorageManager tm = new TGStorageManager("", "testFile");
 		Event e = new Event(1,"hello");
-		tm.addTask(e);
+		tm.addTaskToStorage(e);
 		assertEquals(tm.getTaskCache().size(),1);
 		tm.deleteEventByID(1);
 		assertEquals(tm.getTaskCache().size(),0);
@@ -38,7 +38,7 @@ public class StorageTest {
 	public void updateTest() {
 		TGStorageManager tm = new TGStorageManager("", "testFile");
 		Event e = new Event(1,"hello");
-		tm.addTask(e);
+		tm.addTaskToStorage(e);
 		assertEquals(tm.getTaskCache().size(),1);
 		tm.updateNameByID(1, "hi");
 		//System.out.println(tm.getTaskCache().get(0).getName());

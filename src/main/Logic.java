@@ -196,7 +196,7 @@ public class Logic {
 			int newID = storage.addDeadline(command.getEventName(), command.getEventEnd(), command.getEventCategory(), command.getEventPriority());
 			reversedCommandStack.push(reverseAdd(newID));
 		}else{												//undo
-			storage.addDeadline(command.getEvent());
+			storage.addDeadlineToStorage(command.getEvent());
 		}
 
 		returnedCommand.setDisplayedEventList(updateDisplay());
@@ -220,7 +220,7 @@ public class Logic {
 				return getErrorCommand(String.format(Constants.TANGGUO_SCHEDULE_CLASH, command.getEventName()));
 			}
 		}else{
-			storage.addSchedule(command.getEvent());
+			storage.addScheduleToStorage(command.getEvent());
 		}
 
 		returnedCommand.setDisplayedEventList(updateDisplay());
@@ -241,7 +241,7 @@ public class Logic {
 			int newID = storage.addTask(command.getEventName(), command.getEventCategory(), command.getEventPriority());
 			reversedCommandStack.push(reverseAdd(newID));
 		}else{
-			storage.addTask(command.getEvent());
+			storage.addTaskToStorage(command.getEvent());
 		}
 		returnedCommand.setDisplayedEventList(updateDisplay());
 		return returnedCommand;
