@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.font.TextAttribute;
 import java.util.ArrayList;
 import java.util.Map;
@@ -17,7 +18,15 @@ import main.Event;
 //test commit
 
 public class GUITools {
-
+	
+	private static int tableWidth = 1280;
+	//private static int tableWidth = 1000;
+	private static int tableHeight = 112;
+	private static int ID_SIZE = 25;
+	private static int CATEGORY_SIZE = 100;
+	private static int PRIORITY_SIZE = 100;
+	private static int FIXED_TOTAL = ID_SIZE + CATEGORY_SIZE + PRIORITY_SIZE;
+	
 	public static JScrollPane createTaskTable(ArrayList<Event> eventList) {
 
 		String[] columnNames = { "ID", "Event Name", "Category", "Priority" };
@@ -27,7 +36,7 @@ public class GUITools {
 			Event curr = eventList.get(i);
 			data[i][0] = i + 1;
 			data[i][1] = curr.getName();
-			data[i][2] = curr.getCategory();
+			data[i][2] = curr.getCategory().equals("DEFAULT")? "--" : curr.getCategory();
 			switch ((int) curr.getPriority()){
 				case 3:
 					data[i][3]="HIGH";
@@ -84,8 +93,17 @@ public class GUITools {
 			};
 		});
 		
+		Dimension tableSize = new Dimension(tableWidth, tableHeight);
+		table.setPreferredSize(tableSize);
+		table.getColumn("ID").setPreferredWidth(ID_SIZE);
+		table.getColumn("Event Name").setPreferredWidth(offsetWidth(tableSize.width, 1.00f));
+		table.getColumn("Category").setPreferredWidth(CATEGORY_SIZE);
+		table.getColumn("Priority").setPreferredWidth(PRIORITY_SIZE);
+		
 		table.setFillsViewportHeight(true);
+		table.setRowSelectionAllowed(false);
 		JScrollPane scrollPane = new JScrollPane(table);
+
 		return scrollPane;
 	}
 
@@ -98,8 +116,8 @@ public class GUITools {
 			Event curr = eventList.get(i);
 			data[i][0] = i + 1;
 			data[i][1] = curr.getName();
-			data[i][2] = curr.getEnd() == null ? '-' : curr.getEnd();
-			data[i][3] = curr.getCategory();
+			data[i][2] = curr.formatDate(curr.getEnd());
+			data[i][3] = curr.getCategory().equals("DEFAULT")? "--" : curr.getCategory();
 			switch ((int) curr.getPriority()){
 				case 3:
 					data[i][4]="HIGH";
@@ -156,8 +174,18 @@ public class GUITools {
 			};
 		});
 		
+		Dimension tableSize = new Dimension(tableWidth, tableHeight);
+		table.setPreferredSize(tableSize);
+		table.getColumn("ID").setPreferredWidth(ID_SIZE);
+		table.getColumn("Event Name").setPreferredWidth(offsetWidth(tableSize.width, 0.80f));
+		table.getColumn("By").setPreferredWidth(offsetWidth(tableSize.width, 0.20f));
+		table.getColumn("Category").setPreferredWidth(CATEGORY_SIZE);
+		table.getColumn("Priority").setPreferredWidth(PRIORITY_SIZE);
+		
 		table.setFillsViewportHeight(true);
+		table.setRowSelectionAllowed(false);
 		JScrollPane scrollPane = new JScrollPane(table);
+
 		return scrollPane;
 	}
 	
@@ -170,9 +198,9 @@ public class GUITools {
 			Event curr = eventList.get(i);
 			data[i][0] = i + 1;
 			data[i][1] = curr.getName();
-			data[i][2] = curr.getStart() == null ? '-' : curr.getStart();
-			data[i][3] = curr.getEnd() == null ? '-' : curr.getEnd();
-			data[i][4] = curr.getCategory();
+			data[i][2] = curr.formatDate(curr.getStart());
+			data[i][3] = curr.formatDate(curr.getEnd());
+			data[i][4] = curr.getCategory().equals("DEFAULT")? "--" : curr.getCategory();
 			switch ((int) curr.getPriority()){
 				case 3:
 					data[i][5]="HIGH";
@@ -230,16 +258,25 @@ public class GUITools {
 			};
 		});
 		
+		Dimension tableSize = new Dimension(tableWidth, tableHeight);
+		table.setPreferredSize(tableSize);
+		table.getColumn("ID").setPreferredWidth(ID_SIZE);
+		table.getColumn("Event Name").setPreferredWidth(offsetWidth(tableSize.width, 0.60f));
+		table.getColumn("From").setPreferredWidth(offsetWidth(tableSize.width, 0.20f));
+		table.getColumn("To").setPreferredWidth(offsetWidth(tableSize.width, 0.20f));
+		table.getColumn("Category").setPreferredWidth(CATEGORY_SIZE);
+		table.getColumn("Priority").setPreferredWidth(PRIORITY_SIZE);
+		
 		table.setFillsViewportHeight(true);
-		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		table.setRowSelectionAllowed(false);
 		JScrollPane scrollPane = new JScrollPane(table);
+		System.out.println(scrollPane.getWidth());
 
 		return scrollPane;
 	}
 	
 	private static Font getDefaultFont(){
-		return new Font("arial", Font.PLAIN, 12);
+		return new Font("Futura", Font.PLAIN, 12);
 	}
 
 	private static Font getStrikeThroughFont(){
@@ -247,5 +284,10 @@ public class GUITools {
 		fontAttributes.put(TextAttribute.STRIKETHROUGH,
 	            TextAttribute.STRIKETHROUGH_ON);
 		return new Font(fontAttributes);
+	}
+	
+	private static int offsetWidth(int total, float percentage) {
+		float result = (float)(total - FIXED_TOTAL) * percentage;
+		return Math.round(result);
 	}
 }

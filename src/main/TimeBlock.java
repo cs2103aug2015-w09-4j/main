@@ -39,25 +39,26 @@ public class TimeBlock {
 		Event currEvent, prevEvent;
 		for (int i = START_INDEX; i < _scheduleCache.size(); i++) {
 			currEvent = _scheduleCache.get(i);
-			if (i == START_INDEX && i == getLastIndex()) {	//start and end of _scheduleCache
-				if (xEndsBeforeYStarts(newSchedule, currEvent)) {
+			if (i == 0 && i == _scheduleCache.size() - 1) {
+				if (!xEndsAfterYStarts(newSchedule, currEvent)) {
 					return true;
-				} else if (xStartsAfterYEnds(newSchedule, currEvent)) {
-					return true;
-				}
-			} else if (i == START_INDEX) {		//start of _scheduleCache
-				if (xEndsBeforeYStarts(newSchedule, currEvent)) {
+				} else if (!xStartsBeforeYEnds(newSchedule, currEvent)) {
 					return true;
 				}
-			} else if (i == getLastIndex()) {	//end of _scheduleCache
-				if (xStartsAfterYEnds(newSchedule, currEvent)) {
+			} else if (i == 0) {
+				if (!xEndsAfterYStarts(newSchedule, currEvent)) {
+					return true;
+				}
+			} else if (i == getLastIndex()) {
+				if (!xStartsBeforeYEnds(newSchedule, currEvent)) {
 					return true;
 				}
 			} else {
 				prevEvent = _scheduleCache.get(i-1);
-				if (xStartsAfterYEnds(newSchedule, prevEvent) && xEndsBeforeYStarts(newSchedule, currEvent)) {
+				if (!xStartsBeforeYEnds(newSchedule, prevEvent) && 
+						!xEndsAfterYStarts(newSchedule, currEvent)) {
 					return true;
-				}
+				} 
 			}
 		}
 		return false;
@@ -68,13 +69,13 @@ public class TimeBlock {
 	}
 	
 	//returns whether x's end time is before y's start time
-	private boolean xEndsBeforeYStarts(Event x, Event y){
-		return x.getEnd().before(y.getStart());
+	private boolean xEndsAfterYStarts(Event x, Event y){
+		return x.getEnd().after(y.getStart());
 	}
 	
 	//returns whether x's start time is after y's end time
-	private boolean xStartsAfterYEnds(Event x, Event y){
-		return x.getStart().after(y.getEnd());
+	private boolean xStartsBeforeYEnds(Event x, Event y){
+		return x.getStart().before(y.getEnd());
 	}
 	
 	public boolean updateStart(int id, Date startDate) {
@@ -82,7 +83,7 @@ public class TimeBlock {
 			if (_scheduleCache.get(i).getID() == id) {
 				if (i == 0) {
 					return true;
-				} else if (_scheduleCache.get(i - 1).getEnd().before(startDate)) {
+				} else if (!_scheduleCache.get(i-1).getEnd().after(startDate)) {
 					return true;
 				}
 			}
@@ -95,7 +96,7 @@ public class TimeBlock {
 			if (_scheduleCache.get(i).getID() == id) {
 				if (i == _scheduleCache.size() - 1) {
 					return true;
-				} else if (_scheduleCache.get(i + 1).getEnd().after(endDate)) {
+				} else if (!_scheduleCache.get(i+1).getEnd().before(endDate)) {
 					return true;
 				}
 			}

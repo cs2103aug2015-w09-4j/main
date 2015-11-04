@@ -1,5 +1,8 @@
 package GUI;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
+
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -18,7 +21,13 @@ public class TangGuo {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(1000, 800);
 		frame.setVisible(true);
-
-		
+		/*
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		System.out.println(screenSize.getWidth());
+		JFrame frame = new MainFrame("TangGuo");
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setSize((int)screenSize.getWidth(), (int)screenSize.getHeight());
+		frame.setVisible(true);
+		*/
 	}
 }

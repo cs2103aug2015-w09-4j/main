@@ -269,3 +269,7 @@
 2015/11/04 12:40:10 exception occurs: java.text.ParseException: Unparseable date: "11/10"
 2015/11/04 12:41:20 exception occurs: java.text.ParseException: Unparseable date: ""
 2015/11/04 12:57:57 Log: add schedule: neverrrr
+2015/11/04 14:51:31 Log: addTask: schedule 09:00 to 10:00
+2015/11/04 14:51:38 Log: delete Task: schedule 09:00 to 10:00
+2015/11/04 14:51:45 Log: add schedule: schedule
+2015/11/04 14:52:13 Log: add schedule: tg

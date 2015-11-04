@@ -140,7 +140,9 @@ public class Parser {
 			case SORT_PRIORITY:
 				break;
 			case SEARCH:
-				tempCommand.setSearchKey(event);
+				tempCommand.setSearchKey(event.toLowerCase());
+				break;
+			case TOGGLE:
 				break;
 			case PATH:
 				tempCommand.setPath(event);
