@@ -1,4 +1,4 @@
-package GUI;
+package TGUI;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -8,7 +8,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
-import main.Logic;
+import TGLogic.Logic;
 
 public class HelpComponent extends JPanel {
 	public HelpComponent() {

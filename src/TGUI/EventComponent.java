@@ -1,4 +1,4 @@
-package GUI;
+package TGUI;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -11,8 +11,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
-import main.Event;
-import main.Logic;
+import TGLogic.Logic;
+import TGUtils.Event;
 
 public class EventComponent extends JPanel {
 	int eventType;

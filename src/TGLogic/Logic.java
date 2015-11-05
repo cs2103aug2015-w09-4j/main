@@ -1,4 +1,4 @@
-package main;
+package TGLogic;
 import java.lang.String;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -8,6 +8,15 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Stack;
 
+import TGExceptions.AbnormalScheduleTimeException;
+import TGExceptions.TaskDateExistenceException;
+import TGParser.Parser;
+import TGStorage.TGStorageManager;
+import TGUtils.Command;
+import TGUtils.Constants;
+import TGUtils.Event;
+import TGUtils.Logger;
+import TGUtils.Constants.COMMAND_TYPE;
 
 public class Logic {
 
@@ -95,7 +104,7 @@ public class Logic {
 		Command returnedCommand = new Command();
 		try {
 			currentCommand = Parser.parseCommand(input);
-		} catch (ParseException | TaskDateExistenceException e) {
+		} catch (ParseException |TaskDateExistenceException e) {
 			logger.writeException(e.toString());
 			returnedCommand.setDisplayMessage(Constants.TANGGUO_DATE_OUT_OF_BOUNDS);
 			return returnedCommand;

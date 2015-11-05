@@ -1,4 +1,4 @@
-package GUI;
+package TGUI;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -14,7 +14,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
-import main.Event;
+import TGUtils.Event;
 public class GUITools {
 	private final static Color GUI_COLOR_HIGH = new Color(246, 150, 121);
 	private final static Color GUI_COLOR_MID = new Color(255, 247, 153);
