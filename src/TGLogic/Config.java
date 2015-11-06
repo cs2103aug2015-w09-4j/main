@@ -1,4 +1,4 @@
-package main;
+package TGLogic;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;

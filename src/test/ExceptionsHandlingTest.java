@@ -4,9 +4,10 @@ import static org.junit.Assert.*;
 
 import org.junit.Before;
 
-import main.*;
-
 import org.junit.Test;
+
+import TGLogic.Logic;
+import TGUtils.Constants;
 
 public class ExceptionsHandlingTest {
 	

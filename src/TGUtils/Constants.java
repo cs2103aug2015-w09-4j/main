@@ -1,4 +1,4 @@
-package main;
+package TGUtils;
 public class Constants {
 	/*
 	 * GUI Tabs

@@ -1,9 +1,9 @@
-package main;
+package TGUtils;
 import java.util.Comparator;
 
 public class Sorters {
 
-	static Comparator<Event> sortName() {
+	public static Comparator<Event> sortName() {
 		return new Comparator<Event>() {
 			public int compare(Event x, Event y) {
 				return x.getName().compareTo(y.getName());
@@ -11,7 +11,7 @@ public class Sorters {
 		};
 	}
 	
-	static Comparator<Event> sortPriority() {
+	public static Comparator<Event> sortPriority() {
 		return new Comparator<Event>() {
 			public int compare(Event x, Event y) {
 				return y.getPriority() - x.getPriority();
@@ -19,7 +19,7 @@ public class Sorters {
 		};
 	}
 	
-	static Comparator<Event> sortStart() {
+	public static Comparator<Event> sortStart() {
 		return new Comparator<Event>() {
 			public int compare(Event x, Event y) {
 				if (x.getStart().before(y.getStart()))
@@ -31,7 +31,7 @@ public class Sorters {
 		};
 	}
 	
-	static Comparator<Event> sortEnd() {
+	public static Comparator<Event> sortEnd() {
 		return new Comparator<Event>() {
 			public int compare(Event x, Event y) {
 				if (x.getEnd().before(y.getEnd()))

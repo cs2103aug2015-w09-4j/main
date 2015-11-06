@@ -1,4 +1,4 @@
-package GUI;
+package TGUI;
 
 import java.util.ArrayList;
 
@@ -6,8 +6,8 @@ import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import main.Event;
-import main.Logic;
+import TGLogic.Logic;
+import TGUtils.Event;
 
 public class SearchComponent extends JPanel {
 	Logic logic;

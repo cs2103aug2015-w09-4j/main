@@ -1,4 +1,4 @@
-package main;
+package TGUtils;
 
 import java.util.Date;
 

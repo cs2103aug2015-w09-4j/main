@@ -4,12 +4,12 @@ import static org.junit.Assert.*;
 
 import java.io.PrintStream;
 
-import main.Constants;
-import main.Event;
-import main.TGStorageManager;
-
 import org.junit.Before;
 import org.junit.Test;
+
+import TGStorage.TGStorageManager;
+import TGUtils.Constants;
+import TGUtils.Event;
 
 public class StorageTest {
 	@Before

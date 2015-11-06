@@ -1,9 +1,12 @@
 package test;
 
 import static org.junit.Assert.*;
-import main.*;
 
 import org.junit.Test;
+
+import TGParser.Parser;
+import TGUtils.Command;
+import TGUtils.Constants;
 
 public class ParserTest {
 

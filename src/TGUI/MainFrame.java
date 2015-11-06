@@ -1,4 +1,4 @@
-package GUI;
+package TGUI;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
@@ -21,8 +21,8 @@ import javax.swing.JTextField;
 
 import com.sun.corba.se.impl.oa.poa.ActiveObjectMap.Key;
 
-import main.Command;
-import main.Logic;
+import TGLogic.Logic;
+import TGUtils.Command;
 
 public class MainFrame extends JFrame{
 	public MainFrame(String title){

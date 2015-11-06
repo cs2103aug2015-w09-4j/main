@@ -1,4 +1,4 @@
-package GUI;
+package TGUI;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -14,9 +14,9 @@ import javax.swing.KeyStroke;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import main.Event;
-import main.Logic;
-import main.Constants;
+import TGLogic.Logic;
+import TGUtils.Constants;
+import TGUtils.Event;
 public class MainTab extends JTabbedPane {
 	TodayComponent todayPanel;
 	EventComponent taskPanel;

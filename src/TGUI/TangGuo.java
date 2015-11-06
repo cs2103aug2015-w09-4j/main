@@ -1,4 +1,4 @@
-package GUI;
+package TGUI;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
