@@ -2,8 +2,6 @@ package TGUtils;
 import java.util.ArrayList;
 import java.util.Date;
 
-import TGUtils.Constants.COMMAND_TYPE;
-
 public class Command {
 	private Constants.COMMAND_TYPE type;
 	private int eventType;

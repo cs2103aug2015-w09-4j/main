@@ -18,6 +18,7 @@ import TGUtils.Event;
 import TGUtils.Logger;
 import TGUtils.Constants.COMMAND_TYPE;
 
+
 public class Logic {
 
 	private static String fileName;
@@ -104,7 +105,7 @@ public class Logic {
 		Command returnedCommand = new Command();
 		try {
 			currentCommand = Parser.parseCommand(input);
-		} catch (ParseException |TaskDateExistenceException e) {
+		} catch (ParseException | TaskDateExistenceException e) {
 			logger.writeException(e.toString());
 			returnedCommand.setDisplayMessage(Constants.TANGGUO_DATE_OUT_OF_BOUNDS);
 			return returnedCommand;

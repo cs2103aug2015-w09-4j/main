@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><calendar current="28">
+<?xml version="1.0" encoding="UTF-8"?><calendar current="23">
   <task id="9">
     <name>CS2103T software demo</name>
     <category>DEFAULT</category>
@@ -19,36 +19,6 @@
   </task>
   <task id="16">
     <name>this is how it's done</name>
-    <category>DEFAULT</category>
-    <priority>1</priority>
-    <isDone>true</isDone>
-  </task>
-  <task id="23">
-    <name>test</name>
-    <category>DEFAULT</category>
-    <priority>1</priority>
-    <isDone>false</isDone>
-  </task>
-  <task id="24">
-    <name>test</name>
-    <category>DEFAULT</category>
-    <priority>1</priority>
-    <isDone>false</isDone>
-  </task>
-  <task id="25">
-    <name>test</name>
-    <category>DEFAULT</category>
-    <priority>1</priority>
-    <isDone>false</isDone>
-  </task>
-  <task id="26">
-    <name>test</name>
-    <category>DEFAULT</category>
-    <priority>1</priority>
-    <isDone>false</isDone>
-  </task>
-  <task id="27">
-    <name>test</name>
     <category>DEFAULT</category>
     <priority>1</priority>
     <isDone>false</isDone>
@@ -104,18 +74,6 @@
     <startDate>04/11/2015 09:00</startDate>
     <endDate>04/11/2015 10:00</endDate>
   </schedule>
-  <schedule id="22">
-    <name>tg</name>
-    <category>DEFAULT</category>
-    <priority>1</priority>
-<<<<<<< HEAD
-    <isDone>true</isDone>
-=======
-    <isDone>false</isDone>
->>>>>>> 3e2502e8fef482fa3a9d48a4bf2f2ea6704d346c
-    <startDate>04/11/2015 12:00</startDate>
-    <endDate>04/11/2015 13:00</endDate>
-  </schedule>
   <schedule id="12">
     <name>meet professor</name>
     <category>DEFAULT</category>
@@ -140,15 +98,12 @@
     <startDate>14/11/2015 00:00</startDate>
     <endDate>15/11/2015 00:00</endDate>
   </schedule>
-<<<<<<< HEAD
-  <schedule id="23">
-    <name>shit</name>
+  <schedule id="22">
+    <name>tg</name>
     <category>DEFAULT</category>
     <priority>1</priority>
     <isDone>false</isDone>
-    <startDate>06/11/2015 21:00</startDate>
-    <endDate>06/11/2015 22:00</endDate>
+    <startDate>04/11/2015 12:00</startDate>
+    <endDate>04/11/2015 13:00</endDate>
   </schedule>
-=======
->>>>>>> 3e2502e8fef482fa3a9d48a4bf2f2ea6704d346c
 </calendar>

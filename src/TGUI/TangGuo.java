@@ -13,7 +13,7 @@ public class TangGuo {
 			UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeels");
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
 				| UnsupportedLookAndFeelException e) {
-			// TOD	O Auto-generated catch block
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		*/
