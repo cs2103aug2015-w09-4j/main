@@ -6,6 +6,8 @@ import java.util.Calendar;
 import java.util.Arrays;
 import java.util.Date;
 
+import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
+
 
 
 public class Parser {
@@ -173,43 +175,43 @@ public class Parser {
 	}
 
 	private static Constants.COMMAND_TYPE findCommandType(String commandTypeString) {
-		if (commandTypeString.equalsIgnoreCase("add")){
+		if (commandTypeString.equalsIgnoreCase(Constants.ADD)){
 			return Constants.COMMAND_TYPE.ADD;
-		} else if (commandTypeString.equalsIgnoreCase("display")) {
+		} else if (commandTypeString.equalsIgnoreCase(Constants.DISPLAY)) {
 			return Constants.COMMAND_TYPE.DISPLAY;
-		} else if (commandTypeString.equalsIgnoreCase("delete")) {
+		} else if (commandTypeString.equalsIgnoreCase(Constants.DELETE)) {
 			return Constants.COMMAND_TYPE.DELETE;
-		} else if (commandTypeString.equalsIgnoreCase("exit")) {
+		} else if (commandTypeString.equalsIgnoreCase(Constants.EXIT)) {
 			return Constants.COMMAND_TYPE.EXIT;
-		} else if (commandTypeString.equalsIgnoreCase("undo")) {
+		} else if (commandTypeString.equalsIgnoreCase(Constants.UNDO)) {
 			return Constants.COMMAND_TYPE.UNDO;
-		} else if (commandTypeString.equalsIgnoreCase("update name")) {
+		} else if (commandTypeString.equalsIgnoreCase(Constants.UPDATE_NAME)) {
 			return Constants.COMMAND_TYPE.UPDATE_NAME;
-		} else if (commandTypeString.equalsIgnoreCase("update end")) {
+		} else if (commandTypeString.equalsIgnoreCase(Constants.UPDATE_END)) {
 			return Constants.COMMAND_TYPE.UPDATE_END;
-		} else if (commandTypeString.equalsIgnoreCase("update start")) {
+		} else if (commandTypeString.equalsIgnoreCase(Constants.UPDATE_START)) {
 			return Constants.COMMAND_TYPE.UPDATE_START;
-		} else if (commandTypeString.equalsIgnoreCase("update priority")) {
+		} else if (commandTypeString.equalsIgnoreCase(Constants.UPDATE_PRIORITY)) {
 			return Constants.COMMAND_TYPE.UPDATE_PRIORITY;
-		} else if (commandTypeString.equalsIgnoreCase("update category")) {
+		} else if (commandTypeString.equalsIgnoreCase(Constants.UPDATE_CATEGORY)) {
 			return Constants.COMMAND_TYPE.UPDATE_CATEGORY;
-		} else if (commandTypeString.equalsIgnoreCase("done")){
+		} else if (commandTypeString.equalsIgnoreCase(Constants.DONE)){
 			return Constants.COMMAND_TYPE.DONE;
-		} else if (commandTypeString.equalsIgnoreCase("sort name")) {
+		} else if (commandTypeString.equalsIgnoreCase(Constants.SORT_NAME)) {
 			return Constants.COMMAND_TYPE.SORT_NAME;
-		} else if (commandTypeString.equalsIgnoreCase("sort start")) {
+		} else if (commandTypeString.equalsIgnoreCase(Constants.SORT_START)) {
 			return Constants.COMMAND_TYPE.SORT_START;
-		} else if (commandTypeString.equalsIgnoreCase("sort end")) {
+		} else if (commandTypeString.equalsIgnoreCase(Constants.SORT_END)) {
 			return Constants.COMMAND_TYPE.SORT_END;
-		} else if (commandTypeString.equalsIgnoreCase("sort priority")) {
+		} else if (commandTypeString.equalsIgnoreCase(Constants.SORT_PRIORITY)) {
 			return Constants.COMMAND_TYPE.SORT_PRIORITY;
-		} else if (commandTypeString.equalsIgnoreCase("search")) {
+		} else if (commandTypeString.equalsIgnoreCase(Constants.SEARCH)) {
 			return Constants.COMMAND_TYPE.SEARCH;
-		} else if (commandTypeString.equalsIgnoreCase("path")) {
+		} else if (commandTypeString.equalsIgnoreCase(Constants.PATH)) {
 			return Constants.COMMAND_TYPE.PATH;
-		} else if (commandTypeString.equalsIgnoreCase("import")) {
+		} else if (commandTypeString.equalsIgnoreCase(Constants.IMPORT)) {
 			return Constants.COMMAND_TYPE.IMPORT;
-		} else if (commandTypeString.equalsIgnoreCase("toggle")) {
+		} else if (commandTypeString.equalsIgnoreCase(Constants.TOGGLE)) {
 			return Constants.COMMAND_TYPE.TOGGLE;
 		} else {
 			return Constants.COMMAND_TYPE.INVALID;

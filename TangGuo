@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><calendar current="23">
+<?xml version="1.0" encoding="UTF-8"?><calendar current="24">
   <task id="9">
     <name>CS2103T software demo</name>
     <category>DEFAULT</category>
@@ -21,7 +21,7 @@
     <name>this is how it's done</name>
     <category>DEFAULT</category>
     <priority>1</priority>
-    <isDone>false</isDone>
+    <isDone>true</isDone>
   </task>
   <deadline id="1">
     <name>complete IS1103 Essay</name>
@@ -74,6 +74,14 @@
     <startDate>04/11/2015 09:00</startDate>
     <endDate>04/11/2015 10:00</endDate>
   </schedule>
+  <schedule id="22">
+    <name>tg</name>
+    <category>DEFAULT</category>
+    <priority>1</priority>
+    <isDone>true</isDone>
+    <startDate>04/11/2015 12:00</startDate>
+    <endDate>04/11/2015 13:00</endDate>
+  </schedule>
   <schedule id="12">
     <name>meet professor</name>
     <category>DEFAULT</category>
@@ -98,12 +106,12 @@
     <startDate>14/11/2015 00:00</startDate>
     <endDate>15/11/2015 00:00</endDate>
   </schedule>
-  <schedule id="22">
-    <name>tg</name>
+  <schedule id="23">
+    <name>shit</name>
     <category>DEFAULT</category>
     <priority>1</priority>
     <isDone>false</isDone>
-    <startDate>04/11/2015 12:00</startDate>
-    <endDate>04/11/2015 13:00</endDate>
+    <startDate>06/11/2015 21:00</startDate>
+    <endDate>06/11/2015 22:00</endDate>
   </schedule>
 </calendar>

@@ -413,8 +413,6 @@ public class TGStorageManager {
 			} else {
 				inputFile = new File(_filePath, _fileName);
 			}
-			// TODO file existence
-			// System.out.println(inputFile.exists());
 			if (!inputFile.exists()) {
 				createStorageFile();
 				return;
@@ -459,7 +457,6 @@ public class TGStorageManager {
 			xMLStreamWriter.close();
 
 		} catch (XMLStreamException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return;
 		}
@@ -468,7 +465,6 @@ public class TGStorageManager {
 			try {
 				stringWriter.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 	}
@@ -479,27 +475,29 @@ public class TGStorageManager {
 	}
 
 	private void initializeTaskCache(Document doc) {	
-		NodeList nodeList = getNodeList(doc, Constants.XML_TASK_EXPRESSION);
-		String nameString, categoryString;
-		int ID, priority;
-		boolean isDone;
+		NodeList nodeList = getNodeList(doc, Constants.XML_TASK_EXPRESSION);		
 		Event event;
 		for (int i = 0; i < nodeList.getLength(); i++) {
 			Node nNode = nodeList.item(i);
 			if (nNode.getNodeType() == Node.ELEMENT_NODE) {
 				Element eElement = (Element) nNode;
-				ID = Integer.parseInt(eElement.getAttribute("id"));
-				nameString = getPropertyFromElement(eElement, "name");;
-				categoryString = getPropertyFromElement(eElement, "category");
-				priority = Integer.parseInt(getPropertyFromElement(eElement, "priority"));
-				isDone = Boolean.parseBoolean(getPropertyFromElement(eElement, "isDone"));
-				
-				event = new Event(ID, nameString, categoryString, priority);
-				event.setIsDone(isDone);
-
+				event = createTaskEvent(eElement);
 				_taskCache.add(event);
 			}
 		}		
+	}
+	
+	private Event createTaskEvent(Element eElement) {
+		int ID = Integer.parseInt(eElement.getAttribute("id"));
+		String nameString = getPropertyFromElement(eElement, "name");;
+		String categoryString = getPropertyFromElement(eElement, "category");
+		int priority = Integer.parseInt(getPropertyFromElement(eElement, "priority"));
+		boolean isDone = Boolean.parseBoolean(getPropertyFromElement(eElement, "isDone"));
+
+		Event event = new Event(ID, nameString, categoryString, priority);
+		event.setIsDone(isDone);
+		
+		return event;
 	}
 	
 	private NodeList getNodeList(Document doc, String expression) {
@@ -518,69 +516,64 @@ public class TGStorageManager {
 	}
 
 	private void initializeDeadlineCache(Document doc) {
-		DateFormat sdf = new SimpleDateFormat(Constants.DEFAULT_DATE_FORMAT);
-		try {
-			NodeList nodeList = getNodeList(doc, Constants.XML_DEADLINE_EXPRESSION);
-			String nameString, categoryString;
-			Date endDate;
-			int ID, priority;
-			boolean isDone;
-			Event event;
-			for (int i = 0; i < nodeList.getLength(); i++) {
-				Node nNode = nodeList.item(i);
-				if (nNode.getNodeType() == Node.ELEMENT_NODE) {
-					Element eElement = (Element) nNode;
-					ID = Integer.parseInt(eElement.getAttribute("id"));
-					nameString = getPropertyFromElement(eElement, "name");
-					endDate = sdf.parse(getPropertyFromElement(eElement, "endDate"));
-					categoryString = getPropertyFromElement(eElement, "category");
-					priority = Integer.parseInt(getPropertyFromElement(eElement, "priority"));
-					isDone = Boolean.parseBoolean(getPropertyFromElement(eElement, "isDone"));
-					
-					event = new Event(ID, nameString, endDate, categoryString, priority);
-					event.setIsDone(isDone);
-
-					_deadlineCache.add(event);
-				}
+		NodeList nodeList = getNodeList(doc, Constants.XML_DEADLINE_EXPRESSION);
+		Event event;
+		for (int i = 0; i < nodeList.getLength(); i++) {
+			Node nNode = nodeList.item(i);
+			if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+				Element eElement = (Element) nNode;
+				event = createDeadlineEvent(eElement);
+				_deadlineCache.add(event);
 			}
+		}	
+	}
+	
+	private Event createDeadlineEvent(Element eElement) {
+		Event deadline = createTaskEvent(eElement);
+		DateFormat sdf = new SimpleDateFormat(Constants.DEFAULT_DATE_FORMAT);
+		Date endDate = null;
+		try {
+			endDate = sdf.parse(getPropertyFromElement(eElement, "endDate"));
 		} catch (ParseException e) {
 			System.out.println("Failed to parse date when reading from file");
 			e.printStackTrace();
+			return null;
 		}
+		deadline.setEnd(endDate);
+		return deadline;
 	}
 
 	private void initializeScheduleCache(Document doc) {
-
-		DateFormat sdf = new SimpleDateFormat(Constants.DEFAULT_DATE_FORMAT);
-		try {
-			NodeList nodeList = getNodeList(doc, Constants.XML_SCHEDULE_EXPRESSION);
-			String nameString, categoryString;
-			Date startDate, endDate;
-			int ID, priority;
-			boolean isDone;
-			Event event;
-			for (int i = 0; i < nodeList.getLength(); i++) {
-				Node nNode = nodeList.item(i);
-				if (nNode.getNodeType() == Node.ELEMENT_NODE) {
-					Element eElement = (Element) nNode;
-					ID = Integer.parseInt(eElement.getAttribute("id"));
-					nameString = getPropertyFromElement(eElement, "name");
-					startDate = sdf.parse(getPropertyFromElement(eElement, "startDate"));
-					endDate = sdf.parse(getPropertyFromElement(eElement, "endDate"));
-					categoryString = getPropertyFromElement(eElement, "category");
-					priority = Integer.parseInt(getPropertyFromElement(eElement, "priority"));
-					isDone = Boolean.parseBoolean(getPropertyFromElement(eElement, "isDone"));
-					event = new Event(ID, nameString, startDate, endDate, categoryString, priority);
-					event.setIsDone(isDone);
-					
-					_scheduleCache.add(event);
-				}
+		NodeList nodeList = getNodeList(doc, Constants.XML_SCHEDULE_EXPRESSION);
+		Event event;
+		for (int i = 0; i < nodeList.getLength(); i++) {
+			Node nNode = nodeList.item(i);
+			if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+				Element eElement = (Element) nNode;
+				event = createScheduleEvent(eElement);
+				_scheduleCache.add(event);
 			}
+		}
+		
+	}
+	
+	private Event createScheduleEvent(Element eElement) {
+		Event schedule = createTaskEvent(eElement);
+		DateFormat sdf = new SimpleDateFormat(Constants.DEFAULT_DATE_FORMAT);
+		Date endDate = null, startDate = null;
+		try {
+			startDate = sdf.parse(getPropertyFromElement(eElement, "startDate"));
+			endDate = sdf.parse(getPropertyFromElement(eElement, "endDate"));
 		} catch (ParseException e) {
 			System.out.println("Failed to parse date when reading from file");
 			e.printStackTrace();
+			return null;
 		}
+		schedule.setStart(startDate);
+		schedule.setEnd(endDate);
+		return schedule;
 	}
+	
 	private void updateStorage(){
 		try {
 	         StringWriter stringWriter = new StringWriter();
