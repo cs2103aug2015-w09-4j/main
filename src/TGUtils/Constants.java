@@ -57,6 +57,19 @@ public class Constants {
 	public static final String DELETE = "delete";
 	public static final String DISPLAY = "display";
 	public static final String ADD = "add";
+	
+	public static final String DEFAULT_SCHEDULE_TIME = "00:00";
+	public static final String DEFAULT_DEADLINE_TIME = "23:59";
+	public static final String HOUR_MINUTE_SPLIT = ":";
+	public static final String DAY_MONTH_YEAR_SPLIT = "/";
+	public static final String NULL = "";
+	public static final String TIME_DETECTION = "[0-9]:[0-9]";
+	public static final String DATE_DETECTION = "[0-9]/[0-9]";
+	public static final String SPACE = " ";
+
+	public static final String LOW = "LOW";
+	public static final String MID = "MID";
+	public static final String HIGH = "HIGH";
 
 	/*
 	 * Tanguo Constants

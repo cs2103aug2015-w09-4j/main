@@ -10,8 +10,6 @@ import TGUtils.Constants;
 
 public class Parser {
 
-	
-	
 	/*  public static void main(String[] args) throws IndexOutOfBoundsException,
 	  ParseException, AbnormalScheduleTimeException, TaskDateExistenceException
 	  { Parser parser = new Parser();
@@ -50,7 +48,7 @@ public class Parser {
 				event = priorityCheck.removePriorityFromEventName();
 			}
 
-			eventCheck = new EventCheck(event);
+			eventCheck = eventCheck.reInitialize(event);
 			try { // deadline
 				if (eventCheck.possibleDate(Constants.DEADLINE) == true) {
 					
@@ -229,14 +227,14 @@ public class Parser {
 	}
 
 	private static String removeFirstWord(String input) {
-		return input.replaceFirst(getFirstWord(input), "").trim();
+		return input.replaceFirst(getFirstWord(input), Constants.NULL).trim();
 	}
 
 	private static String getFirstWord(String input) {
 		String inputString = input.trim().split(Constants.WORD_SPLIT)[0];
 
 		if (inputString.equals(Constants.UPDATE) || inputString.equals(Constants.SORT)) {
-			inputString += " " + input.trim().split(Constants.WORD_SPLIT)[1];
+			inputString += Constants.SPACE + input.trim().split(Constants.WORD_SPLIT)[1];
 		}
 		return inputString;
 	}
