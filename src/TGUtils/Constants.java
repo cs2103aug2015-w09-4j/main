@@ -66,6 +66,8 @@ public class Constants {
 	public static final String TIME_DETECTION = "[0-9]:[0-9]";
 	public static final String DATE_DETECTION = "[0-9]/[0-9]";
 	public static final String SPACE = " ";
+	public static final char DEADLINE_CHAR = 'd';
+	public static final char SCHEDULE_CHAR = 's';
 
 	public static final String LOW = "LOW";
 	public static final String MID = "MID";

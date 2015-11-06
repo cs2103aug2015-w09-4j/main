@@ -43,7 +43,6 @@ public class DateTimeHandler {
 			else if(eventType.equals(Constants.SCHEDULE))
 				modifiedString = modifiedString + thisYear + Constants.DEFAULT_SCHEDULE_TIME;
 		}
-
 		return modifiedString;
 	}
 	
@@ -108,7 +107,6 @@ public class DateTimeHandler {
 			minute = hourMinuteSplit[1];
 			minuteInteger = Integer.parseInt(minute);
 		}
-
 		return true;
 	}
 	
@@ -126,8 +124,15 @@ public class DateTimeHandler {
 
 	}
 	
-	public static void startAndEndTimeValidation(String start, String end) throws AbnormalScheduleTimeException {
-		if(start.compareTo(end) >= 0) {
+	public static void startAndEndTimeValidation(String start, String end) throws AbnormalScheduleTimeException, ParseException{
+	
+		String finalEndDate = DateTimeHandler.defaultDateTimeCheck(end, Constants.SCHEDULE);
+		String finalStartDate = DateTimeHandler.defaultDateTimeCheck(start, Constants.SCHEDULE);
+		
+		Date endDate = DateTimeHandler.dateConverter(finalEndDate);
+		Date startDate = DateTimeHandler.dateConverter(finalStartDate); 
+		
+		if(startDate.compareTo(endDate) >= 0) {
 			throw new AbnormalScheduleTimeException();
 		}
 	}

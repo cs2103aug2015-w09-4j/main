@@ -18,8 +18,7 @@ public class Parser {
 	  	Command test1 = Parser.parseCommand("update end d1 6/11");
 	  }*/
 	 
-	public static Command parseCommand(String input) throws ParseException, IndexOutOfBoundsException,
-			AbnormalScheduleTimeException, TaskDateExistenceException {
+	public static Command parseCommand(String input) throws ParseException, IndexOutOfBoundsException, AbnormalScheduleTimeException, TaskDateExistenceException {
 		String command = getFirstWord(input);
 		String event = removeFirstWord(input);
 		String displayedIndex;
@@ -100,15 +99,16 @@ public class Parser {
 		case UPDATE_NAME:
 			displayedIndex = getFirstWord(event);
 			String updatedName = removeFirstWord(event);
+			
 			tempCommand.setDisplayedIndex(displayedIndex);
 			tempCommand.setEventName(updatedName);
 			break;
 		case UPDATE_START:
 			displayedIndex = getFirstWord(event);
 			String newStart = removeFirstWord(event);
-			newStart = updateDateTimeCheck(displayedIndex, newStart);
-			
+			newStart = updateDateTimeCheck(displayedIndex, newStart);	
 			Date updatedStart = DateTimeHandler.dateConverter(newStart);
+			
 			tempCommand.setDisplayedIndex(displayedIndex);
 			tempCommand.setEventStart(updatedStart);
 			break;
@@ -116,20 +116,22 @@ public class Parser {
 			displayedIndex = getFirstWord(event);
 			String newEnd = removeFirstWord(event);	
 			newEnd = updateDateTimeCheck(displayedIndex, newEnd);
-
 			Date updatedEnd = DateTimeHandler.dateConverter(newEnd);
+			
 			tempCommand.setDisplayedIndex(displayedIndex);
 			tempCommand.setEventEnd(updatedEnd);
 			break;
 		case UPDATE_PRIORITY:
 			displayedIndex = getFirstWord(event);
 			int updatedPriority = priorityCheck.getPriorityNumber();
+			
 			tempCommand.setDisplayedIndex(displayedIndex);
 			tempCommand.setEventPriority(updatedPriority);
 			break;
 		case UPDATE_CATEGORY:
 			displayedIndex = getFirstWord(event);
 			String updatedCategory = removeFirstWord(event);
+			
 			tempCommand.setDisplayedIndex(displayedIndex);
 			tempCommand.setEventCategory(updatedCategory);
 			break;
@@ -167,18 +169,17 @@ public class Parser {
 		case INVALID:
 			break;
 		default:
-			// throw new exception?
 			tempCommand.setType(Constants.COMMAND_TYPE.EXCEPTION);
-		}
+		}		
 		return tempCommand;
 	}
 
 	private static String updateDateTimeCheck(String displayedIndex, String date) {
-		if (displayedIndex.charAt(0) == 'd') {
+		if (displayedIndex.charAt(0) == Constants.DEADLINE_CHAR) {
 			date = DateTimeHandler.defaultDateTimeCheck(date, Constants.DEADLINE);
-		} else if (displayedIndex.charAt(0) == 's') {
+		} else if (displayedIndex.charAt(0) == Constants.SCHEDULE_CHAR) {
 			date = DateTimeHandler.defaultDateTimeCheck(date, Constants.SCHEDULE);
-		}
+		}		
 		return date;
 	}
 
