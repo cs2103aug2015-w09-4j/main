@@ -15,40 +15,45 @@ public class Parser {
 	private static DateFormat format = new SimpleDateFormat(Constants.DEFAULT_DATE_FORMAT);
 
 	public static Command parseCommand(String input) throws ParseException, IndexOutOfBoundsException, AbnormalScheduleTimeException, TaskDateExistenceException{
-		Command tempCommand = new Command();
 		String command = getFirstWord(input);
-		Constants.COMMAND_TYPE commandType = findCommandType(command);
 		String event = removeFirstWord(input);
-		Date endDate, startDate;
 		String displayedIndex;
+		String eventName;
+		String deadlineDateAndTime, scheduleStartDateAndTime, scheduleEndDateAndTime;
+		String finalStartDate, finalEndDate;
+		
+		Constants.COMMAND_TYPE commandType = findCommandType(command);
+		
+		Date endDate, startDate;
+		
+		Command tempCommand = new Command();
 		tempCommand.setType(commandType);
 		tempCommand.setIsUserCommand(true);
+		
+		PriorityCheck priorityCheck = new PriorityCheck(event);
+		
 		format.setLenient(false); //This allows DateFormat to prevent date overflow
-		String modifiedStartDateString, modifiedEndDateString;
-
 		switch (commandType) {
 			case ADD:
 
 				String[] inputArray = event.split(" ");
-				int eventPriority = checkPriority(inputArray[inputArray.length - 1]);
-				if (eventPriority != -1) {
+				
+				boolean withPriority = priorityCheck.containsPriority();
+				
+				if (withPriority == true) {	
+					int eventPriority = priorityCheck.getPriorityNumber();
 					tempCommand.setEventPriority(eventPriority);
-					inputArray[inputArray.length - 1] = "";
-					String temp = "";
 					
-					for(int i = 0; i < inputArray.length - 1; i++) {
-						temp = temp + inputArray[i] + " ";
-					}
-					event = temp.substring(0, temp.length() - 1);
+					event = priorityCheck.removePriorityFromEventName();
 				}
 				
 				String[] array = event.split(Constants.DEADLINE_SPLIT);
 				try {														//deadline
 					if(isNumber(array[array.length - 1])) {
 
-						modifiedEndDateString = defaultDateTimeCheck(array[array.length - 1], "deadline");
+						finalEndDate = defaultDateTimeCheck(array[array.length - 1], "deadline");
 
-						endDate = dateConverter(modifiedEndDateString);
+						endDate = dateConverter(finalEndDate);
 
 						tempCommand.setEventEnd(endDate);
 						tempCommand.setEventName(getName(Constants.DEADLINE_SPLIT, array));
@@ -61,11 +66,11 @@ public class Parser {
 
 					try {													//schedule
 						if(isNumber(array2[1]) && isNumber(array2[0]) && startAndEndTimeValidation(array2[0], array2[1])) {
-							modifiedEndDateString = defaultDateTimeCheck(array2[1], "schedule");
-							modifiedStartDateString = defaultDateTimeCheck(array2[0], "schedule");
+							finalEndDate = defaultDateTimeCheck(array2[1], "schedule");
+							finalStartDate = defaultDateTimeCheck(array2[0], "schedule");
 
-							endDate = dateConverter(modifiedEndDateString);
-							startDate = dateConverter(modifiedStartDateString);
+							endDate = dateConverter(finalEndDate);
+							startDate = dateConverter(finalStartDate);
 
 							tempCommand.setEventStart(startDate);
 							tempCommand.setEventEnd(endDate);
