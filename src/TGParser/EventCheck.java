@@ -22,11 +22,10 @@ public class EventCheck {
 		scheduleCheckArray = scheduleStartAndEnd[scheduleStartAndEnd.length - 1].split(Constants.SCHEDULE_SECOND_SPLIT);
 		scheduleStartDateAndTime = scheduleCheckArray[0];
 		
-		if(scheduleCheckArray.length > 1) 
+		if(scheduleCheckArray.length > 1)
 			scheduleEndDateAndTime = scheduleCheckArray[1];
-
 	}
-
+	
 	public String getDeadlineDateAndTime() {
 		return deadlineDateAndTime;
 	}
@@ -38,15 +37,20 @@ public class EventCheck {
 	public String getScheduleEndDateAndTime() {
 		return scheduleEndDateAndTime;
 	}
+	
+	public EventCheck reInitialize(String input) {
+		EventCheck newEventCheck = new EventCheck(input);
+		return newEventCheck;
+	}
 
 	public boolean possibleDate(String input) throws NumberFormatException, ArrayIndexOutOfBoundsException {
 		boolean isPossibleDate = false;
 
-		if (input.equals("deadline")) {
+		if (input.equals(Constants.DEADLINE)) {
 			isPossibleDate = DateTimeHandler.isNumber(getDeadlineDateAndTime());
-		} else if (input.equals("scheduleStart")) {
+		} else if (input.equals(Constants.SCHEDULE_START)) {
 			isPossibleDate = DateTimeHandler.isNumber(getScheduleStartDateAndTime());
-		} else if (input.equals("scheduleEnd")) {
+		} else if (input.equals(Constants.SCHEDULE_END)) {
 			isPossibleDate = DateTimeHandler.isNumber(getScheduleEndDateAndTime());
 		}
 
@@ -54,11 +58,11 @@ public class EventCheck {
 	}
 
 	public String getEventName(String input) {
-		String eventName = "";
+		String eventName = Constants.NULL;
 
-		if (input.equals("deadline")) {
+		if (input.equals(Constants.DEADLINE)) {
 			eventName = getName(Constants.DEADLINE_SPLIT, deadlineCheckArray);
-		} else if (input.equals("schedule")) {
+		} else if (input.equals(Constants.SCHEDULE)) {
 			eventName = getName(Constants.SCHEDULE_FIRST_SPLIT, scheduleStartAndEnd);
 		}
 

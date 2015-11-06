@@ -322,6 +322,37 @@
 2015/11/06 09:28:57 Log: addTask: task
 2015/11/06 09:29:01 Log: addTask: task
 2015/11/06 09:29:06 Log: add deadline: task
+2015/11/06 14:09:59 Log: addTask: task
+2015/11/06 14:10:02 Log: delete Task: task
+2015/11/06 14:10:07 Log: addTask: task
+2015/11/06 14:10:35 exception occurs: java.text.ParseException: Unparseable date: "6/11"
+2015/11/06 14:11:12 Log: add deadline: do 2103T debugging
+2015/11/06 14:11:28 exception occurs: java.text.ParseException: Unparseable date: "6/11 15:00"
+2015/11/06 14:11:50 exception occurs: java.text.ParseException: Unparseable date: "6/11/ 15:00"
+2015/11/06 14:11:53 exception occurs: java.text.ParseException: Unparseable date: "6/11 15:00"
+2015/11/06 14:49:17 Log: add schedule: schedule
 2015/11/06 16:09:17 Log: addTask: this
 2015/11/06 16:09:19 Log: addTask: that
 2015/11/06 16:09:48 Log: addTask: now
+2015/11/06 23:55:51 exception occurs: java.text.ParseException: Unparseable date: "31/10/2015 24:09"
+2015/11/06 23:55:51 exception occurs: java.text.ParseException: Unparseable date: "29/02/2015 23:09"
+2015/11/06 23:55:51 exception occurs: java.text.ParseException: Unparseable date: "32/10/2015 15:09"
+2015/11/06 23:56:51 exception occurs: java.text.ParseException: Unparseable date: "31/10/2015 24:09"
+2015/11/06 23:56:52 exception occurs: java.text.ParseException: Unparseable date: "29/02/2015 23:09"
+2015/11/06 23:56:52 exception occurs: java.text.ParseException: Unparseable date: "32/10/2015 15:09"
+2015/11/06 23:58:07 exception occurs: TGExceptions.AbnormalScheduleTimeException
+2015/11/06 23:58:13 exception occurs: TGExceptions.AbnormalScheduleTimeException
+2015/11/06 23:58:35 exception occurs: java.text.ParseException: Unparseable date: "32/10/2015 23:59"
+2015/11/06 23:58:42 Log: add deadline: schedule
+2015/11/07 00:13:20 Log: add schedule: welfare pack packing
+2015/11/07 00:16:54 exception occurs: java.text.ParseException: Unparseable date: "7/11"
+2015/11/07 00:17:03 exception occurs: java.text.ParseException: Unparseable date: "7/11"
+2015/11/07 00:18:50 Log: add schedule: schedule
+2015/11/07 00:19:12 Log: add schedule: schedule
+2015/11/07 00:19:24 exception occurs: java.text.ParseException: Unparseable date: "32/11/2015 00:00"
+2015/11/07 00:19:43 Log: delete schedule: schedule
+2015/11/07 00:20:41 Log: add schedule: schedule
+2015/11/07 00:20:43 Log: delete schedule: schedule
+2015/11/07 00:20:44 Log: delete schedule: schedule
+2015/11/07 00:24:46 exception occurs: TGExceptions.AbnormalScheduleTimeException
+2015/11/07 00:25:36 Log: add schedule: schedule

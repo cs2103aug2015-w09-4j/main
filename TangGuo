@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><calendar current="24">
+<?xml version="1.0" encoding="UTF-8"?><calendar current="28">
   <task id="9">
     <name>CS2103T software demo</name>
     <category>DEFAULT</category>
@@ -22,6 +22,36 @@
     <category>DEFAULT</category>
     <priority>1</priority>
     <isDone>true</isDone>
+  </task>
+  <task id="23">
+    <name>test</name>
+    <category>DEFAULT</category>
+    <priority>1</priority>
+    <isDone>false</isDone>
+  </task>
+  <task id="24">
+    <name>test</name>
+    <category>DEFAULT</category>
+    <priority>1</priority>
+    <isDone>false</isDone>
+  </task>
+  <task id="25">
+    <name>test</name>
+    <category>DEFAULT</category>
+    <priority>1</priority>
+    <isDone>false</isDone>
+  </task>
+  <task id="26">
+    <name>test</name>
+    <category>DEFAULT</category>
+    <priority>1</priority>
+    <isDone>false</isDone>
+  </task>
+  <task id="27">
+    <name>test</name>
+    <category>DEFAULT</category>
+    <priority>1</priority>
+    <isDone>false</isDone>
   </task>
   <deadline id="1">
     <name>complete IS1103 Essay</name>
@@ -78,7 +108,11 @@
     <name>tg</name>
     <category>DEFAULT</category>
     <priority>1</priority>
+<<<<<<< HEAD
     <isDone>true</isDone>
+=======
+    <isDone>false</isDone>
+>>>>>>> 3e2502e8fef482fa3a9d48a4bf2f2ea6704d346c
     <startDate>04/11/2015 12:00</startDate>
     <endDate>04/11/2015 13:00</endDate>
   </schedule>
@@ -106,6 +140,7 @@
     <startDate>14/11/2015 00:00</startDate>
     <endDate>15/11/2015 00:00</endDate>
   </schedule>
+<<<<<<< HEAD
   <schedule id="23">
     <name>shit</name>
     <category>DEFAULT</category>
@@ -114,4 +149,6 @@
     <startDate>06/11/2015 21:00</startDate>
     <endDate>06/11/2015 22:00</endDate>
   </schedule>
+=======
+>>>>>>> 3e2502e8fef482fa3a9d48a4bf2f2ea6704d346c
 </calendar>
