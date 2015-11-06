@@ -30,6 +30,33 @@ public class Constants {
 	public static final String DEADLINE_SPLIT = " by ";
 	public static final String SCHEDULE_FIRST_SPLIT = " from ";
 	public static final String SCHEDULE_SECOND_SPLIT = " to ";
+	
+	public static final String DEADLINE = "deadline";
+	public static final String SCHEDULE = "schedule";
+	public static final String SCHEDULE_END = "scheduleEnd";
+	public static final String SCHEDULE_START = "scheduleStart";
+	public static final String SORT = "sort";
+	public static final String UPDATE = "update";
+	public static final String WORD_SPLIT = "\\s+";
+	public static final String TOGGLE = "toggle";
+	public static final String IMPORT = "import";
+	public static final String PATH = "path";
+	public static final String SEARCH = "search";
+	public static final String SORT_PRIORITY = "sort priority";
+	public static final String SORT_END = "sort end";
+	public static final String SORT_START = "sort start";
+	public static final String SORT_NAME = "sort name";
+	public static final String DONE = "done";
+	public static final String UPDATE_CATEGORY = "update category";
+	public static final String UPDATE_PRIORITY = "update priority";
+	public static final String UPDATE_START = "update start";
+	public static final String UPDATE_END = "update end";
+	public static final String UPDATE_NAME = "update name";
+	public static final String UNDO = "undo";
+	public static final String EXIT = "exit";
+	public static final String DELETE = "delete";
+	public static final String DISPLAY = "display";
+	public static final String ADD = "add";
 
 	/*
 	 * Tanguo Constants
