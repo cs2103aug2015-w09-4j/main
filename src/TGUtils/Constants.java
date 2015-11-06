@@ -25,6 +25,24 @@ public class Constants {
 	public static final int DEFAULT_PRIORITY = 1;
 
 	/*
+	 * StorageManager Constants
+	 */
+	public static final String ATTRIBUTE_CURRENT_INDEX = "current";
+	public static final String ATTRIBUTE_ID = "id";
+	public static final String PROPERTY_NAME = "name";
+	public static final String PROPERTY_CATEGORY = "category";
+	public static final String PROPERTY_PRIORITY = "priority";
+	public static final String PROPERTY_IS_DONE = "isDone";
+	public static final String PROPERTY_START = "startDate";
+	public static final String PROPERTY_END = "endDate";
+	public static final String CALENDAR = "calendar";
+	public static final String INITIALIZE_CURRENT_INDEX = "0";
+	public static final String TASK_TYPE = "task";
+	public static final String SCHEDULE_TYPE = "schedule";
+	public static final String DEADLINE_TYPE = "deadline";
+	
+	
+	/*
 	 * Parser Constants
 	 */
 	public static final String DEADLINE_SPLIT = " by ";
@@ -51,7 +69,7 @@ public class Constants {
 	public static final String TOGGLE = "toggle";
 
 	/*
-	 * Tanguo Constants
+	 * Logic Constants
 	 */
 	public static final String DEFAULT_DATE_FORMAT = "dd/MM/yyyy HH:mm";
 	public static final int DATE_LENGTH = 17;

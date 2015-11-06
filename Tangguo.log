@@ -322,3 +322,6 @@
 2015/11/06 09:28:57 Log: addTask: task
 2015/11/06 09:29:01 Log: addTask: task
 2015/11/06 09:29:06 Log: add deadline: task
+2015/11/06 16:09:17 Log: addTask: this
+2015/11/06 16:09:19 Log: addTask: that
+2015/11/06 16:09:48 Log: addTask: now
