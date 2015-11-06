@@ -24,8 +24,7 @@ public class EventCheck {
 		
 		if(scheduleCheckArray.length > 1) 
 			scheduleEndDateAndTime = scheduleCheckArray[1];
-		
-		//System.out.println(deadlineDateAndTime + " | " + scheduleCheckArray + " | " + scheduleEndDateAndTime);
+
 	}
 
 	public String getDeadlineDateAndTime() {
@@ -41,7 +40,6 @@ public class EventCheck {
 	}
 
 	public boolean possibleDate(String input) throws NumberFormatException, ArrayIndexOutOfBoundsException {
-
 		boolean isPossibleDate = false;
 
 		if (input.equals("deadline")) {
@@ -56,7 +54,6 @@ public class EventCheck {
 	}
 
 	public String getEventName(String input) {
-
 		String eventName = "";
 
 		if (input.equals("deadline")) {
@@ -68,14 +65,12 @@ public class EventCheck {
 		return eventName;
 	}
 	
-	public void isProperFloatingTaskCheck() throws TaskDateExistenceException {
-		
+	public void isProperFloatingTaskCheck() throws TaskDateExistenceException {	
 		if(deadlineCheckArray.length > 1) {
 			DateTimeHandler.checkTaskValidity(getDeadlineDateAndTime());
 		}
 
 		if(scheduleStartAndEnd.length > 1 && scheduleCheckArray.length > 1) {
-
 			DateTimeHandler.checkTaskValidity(getScheduleEndDateAndTime());
 			DateTimeHandler.checkTaskValidity(getScheduleStartDateAndTime());
 		}

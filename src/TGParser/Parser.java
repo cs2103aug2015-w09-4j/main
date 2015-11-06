@@ -65,6 +65,7 @@ public class Parser {
 				}
 
 			} catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+				
 				try { // schedule
 					if (eventCheck.possibleDate("scheduleStart") && eventCheck.possibleDate("scheduleEnd")) {
 
@@ -89,11 +90,12 @@ public class Parser {
 					}
 
 				} catch (NumberFormatException | ArrayIndexOutOfBoundsException f) {
-
+					
+					//task
 					eventCheck.isProperFloatingTaskCheck();
 
 					tempCommand.setEventName(event);
-					tempCommand.setType(Constants.COMMAND_TYPE.ADD_TASK); // task
+					tempCommand.setType(Constants.COMMAND_TYPE.ADD_TASK); 
 				}
 			}
 			break;

@@ -13,21 +13,16 @@ public class PriorityCheck {
 
 	// Class methods
 	public boolean containsPriority() {
-
 		boolean hasPriority = hasPriority(priority);
 		return hasPriority;
 	}
 
 	public int getPriorityNumber() {
-
 		int priorityNumber = checkPriority(priority);
 		return priorityNumber;
 	}
 	
 	public String removePriorityFromEventName() {
-		
-		//inputArray[inputArray.length - 1] = "";
-		
 		String modifiedEvent = "";
 		String finalResult = "";
 		
@@ -53,7 +48,6 @@ public class PriorityCheck {
 	}
 
 	private boolean hasPriority(String input) {
-
 		return (input.equalsIgnoreCase("HIGH") || input.equalsIgnoreCase("MID") || input.equalsIgnoreCase("LOW"));		
 	}
 }
