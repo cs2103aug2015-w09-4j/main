@@ -325,3 +325,9 @@
 2015/11/06 16:09:17 Log: addTask: this
 2015/11/06 16:09:19 Log: addTask: that
 2015/11/06 16:09:48 Log: addTask: now
+2015/11/07 20:21:38 Log: addTask: did i
+2015/11/07 20:21:40 Log: addTask: finally
+2015/11/07 20:21:59 Log: add deadline: revert changes
+2015/11/07 20:22:24 Log: add schedule: ?????
+2015/11/07 20:23:43 exception occurs: java.text.ParseException: Unparseable date: "01/11 09:00"
+2015/11/07 20:26:16 exception occurs: java.text.ParseException: Unparseable date: "06:00"

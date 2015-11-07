@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><calendar current="24">
+<?xml version="1.0" encoding="UTF-8"?><calendar current="28">
   <task id="9">
     <name>CS2103T software demo</name>
     <category>DEFAULT</category>
@@ -15,7 +15,7 @@
     <name>refactor</name>
     <category>DEFAULT</category>
     <priority>1</priority>
-    <isDone>false</isDone>
+    <isDone>true</isDone>
   </task>
   <task id="16">
     <name>this is how it's done</name>
@@ -23,11 +23,23 @@
     <priority>1</priority>
     <isDone>true</isDone>
   </task>
+  <task id="24">
+    <name>did i</name>
+    <category>DEFAULT</category>
+    <priority>1</priority>
+    <isDone>false</isDone>
+  </task>
+  <task id="25">
+    <name>finally</name>
+    <category>DEFAULT</category>
+    <priority>1</priority>
+    <isDone>false</isDone>
+  </task>
   <deadline id="1">
     <name>complete IS1103 Essay</name>
     <category>DEFAULT</category>
     <priority>2</priority>
-    <isDone>false</isDone>
+    <isDone>true</isDone>
     <endDate>07/11/2015 23:59</endDate>
   </deadline>
   <deadline id="8">
@@ -49,7 +61,7 @@
     <category>DEFAULT</category>
     <priority>1</priority>
     <isDone>false</isDone>
-    <endDate>11/11/2015 09:00</endDate>
+    <endDate>07/11/2015 06:00</endDate>
   </deadline>
   <deadline id="18">
     <name>deadline</name>
@@ -58,11 +70,18 @@
     <isDone>false</isDone>
     <endDate>14/11/2015 23:59</endDate>
   </deadline>
+  <deadline id="26">
+    <name>revert changes</name>
+    <category>DEFAULT</category>
+    <priority>3</priority>
+    <isDone>false</isDone>
+    <endDate>07/11/2015 23:59</endDate>
+  </deadline>
   <schedule id="17">
     <name>schedule</name>
     <category>DEFAULT</category>
     <priority>1</priority>
-    <isDone>false</isDone>
+    <isDone>true</isDone>
     <startDate>10/10/2015 09:00</startDate>
     <endDate>11/10/2015 00:00</endDate>
   </schedule>
@@ -71,8 +90,8 @@
     <category>DEFAULT</category>
     <priority>1</priority>
     <isDone>false</isDone>
-    <startDate>04/11/2015 09:00</startDate>
-    <endDate>04/11/2015 10:00</endDate>
+    <startDate>01/11/2015 09:01</startDate>
+    <endDate>01/11/2015 10:00</endDate>
   </schedule>
   <schedule id="22">
     <name>tg</name>
@@ -86,9 +105,25 @@
     <name>meet professor</name>
     <category>DEFAULT</category>
     <priority>1</priority>
-    <isDone>false</isDone>
+    <isDone>true</isDone>
     <startDate>04/11/2015 13:00</startDate>
     <endDate>04/11/2015 17:00</endDate>
+  </schedule>
+  <schedule id="23">
+    <name>shit</name>
+    <category>DEFAULT</category>
+    <priority>1</priority>
+    <isDone>false</isDone>
+    <startDate>06/11/2015 21:00</startDate>
+    <endDate>06/11/2015 22:00</endDate>
+  </schedule>
+  <schedule id="27">
+    <name>?????</name>
+    <category>DEFAULT</category>
+    <priority>1</priority>
+    <isDone>false</isDone>
+    <startDate>07/11/2015 20:00</startDate>
+    <endDate>07/11/2015 20:30</endDate>
   </schedule>
   <schedule id="7">
     <name>Welfare Pack Distribution</name>
@@ -105,13 +140,5 @@
     <isDone>false</isDone>
     <startDate>14/11/2015 00:00</startDate>
     <endDate>15/11/2015 00:00</endDate>
-  </schedule>
-  <schedule id="23">
-    <name>shit</name>
-    <category>DEFAULT</category>
-    <priority>1</priority>
-    <isDone>false</isDone>
-    <startDate>06/11/2015 21:00</startDate>
-    <endDate>06/11/2015 22:00</endDate>
   </schedule>
 </calendar>
