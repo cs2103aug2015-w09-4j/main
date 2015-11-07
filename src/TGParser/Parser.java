@@ -1,5 +1,6 @@
 package TGParser;
 
+//@@author A0124503W
 import java.text.ParseException;
 import java.util.Date;
 
@@ -10,14 +11,6 @@ import TGUtils.Constants;
 
 public class Parser {
 
-	/*  public static void main(String[] args) throws IndexOutOfBoundsException,
-	  ParseException, AbnormalScheduleTimeException, TaskDateExistenceException
-	  { Parser parser = new Parser();
-	 
-	  	Command test = Parser.parseCommand("add task by 6/11/2015 15:09");
-	  	Command test1 = Parser.parseCommand("update end d1 6/11");
-	  }*/
-	 
 	public static Command parseCommand(String input) throws ParseException, IndexOutOfBoundsException, AbnormalScheduleTimeException, TaskDateExistenceException {
 		String command = getFirstWord(input);
 		String event = removeFirstWord(input);
