@@ -8,7 +8,12 @@ public class Constants {
 	public static final int DEADLINE_TAB_NUMBER = 2;
 	public static final int SCHEDULE_TAB_NUMBER = 3;
 	public static final int SEARCH_TAB_NUMBER = 4;
+	public static final int HELP_TAB_NUMBER = 5;
 
+	public static final int EVENT_LIST_TASK = 0;
+	public static final int EVENT_LIST_DEADLINE = 1;
+	public static final int EVENT_LIST_SCHEDULE = 2;
+	
 	public static final String XML_TASK_EXPRESSION = "/calendar/task";
 	public static final String XML_DEADLINE_EXPRESSION = "/calendar/deadline";
 	public static final String XML_SCHEDULE_EXPRESSION = "/calendar/schedule";
@@ -21,7 +26,6 @@ public class Constants {
 	public static final int DEADLINE_TYPE_NUMBER = 2;
 	public static final int SCHEDULE_TYPE_NUMBER = 3;
 	public static final String DEFAULT_CATEGORY = "DEFAULT";
-
 	public static final int DEFAULT_PRIORITY = 1;
 
 	/*

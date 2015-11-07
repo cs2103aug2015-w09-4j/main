@@ -68,10 +68,6 @@ public class Logic {
 	}
 	public ArrayList<ArrayList<Event>> updateDisplay(){
 		ArrayList<ArrayList<Event>> displayEvent = new ArrayList<ArrayList<Event>>();
-		/*
-		if (allCachesEmpty()){
-			return String.format(Constants.TANGGUO_EMPTY_FILE, fileName);
-		}*/
 		TGIDMap.clear();
 		displayEvent.add(getCache("Tasks", storage.getTaskCache(),"t"));
 		displayEvent.add(getCache("Deadlines", storage.getDeadlineCache(),"d"));
@@ -224,11 +220,7 @@ public class Logic {
 		returnedCommand.setDisplayMessage(String.format(Constants.TANGGUO_ADD_SUCCESS, fileName, command.getEventName()));
 		if (command.isUserCommand()){
 			int newID = storage.addSchedule(command.getEventName(), command.getEventStart(), command.getEventEnd(), command.getEventCategory(), command.getEventPriority());
-			if (newID > -1) {
-				reversedCommandStack.push(reverseAdd(newID));
-			} else {
-				return getErrorCommand(String.format(Constants.TANGGUO_SCHEDULE_CLASH, command.getEventName()));
-			}
+			reversedCommandStack.push(reverseAdd(newID));
 		}else{
 			storage.addScheduleToStorage(command.getEvent());
 		}
@@ -316,10 +308,10 @@ public class Logic {
 
 	private ArrayList<Event> getCache(String cacheName, ArrayList<Event> cache, String header){
 		ArrayList<Event> temp = new ArrayList<Event>();
+		int counter = 1;
 		for (int i = 0; i < cache.size(); i++){
 			if (cache.get(i).isDone() && !showDoneEvent) continue;
-			TGIDMap.put(header+(i+1), cache.get(i).getID());
-
+			TGIDMap.put(header+(counter++), cache.get(i).getID());
 			temp.add(cache.get(i));
 		}
 		return temp;
@@ -711,7 +703,6 @@ public class Logic {
 		}
 		TGIDMap.clear();
 		Command returnedCommand = new Command();
-		returnedCommand.setDisplayedTab(Constants.SEARCH_TAB_NUMBER);
 		returnedCommand.setDisplayedTab(Constants.SEARCH_TAB_NUMBER);
 		returnedCommand.setDisplayMessage(String.format(Constants.TANGGUO_SEARCH_SUCCESS, command.getSearchKey()));
 		returnedCommand.setDisplayedEventList(displayedEvent);

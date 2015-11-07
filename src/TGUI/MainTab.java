@@ -1,8 +1,8 @@
 package TGUI;
 
-import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
@@ -10,13 +10,13 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
-import javax.swing.KeyStroke;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import TGLogic.Logic;
 import TGUtils.Constants;
 import TGUtils.Event;
+
 public class MainTab extends JTabbedPane {
 	TodayComponent todayPanel;
 	EventComponent taskPanel;
@@ -24,80 +24,84 @@ public class MainTab extends JTabbedPane {
 	EventComponent schedulePanel;
 	SearchComponent searchPanel;
 	HelpComponent helpPanel;
-	public MainTab(Logic logic){
+
+	public MainTab(Logic logic) {
 		super();
 		todayPanel = new TodayComponent(logic);
 		//ImageIcon todayIcon = createImageIcon("img/HEADER_today.png");
-		addTab("Today",todayPanel);
-		setMnemonicAt(0, KeyEvent.VK_1);
+		addTab("Today", todayPanel);
+		setMnemonicAt(Constants.TODAY_TAB_NUMBER, KeyEvent.VK_1);
+
+		taskPanel = new EventComponent(logic, Constants.TASK_TYPE_NUMBER);
+		addTab("Tasks", taskPanel);
+		setMnemonicAt(Constants.TASK_TAB_NUMBER, KeyEvent.VK_2);
 		
-		taskPanel = new EventComponent(logic,Constants.TASK_TYPE_NUMBER);
-		addTab("Tasks",taskPanel);
-		setMnemonicAt(1, KeyEvent.VK_2);
-		//setMnemonicAt(1, KeyEvent.VK_T);
-
-		deadlinePanel = new EventComponent(logic,Constants.DEADLINE_TYPE_NUMBER);
-		addTab("Deadlines",deadlinePanel);
-		setMnemonicAt(2, KeyEvent.VK_3);
-		//setMnemonicAt(1, KeyEvent.VK_D);
-
-		schedulePanel = new EventComponent(logic,Constants.SCHEDULE_TYPE_NUMBER);
-		addTab("Schedules",schedulePanel);
-		setMnemonicAt(3, KeyEvent.VK_4);
-		//setMnemonicAt(1, KeyEvent.VK_S);
-
+		deadlinePanel = new EventComponent(logic,
+				Constants.DEADLINE_TYPE_NUMBER);
+		addTab("Deadlines", deadlinePanel);
+		setMnemonicAt(Constants.DEADLINE_TAB_NUMBER, KeyEvent.VK_3);
+		
+		schedulePanel = new EventComponent(logic,
+				Constants.SCHEDULE_TYPE_NUMBER);
+		addTab("Schedules", schedulePanel);
+		setMnemonicAt(Constants.SCHEDULE_TAB_NUMBER, KeyEvent.VK_4);
+		
 		searchPanel = new SearchComponent(logic);
-		addTab("Search",searchPanel);
-		setMnemonicAt(4, KeyEvent.VK_5);
+		addTab("Search", searchPanel);
+		setMnemonicAt(Constants.SEARCH_TAB_NUMBER, KeyEvent.VK_5);
 
 		helpPanel = new HelpComponent();
-		addTab("Help",helpPanel);
-		setMnemonicAt(5, KeyEvent.VK_6);
-		//setMnemonicAt(5, KeyEvent.VK_H);
-
-
+		addTab("Help", helpPanel);
+		setMnemonicAt(Constants.HELP_TAB_NUMBER, KeyEvent.VK_6);
+		
 		addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent e) {
 				System.out.println(getSelectedIndex());
-				if (getSelectedIndex()==0){ //today
+				if (getSelectedIndex() == Constants.TODAY_TAB_NUMBER) { // today
 					todayPanel.refresh();
-				}else if (getSelectedIndex()==4){ //search result
+				} else if (getSelectedIndex() == Constants.SEARCH_TAB_NUMBER) { // search result
 					searchPanel.refresh();
-				}else{
+				} else {
 					refreshAllEventTabs(logic.updateDisplay());
 				}
-
 			}
-	    });
+		});
 		refresh(logic.updateDisplay());
 	}
 
 	protected JComponent makeTextPanel(String text) {
-        JPanel panel = new JPanel(false);
-        JLabel filler = new JLabel(text);
-        filler.setHorizontalAlignment(JLabel.CENTER);
-        panel.setLayout(new GridLayout(1, 1));
-        panel.add(filler);
-        return panel;
-    }
-	public void refresh(ArrayList<ArrayList<Event>> eventList){
-		todayPanel.refresh();
-		refreshAllEventTabs(eventList);
+		JPanel panel = new JPanel(false);
+		JLabel filler = new JLabel(text);
+		filler.setHorizontalAlignment(JLabel.CENTER);
+		panel.setLayout(new GridLayout(1, 1));
+		panel.add(filler);
+		return panel;
 	}
 
-	private void refreshAllEventTabs(ArrayList<ArrayList<Event>> eventList){
+	public void refresh(ArrayList<ArrayList<Event>> eventList) {
+		if (getSelectedIndex() == Constants.TODAY_TAB_NUMBER) {
+			todayPanel.refresh();
+		} else if (getSelectedIndex() == Constants.SEARCH_TAB_NUMBER) {
+			searchPanel.refresh();
+		} else {
+			refreshAllEventTabs(eventList);
+		}
+	}
+
+	private void refreshAllEventTabs(ArrayList<ArrayList<Event>> eventList) {
 		taskPanel.refresh(eventList);
 		deadlinePanel.refresh(eventList);
 		schedulePanel.refresh(eventList);
 	}
-	 protected static ImageIcon createImageIcon(String path) {
-	        java.net.URL imgURL = MainTab.class.getResource(path);
-	        if (imgURL != null) {
-	            return new ImageIcon(imgURL);
-	        } else {
-	            System.err.println("Couldn't find file: " + path);
-	            return null;
-	        }
-	    }
+	
+	protected static ImageIcon createImageIcon(String path) {
+		java.net.URL imgURL = MainTab.class.getResource(path);
+		if (imgURL != null) {
+			return new ImageIcon(imgURL);
+		} else {
+			System.err.println("Couldn't find file: " + path);
+			return null;
+		}
+	}
 }

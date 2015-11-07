@@ -12,7 +12,7 @@ public class Event {
 	private String category;
 	private int priority;
 	private boolean isDone;
-
+	private boolean hasClash;
 
 	public Event(int ID, String name, Date startDate, Date endDate, String category, int priority){
 		this.type = Constants.SCHEDULE_TYPE_NUMBER;
@@ -23,6 +23,7 @@ public class Event {
 		this.category = category;
 		this.priority = priority;
 		this.isDone = false;
+		this.hasClash = false;
 	}
 
 	public Event(int ID, String name, Date endDate, String category, int priority){
@@ -34,6 +35,7 @@ public class Event {
 		this.category = category;
 		this.priority = priority;
 		this.isDone = false;
+		this.hasClash = false;
 	}
 
 
@@ -45,6 +47,7 @@ public class Event {
 		this.category = category;
 		this.priority = priority;
 		this.isDone = false;
+		this.hasClash = false;
 	}
 
 
@@ -84,14 +87,22 @@ public class Event {
 		new Event(ID, name, Constants.DEFAULT_CATEGORY, Constants.DEFAULT_PRIORITY);
 	}
 
-
 	public boolean isDone(){
-		return this.isDone;
+		return isDone;
 	}
 
-	public void setIsDone(boolean b){
-		this.isDone = b;
+	public void setIsDone(boolean boo){
+		this.isDone = boo;
 	}
+	
+	public boolean hasClash() {
+		return hasClash;
+	}
+	
+	public void setHasClash(boolean boo) {
+		this.hasClash = boo;
+	}
+	
 	public int getType() {
 		return type;
 	}
