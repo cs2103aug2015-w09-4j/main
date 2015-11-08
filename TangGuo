@@ -1,10 +1,84 @@
-<?xml version="1.0" encoding="UTF-8"?><calendar current="3">
+<?xml version="1.0" encoding="UTF-8"?><calendar current="14">
+  <task id="3">
+    <name>done</name>
+    <category>DEFAULT</category>
+    <priority>1</priority>
+    <isDone>false</isDone>
+  </task>
+  <task id="6">
+    <name>hmm 11/11</name>
+    <category>DEFAULT</category>
+    <priority>1</priority>
+    <isDone>false</isDone>
+  </task>
+  <task id="11">
+    <name>stuff</name>
+    <category>DEFAULT</category>
+    <priority>1</priority>
+    <isDone>false</isDone>
+  </task>
+  <task id="12">
+    <name>dun</name>
+    <category>DEFAULT</category>
+    <priority>1</priority>
+    <isDone>false</isDone>
+  </task>
+  <deadline id="4">
+    <name>this</name>
+    <category>DEFAULT</category>
+    <priority>1</priority>
+    <isDone>false</isDone>
+    <endDate>11/11/2015 23:59</endDate>
+  </deadline>
+  <deadline id="7">
+    <name>hmm</name>
+    <category>DEFAULT</category>
+    <priority>1</priority>
+    <isDone>false</isDone>
+    <endDate>12/11/2015 23:59</endDate>
+  </deadline>
+  <deadline id="8">
+    <name>schedule</name>
+    <category>DEFAULT</category>
+    <priority>1</priority>
+    <isDone>false</isDone>
+    <endDate>08/11/2015 09:00</endDate>
+  </deadline>
+  <deadline id="9">
+    <name>shouldnt show</name>
+    <category>DEFAULT</category>
+    <priority>1</priority>
+    <isDone>false</isDone>
+    <endDate>12/11/2015 23:59</endDate>
+  </deadline>
+  <deadline id="13">
+    <name>sibeh</name>
+    <category>DEFAULT</category>
+    <priority>1</priority>
+    <isDone>false</isDone>
+    <endDate>08/11/2015 14:09</endDate>
+  </deadline>
+  <schedule id="5">
+    <name>hmm</name>
+    <category>DEFAULT</category>
+    <priority>1</priority>
+    <isDone>false</isDone>
+    <startDate>08/11/2015 07:00</startDate>
+    <endDate>08/11/2015 12:45</endDate>
+  </schedule>
+  <schedule id="10">
+    <name>clash</name>
+    <category>DEFAULT</category>
+    <priority>1</priority>
+    <isDone>false</isDone>
+    <startDate>08/11/2015 07:00</startDate>
+    <endDate>08/11/2015 12:45</endDate>
+  </schedule>
   <schedule id="1">
     <name>areakj</name>
     <category>DEFAULT</category>
     <priority>1</priority>
     <isDone>false</isDone>
-    <hasClash>false</hasClash>
     <startDate>08/11/2015 12:30</startDate>
     <endDate>08/11/2015 13:30</endDate>
   </schedule>
@@ -13,7 +87,6 @@
     <category>DEFAULT</category>
     <priority>1</priority>
     <isDone>false</isDone>
-    <hasClash>false</hasClash>
     <startDate>08/11/2015 00:00</startDate>
     <endDate>09/11/2015 00:00</endDate>
   </schedule>
