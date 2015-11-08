@@ -692,7 +692,13 @@ public class TGStorageManager {
 	 * @return an Event object parsed from @param eElement
 	 */
 	private Event createDeadlineEvent(Element eElement) {
-		Event deadline = createTaskEvent(eElement);
+		int ID = Integer.parseInt(eElement.getAttribute(Constants.ATTRIBUTE_ID));
+		String nameString = getPropertyFromElement(eElement, Constants.PROPERTY_NAME);;
+		String categoryString = getPropertyFromElement(eElement, Constants.PROPERTY_CATEGORY);
+		int priority = Integer.parseInt(getPropertyFromElement(eElement, Constants.PROPERTY_PRIORITY));
+		boolean isDone = Boolean.parseBoolean(getPropertyFromElement(eElement, Constants.PROPERTY_IS_DONE));
+		boolean hasClash = Boolean.parseBoolean(getPropertyFromElement(eElement, Constants.PROPERTY_HAS_CLASH));
+		
 		DateFormat sdf = new SimpleDateFormat(Constants.DEFAULT_DATE_FORMAT);
 		Date endDate = null;
 		try {
@@ -702,8 +708,10 @@ public class TGStorageManager {
 			e.printStackTrace();
 			return null;
 		}
-		deadline.setEnd(endDate);
-		return deadline;
+		Event event = new Event(ID, nameString, endDate, categoryString, priority);
+		event.setIsDone(isDone);
+		event.setHasClash(hasClash);
+		return event;
 	}
 
 	/**
@@ -730,7 +738,13 @@ public class TGStorageManager {
 	 * @return an Event object parsed from @param eElement
 	 */
 	private Event createScheduleEvent(Element eElement) {
-		Event schedule = createTaskEvent(eElement);
+		int ID = Integer.parseInt(eElement.getAttribute(Constants.ATTRIBUTE_ID));
+		String nameString = getPropertyFromElement(eElement, Constants.PROPERTY_NAME);;
+		String categoryString = getPropertyFromElement(eElement, Constants.PROPERTY_CATEGORY);
+		int priority = Integer.parseInt(getPropertyFromElement(eElement, Constants.PROPERTY_PRIORITY));
+		boolean isDone = Boolean.parseBoolean(getPropertyFromElement(eElement, Constants.PROPERTY_IS_DONE));
+		boolean hasClash = Boolean.parseBoolean(getPropertyFromElement(eElement, Constants.PROPERTY_HAS_CLASH));
+		
 		DateFormat sdf = new SimpleDateFormat(Constants.DEFAULT_DATE_FORMAT);
 		Date endDate = null, startDate = null;
 		try {
@@ -741,9 +755,10 @@ public class TGStorageManager {
 			e.printStackTrace();
 			return null;
 		}
-		schedule.setStart(startDate);
-		schedule.setEnd(endDate);
-		return schedule;
+		Event event = new Event(ID, nameString, startDate, endDate, categoryString, priority);
+		event.setIsDone(isDone);
+		event.setHasClash(hasClash);
+		return event;
 	}
 	
 	/**

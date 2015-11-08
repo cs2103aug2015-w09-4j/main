@@ -10,7 +10,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Stack;
 
-import javax.swing.AbstractAction;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -44,6 +43,31 @@ public class MainFrame extends JFrame{
 		inputPane.add(button);
 		commandPane.add(inputPane);
 		c.add(commandPane,BorderLayout.SOUTH);
+		
+		tabbedPane.addKeyListener(new KeyListener() {
+			
+			@Override
+			public void keyTyped(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void keyPressed(KeyEvent e) {
+				// TODO Auto-generated method stub
+				if (e.getKeyCode() == KeyEvent.VK_Q) {
+					System.out.println("hello");
+					c.transferFocus();
+				}
+			}
+		});
+		
 		Stack<String> up = new Stack<String>();
 		Stack<String> down = new Stack<String>();
 		textArea.addKeyListener(new KeyListener() {
@@ -76,7 +100,7 @@ public class MainFrame extends JFrame{
 			}
 
 		});
-
+		
 		textArea.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
             	Command command = TGlogic.executeInputs(textArea.getText());
