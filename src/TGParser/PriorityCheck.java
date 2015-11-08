@@ -1,5 +1,7 @@
 package TGParser;
 
+import TGUtils.Constants;
+
 public class PriorityCheck {
 
 	// Attributes
@@ -7,7 +9,7 @@ public class PriorityCheck {
 	private static String priority;
 	
 	public PriorityCheck(String input) {
-		inputArray = input.split(" ");
+		inputArray = input.split(Constants.SPACE);
 		priority = inputArray[inputArray.length - 1];
 	}
 
@@ -23,11 +25,11 @@ public class PriorityCheck {
 	}
 	
 	public String removePriorityFromEventName() {
-		String modifiedEvent = "";
-		String finalResult = "";
+		String modifiedEvent = Constants.NULL;
+		String finalResult = Constants.NULL;
 		
 		for(int i = 0; i < inputArray.length - 1; i++) {
-			modifiedEvent = modifiedEvent + inputArray[i] + " ";
+			modifiedEvent = modifiedEvent + inputArray[i] + Constants.SPACE;
 		}
 		
 		finalResult = modifiedEvent.substring(0, modifiedEvent.length() - 1);	
@@ -36,11 +38,11 @@ public class PriorityCheck {
 
 	// Private methods
 	private int checkPriority(String input) {
-		if (input.equalsIgnoreCase("HIGH")) {
+		if (input.equalsIgnoreCase(Constants.HIGH)) {
 			return 3;
-		} else if (input.equalsIgnoreCase("MID")) {
+		} else if (input.equalsIgnoreCase(Constants.MID)) {
 			return 2;
-		} else if (input.equalsIgnoreCase("LOW")) {
+		} else if (input.equalsIgnoreCase(Constants.LOW)) {
 			return 1;
 		} else {
 			return -1;
@@ -48,6 +50,6 @@ public class PriorityCheck {
 	}
 
 	private boolean hasPriority(String input) {
-		return (input.equalsIgnoreCase("HIGH") || input.equalsIgnoreCase("MID") || input.equalsIgnoreCase("LOW"));		
+		return (input.equalsIgnoreCase(Constants.HIGH) || input.equalsIgnoreCase(Constants.MID) || input.equalsIgnoreCase(Constants.LOW));		
 	}
 }

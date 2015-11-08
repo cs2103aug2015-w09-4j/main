@@ -45,32 +45,55 @@ public class Constants {
 	public static final String SCHEDULE_TYPE = "schedule";
 	public static final String DEADLINE_TYPE = "deadline";
 	
-	
 	/*
 	 * Parser Constants
 	 */
 	public static final String DEADLINE_SPLIT = " by ";
 	public static final String SCHEDULE_FIRST_SPLIT = " from ";
 	public static final String SCHEDULE_SECOND_SPLIT = " to ";
-	public static final String ADD = "add";
-	public static final String DISPLAY = "display";
-	public static final String DELETE = "delete";
-	public static final String EXIT = "exit";
-	public static final String UNDO = "undo";
-	public static final String UPDATE_NAME = "update name";
-	public static final String UPDATE_END = "update end";
-	public static final String UPDATE_START = "update start";
-	public static final String UPDATE_PRIORITY = "update priority";
-	public static final String UPDATE_CATEGORY = "update category";
-	public static final String DONE = "done";
-	public static final String SORT_NAME = "sort name";
-	public static final String SORT_START = "sort start";
-	public static final String SORT_END = "sort end";
-	public static final String SORT_PRIORITY = "sort priority";
-	public static final String SEARCH = "search";
-	public static final String PATH = "path";
-	public static final String IMPORT = "import";
+	
+	public static final String DEADLINE = "deadline";
+	public static final String SCHEDULE = "schedule";
+	public static final String SCHEDULE_END = "scheduleEnd";
+	public static final String SCHEDULE_START = "scheduleStart";
+	public static final String SORT = "sort";
+	public static final String UPDATE = "update";
+	public static final String WORD_SPLIT = "\\s+";
 	public static final String TOGGLE = "toggle";
+	public static final String IMPORT = "import";
+	public static final String PATH = "path";
+	public static final String SEARCH = "search";
+	public static final String SORT_PRIORITY = "sort priority";
+	public static final String SORT_END = "sort end";
+	public static final String SORT_START = "sort start";
+	public static final String SORT_NAME = "sort name";
+	public static final String DONE = "done";
+	public static final String UPDATE_CATEGORY = "update category";
+	public static final String UPDATE_PRIORITY = "update priority";
+	public static final String UPDATE_START = "update start";
+	public static final String UPDATE_END = "update end";
+	public static final String UPDATE_NAME = "update name";
+	public static final String UNDO = "undo";
+	public static final String EXIT = "exit";
+	public static final String DELETE = "delete";
+	public static final String DISPLAY = "display";
+	public static final String ADD = "add";
+	
+	public static final String DEFAULT_SCHEDULE_TIME = "00:00";
+	public static final String DEFAULT_DEADLINE_TIME = "23:59";
+	public static final String HOUR_MINUTE_SPLIT = ":";
+	public static final String DAY_MONTH_YEAR_SPLIT = "/";
+	public static final String NULL = "";
+	public static final String TIME_DETECTION = "[0-9]:[0-9]";
+	public static final String DATE_DETECTION = "[0-9]/[0-9]";
+	public static final String SPACE = " ";
+	public static final char DEADLINE_CHAR = 'd';
+	public static final char SCHEDULE_CHAR = 's';
+
+	public static final String LOW = "LOW";
+	public static final String MID = "MID";
+	public static final String HIGH = "HIGH";
+
 
 	/*
 	 * Logic Constants

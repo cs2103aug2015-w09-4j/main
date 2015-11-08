@@ -10,20 +10,19 @@ import TGUtils.Constants;
 
 public class Parser {
 
-	/*
-	 * public static void main(String[] args) throws IndexOutOfBoundsException,
-	 * ParseException, AbnormalScheduleTimeException, TaskDateExistenceException
-	 * { Parser parser = new Parser();
-	 * 
-	 * Command test = Parser.parseCommand("add task by 6/11/2015 15:09"); }
-	 */
-
-	public static Command parseCommand(String input) throws ParseException, IndexOutOfBoundsException,
-			AbnormalScheduleTimeException, TaskDateExistenceException {
+	/*  public static void main(String[] args) throws IndexOutOfBoundsException,
+	  ParseException, AbnormalScheduleTimeException, TaskDateExistenceException
+	  { Parser parser = new Parser();
+	 
+	  	Command test = Parser.parseCommand("add task by 6/11/2015 15:09");
+	  	Command test1 = Parser.parseCommand("update end d1 6/11");
+	  }*/
+	 
+	public static Command parseCommand(String input) throws ParseException, IndexOutOfBoundsException, AbnormalScheduleTimeException, TaskDateExistenceException {
 		String command = getFirstWord(input);
 		String event = removeFirstWord(input);
 		String displayedIndex;
-		String scheduleStartDateAndTime, scheduleEndDateAndTime;
+		String deadlineDateAndTime, scheduleStartDateAndTime, scheduleEndDateAndTime;
 		String finalStartDate, finalEndDate;
 
 		Constants.COMMAND_TYPE commandType = findCommandType(command);
@@ -35,12 +34,12 @@ public class Parser {
 		tempCommand.setIsUserCommand(true);
 
 		PriorityCheck priorityCheck = new PriorityCheck(event);
+		EventCheck eventCheck = new EventCheck(event);
 
 		switch (commandType) {
 		case ADD:
 
 			boolean withPriority = priorityCheck.containsPriority();
-
 			if (withPriority == true) {
 				int eventPriority = priorityCheck.getPriorityNumber();
 				tempCommand.setEventPriority(eventPriority);
@@ -48,47 +47,43 @@ public class Parser {
 				event = priorityCheck.removePriorityFromEventName();
 			}
 
-			EventCheck eventCheck = new EventCheck(event);
-
+			eventCheck = eventCheck.reInitialize(event);
 			try { // deadline
-				if (eventCheck.possibleDate("deadline") == true) {
+				if (eventCheck.possibleDate(Constants.DEADLINE) == true) {
+					
+					deadlineDateAndTime = eventCheck.getDeadlineDateAndTime();
 
-					finalEndDate = DateTimeHandler.defaultDateTimeCheck(eventCheck.getDeadlineDateAndTime(),
-							"deadline");
+					finalEndDate = DateTimeHandler.defaultDateTimeCheck(deadlineDateAndTime, Constants.DEADLINE);
 
 					endDate = DateTimeHandler.dateConverter(finalEndDate);
 
 					tempCommand.setEventEnd(endDate);
-					tempCommand.setEventName(eventCheck.getEventName("deadline"));
+					tempCommand.setEventName(eventCheck.getEventName(Constants.DEADLINE));
 					tempCommand.setType(Constants.COMMAND_TYPE.ADD_DEADLINE);
 					break;
 				}
-
 			} catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
 				
 				try { // schedule
-					if (eventCheck.possibleDate("scheduleStart") && eventCheck.possibleDate("scheduleEnd")) {
+					if (eventCheck.possibleDate(Constants.SCHEDULE_START) && eventCheck.possibleDate(Constants.SCHEDULE_END)) {
 
 						scheduleStartDateAndTime = eventCheck.getScheduleStartDateAndTime();
 						scheduleEndDateAndTime = eventCheck.getScheduleEndDateAndTime();
 
 						DateTimeHandler.startAndEndTimeValidation(scheduleStartDateAndTime, scheduleEndDateAndTime);
 
-						finalEndDate = DateTimeHandler.defaultDateTimeCheck(eventCheck.getScheduleEndDateAndTime(),
-								"schedule");
-						finalStartDate = DateTimeHandler.defaultDateTimeCheck(eventCheck.getScheduleStartDateAndTime(),
-								"schedule");
+						finalEndDate = DateTimeHandler.defaultDateTimeCheck(scheduleEndDateAndTime, Constants.SCHEDULE);
+						finalStartDate = DateTimeHandler.defaultDateTimeCheck(scheduleStartDateAndTime, Constants.SCHEDULE);
 
 						endDate = DateTimeHandler.dateConverter(finalEndDate);
 						startDate = DateTimeHandler.dateConverter(finalStartDate);
 
 						tempCommand.setEventStart(startDate);
 						tempCommand.setEventEnd(endDate);
-						tempCommand.setEventName(eventCheck.getEventName("schedule"));
+						tempCommand.setEventName(eventCheck.getEventName(Constants.SCHEDULE));
 						tempCommand.setType(Constants.COMMAND_TYPE.ADD_SCHEDULE);
 						break;
 					}
-
 				} catch (NumberFormatException | ArrayIndexOutOfBoundsException f) {
 					
 					//task
@@ -104,30 +99,39 @@ public class Parser {
 		case UPDATE_NAME:
 			displayedIndex = getFirstWord(event);
 			String updatedName = removeFirstWord(event);
+			
 			tempCommand.setDisplayedIndex(displayedIndex);
 			tempCommand.setEventName(updatedName);
 			break;
 		case UPDATE_START:
 			displayedIndex = getFirstWord(event);
-			Date updatedStart = DateTimeHandler.dateConverter(removeFirstWord(event));
+			String newStart = removeFirstWord(event);
+			newStart = updateDateTimeCheck(displayedIndex, newStart);	
+			Date updatedStart = DateTimeHandler.dateConverter(newStart);
+			
 			tempCommand.setDisplayedIndex(displayedIndex);
 			tempCommand.setEventStart(updatedStart);
 			break;
 		case UPDATE_END:
 			displayedIndex = getFirstWord(event);
-			Date updatedEnd = DateTimeHandler.dateConverter(removeFirstWord(event));
+			String newEnd = removeFirstWord(event);	
+			newEnd = updateDateTimeCheck(displayedIndex, newEnd);
+			Date updatedEnd = DateTimeHandler.dateConverter(newEnd);
+			
 			tempCommand.setDisplayedIndex(displayedIndex);
 			tempCommand.setEventEnd(updatedEnd);
 			break;
 		case UPDATE_PRIORITY:
 			displayedIndex = getFirstWord(event);
 			int updatedPriority = priorityCheck.getPriorityNumber();
+			
 			tempCommand.setDisplayedIndex(displayedIndex);
 			tempCommand.setEventPriority(updatedPriority);
 			break;
 		case UPDATE_CATEGORY:
 			displayedIndex = getFirstWord(event);
 			String updatedCategory = removeFirstWord(event);
+			
 			tempCommand.setDisplayedIndex(displayedIndex);
 			tempCommand.setEventCategory(updatedCategory);
 			break;
@@ -165,65 +169,73 @@ public class Parser {
 		case INVALID:
 			break;
 		default:
-			// throw new exception?
 			tempCommand.setType(Constants.COMMAND_TYPE.EXCEPTION);
-		}
+		}		
 		return tempCommand;
 	}
 
+	private static String updateDateTimeCheck(String displayedIndex, String date) {
+		if (displayedIndex.charAt(0) == Constants.DEADLINE_CHAR) {
+			date = DateTimeHandler.defaultDateTimeCheck(date, Constants.DEADLINE);
+		} else if (displayedIndex.charAt(0) == Constants.SCHEDULE_CHAR) {
+			date = DateTimeHandler.defaultDateTimeCheck(date, Constants.SCHEDULE);
+		}		
+		return date;
+	}
+
 	private static Constants.COMMAND_TYPE findCommandType(String commandTypeString) {
-		if (commandTypeString.equalsIgnoreCase("add")) {
+		if (commandTypeString.equalsIgnoreCase(Constants.ADD)) {
 			return Constants.COMMAND_TYPE.ADD;
-		} else if (commandTypeString.equalsIgnoreCase("display")) {
+		} else if (commandTypeString.equalsIgnoreCase(Constants.DISPLAY)) {
 			return Constants.COMMAND_TYPE.DISPLAY;
-		} else if (commandTypeString.equalsIgnoreCase("delete")) {
+		} else if (commandTypeString.equalsIgnoreCase(Constants.DELETE)) {
 			return Constants.COMMAND_TYPE.DELETE;
-		} else if (commandTypeString.equalsIgnoreCase("exit")) {
+		} else if (commandTypeString.equalsIgnoreCase(Constants.EXIT)) {
 			return Constants.COMMAND_TYPE.EXIT;
-		} else if (commandTypeString.equalsIgnoreCase("undo")) {
+		} else if (commandTypeString.equalsIgnoreCase(Constants.UNDO)) {
 			return Constants.COMMAND_TYPE.UNDO;
-		} else if (commandTypeString.equalsIgnoreCase("update name")) {
+		} else if (commandTypeString.equalsIgnoreCase(Constants.UPDATE_NAME)) {
 			return Constants.COMMAND_TYPE.UPDATE_NAME;
-		} else if (commandTypeString.equalsIgnoreCase("update end")) {
+		} else if (commandTypeString.equalsIgnoreCase(Constants.UPDATE_END)) {
 			return Constants.COMMAND_TYPE.UPDATE_END;
-		} else if (commandTypeString.equalsIgnoreCase("update start")) {
+		} else if (commandTypeString.equalsIgnoreCase(Constants.UPDATE_START)) {
 			return Constants.COMMAND_TYPE.UPDATE_START;
-		} else if (commandTypeString.equalsIgnoreCase("update priority")) {
+		} else if (commandTypeString.equalsIgnoreCase(Constants.UPDATE_PRIORITY)) {
 			return Constants.COMMAND_TYPE.UPDATE_PRIORITY;
-		} else if (commandTypeString.equalsIgnoreCase("update category")) {
+		} else if (commandTypeString.equalsIgnoreCase(Constants.UPDATE_CATEGORY)) {
 			return Constants.COMMAND_TYPE.UPDATE_CATEGORY;
-		} else if (commandTypeString.equalsIgnoreCase("done")) {
+		} else if (commandTypeString.equalsIgnoreCase(Constants.DONE)) {
 			return Constants.COMMAND_TYPE.DONE;
-		} else if (commandTypeString.equalsIgnoreCase("sort name")) {
+		} else if (commandTypeString.equalsIgnoreCase(Constants.SORT_NAME)) {
 			return Constants.COMMAND_TYPE.SORT_NAME;
-		} else if (commandTypeString.equalsIgnoreCase("sort start")) {
+		} else if (commandTypeString.equalsIgnoreCase(Constants.SORT_START)) {
 			return Constants.COMMAND_TYPE.SORT_START;
-		} else if (commandTypeString.equalsIgnoreCase("sort end")) {
+		} else if (commandTypeString.equalsIgnoreCase(Constants.SORT_END)) {
 			return Constants.COMMAND_TYPE.SORT_END;
-		} else if (commandTypeString.equalsIgnoreCase("sort priority")) {
+		} else if (commandTypeString.equalsIgnoreCase(Constants.SORT_PRIORITY)) {
 			return Constants.COMMAND_TYPE.SORT_PRIORITY;
-		} else if (commandTypeString.equalsIgnoreCase("search")) {
+		} else if (commandTypeString.equalsIgnoreCase(Constants.SEARCH)) {
 			return Constants.COMMAND_TYPE.SEARCH;
-		} else if (commandTypeString.equalsIgnoreCase("path")) {
+		} else if (commandTypeString.equalsIgnoreCase(Constants.PATH)) {
 			return Constants.COMMAND_TYPE.PATH;
-		} else if (commandTypeString.equalsIgnoreCase("import")) {
+		} else if (commandTypeString.equalsIgnoreCase(Constants.IMPORT)) {
 			return Constants.COMMAND_TYPE.IMPORT;
-		} else if (commandTypeString.equalsIgnoreCase("toggle")) {
+		} else if (commandTypeString.equalsIgnoreCase(Constants.TOGGLE)) {
 			return Constants.COMMAND_TYPE.TOGGLE;
 		} else {
 			return Constants.COMMAND_TYPE.INVALID;
 		}
 	}
 
-	static private String removeFirstWord(String input) {
-		return input.replaceFirst(getFirstWord(input), "").trim();
+	private static String removeFirstWord(String input) {
+		return input.replaceFirst(getFirstWord(input), Constants.NULL).trim();
 	}
 
-	static private String getFirstWord(String input) {
-		String inputString = input.trim().split("\\s+")[0];
+	private static String getFirstWord(String input) {
+		String inputString = input.trim().split(Constants.WORD_SPLIT)[0];
 
-		if (inputString.equals("update") || inputString.equals("sort")) {
-			inputString += " " + input.trim().split("\\s+")[1];
+		if (inputString.equals(Constants.UPDATE) || inputString.equals(Constants.SORT)) {
+			inputString += Constants.SPACE + input.trim().split(Constants.WORD_SPLIT)[1];
 		}
 		return inputString;
 	}
