@@ -42,7 +42,7 @@ import TGUtils.Constants;
 import TGUtils.Event;
 import TGUtils.Logger;
 import TGUtils.Sorters;
-import TGUtils.TimeBlock;
+import TGUtils.TimeClash;
 
 public class TGStorageManager {
 	private String _filePath;
@@ -51,7 +51,7 @@ public class TGStorageManager {
 	private ArrayList<Event> _deadlineCache;
 	private ArrayList<Event> _scheduleCache;
 	private Logger logger;
-	private TimeBlock tb;
+	private TimeClash tb;
 	private int currentIndex;
 	File inputFile;
 
@@ -67,7 +67,7 @@ public class TGStorageManager {
 		this._taskCache = new ArrayList<Event>();
 		this._deadlineCache = new ArrayList<Event>();
 		this._scheduleCache = new ArrayList<Event>();
-		this.tb = new TimeBlock();
+		this.tb = new TimeClash();
 		try {
 			this.logger = new Logger(Constants.LOG_FILE);
 		} catch (IOException e) {
@@ -203,6 +203,7 @@ public class TGStorageManager {
 	public int addScheduleToStorage(Event newSchedule){
 		int id = addEventToStorage(newSchedule, _scheduleCache, Constants.LOG_ADD_SCHEDULE);
 		tb.updateCache(_scheduleCache);
+		_scheduleCache = tb.getCache();
 		return id;
 	}
 	
@@ -290,10 +291,11 @@ public class TGStorageManager {
 	public boolean updateStartByID(int id, Date startDate){
 		for (Event element:_scheduleCache){
 			if (element.getID() == id){
-				if (startDate.before(element.getEnd()) && tb.updateStart(id, startDate)) {
+				if (startDate.before(element.getEnd())) {
 					element.setStart(startDate);
 					updateStorage();
 					tb.updateCache(_scheduleCache);
+					_scheduleCache = tb.getCache();
 					return true;
 				} else {
 					return false;
@@ -314,10 +316,11 @@ public class TGStorageManager {
 	public boolean updateEndByID(int id, Date endDate){
 		for (Event element:_scheduleCache){
 			if (element.getID() == id){
-				if (endDate.after(element.getStart()) && tb.updateEnd(id, endDate)) {
+				if (endDate.after(element.getStart())) {
 					element.setEnd(endDate);
 					updateStorage();
 					tb.updateCache(_scheduleCache);
+					_scheduleCache = tb.getCache();
 					return true;
 				} else {
 					return false;
@@ -636,9 +639,11 @@ public class TGStorageManager {
 		String categoryString = getPropertyFromElement(eElement, Constants.PROPERTY_CATEGORY);
 		int priority = Integer.parseInt(getPropertyFromElement(eElement, Constants.PROPERTY_PRIORITY));
 		boolean isDone = Boolean.parseBoolean(getPropertyFromElement(eElement, Constants.PROPERTY_IS_DONE));
+		boolean hasClash = Boolean.parseBoolean(getPropertyFromElement(eElement, Constants.PROPERTY_HAS_CLASH));
 
 		Event event = new Event(ID, nameString, categoryString, priority);
 		event.setIsDone(isDone);
+		event.setHasClash(hasClash);
 		return event;
 	}
 	
@@ -808,6 +813,9 @@ public class TGStorageManager {
 	        xmlStreamWriter.writeEndElement();
 	        xmlStreamWriter.writeStartElement(Constants.PROPERTY_IS_DONE);
 	        xmlStreamWriter.writeCharacters(String.valueOf(element.isDone()));
+	        xmlStreamWriter.writeEndElement();
+	        xmlStreamWriter.writeStartElement(Constants.PROPERTY_HAS_CLASH);
+	        xmlStreamWriter.writeCharacters(String.valueOf(element.hasClash()));
 	        xmlStreamWriter.writeEndElement();
 		} catch (XMLStreamException e){
 			logger.writeException(Constants.LOG_FAILED_WRITE_TO_FILE);
