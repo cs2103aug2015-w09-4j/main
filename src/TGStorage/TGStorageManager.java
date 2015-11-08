@@ -152,12 +152,8 @@ public class TGStorageManager {
 
 	public int addSchedule(String name, Date startDate, Date endDate, String category, int priority){
 		Event newSchedule = new Event(currentIndex, name, startDate, endDate, category, priority);
-		if (tb.canFitSchedule(newSchedule)) {
-			addScheduleToStorage(newSchedule);
-			return newSchedule.getID();
-		} else {
-			return -1;
-		}
+		addScheduleToStorage(newSchedule);
+		return newSchedule.getID();
 	}
 
 	//precon:id exists

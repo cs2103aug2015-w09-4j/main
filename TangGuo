@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><calendar current="2">
+<?xml version="1.0" encoding="UTF-8"?><calendar current="3">
   <schedule id="1">
     <name>areakj</name>
     <category>DEFAULT</category>
@@ -7,5 +7,14 @@
     <hasClash>false</hasClash>
     <startDate>08/11/2015 12:30</startDate>
     <endDate>08/11/2015 13:30</endDate>
+  </schedule>
+  <schedule id="2">
+    <name>ayam</name>
+    <category>DEFAULT</category>
+    <priority>1</priority>
+    <isDone>false</isDone>
+    <hasClash>false</hasClash>
+    <startDate>08/11/2015 00:00</startDate>
+    <endDate>09/11/2015 00:00</endDate>
   </schedule>
 </calendar>
