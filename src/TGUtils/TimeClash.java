@@ -80,7 +80,7 @@ public class TimeClash {
 			} else {
 				return false;
 			}
-		} else if (oneStart.after(twoStart)) {
+		} else {
 			if (oneStart.before(twoEnd)) {
 				return true;
 			} else if (oneEnd.before(twoEnd)) {
@@ -88,8 +88,6 @@ public class TimeClash {
 			} else {
 				return false;
 			}
-		} else {
-			return false;
 		}
 	}
 
