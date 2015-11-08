@@ -58,6 +58,7 @@ public class Constants {
 	public static final String PROPERTY_CATEGORY = "category";
 	public static final String PROPERTY_PRIORITY = "priority";
 	public static final String PROPERTY_IS_DONE = "isDone";
+	public static final String PROPERTY_HAS_CLASH = "hasClash";
 	public static final String PROPERTY_START = "startDate";
 	public static final String PROPERTY_END = "endDate";
 	public static final String PROPERTY_YES = "yes";
