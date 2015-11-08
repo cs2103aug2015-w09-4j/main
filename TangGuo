@@ -1,1 +1,11 @@
-<?xml version="1.0" encoding="UTF-8"?><calendar current="1"/>
+<?xml version="1.0" encoding="UTF-8"?><calendar current="2">
+  <schedule id="1">
+    <name>areakj</name>
+    <category>DEFAULT</category>
+    <priority>1</priority>
+    <isDone>false</isDone>
+    <hasClash>false</hasClash>
+    <startDate>08/11/2015 12:30</startDate>
+    <endDate>08/11/2015 13:30</endDate>
+  </schedule>
+</calendar>

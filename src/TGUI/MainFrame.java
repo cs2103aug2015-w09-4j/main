@@ -44,24 +44,19 @@ public class MainFrame extends JFrame{
 		inputPane.add(button);
 		commandPane.add(inputPane);
 		c.add(commandPane,BorderLayout.SOUTH);
-		//c.add(textArea,BorderLayout.SOUTH);
-		//c.add(button,BorderLayout.LINE_END);
-		
 		Stack<String> up = new Stack<String>();
 		Stack<String> down = new Stack<String>();
-		
 		textArea.addKeyListener(new KeyListener() {
 
 			@Override
 			public void keyTyped(KeyEvent e) {
-				// TODO Auto-generated method stub
-				
+				//no event
+
 			}
-			
+
 			@Override
 			public void keyReleased(KeyEvent e) {
-				// TODO Auto-generated method stub
-				
+				//no event
 			}
 
 			@Override
@@ -77,19 +72,15 @@ public class MainFrame extends JFrame{
 						textArea.setText(down.pop());
 					}
 				}
-				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 		});
 
 		textArea.addActionListener(new ActionListener(){
-
             public void actionPerformed(ActionEvent e){
-            	//tabbedPane.setSelectedIndex(0);
             	Command command = TGlogic.executeInputs(textArea.getText());
             	up.push(textArea.getText());
-            	//System.out.println(command.getDisplayedEventList());
             	if (command.getDisplayedTab()!=-1){
             		tabbedPane.setSelectedIndex(command.getDisplayedTab());
             	}
@@ -98,7 +89,7 @@ public class MainFrame extends JFrame{
             	}
             	messageLabel.setText(command.getDisplayMessage());
             	System.out.println(command.getDisplayMessage());
-            	textArea.setText("");
+            	textArea.setText(""); //reset the content of textArea
             }
         });
 	}

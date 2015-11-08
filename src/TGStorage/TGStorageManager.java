@@ -70,11 +70,11 @@ public class TGStorageManager {
 
 		initialize();
 	}
-	
+
 	public void setFilePath(String filePath) {
 		this._filePath = filePath;
 	}
-	
+
 	public Event getEventByID(int id){
 		for (Event element:_taskCache){
 			if (element.getID() == id){
@@ -95,7 +95,7 @@ public class TGStorageManager {
 		}
 		return null;
 	}
-	
+
 	public ArrayList<Event> getTaskCache() {
 		return this._taskCache;
 	}
@@ -119,7 +119,7 @@ public class TGStorageManager {
 		updateStorage();
 		return newTask.getID();
 	}
-	
+
 	public int addTask(String name, String category, int priority){
 		Event newTask = new Event(currentIndex, name, category, priority);
 		addTaskToStorage(newTask);
@@ -134,7 +134,7 @@ public class TGStorageManager {
 		updateStorage();
 		return newDeadline.getID();
 	}
-	
+
 	public int addDeadline(String name, Date endDate, String category, int priority){
 		Event newDeadline = new Event(currentIndex, name, endDate, category, priority);
 		addDeadlineToStorage(newDeadline);
@@ -149,7 +149,7 @@ public class TGStorageManager {
 		tb.updateCache(_scheduleCache);
 		return newSchedule.getID();
 	}
-	
+
 	public int addSchedule(String name, Date startDate, Date endDate, String category, int priority){
 		Event newSchedule = new Event(currentIndex, name, startDate, endDate, category, priority);
 		if (tb.canFitSchedule(newSchedule)) {
@@ -484,7 +484,7 @@ public class TGStorageManager {
 				.getAttribute("current"));
 	}
 
-	private void initializeTaskCache(Document doc) {	
+	private void initializeTaskCache(Document doc) {
 		NodeList nodeList = getNodeList(doc, Constants.XML_TASK_EXPRESSION);
 		String nameString, categoryString;
 		int ID, priority;
@@ -500,16 +500,16 @@ public class TGStorageManager {
 				priority = Integer.parseInt(getPropertyFromElement(eElement, "priority"));
 				isDone = Boolean.parseBoolean(getPropertyFromElement(eElement, "isDone"));
 				hasClash = Boolean.parseBoolean(getPropertyFromElement(eElement, "hasClash"));
-				
+
 				event = new Event(ID, nameString, categoryString, priority);
 				event.setIsDone(isDone);
 				event.setHasClash(hasClash);
 
 				_taskCache.add(event);
 			}
-		}		
+		}
 	}
-	
+
 	private NodeList getNodeList(Document doc, String expression) {
 		try{
 			XPath xPath = XPathFactory.newInstance().newXPath();
@@ -520,7 +520,7 @@ public class TGStorageManager {
 			return null;
 		}
 	}
-	
+
 	private String getPropertyFromElement(Element eElement, String property){
 		return eElement.getElementsByTagName(property).item(0).getTextContent();
 	}
@@ -545,7 +545,7 @@ public class TGStorageManager {
 					priority = Integer.parseInt(getPropertyFromElement(eElement, "priority"));
 					isDone = Boolean.parseBoolean(getPropertyFromElement(eElement, "isDone"));
 					hasClash = Boolean.parseBoolean(getPropertyFromElement(eElement, "hasClash"));
-					
+
 					event = new Event(ID, nameString, endDate, categoryString, priority);
 					event.setIsDone(isDone);
 					event.setHasClash(hasClash);
@@ -581,7 +581,7 @@ public class TGStorageManager {
 					priority = Integer.parseInt(getPropertyFromElement(eElement, "priority"));
 					isDone = Boolean.parseBoolean(getPropertyFromElement(eElement, "isDone"));
 					hasClash = Boolean.parseBoolean(getPropertyFromElement(eElement, "hasClash"));
-					
+
 					event = new Event(ID, nameString, startDate, endDate, categoryString, priority);
 					event.setIsDone(isDone);
 					event.setHasClash(hasClash);
@@ -644,7 +644,7 @@ public class TGStorageManager {
 	         e.printStackTrace();
 	      }
 	}
-	
+
 	private void writeTaskProperties(XMLStreamWriter xmlStreamWriter, Event element){
 		try{
 			xmlStreamWriter.writeAttribute("id", String.valueOf(element.getID()));
@@ -668,7 +668,7 @@ public class TGStorageManager {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private void writeStartProperty(XMLStreamWriter xmlStreamWriter, Event element, DateFormat sdf){
 		try {
 			xmlStreamWriter.writeStartElement("startDate");
@@ -679,7 +679,7 @@ public class TGStorageManager {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private void writeEndProperty(XMLStreamWriter xmlStreamWriter, Event element, DateFormat sdf){
 		try {
 			xmlStreamWriter.writeStartElement("endDate");
