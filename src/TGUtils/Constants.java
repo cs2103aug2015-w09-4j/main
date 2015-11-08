@@ -1,4 +1,8 @@
 package TGUtils;
+
+import java.awt.Color;
+import java.awt.Dimension;
+
 public class Constants {
 	/*
 	 * GUI Tabs
@@ -18,6 +22,26 @@ public class Constants {
 	public static final String XML_DEADLINE_EXPRESSION = "/calendar/deadline";
 	public static final String XML_SCHEDULE_EXPRESSION = "/calendar/schedule";
 	public static final String XML_CALENDAR_EXPRESSION = "calendar";
+	
+	public final static Color GUI_COLOR_CLASH = new Color(255, 160, 0);
+	public final static Color GUI_COLOR_HIGH = new Color(246, 150, 121);
+	public final static Color GUI_COLOR_MID = new Color(255, 247, 153);
+	public final static Color GUI_COLOR_LOW = new Color(130, 202, 156);
+	public final static Color GUI_COLOR_EVEN_ROW = new Color(216, 216, 216);
+	
+	public final static int TABLE_WIDTH = 1280;
+	public final static int TABLE_HEIGHT = 112;
+	public final static Dimension TABLE_DIMENSION = new Dimension(TABLE_WIDTH, TABLE_HEIGHT);
+	
+	public final static int COLUMN_ID_SIZE = 25;
+	public final static int COLUMN_CATEGORY_SIZE = 100;
+	public final static int COLUMN_PRIORITY_SIZE = 100;
+	public final static int COLUMN_FIXED_TOTAL = COLUMN_ID_SIZE + COLUMN_CATEGORY_SIZE + COLUMN_PRIORITY_SIZE;
+	
+	public final static float CELL_TIME_PERCENTAGE = 0.20f;
+	public final static float CELL_NAME_TASK_PERCENTAGE = 1.00f;
+	public final static float CELL_NAME_DEADLINE_PERCENTAGE = 0.80f;
+	public final static float CELL_NAME_SCHEDULE_PERCENTAGE = 0.60f;
 
 	/*
 	 * Event Constants
