@@ -193,7 +193,6 @@ public class Logic {
 		}else{
 			storage.addDeadlineToStorage(command.getEvent());
 		}
-
 		returnedCommand.setDisplayedEventList(updateDisplay());
 		return returnedCommand;
 	}
@@ -291,12 +290,20 @@ public class Logic {
 		}else if (event.getType()==Constants.DEADLINE_TYPE_NUMBER){ //deadline is today's if end date is on today
 			return isSameDay(today,event.getEnd());
 		}else if (event.getType()==Constants.SCHEDULE_TYPE_NUMBER){
-			//deadline is today's if end date or start date is on today
-			return isSameDay(today,event.getEnd()) || isSameDay(today,event.getStart());
+			return isWithinInterval(today,event.getStart(),event.getEnd()) && isOnInterval(today,event.getStart(),event.getEnd());
 		}else{
 			return false;
 		}
 	}
+	//check whether target date is within the interval (start,end)
+	private boolean isWithinInterval(Date target, Date start, Date end){
+		return start.before(target) && end.after(target);
+	}
+	//check whether target date is ON the start date / end date
+	private boolean isOnInterval(Date target, Date start, Date end){
+		return isSameDay(target,start) || isSameDay(target,end);
+	}
+
 	//return true if the 2 dates are on the same day, false otherwise
 	private boolean isSameDay(Date date1, Date date2){
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");

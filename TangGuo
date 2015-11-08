@@ -90,4 +90,31 @@
     <startDate>08/11/2015 00:00</startDate>
     <endDate>09/11/2015 00:00</endDate>
   </schedule>
+  <schedule id="5">
+    <name>akj</name>
+    <category>DEFAULT</category>
+    <priority>1</priority>
+    <isDone>false</isDone>
+    <hasClash>false</hasClash>
+    <startDate>08/11/2015 00:00</startDate>
+    <endDate>09/11/2015 00:00</endDate>
+  </schedule>
+  <schedule id="3">
+    <name>ayam</name>
+    <category>DEFAULT</category>
+    <priority>1</priority>
+    <isDone>false</isDone>
+    <hasClash>false</hasClash>
+    <startDate>08/11/2015 00:00</startDate>
+    <endDate>11/11/2015 00:00</endDate>
+  </schedule>
+  <schedule id="6">
+    <name>akjjj</name>
+    <category>DEFAULT</category>
+    <priority>1</priority>
+    <isDone>false</isDone>
+    <hasClash>false</hasClash>
+    <startDate>07/11/2015 00:00</startDate>
+    <endDate>08/11/2015 00:00</endDate>
+  </schedule>
 </calendar>
