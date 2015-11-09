@@ -367,18 +367,19 @@ public class Logic {
 		}else{
 			return getErrorCommand(Constants.TANGGUO_INVALID_INDEX);
 		}
-		Date oldStart = storage.getEventByID(taskID).getStart();
-		if (storage.updateStartByID(taskID, startDate)) {
-			if (command.isUserCommand()){
-				reversedCommandStack.push(reverseUpdateStart(taskID, oldStart, displayedIndex));
-			}
-			returnedCommand.setDisplayMessage(String.format(Constants.TANGGUO_UPDATE_START_SUCCESS, storage.getEventByID(taskID).getName(),
-					startDate.toString()));
-			returnedCommand.setDisplayedEventList(updateDisplay());
-			return returnedCommand;
-		} else {
-			return getErrorCommand(Constants.TANGGUO_UPDATE_START_FAIL);
+		Event element = storage.getEventByID(taskID);
+		if (startDate.after(element.getEnd())) {
+			return getErrorCommand(Constants.TANGGUO_INVALID_START);
 		}
+		Date oldStart = element.getStart();
+		if (command.isUserCommand()){
+			reversedCommandStack.push(reverseUpdateStart(taskID, oldStart, displayedIndex));
+		}
+		storage.updateStartByID(taskID, startDate);
+		returnedCommand.setDisplayMessage(String.format(Constants.TANGGUO_UPDATE_START_SUCCESS, storage.getEventByID(taskID).getName(),
+				startDate.toString()));
+		returnedCommand.setDisplayedEventList(updateDisplay());
+		return returnedCommand;
 	}
 
 	/**
@@ -408,18 +409,19 @@ public class Logic {
 		}else{
 			return getErrorCommand(Constants.TANGGUO_INVALID_INDEX);
 		}
-		Date oldEnd = storage.getEventByID(taskID).getEnd();
-		if (storage.updateEndByID(taskID, endDate)) {
-			if (command.isUserCommand()){
-				reversedCommandStack.push(reverseUpdateEnd(taskID, oldEnd, displayedIndex));
-			}
-			returnedCommand.setDisplayMessage(String.format(Constants.TANGGUO_UPDATE_END_SUCCESS, storage.getEventByID(taskID).getName(),
-					endDate.toString()));
-			returnedCommand.setDisplayedEventList(updateDisplay());
-			return returnedCommand;
-		} else {
-			return getErrorCommand(Constants.TANGGUO_UPDATE_END_FAIL);
+		Event element = storage.getEventByID(taskID);
+		if (endDate.before(element.getStart())) {
+			return getErrorCommand(Constants.TANGGUO_INVALID_END);
 		}
+		Date oldEnd = element.getEnd();
+		if (command.isUserCommand()){
+			reversedCommandStack.push(reverseUpdateEnd(taskID, oldEnd, displayedIndex));
+		}
+		storage.updateEndByID(taskID, endDate);
+		returnedCommand.setDisplayMessage(String.format(Constants.TANGGUO_UPDATE_END_SUCCESS, storage.getEventByID(taskID).getName(),
+				endDate.toString()));
+		returnedCommand.setDisplayedEventList(updateDisplay());
+		return returnedCommand;
 	}
 
 	/**

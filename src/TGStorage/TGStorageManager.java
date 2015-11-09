@@ -286,23 +286,17 @@ public class TGStorageManager {
 	 * Event object with ID == @param id to @param startDate
 	 * @param id
 	 * @param startDate
-	 * @return true if start date is not blocked by the time block, false otherwise
 	 */
-	public boolean updateStartByID(int id, Date startDate){
+	public void updateStartByID(int id, Date startDate){
 		for (Event element:_scheduleCache){
 			if (element.getID() == id){
-				if (startDate.before(element.getEnd())) {
-					element.setStart(startDate);
-					updateStorage();
-					tb.updateCache(_scheduleCache);
-					_scheduleCache = tb.getCache();
-					return true;
-				} else {
-					return false;
-				}
+				element.setStart(startDate);
+				updateStorage();
+				tb.updateCache(_scheduleCache);
+				_scheduleCache = tb.getCache();
+				return;
 			}
 		}
-		return false;
 	}
 
 	/**
@@ -311,20 +305,15 @@ public class TGStorageManager {
 	 * Event object with ID == @param id to @param endDate
 	 * @param id
 	 * @param endDate
-	 * @return true if end date is not blocked by the time block, false otherwise
 	 */
-	public boolean updateEndByID(int id, Date endDate){
+	public void updateEndByID(int id, Date endDate){
 		for (Event element:_scheduleCache){
 			if (element.getID() == id){
-				if (endDate.after(element.getStart())) {
-					element.setEnd(endDate);
-					updateStorage();
-					tb.updateCache(_scheduleCache);
-					_scheduleCache = tb.getCache();
-					return true;
-				} else {
-					return false;
-				}
+				element.setEnd(endDate);
+				updateStorage();
+				tb.updateCache(_scheduleCache);
+				_scheduleCache = tb.getCache();
+				return;
 			}
 		}
 
@@ -332,10 +321,9 @@ public class TGStorageManager {
 			if (element.getID() == id){
 				element.setEnd(endDate);
 				updateStorage();
-				return true;
+				return;
 			}
 		}
-		return false;
 	}
 
 	/**
