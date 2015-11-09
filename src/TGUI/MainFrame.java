@@ -10,6 +10,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Stack;
 
+import javax.swing.AbstractAction;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -21,56 +22,47 @@ import TGLogic.Logic;
 import TGUtils.Command;
 
 public class MainFrame extends JFrame{
+	private Logic TGlogic;
+	private MainTab tabbedPane;
+	private JPanel commandPane;
+	private Stack<String> up;
+	private Stack<String> down;
+	private JPanel inputPane;
+	private JTextField commandField;
+	private JLabel commandLabel;
+	private JLabel messageLabel;
 	public MainFrame(String title){
 		super(title);
-		Logic TGlogic = new Logic();
+		TGlogic = new Logic();
 		setLayout(new BorderLayout());
-		MainTab tabbedPane = new MainTab(TGlogic);
-		final JPanel commandPane = new JPanel();
+		tabbedPane = new MainTab(TGlogic);
+		commandPane = new JPanel();
 		commandPane.setLayout(new BoxLayout(commandPane,BoxLayout.Y_AXIS));
-		final JPanel inputPane = new JPanel();
+		inputPane = new JPanel();
 		inputPane.setLayout(new FlowLayout());
-		final JTextField textArea = new JTextField();
-		final JLabel commandLabel = new JLabel("Command:");
-		final JLabel messageLabel = new JLabel("Welcome Back to TangGuo");
-		textArea.setPreferredSize(new Dimension(600,20));
+		commandField = new JTextField();
+		commandLabel = new JLabel("Command:");
+		messageLabel = new JLabel("Welcome Back to TangGuo");
+		commandField.setPreferredSize(new Dimension(600,20));
 		JButton button = new JButton("Submit");
 		Container c = getContentPane();
 		c.add(tabbedPane,BorderLayout.CENTER);
 		commandPane.add(messageLabel);
 		inputPane.add(commandLabel);
-		inputPane.add(textArea);
+		inputPane.add(commandField);
 		inputPane.add(button);
 		commandPane.add(inputPane);
 		c.add(commandPane,BorderLayout.SOUTH);
-		
-		tabbedPane.addKeyListener(new KeyListener() {
-			
+		up = new Stack<String>();
+		down = new Stack<String>();
+		button.addActionListener(new ActionListener(){
 			@Override
-			public void keyTyped(KeyEvent e) {
-				// TODO Auto-generated method stub
-				
+			public void actionPerformed(ActionEvent e) {
+				submitCommand();
 			}
-			
-			@Override
-			public void keyReleased(KeyEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void keyPressed(KeyEvent e) {
-				// TODO Auto-generated method stub
-				if (e.getKeyCode() == KeyEvent.VK_Q) {
-					System.out.println("hello");
-					c.transferFocus();
-				}
-			}
+
 		});
-		
-		Stack<String> up = new Stack<String>();
-		Stack<String> down = new Stack<String>();
-		textArea.addKeyListener(new KeyListener() {
+		commandField.addKeyListener(new KeyListener() {
 
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -87,34 +79,38 @@ public class MainFrame extends JFrame{
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_UP) {
 					if (!up.isEmpty()) {
-						down.push(textArea.getText());
-						textArea.setText(up.pop());
+						down.push(commandField.getText());
+						commandField.setText(up.pop());
 					}
 				} else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
 					if (!down.isEmpty()) {
-						up.push(textArea.getText());
-						textArea.setText(down.pop());
+						up.push(commandField.getText());
+						commandField.setText(down.pop());
 					}
 				}
 
 			}
 
 		});
-		
-		textArea.addActionListener(new ActionListener(){
+
+		commandField.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-            	Command command = TGlogic.executeInputs(textArea.getText());
-            	up.push(textArea.getText());
-            	if (command.getDisplayedTab()!=-1){
-            		tabbedPane.setSelectedIndex(command.getDisplayedTab());
-            	}
-            	if (command.getDisplayedEventList()!=null){ //valid command
-            		tabbedPane.refresh(command.getDisplayedEventList());
-            	}
-            	messageLabel.setText(command.getDisplayMessage());
-            	System.out.println(command.getDisplayMessage());
-            	textArea.setText(""); //reset the content of textArea
+            	submitCommand();
             }
         });
+	}
+
+	private void submitCommand(){
+		Command command = TGlogic.executeInputs(commandField.getText());
+    	up.push(commandField.getText());
+    	if (command.getDisplayedTab()!=-1){
+    		tabbedPane.setSelectedIndex(command.getDisplayedTab());
+    	}
+    	if (command.getDisplayedEventList()!=null){ //valid command
+    		tabbedPane.refresh(command.getDisplayedEventList());
+    	}
+    	messageLabel.setText(command.getDisplayMessage());
+    	System.out.println(command.getDisplayMessage());
+    	commandField.setText(""); //reset the content of textArea
 	}
 }
