@@ -1,6 +1,7 @@
 package TGUtils;
 import java.util.Comparator;
 
+//@@author A0127604L
 public class Sorters {
 
 	public static Comparator<Event> sortName() {

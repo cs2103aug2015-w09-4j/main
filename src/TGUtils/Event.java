@@ -3,6 +3,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+//@@author A0127604L
 public class Event {
 	private int type;
 	private int ID;

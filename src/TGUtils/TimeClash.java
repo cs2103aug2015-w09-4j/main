@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.ArrayList;
 import java.util.Collections;
 
+//@@author A0127604L
 public class TimeClash {
 	private int START_INDEX = 0;
 	private ArrayList<Event> _scheduleCache;

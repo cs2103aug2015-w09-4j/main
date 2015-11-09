@@ -201,6 +201,7 @@ public class TGStorageManager {
 		return id;
 	}
 
+	//@@author A0127604L
 	/**
 	 * precon:id exists Iterates through the Event caches, removes Event object
 	 * with the same ID as @param id
@@ -238,7 +239,7 @@ public class TGStorageManager {
 		}
 		return null; //event is not found in storage, return null
 	}
-	//@@author
+	
 	/**
 	 * precon:id exists Iterates through the Event caches, updates name of Event
 	 * object with id == @param ID to @param name
@@ -386,7 +387,7 @@ public class TGStorageManager {
 			}
 		}
 	}
-
+	//@@author
 	/**
 	 * precon:id exists Iterates through the Event caches, updates whether the
 	 * Event object with ID == @param id is done with @param isDone
@@ -421,6 +422,7 @@ public class TGStorageManager {
 		}
 	}
 
+	//@@author A0127604L
 	// sorts the caches according to event names
 	public void sortName() {
 		Collections.sort(taskCache, Sorters.sortName());

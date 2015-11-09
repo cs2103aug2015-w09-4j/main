@@ -7,7 +7,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Properties;
 
-
+//@@author A0127604L
 public class Config {
 
 	private String _fileName = "TangGuo";

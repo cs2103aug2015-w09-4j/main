@@ -664,6 +664,7 @@ public class Logic {
 		return temp;
 	}
 
+	//@@author A0127604L
 	// sorts Events by name by alphabetical order for display
 	private Command sortName() {
 		storage.sortName();
