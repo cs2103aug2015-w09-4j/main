@@ -19,6 +19,9 @@ public class TodayComponent extends JPanel {
 		refresh();
 	}
 
+	/**
+	 * Refresh the display in the Today Tab with an updated lists of events
+	 */
 	public void refresh(){
 		removeAll();
 		ArrayList<ArrayList<Event>> eventList = logic.updateTodayDisplay();
