@@ -148,8 +148,21 @@ public class Constants {
 	 * Logic Constants
 	 */
 	public static final String DEFAULT_DATE_FORMAT = "dd/MM/yyyy HH:mm";
+	public static final String DAY_FORMAT = "yyyyMMdd";
 	public static final int DATE_LENGTH = 17;
 	public static final String NEW_LINE = "\n";
+	public static final String SLASH = "/";
+	public static final int INVALID_INDICATOR = -1;
+	
+	public static final String TASK_IDENTITY = "t";
+	public static final String DEADLINE_IDENTITY = "d";
+	public static final String SCHEDULE_IDENTITY = "s";
+	public static final String DEFAULT_STRING = "default";
+	
+	public static final String DISPLAY_NAME = "NAME";
+	public static final String DISPLAY_START = "START DATE";
+	public static final String DISPLAY_END = "END DATE";
+	public static final String DISPLAY_PRIORITY	= "PRIORITY";
 
 	public static final String TANGGUO_START = "Welcome to TangGuo. %s is ready for use";
 	public static final String TANGGUO_ADD_SUCCESS = "Added to %1$s: %2$s";
@@ -163,20 +176,18 @@ public class Constants {
 	public static final String TANGGUO_UPDATE_CATEGORY_SUCCESS = "Category of %1$s updated to %2$s";
 	public static final String TANGGUO_UPDATE_DONE_SUCCESS = "%1$s completed";
 	public static final String TANGGUO_SORT_SUCCESS = "Sorted by %1$s!";
-
 	public static final String TANGGUO_UNDO_SUCCESS = "Undo successful!";
+	public static final String TANGGUO_SEARCH_SUCCESS = "Search results for %1$s ";
+	public static final String TANGGUO_IMPORT_SUCCESS = "TangGuo data successfully imported from \"%1$s\"!";
+	public static final String TANGGUO_PATH_SET = "%1$s data saved to \"%2$s\"!";
+	public static final String TANGGUO_SHOW_DONE = "The completed events are now shown!";
+	public static final String TANGGUO_HIDE_DONE = "The completed events are now hidden!";
 	public static final String TANGGUO_EXIT = "See you again!";
 
 	public static final String TANGGUO_SCHEDULE_CLASH = "Cannot add : %1$s because that time slot is already taken!";
-
 	public static final String TANGGUO_UNDO_NO_COMMAND ="No command to be undone!";
 	public static final String TANGGUO_EMPTY_FILE = "%s is empty!";
-
-	public static final String TANGGUO_SEARCH_SUCCESS = "Search results for %1$s ";
 	public static final String TANGGUO_SEARCH_FAIL = "The keyword: %1$s is not found!";
-	public static final String TANGGUO_PATH_SET = "%1$s data saved to \"%2$s\"!";
-	public static final String TANGGUO_IMPORT_SUCCESS = "TangGuo data successfully imported from \"%1$s\"!";
-	
 	public static final String TANGGUO_IO_EXCEPTION = "An unexpected error has occurred";
 	public static final String TANGGUO_OUT_BOUNDS = "The index you entered is invalid, try again";
 	public static final String TANGGUO_INVALID_INDEX = "The task index you entered seems to be invalid, try again";
@@ -184,11 +195,9 @@ public class Constants {
 	public static final String TANGGUO_INVALID_SCHEDULE = "The start time you entered seem to be later than your end time, try again";
 	public static final String TANGGUO_INVALID_COMMAND = "The command you entered seems to be invalid, try another command";
 	public static final String TANGGUO_DATE_OUT_OF_BOUNDS = "The date or time you have entered is in the wrong format, try again";
-
 	public static final String TANGGUO_INVALID_PRIORITY = "The priority level you entered seems to be invalid, try again";
 
-	public static final String TANGGUO_SHOW_DONE = "The completed events are now shown!";
-	public static final String TANGGUO_HIDE_DONE = "The completed events are now hidden!";
+	public static final String ASSERT_UNEXPECTED_TYPE_NUM = "unexpected type number";
 
 
 	public enum COMMAND_TYPE {

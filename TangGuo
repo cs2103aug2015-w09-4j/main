@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><calendar current="74">
+<?xml version="1.0" encoding="UTF-8"?><calendar current="81">
   <task id="3">
     <name>fjd</name>
     <category>DEFAULT</category>
@@ -17,6 +17,41 @@
     <name>drink 3000cc of Gong Cha</name>
     <category>DEFAULT</category>
     <priority>3</priority>
+    <isDone>false</isDone>
+    <hasClash>false</hasClash>
+  </task>
+  <task id="74">
+    <name>dun</name>
+    <category>DEFAULT</category>
+    <priority>1</priority>
+    <isDone>false</isDone>
+    <hasClash>false</hasClash>
+  </task>
+  <task id="75">
+    <name>does this work</name>
+    <category>DEFAULT</category>
+    <priority>1</priority>
+    <isDone>false</isDone>
+    <hasClash>false</hasClash>
+  </task>
+  <task id="76">
+    <name>now try this</name>
+    <category>DEFAULT</category>
+    <priority>1</priority>
+    <isDone>false</isDone>
+    <hasClash>false</hasClash>
+  </task>
+  <task id="77">
+    <name>hey hey hey</name>
+    <category>DEFAULT</category>
+    <priority>1</priority>
+    <isDone>false</isDone>
+    <hasClash>false</hasClash>
+  </task>
+  <task id="78">
+    <name>dobedobedo</name>
+    <category>DEFAULT</category>
+    <priority>1</priority>
     <isDone>false</isDone>
     <hasClash>false</hasClash>
   </task>
@@ -44,6 +79,14 @@
     <hasClash>false</hasClash>
     <endDate>16/11/2015 23:59</endDate>
   </deadline>
+  <deadline id="79">
+    <name>dooo</name>
+    <category>DEFAULT</category>
+    <priority>2</priority>
+    <isDone>false</isDone>
+    <hasClash>false</hasClash>
+    <endDate>09/11/2015 09:00</endDate>
+  </deadline>
   <schedule id="66">
     <name>presentation</name>
     <category>DEFAULT</category>
@@ -56,9 +99,9 @@
   <schedule id="67">
     <name>group discussion</name>
     <category>DEFAULT</category>
-    <priority>1</priority>
+    <priority>2</priority>
     <isDone>false</isDone>
-    <hasClash>false</hasClash>
+    <hasClash>true</hasClash>
     <startDate>09/11/2015 10:00</startDate>
     <endDate>09/11/2015 12:30</endDate>
   </schedule>
@@ -67,8 +110,8 @@
     <category>DEFAULT</category>
     <priority>3</priority>
     <isDone>false</isDone>
-    <hasClash>false</hasClash>
-    <startDate>09/11/2015 14:00</startDate>
+    <hasClash>true</hasClash>
+    <startDate>09/11/2015 12:00</startDate>
     <endDate>09/11/2015 15:00</endDate>
   </schedule>
   <schedule id="69">
@@ -79,6 +122,15 @@
     <hasClash>false</hasClash>
     <startDate>09/11/2015 16:00</startDate>
     <endDate>09/11/2015 17:00</endDate>
+  </schedule>
+  <schedule id="80">
+    <name>sjid</name>
+    <category>DEFAULT</category>
+    <priority>1</priority>
+    <isDone>false</isDone>
+    <hasClash>false</hasClash>
+    <startDate>09/11/2015 17:00</startDate>
+    <endDate>09/11/2015 19:00</endDate>
   </schedule>
   <schedule id="70">
     <name>lepak</name>
