@@ -139,9 +139,16 @@ public class Constants {
 	public static final char DEADLINE_CHAR = 'd';
 	public static final char SCHEDULE_CHAR = 's';
 
-	public static final String LOW = "LOW";
-	public static final String MID = "MID";
-	public static final String HIGH = "HIGH";
+	public static final String ADD_CATEGORY = "-c";
+	public static final String ADD_PRIORITY = "-p";
+	public static final int ADD_NULL = -1;
+	
+	public static final String STRING_LOW = "LOW";
+	public static final String STRING_MID = "MID";
+	public static final String STRING_HIGH = "HIGH";
+	public static final int INT_LOW = 1;
+	public static final int INT_MID = 2;
+	public static final int INT_HIGH = 3;
 
 
 	/*

@@ -33,18 +33,18 @@ public class Parser {
 		tempCommand.setType(commandType);
 		tempCommand.setIsUserCommand(true);
 
-		PriorityCheck priorityCheck = new PriorityCheck(event);
+		PropertyCheck propertyCheck = new PropertyCheck(event);
 		EventCheck eventCheck = new EventCheck(event);
 
 		switch (commandType) {
 		case ADD:
 
-			boolean withPriority = priorityCheck.containsPriority();
+			boolean withPriority = propertyCheck.containsPriority();
 			if (withPriority == true) {
-				int eventPriority = priorityCheck.getPriorityNumber();
+				int eventPriority = propertyCheck.getPriority();
 				tempCommand.setEventPriority(eventPriority);
 
-				event = priorityCheck.removePriorityFromEventName();
+				event = propertyCheck.removePropertyFromEventName();
 			}
 
 			eventCheck = eventCheck.reInitialize(event);
@@ -123,7 +123,7 @@ public class Parser {
 			break;
 		case UPDATE_PRIORITY:
 			displayedIndex = getFirstWord(event);
-			int updatedPriority = priorityCheck.getPriorityNumber();
+			int updatedPriority = propertyCheck.checkPriority(removeFirstWord(event));
 			
 			tempCommand.setDisplayedIndex(displayedIndex);
 			tempCommand.setEventPriority(updatedPriority);
