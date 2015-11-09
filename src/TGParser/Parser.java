@@ -3,7 +3,6 @@ package TGParser;
 import java.text.ParseException;
 import java.util.Date;
 
-import TGExceptions.AbnormalScheduleTimeException;
 import TGExceptions.TaskDateExistenceException;
 import TGUtils.Command;
 import TGUtils.Constants;
@@ -13,12 +12,12 @@ public class Parser {
 	/*  public static void main(String[] args) throws IndexOutOfBoundsException,
 	  ParseException, AbnormalScheduleTimeException, TaskDateExistenceException
 	  { Parser parser = new Parser();
-	 
+
 	  	Command test = Parser.parseCommand("add task by 6/11/2015 15:09");
 	  	Command test1 = Parser.parseCommand("update end d1 6/11");
 	  }*/
-	 
-	public static Command parseCommand(String input) throws ParseException, IndexOutOfBoundsException, AbnormalScheduleTimeException, TaskDateExistenceException {
+
+	public static Command parseCommand(String input) throws ParseException, IndexOutOfBoundsException, TaskDateExistenceException {
 		String command = getFirstWord(input);
 		String event = removeFirstWord(input);
 		String displayedIndex;
@@ -50,7 +49,7 @@ public class Parser {
 			eventCheck = eventCheck.reInitialize(event);
 			try { // deadline
 				if (eventCheck.possibleDate(Constants.DEADLINE) == true) {
-					
+
 					deadlineDateAndTime = eventCheck.getDeadlineDateAndTime();
 
 					finalEndDate = DateTimeHandler.defaultDateTimeCheck(deadlineDateAndTime, Constants.DEADLINE);
@@ -63,14 +62,12 @@ public class Parser {
 					break;
 				}
 			} catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
-				
+
 				try { // schedule
 					if (eventCheck.possibleDate(Constants.SCHEDULE_START) && eventCheck.possibleDate(Constants.SCHEDULE_END)) {
 
 						scheduleStartDateAndTime = eventCheck.getScheduleStartDateAndTime();
 						scheduleEndDateAndTime = eventCheck.getScheduleEndDateAndTime();
-
-						DateTimeHandler.startAndEndTimeValidation(scheduleStartDateAndTime, scheduleEndDateAndTime);
 
 						finalEndDate = DateTimeHandler.defaultDateTimeCheck(scheduleEndDateAndTime, Constants.SCHEDULE);
 						finalStartDate = DateTimeHandler.defaultDateTimeCheck(scheduleStartDateAndTime, Constants.SCHEDULE);
@@ -85,12 +82,12 @@ public class Parser {
 						break;
 					}
 				} catch (NumberFormatException | ArrayIndexOutOfBoundsException f) {
-					
+
 					//task
 					eventCheck.isProperFloatingTaskCheck();
 
 					tempCommand.setEventName(event);
-					tempCommand.setType(Constants.COMMAND_TYPE.ADD_TASK); 
+					tempCommand.setType(Constants.COMMAND_TYPE.ADD_TASK);
 				}
 			}
 			break;
@@ -99,39 +96,39 @@ public class Parser {
 		case UPDATE_NAME:
 			displayedIndex = getFirstWord(event);
 			String updatedName = removeFirstWord(event);
-			
+
 			tempCommand.setDisplayedIndex(displayedIndex);
 			tempCommand.setEventName(updatedName);
 			break;
 		case UPDATE_START:
 			displayedIndex = getFirstWord(event);
 			String newStart = removeFirstWord(event);
-			newStart = updateDateTimeCheck(displayedIndex, newStart);	
+			newStart = updateDateTimeCheck(displayedIndex, newStart);
 			Date updatedStart = DateTimeHandler.dateConverter(newStart);
-			
+
 			tempCommand.setDisplayedIndex(displayedIndex);
 			tempCommand.setEventStart(updatedStart);
 			break;
 		case UPDATE_END:
 			displayedIndex = getFirstWord(event);
-			String newEnd = removeFirstWord(event);	
+			String newEnd = removeFirstWord(event);
 			newEnd = updateDateTimeCheck(displayedIndex, newEnd);
 			Date updatedEnd = DateTimeHandler.dateConverter(newEnd);
-			
+
 			tempCommand.setDisplayedIndex(displayedIndex);
 			tempCommand.setEventEnd(updatedEnd);
 			break;
 		case UPDATE_PRIORITY:
 			displayedIndex = getFirstWord(event);
 			int updatedPriority = propertyCheck.checkPriority(removeFirstWord(event));
-			
+
 			tempCommand.setDisplayedIndex(displayedIndex);
 			tempCommand.setEventPriority(updatedPriority);
 			break;
 		case UPDATE_CATEGORY:
 			displayedIndex = getFirstWord(event);
 			String updatedCategory = removeFirstWord(event);
-			
+
 			tempCommand.setDisplayedIndex(displayedIndex);
 			tempCommand.setEventCategory(updatedCategory);
 			break;
@@ -170,7 +167,7 @@ public class Parser {
 			break;
 		default:
 			tempCommand.setType(Constants.COMMAND_TYPE.EXCEPTION);
-		}		
+		}
 		return tempCommand;
 	}
 
@@ -179,7 +176,7 @@ public class Parser {
 			date = DateTimeHandler.defaultDateTimeCheck(date, Constants.DEADLINE);
 		} else if (displayedIndex.charAt(0) == Constants.SCHEDULE_CHAR) {
 			date = DateTimeHandler.defaultDateTimeCheck(date, Constants.SCHEDULE);
-		}		
+		}
 		return date;
 	}
 

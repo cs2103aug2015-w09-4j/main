@@ -15,7 +15,7 @@ public class Event {
 	private boolean hasClash;
 
 	public Event(int ID, String name, Date startDate, Date endDate, String category, int priority){
-		
+
 		this.type = Constants.SCHEDULE_TYPE_NUMBER;
 		this.ID = ID;
 		this.name = name;
@@ -53,39 +53,39 @@ public class Event {
 
 
 	public Event(int ID, String name, Date startDate, Date endDate, String category) {
-		new Event(ID, name, startDate, endDate, category, Constants.DEFAULT_PRIORITY);
+		this(ID, name, startDate, endDate, category, Constants.DEFAULT_PRIORITY);
 	}
 
 	public Event(int ID, String name, Date endDate, String category) {
-		new Event(ID, name, endDate, category, Constants.DEFAULT_PRIORITY);
+		this(ID, name, endDate, category, Constants.DEFAULT_PRIORITY);
 	}
 
 	public Event(int ID, String name, String category) {
-		new Event(ID, name, category, Constants.DEFAULT_PRIORITY);
+		this(ID, name, category, Constants.DEFAULT_PRIORITY);
 	}
 
 	public Event(int ID, String name, Date startDate, Date endDate, int priority) {
-		new Event(ID, name, startDate, endDate, Constants.DEFAULT_CATEGORY, priority);
+		this(ID, name, startDate, endDate, Constants.DEFAULT_CATEGORY, priority);
 	}
 
 	public Event(int ID, String name, Date endDate, int priority) {
-		new Event(ID, name, endDate, Constants.DEFAULT_CATEGORY, priority);
+		this(ID, name, endDate, Constants.DEFAULT_CATEGORY, priority);
 	}
 
 	public Event(int ID, String name, int priority) {
-		new Event(ID, name, Constants.DEFAULT_CATEGORY, priority);
+		this(ID, name, Constants.DEFAULT_CATEGORY, priority);
 	}
 
 	public Event(int ID, String name, Date startDate, Date endDate) {
-		new Event(ID, name, startDate, endDate, Constants.DEFAULT_CATEGORY, Constants.DEFAULT_PRIORITY);
+		this(ID, name, startDate, endDate, Constants.DEFAULT_CATEGORY, Constants.DEFAULT_PRIORITY);
 	}
 
 	public Event(int ID, String name, Date endDate) {
-		new Event(ID, name, endDate, Constants.DEFAULT_CATEGORY, Constants.DEFAULT_PRIORITY);
+		this(ID, name, endDate, Constants.DEFAULT_CATEGORY, Constants.DEFAULT_PRIORITY);
 	}
 
 	public Event(int ID, String name) {
-		new Event(ID, name, Constants.DEFAULT_CATEGORY, Constants.DEFAULT_PRIORITY);
+		this(ID, name, Constants.DEFAULT_CATEGORY, Constants.DEFAULT_PRIORITY);
 	}
 
 	public boolean isDone(){
@@ -95,15 +95,15 @@ public class Event {
 	public void setIsDone(boolean boo){
 		this.isDone = boo;
 	}
-	
+
 	public boolean hasClash() {
 		return hasClash;
 	}
-	
+
 	public void setHasClash(boolean boo) {
 		this.hasClash = boo;
 	}
-	
+
 	public int getType() {
 		return type;
 	}

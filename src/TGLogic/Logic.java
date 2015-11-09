@@ -7,8 +7,6 @@ import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Stack;
-
-import TGExceptions.AbnormalScheduleTimeException;
 import TGExceptions.TaskDateExistenceException;
 import TGParser.Parser;
 import TGStorage.TGStorageManager;
@@ -105,9 +103,6 @@ public class Logic {
 		} catch (IndexOutOfBoundsException e){
 			logger.writeException(e.toString());
 			return getErrorCommand(Constants.TANGGUO_INVALID_COMMAND);
-		} catch (AbnormalScheduleTimeException e) {
-			logger.writeException(e.toString());
-			return getErrorCommand(Constants.TANGGUO_INVALID_SCHEDULE);
 		}
 		Command returnedCommand = executeProcessedCommand(currentCommand);
 		return returnedCommand;
@@ -201,6 +196,9 @@ public class Logic {
 	 * adds a Schedule event
 	 */
 	private Command addSchedule(Command command){
+		if(command.getEventStart().compareTo(command.getEventEnd()) >= 0) {
+			return getErrorCommand(Constants.TANGGUO_INVALID_SCHEDULE);
+		}
 		Command returnedCommand = new Command();
 		returnedCommand.setDisplayMessage(String.format(Constants.TANGGUO_ADD_SUCCESS, fileName, command.getEventName()));
 		if (command.isUserCommand()){
