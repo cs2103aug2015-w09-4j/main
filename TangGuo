@@ -1,4 +1,18 @@
-<?xml version="1.0" encoding="UTF-8"?><calendar current="7">
+<?xml version="1.0" encoding="UTF-8"?><calendar current="9">
+  <task id="7">
+    <name>task</name>
+    <category>DEFAULT</category>
+    <priority>1</priority>
+    <isDone>false</isDone>
+    <hasClash>false</hasClash>
+  </task>
+  <task id="8">
+    <name>sasa</name>
+    <category>DEFAULT</category>
+    <priority>1</priority>
+    <isDone>false</isDone>
+    <hasClash>false</hasClash>
+  </task>
   <schedule id="4">
     <name>aj</name>
     <category>DEFAULT</category>
@@ -7,6 +21,15 @@
     <hasClash>false</hasClash>
     <startDate>01/11/2015 00:00</startDate>
     <endDate>02/11/2015 00:00</endDate>
+  </schedule>
+  <schedule id="6">
+    <name>akjjj</name>
+    <category>DEFAULT</category>
+    <priority>1</priority>
+    <isDone>false</isDone>
+    <hasClash>false</hasClash>
+    <startDate>07/11/2015 00:00</startDate>
+    <endDate>08/11/2015 00:00</endDate>
   </schedule>
   <schedule id="1">
     <name>areakj</name>
@@ -43,14 +66,5 @@
     <hasClash>false</hasClash>
     <startDate>08/11/2015 00:00</startDate>
     <endDate>11/11/2015 00:00</endDate>
-  </schedule>
-  <schedule id="6">
-    <name>akjjj</name>
-    <category>DEFAULT</category>
-    <priority>1</priority>
-    <isDone>false</isDone>
-    <hasClash>false</hasClash>
-    <startDate>07/11/2015 00:00</startDate>
-    <endDate>08/11/2015 00:00</endDate>
   </schedule>
 </calendar>
