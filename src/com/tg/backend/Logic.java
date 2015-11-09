@@ -25,7 +25,7 @@ public class Logic {
 	private Logger logger;
 	private String lastSearchKey;
 	private boolean showDoneEvents;
-
+	//@@author A0126833E
 	/**
 	 * Initialization of TGStorageManager, TGIDMap, and reversedCommandStack
 	 */
@@ -168,7 +168,7 @@ public class Logic {
 		returnedCommand.setDisplayedEventList(updateDisplay());
 		return returnedCommand;
 	}
-
+	//@@author
 	//@author A0131465L
 	/**
 	 * adds a Deadline event
@@ -279,6 +279,7 @@ public class Logic {
 	}
 
 	//@author
+	//@@author A0126833E
 	/**
 	 * @param cache
 	 * @param header
@@ -337,7 +338,7 @@ public class Logic {
 		SimpleDateFormat sdf = new SimpleDateFormat(Constants.DAY_FORMAT);
 		return sdf.format(date1).equals(sdf.format(date2));
 	}
-
+	//@@author
 	//@author UPDATE_NAME
 	/**
 	 * Updates the name of an existing event to the new name entered by the user

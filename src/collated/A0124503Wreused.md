@@ -1,5 +1,5 @@
 # A0124503Wreused
-###### src\com\tg\parser\DateTimeHandler.java
+###### src/com/tg/parser/DateTimeHandler.java
 ``` java
 	public static void checkTaskValidity(String input) throws ParseException {
 		int inputLength = input.length();
@@ -15,7 +15,7 @@
 
 	}
 ```
-###### src\com\tg\parser\Parser.java
+###### src/com/tg/parser/Parser.java
 ``` java
 	private static String removeFirstWord(String input) {
 		return input.replaceFirst(getFirstWord(input), Constants.NULL).trim();
