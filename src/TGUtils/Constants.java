@@ -1,3 +1,4 @@
+//@@author A0126833E
 package TGUtils;
 
 import java.awt.Color;
@@ -17,27 +18,27 @@ public class Constants {
 	public static final int EVENT_LIST_TASK = 0;
 	public static final int EVENT_LIST_DEADLINE = 1;
 	public static final int EVENT_LIST_SCHEDULE = 2;
-	
+
 	public static final String XML_TASK_EXPRESSION = "/calendar/task";
 	public static final String XML_DEADLINE_EXPRESSION = "/calendar/deadline";
 	public static final String XML_SCHEDULE_EXPRESSION = "/calendar/schedule";
 	public static final String XML_CALENDAR_EXPRESSION = "calendar";
-	
+
 	public final static Color GUI_COLOR_CLASH = new Color(255, 160, 0);
 	public final static Color GUI_COLOR_HIGH = new Color(246, 150, 121);
 	public final static Color GUI_COLOR_MID = new Color(255, 247, 153);
 	public final static Color GUI_COLOR_LOW = new Color(130, 202, 156);
 	public final static Color GUI_COLOR_EVEN_ROW = new Color(216, 216, 216);
-	
+
 	public final static int TABLE_WIDTH = 1280;
 	public final static int TABLE_HEIGHT = 112;
 	public final static Dimension TABLE_DIMENSION = new Dimension(TABLE_WIDTH, TABLE_HEIGHT);
-	
+
 	public final static int COLUMN_ID_SIZE = 25;
 	public final static int COLUMN_CATEGORY_SIZE = 100;
 	public final static int COLUMN_PRIORITY_SIZE = 100;
 	public final static int COLUMN_FIXED_TOTAL = COLUMN_ID_SIZE + COLUMN_CATEGORY_SIZE + COLUMN_PRIORITY_SIZE;
-	
+
 	public final static float CELL_TIME_PERCENTAGE = 0.20f;
 	public final static float CELL_NAME_TASK_PERCENTAGE = 1.00f;
 	public final static float CELL_NAME_DEADLINE_PERCENTAGE = 0.80f;
@@ -62,7 +63,7 @@ public class Constants {
 	public static final String LOG_DELETE_TASK = "delete task: ";
 	public static final String LOG_DELETE_DEADLINE = "delete deadline: ";
 	public static final String LOG_DELETE_SCHEDULE = "delete schedule: ";
-		
+
 	public static final String LOG_FAILED_COMPILATION_XPATH = "Failed to compile xPath";
 	public static final String LOG_FAILED_PARSE_DATE_FROM_FILE = "Failed to parse date when reading from file";
 	public static final String LOG_FAILED_PARSE_FILE = "Failed to parse storage file";
@@ -70,10 +71,10 @@ public class Constants {
 	public static final String LOG_FAILED_CREATE_FILE = "Failed to create storage file";
 	public static final String LOG_FAILED_CLOSE_STRINGWRITER = "Failed to close StringWriter";
 	public static final String LOG_FAILED_TRANSFORM_XMLSTRING = "Failed to transfrom XMLString";
-	
+
 	public static final String FAILED_TO_INITIALIZE_LOGGER = "Failed to initialize log file";
 	public static final String ASSERT_NO_MATCHED_ID = "no matched ID found";
-	
+
 	public static final String ATTRIBUTE_CURRENT_INDEX = "current";
 	public static final String ATTRIBUTE_ID = "id";
 	public static final String ATTRIBUTE_INDENT_NUMBER = "indent-number";
@@ -86,21 +87,21 @@ public class Constants {
 	public static final String PROPERTY_START = "startDate";
 	public static final String PROPERTY_END = "endDate";
 	public static final String PROPERTY_YES = "yes";
-	
+
 	public static final String CALENDAR = "calendar";
 	public static final String INITIALIZE_CURRENT_INDEX = "0";
 	public static final String TASK_TYPE = "task";
 	public static final String SCHEDULE_TYPE = "schedule";
 	public static final String DEADLINE_TYPE = "deadline";
 
-	
+
 	/*
 	 * Parser Constants
 	 */
 	public static final String DEADLINE_SPLIT = " by ";
 	public static final String SCHEDULE_FIRST_SPLIT = " from ";
 	public static final String SCHEDULE_SECOND_SPLIT = " to ";
-	
+
 	public static final String DEADLINE = "deadline";
 	public static final String SCHEDULE = "schedule";
 	public static final String SCHEDULE_END = "scheduleEnd";
@@ -127,7 +128,7 @@ public class Constants {
 	public static final String DELETE = "delete";
 	public static final String DISPLAY = "display";
 	public static final String ADD = "add";
-	
+
 	public static final String DEFAULT_SCHEDULE_TIME = "00:00";
 	public static final String DEFAULT_DEADLINE_TIME = "23:59";
 	public static final String HOUR_MINUTE_SPLIT = ":";
@@ -142,7 +143,7 @@ public class Constants {
 	public static final String ADD_CATEGORY = "-c";
 	public static final String ADD_PRIORITY = "-p";
 	public static final int ADD_NULL = -1;
-	
+
 	public static final String STRING_LOW = "LOW";
 	public static final String STRING_MID = "MID";
 	public static final String STRING_HIGH = "HIGH";
@@ -160,12 +161,12 @@ public class Constants {
 	public static final String NEW_LINE = "\n";
 	public static final String SLASH = "/";
 	public static final int INVALID_INDICATOR = -1;
-	
+
 	public static final String TASK_IDENTITY = "t";
 	public static final String DEADLINE_IDENTITY = "d";
 	public static final String SCHEDULE_IDENTITY = "s";
 	public static final String DEFAULT_STRING = "default";
-	
+
 	public static final String DISPLAY_NAME = "NAME";
 	public static final String DISPLAY_START = "START DATE";
 	public static final String DISPLAY_END = "END DATE";
@@ -208,8 +209,8 @@ public class Constants {
 
 
 	public enum COMMAND_TYPE {
-		ADD, ADD_DEADLINE, ADD_SCHEDULE, ADD_TASK, DISPLAY, DELETE, 
-		UPDATE_NAME, UPDATE_START, UPDATE_END, UPDATE_PRIORITY, UPDATE_CATEGORY, UNDO, DONE, 
+		ADD, ADD_DEADLINE, ADD_SCHEDULE, ADD_TASK, DISPLAY, DELETE,
+		UPDATE_NAME, UPDATE_START, UPDATE_END, UPDATE_PRIORITY, UPDATE_CATEGORY, UNDO, DONE,
 		SORT_NAME, SORT_START, SORT_END, SORT_PRIORITY, SEARCH, TOGGLE, PATH, IMPORT, EXCEPTION, INVALID, EXIT
 	};
 
