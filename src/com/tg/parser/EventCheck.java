@@ -1,4 +1,4 @@
-package TGParser;
+package com.tg.parser;
 
 import java.text.ParseException;
 

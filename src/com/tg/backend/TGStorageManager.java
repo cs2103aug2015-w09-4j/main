@@ -1,4 +1,4 @@
-package TGStorage;
+package com.tg.backend;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -67,13 +67,8 @@ public class TGStorageManager {
 		this.deadlineCache = new ArrayList<Event>();
 		this.scheduleCache = new ArrayList<Event>();
 		this.tb = new TimeClash();
-		try {
-			//initialize logger
-			this.logger = new Logger(Constants.LOG_FILE);
-		} catch (IOException e) {
-			//if the logger fails to initialize, there's no choice but to print it on console
-			System.out.println(Constants.FAILED_TO_INITIALIZE_LOGGER);
-		}
+		//initialize logger
+		this.logger = new Logger(Constants.LOG_FILE);
 		initialize();
 	}
 
@@ -81,7 +76,7 @@ public class TGStorageManager {
 	public void setFilePath(String filePath) {
 		this.filePath = filePath;
 	}
-
+	//@@author A0126833E
 	/**
 	 * Iterates through the event caches to find an event of the same id
 	 *
@@ -243,7 +238,7 @@ public class TGStorageManager {
 		}
 		return null; //event is not found in storage, return null
 	}
-
+	//@@author
 	/**
 	 * precon:id exists Iterates through the Event caches, updates name of Event
 	 * object with id == @param ID to @param name
@@ -497,7 +492,7 @@ public class TGStorageManager {
 		}
 		return result;
 	}
-
+	//@@author A0126833E
 	// clears all event caches
 	public void clear() {
 		scheduleCache.clear();
@@ -525,7 +520,7 @@ public class TGStorageManager {
 		currentIndex = getCurrentIndexFromFile(doc);
 		initializeCaches(doc);
 	}
-
+	//@@author
 	/**
 	 * Parses @param inputFile into a Document object
 	 *
@@ -563,7 +558,7 @@ public class TGStorageManager {
 		initializeScheduleCache(doc);
 		tb.updateCache(this.scheduleCache);
 	}
-
+	//@@author A0126833E
 	/**
 	 * creates an XML file for storing user data
 	 */
@@ -618,7 +613,7 @@ public class TGStorageManager {
 			}
 		}
 	}
-
+	//@@author
 	/**
 	 * converts @param eElement into an Event object (task)
 	 *

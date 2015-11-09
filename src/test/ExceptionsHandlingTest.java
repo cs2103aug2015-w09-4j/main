@@ -6,7 +6,8 @@ import org.junit.Before;
 
 import org.junit.Test;
 
-import TGLogic.Logic;
+import com.tg.backend.Logic;
+
 import TGUtils.Constants;
 
 public class ExceptionsHandlingTest {

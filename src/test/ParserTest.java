@@ -6,8 +6,9 @@ import java.util.Date;
 
 import org.junit.Test;
 
-import TGParser.DateTimeHandler;
-import TGParser.Parser;
+import com.tg.parser.DateTimeHandler;
+import com.tg.parser.Parser;
+
 import TGUtils.Command;
 import TGUtils.Constants;
 

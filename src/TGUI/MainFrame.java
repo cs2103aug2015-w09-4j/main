@@ -18,7 +18,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import TGLogic.Logic;
+import com.tg.backend.Logic;
+
 import TGUtils.Command;
 
 public class MainFrame extends JFrame{

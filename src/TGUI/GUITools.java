@@ -15,7 +15,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import TGUtils.Constants;
 import TGUtils.Event;
 public class GUITools {
-	
+
 	public static JScrollPane createTaskTable(ArrayList<Event> eventList) {
 
 		String[] columnNames = { "ID", "Event Name", "Category", "Priority" };
@@ -42,7 +42,7 @@ public class GUITools {
 
 				c = setCellColours(table, c, row, column, 3);
 				c = markDoneEvents(c, eventList, row);
-				
+
 				return c;
 			};
 		});
@@ -50,7 +50,7 @@ public class GUITools {
 		Dimension tableSize = Constants.TABLE_DIMENSION;
 		setTableSizes(table, tableSize);
 		table.getColumn("Event Name").setPreferredWidth(offsetWidth(tableSize.width, Constants.CELL_NAME_TASK_PERCENTAGE));
-		
+
 		JScrollPane scrollPane = new JScrollPane(table);
 
 		return scrollPane;
@@ -65,7 +65,7 @@ public class GUITools {
 			Event curr = eventList.get(i);
 			data[i][0] = i + 1;
 			data[i][1] = curr.getName();
-			data[i][2] = curr.formatDate(curr.getEnd());
+			data[i][2] = Event.formatDate(curr.getEnd());
 			data[i][3] = curr.getCategory().equals("DEFAULT") ? "--" : curr.getCategory();
 			data[i][4] = getPriority(curr.getPriority());
 		}
@@ -80,10 +80,10 @@ public class GUITools {
 			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
 					boolean hasFocus, int row, int column) {
 				Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-				
+
 				c = setCellColours(table, c, row, column, 4);
 				c = markDoneEvents(c, eventList, row);
-				
+
 				return c;
 			};
 		});
@@ -92,7 +92,7 @@ public class GUITools {
 		setTableSizes(table, tableSize);
 		table.getColumn("Event Name").setPreferredWidth(offsetWidth(tableSize.width, Constants.CELL_NAME_DEADLINE_PERCENTAGE));
 		table.getColumn("By").setPreferredWidth(offsetWidth(tableSize.width, Constants.CELL_TIME_PERCENTAGE));
-		
+
 		JScrollPane scrollPane = new JScrollPane(table);
 
 		return scrollPane;
@@ -107,8 +107,8 @@ public class GUITools {
 			Event curr = eventList.get(i);
 			data[i][0] = i + 1;
 			data[i][1] = curr.getName();
-			data[i][2] = curr.formatDate(curr.getStart());
-			data[i][3] = curr.formatDate(curr.getEnd());
+			data[i][2] = Event.formatDate(curr.getStart());
+			data[i][3] = Event.formatDate(curr.getEnd());
 			data[i][4] = curr.getCategory().equals("DEFAULT") ? "--" : curr.getCategory();
 			data[i][5] = getPriority(curr.getPriority());
 		}
@@ -126,7 +126,7 @@ public class GUITools {
 
 				c = setCellColours(table, c, row, column, 5);
 				c = markDoneEvents(c, eventList, row);
-				
+
 				return c;
 			};
 		});
@@ -136,7 +136,7 @@ public class GUITools {
 		table.getColumn("Event Name").setPreferredWidth(offsetWidth(tableSize.width, Constants.CELL_NAME_SCHEDULE_PERCENTAGE));
 		table.getColumn("From").setPreferredWidth(offsetWidth(tableSize.width, Constants.CELL_TIME_PERCENTAGE));
 		table.getColumn("To").setPreferredWidth(offsetWidth(tableSize.width, Constants.CELL_TIME_PERCENTAGE));
-	
+
 		JScrollPane scrollPane = new JScrollPane(table);
 
 		return scrollPane;
@@ -154,7 +154,7 @@ public class GUITools {
 			return "LOW";
 		}
 	}
-	
+
 	private static Component setCellColours(JTable table, Component component, int row, int col, int x) {
 		if (col == x) {
 			switch (table.getModel().getValueAt(row, x).toString()) {
@@ -176,34 +176,34 @@ public class GUITools {
 		} else {
 			component.setBackground(Color.WHITE);
 		}
-		
+
 		return component;
 	}
-	
+
 	private static Component markDoneEvents(Component component, ArrayList<Event> eventList, int row) {
 		if (eventList.get(row).isDone()) {
 			component.setFont(getStrikeThroughFont());
 		} else {
 			component.setFont(getDefaultFont());
 		}
-		
+
 		if (eventList.get(row).hasClash()) {
 			component.setBackground(Constants.GUI_COLOR_CLASH);
 		}
-		
+
 		return component;
 	}
-	
+
 	private static void setTableSizes(JTable table, Dimension tableSize) {
 		table.setPreferredScrollableViewportSize(tableSize);
 		table.getColumn("ID").setPreferredWidth(Constants.COLUMN_ID_SIZE);
 		table.getColumn("Category").setPreferredWidth(Constants.COLUMN_CATEGORY_SIZE);
 		table.getColumn("Priority").setPreferredWidth(Constants.COLUMN_PRIORITY_SIZE);
-		
+
 		table.setFillsViewportHeight(true);
 		table.setRowSelectionAllowed(false);
 	}
-	
+
 	private static Font getDefaultFont() {
 		return new Font("Futura", Font.PLAIN, 12);
 	}

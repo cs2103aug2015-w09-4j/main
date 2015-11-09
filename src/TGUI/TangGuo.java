@@ -1,3 +1,4 @@
+//@author A0126833
 package TGUI;
 import javax.swing.JFrame;
 

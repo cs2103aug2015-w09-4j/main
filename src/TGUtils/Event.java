@@ -167,30 +167,13 @@ public class Event {
 	}
 
 	/**
-	 * returns for
-	 * schedule: "{start date, end date} eventName"
-	 * deadline: "{end date} eventName"
-	 *     task: "eventName"
-	 */
-	public String toString(){
-		String string = "";
-		if (getStart() != null){
-			string += "{"+formatDate(getStart())+", "+formatDate(getEnd())+"} ";
-		} else if (getEnd() != null){
-			string += "{"+formatDate(getEnd())+"} ";
-		}
-		string += getName() + "\n";
-		return string;
-	}
-
-	/**
 	 * returns date in the form of "DAY MONTH DATE HOUR:MINUTE" in a 24-hour format
 	 * is returned in the form of "DAY YEAR MONTH DATE HOUR:MINUTE" if year is not
 	 * current year
 	 * @param date
 	 * @return
 	 */
-	public String formatDate(Date date){
+	public static String formatDate(Date date){
 		Calendar now = Calendar.getInstance();   // Gets the current date and time
 		int currentYear = now.get(Calendar.YEAR);
 		int dateYear = Integer.parseInt(new SimpleDateFormat("yyyy").format(date));

@@ -13,7 +13,8 @@ import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import TGLogic.Logic;
+import com.tg.backend.Logic;
+
 import TGUtils.Constants;
 import TGUtils.Event;
 

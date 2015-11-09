@@ -1,3 +1,4 @@
+//@@author A0126833E
 package test;
 
 import static org.junit.Assert.*;
@@ -7,7 +8,8 @@ import java.io.PrintStream;
 import org.junit.Before;
 import org.junit.Test;
 
-import TGStorage.TGStorageManager;
+import com.tg.backend.TGStorageManager;
+
 import TGUtils.Constants;
 import TGUtils.Event;
 

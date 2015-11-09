@@ -1,4 +1,4 @@
-package TGLogic;
+package com.tg.backend;
 
 import java.lang.String;
 import java.text.ParseException;
@@ -8,8 +8,9 @@ import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Stack;
-import TGParser.Parser;
-import TGStorage.TGStorageManager;
+
+import com.tg.parser.Parser;
+
 import TGUtils.Command;
 import TGUtils.Constants;
 import TGUtils.Event;
@@ -33,11 +34,7 @@ public class Logic {
 		// get file path from Config class
 		config = new Config();
 		fileName = config.getFileName();
-		try {
-			logger = new Logger(Constants.LOG_FILE);
-		} catch (IOException e) {
-			System.out.println(Constants.FAILED_TO_INITIALIZE_LOGGER);
-		}
+		logger = new Logger(Constants.LOG_FILE);
 		storage = new TGStorageManager(config.getFilePath(), fileName);
 		TGIDMap = new HashMap<String, Integer>();
 		showDoneEvents = false;
@@ -45,7 +42,7 @@ public class Logic {
 	}
 
 	/**
-	 * @return an ArrayList of all events that matches the previous search 
+	 * @return an ArrayList of all events that matches the previous search
 	 *         key stored within TangGuo
 	 */
 	public ArrayList<ArrayList<Event>> updateSearchDisplay() {
@@ -156,9 +153,9 @@ public class Logic {
 			return getErrorCommand(Constants.TANGGUO_INVALID_COMMAND);
 		}
 	}
- 
+
 	/**
-	 * Toggles the boolean value showDoneEvents, which indicates whether completed events are 
+	 * Toggles the boolean value showDoneEvents, which indicates whether completed events are
 	 * to be hidden/displayed. This toggles the display view to display/hide completed events.
 	 */
 	private Command toggleDoneDisplay() {
@@ -214,7 +211,7 @@ public class Logic {
 	private Command addTask(Command command) {
 		Command returnedCommand = createAddReturnCommand(command);
 		if (command.isUserCommand()) {
-			int newID = storage.addTask(command.getEventName(), command.getEventCategory(), 
+			int newID = storage.addTask(command.getEventName(), command.getEventCategory(),
 					command.getEventPriority());
 			reversedCommandStack.push(reverseAdd(newID));
 		} else {
@@ -231,7 +228,7 @@ public class Logic {
 	 */
 	private Command createAddReturnCommand(Command command) {
 		Command returnedCommand = new Command();
-		returnedCommand.setDisplayMessage(String.format(Constants.TANGGUO_ADD_SUCCESS, fileName, 
+		returnedCommand.setDisplayMessage(String.format(Constants.TANGGUO_ADD_SUCCESS, fileName,
 				command.getEventName()));
 		return returnedCommand;
 	}
@@ -250,7 +247,7 @@ public class Logic {
 
 	/**
 	 * Undoes the previous command entered by the user
-	 * @return a Command object with display message indicating success of the undo 
+	 * @return a Command object with display message indicating success of the undo
 	 */
 	private Command undo() {
 		if (reversedCommandStack.isEmpty()) {
@@ -284,9 +281,9 @@ public class Logic {
 	/**
 	 * @param cache
 	 * @param header
-	 * @return ArrayList of all Event objects in @param cache that are occurring on the current date, 
+	 * @return ArrayList of all Event objects in @param cache that are occurring on the current date,
 	 * 		   that is to be displayed in TangGuo according the the toggle setting
-	 * 
+	 *
 	 */	private ArrayList<Event> getTodayCache(ArrayList<Event> cache, String header) {
 		ArrayList<Event> temp = new ArrayList<Event>();
 		int counter = 1;
@@ -294,14 +291,14 @@ public class Logic {
 			if (cache.get(i).isDone() && !showDoneEvents)
 				continue;
 			if (isTodayEvent(cache.get(i))) {
-				TGIDMap.put(header + (counter++), cache.get(i).getID()); 
+				TGIDMap.put(header + (counter++), cache.get(i).getID());
 				temp.add(cache.get(i));
 			}
 		}
 		return temp;
 	}
 
-	/** 
+	/**
 	 * All tasks are considered as today's events
 	 * Deadlines whereby the end date falls on the current date are considered
 	 * today's events
@@ -640,7 +637,7 @@ public class Logic {
 		return returnedCommand;
 	}
 
-	/** 
+	/**
 	 * Undoes the prior deletion of an Event object
 	 * @param id
 	 * @return Command object that adds back the previously deleted Event of @param id
@@ -671,7 +668,7 @@ public class Logic {
 	private Command sortName() {
 		storage.sortName();
 		Command returnedCommand = new Command();
-		returnedCommand.setDisplayMessage(String.format(Constants.TANGGUO_SORT_SUCCESS, 
+		returnedCommand.setDisplayMessage(String.format(Constants.TANGGUO_SORT_SUCCESS,
 				Constants.DISPLAY_NAME));
 		returnedCommand.setDisplayedEventList(updateDisplay());
 		return returnedCommand;
@@ -681,7 +678,7 @@ public class Logic {
 	private Command sortStart() {
 		storage.sortStart();
 		Command returnedCommand = new Command();
-		returnedCommand.setDisplayMessage(String.format(Constants.TANGGUO_SORT_SUCCESS, 
+		returnedCommand.setDisplayMessage(String.format(Constants.TANGGUO_SORT_SUCCESS,
 				Constants.DISPLAY_START));
 		returnedCommand.setDisplayedEventList(updateDisplay());
 		return returnedCommand;
@@ -691,7 +688,7 @@ public class Logic {
 	private Command sortEnd() {
 		storage.sortEnd();
 		Command returnedCommand = new Command();
-		returnedCommand.setDisplayMessage(String.format(Constants.TANGGUO_SORT_SUCCESS, 
+		returnedCommand.setDisplayMessage(String.format(Constants.TANGGUO_SORT_SUCCESS,
 				Constants.DISPLAY_END));
 		returnedCommand.setDisplayedEventList(updateDisplay());
 		return returnedCommand;
@@ -701,7 +698,7 @@ public class Logic {
 	private Command sortPriority() {
 		storage.sortPriority();
 		Command returnedCommand = new Command();
-		returnedCommand.setDisplayMessage(String.format(Constants.TANGGUO_SORT_SUCCESS, 
+		returnedCommand.setDisplayMessage(String.format(Constants.TANGGUO_SORT_SUCCESS,
 				Constants.DISPLAY_PRIORITY));
 		returnedCommand.setDisplayedEventList(updateDisplay());
 		return returnedCommand;
@@ -712,7 +709,7 @@ public class Logic {
 		lastSearchKey = command.getSearchKey(); // record down as latest searched keyword
 		ArrayList<ArrayList<Event>> displayedEvent = updateSearchResult(lastSearchKey);
 		if (displayedEvent == null) { // no search results returned
-			return getErrorCommand(String.format(Constants.TANGGUO_SEARCH_FAIL, 
+			return getErrorCommand(String.format(Constants.TANGGUO_SEARCH_FAIL,
 					command.getSearchKey()));
 		}
 		TGIDMap.clear();
@@ -747,7 +744,7 @@ public class Logic {
 		storage.setFilePath(command.getPath());
 		config.writeConfig();
 		Command returnedCommand = new Command();
-		returnedCommand.setDisplayMessage(String.format(Constants.TANGGUO_PATH_SET, 
+		returnedCommand.setDisplayMessage(String.format(Constants.TANGGUO_PATH_SET,
 				fileName, command.getPath()));
 		return returnedCommand;
 	}
@@ -763,7 +760,7 @@ public class Logic {
 		storage = new TGStorageManager(filePath, fileName);
 		filePath = (filePath.equals(Constants.NULL)) ? Constants.DEFAULT_STRING : filePath;
 		Command returnedCommand = new Command();
-		returnedCommand.setDisplayMessage(String.format(Constants.TANGGUO_IMPORT_SUCCESS, 
+		returnedCommand.setDisplayMessage(String.format(Constants.TANGGUO_IMPORT_SUCCESS,
 				filePath));
 		returnedCommand.setDisplayedEventList(updateDisplay());
 		return returnedCommand;

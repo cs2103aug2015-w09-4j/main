@@ -6,7 +6,8 @@ import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import TGLogic.Logic;
+import com.tg.backend.Logic;
+
 import TGUtils.Constants;
 import TGUtils.Event;
 
