@@ -15,7 +15,12 @@ import javax.swing.table.DefaultTableCellRenderer;
 import TGUtils.Constants;
 import TGUtils.Event;
 public class GUITools {
-
+	
+	/**
+	 * Creates the table for Floating Task events
+	 * @param eventList
+	 * @return JScrollPane the table
+	 */
 	public static JScrollPane createTaskTable(ArrayList<Event> eventList) {
 
 		String[] columnNames = { "ID", "Event Name", "Category", "Priority" };
@@ -39,16 +44,16 @@ public class GUITools {
 			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
 					boolean hasFocus, int row, int column) {
 				Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-
+				
 				c = setCellColours(table, c, row, column, 3);
-				c = markDoneEvents(c, eventList, row);
-
+				c = displayEventProperties(c, eventList, row);
+				
 				return c;
 			};
 		});
 
 		Dimension tableSize = Constants.TABLE_DIMENSION;
-		setTableSizes(table, tableSize);
+		setTableProperties(table, tableSize);
 		table.getColumn("Event Name").setPreferredWidth(offsetWidth(tableSize.width, Constants.CELL_NAME_TASK_PERCENTAGE));
 
 		JScrollPane scrollPane = new JScrollPane(table);
@@ -56,6 +61,11 @@ public class GUITools {
 		return scrollPane;
 	}
 
+	/**
+	 * Creates the table for Deadline events
+	 * @param eventList
+	 * @return JScrollPane the table
+	 */
 	public static JScrollPane createDeadlineTable(ArrayList<Event> eventList) {
 
 		String[] columnNames = { "ID", "Event Name", "By", "Category", "Priority" };
@@ -82,14 +92,14 @@ public class GUITools {
 				Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 
 				c = setCellColours(table, c, row, column, 4);
-				c = markDoneEvents(c, eventList, row);
-
+				c = displayEventProperties(c, eventList, row);
+				
 				return c;
 			};
 		});
 
 		Dimension tableSize = Constants.TABLE_DIMENSION;
-		setTableSizes(table, tableSize);
+		setTableProperties(table, tableSize);
 		table.getColumn("Event Name").setPreferredWidth(offsetWidth(tableSize.width, Constants.CELL_NAME_DEADLINE_PERCENTAGE));
 		table.getColumn("By").setPreferredWidth(offsetWidth(tableSize.width, Constants.CELL_TIME_PERCENTAGE));
 
@@ -98,6 +108,11 @@ public class GUITools {
 		return scrollPane;
 	}
 
+	/**
+	 * Creates the table for Schedule events
+	 * @param eventList
+	 * @return JScrollPane the table
+	 */
 	public static JScrollPane createScheduleTable(ArrayList<Event> eventList) {
 
 		String[] columnNames = { "ID", "Event Name", "From", "To", "Category", "Priority" };
@@ -125,14 +140,14 @@ public class GUITools {
 				Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 
 				c = setCellColours(table, c, row, column, 5);
-				c = markDoneEvents(c, eventList, row);
-
+				c = displayEventProperties(c, eventList, row);
+				
 				return c;
 			};
 		});
 
 		Dimension tableSize = Constants.TABLE_DIMENSION;
-		setTableSizes(table, tableSize);
+		setTableProperties(table, tableSize);
 		table.getColumn("Event Name").setPreferredWidth(offsetWidth(tableSize.width, Constants.CELL_NAME_SCHEDULE_PERCENTAGE));
 		table.getColumn("From").setPreferredWidth(offsetWidth(tableSize.width, Constants.CELL_TIME_PERCENTAGE));
 		table.getColumn("To").setPreferredWidth(offsetWidth(tableSize.width, Constants.CELL_TIME_PERCENTAGE));
@@ -142,6 +157,11 @@ public class GUITools {
 		return scrollPane;
 	}
 
+	/**
+	 * Interprets the priority of the event from its number
+	 * @param priority
+	 * @return HIGH/MEDIUM/LOW
+	 */
 	private static String getPriority(int priority) {
 		switch (priority) {
 		case 3:
@@ -155,6 +175,15 @@ public class GUITools {
 		}
 	}
 
+	/**
+	 * Set the color for priority and even row events
+	 * @param table
+	 * @param component
+	 * @param row
+	 * @param col
+	 * @param x
+	 * @return the modified component
+	 */
 	private static Component setCellColours(JTable table, Component component, int row, int col, int x) {
 		if (col == x) {
 			switch (table.getModel().getValueAt(row, x).toString()) {
@@ -180,7 +209,14 @@ public class GUITools {
 		return component;
 	}
 
-	private static Component markDoneEvents(Component component, ArrayList<Event> eventList, int row) {
+	/**
+	 * Set the visual feedback for isDone and hasClash properties
+	 * @param component
+	 * @param eventList
+	 * @param row
+	 * @return the modified component
+	 */
+	private static Component displayEventProperties(Component component, ArrayList<Event> eventList, int row) {
 		if (eventList.get(row).isDone()) {
 			component.setFont(getStrikeThroughFont());
 		} else {
@@ -193,8 +229,13 @@ public class GUITools {
 
 		return component;
 	}
-
-	private static void setTableSizes(JTable table, Dimension tableSize) {
+	
+	/**
+	 * Set the standard table properties
+	 * @param table
+	 * @param tableSize
+	 */
+	private static void setTableProperties(JTable table, Dimension tableSize) {
 		table.setPreferredScrollableViewportSize(tableSize);
 		table.getColumn("ID").setPreferredWidth(Constants.COLUMN_ID_SIZE);
 		table.getColumn("Category").setPreferredWidth(Constants.COLUMN_CATEGORY_SIZE);
@@ -204,6 +245,17 @@ public class GUITools {
 		table.setRowSelectionAllowed(false);
 	}
 
+	/**
+	 * Set the width of the cell according to percentage
+	 * @param total
+	 * @param percentage
+	 * @return the width of the cell in integer
+	 */
+	private static int offsetWidth(int total, float percentage) {
+		float result = (float) (total - Constants.COLUMN_FIXED_TOTAL) * percentage;
+		return Math.round(result);
+	}
+	
 	private static Font getDefaultFont() {
 		return new Font("Futura", Font.PLAIN, 12);
 	}
@@ -214,8 +266,4 @@ public class GUITools {
 		return new Font(fontAttributes);
 	}
 
-	private static int offsetWidth(int total, float percentage) {
-		float result = (float) (total - Constants.COLUMN_FIXED_TOTAL) * percentage;
-		return Math.round(result);
-	}
 }

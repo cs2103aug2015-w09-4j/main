@@ -101,6 +101,10 @@ public class MainFrame extends JFrame{
         });
 	}
 
+	/**
+	 * Passes the command to Logic for command processing,
+	 * Then displays the output given by Logic Class
+	 */
 	private void submitCommand(){
 		Command command = TGlogic.executeInputs(commandField.getText());
     	up.push(commandField.getText());

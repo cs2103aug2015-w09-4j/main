@@ -17,6 +17,9 @@ public class EventComponent extends JPanel {
 		this.eventType = eventType - 1;
 	}
 
+	/**
+	 * Refresh the display in its Respective Type Tab with the updated list of event types
+	 */
 	public void refresh(ArrayList<ArrayList<Event>> eventList){
 		removeAll();
 

@@ -66,15 +66,9 @@ public class MainTab extends JTabbedPane {
 		refresh(logic.updateDisplay());
 	}
 
-	protected JComponent makeTextPanel(String text) {
-		JPanel panel = new JPanel(false);
-		JLabel filler = new JLabel(text);
-		filler.setHorizontalAlignment(JLabel.CENTER);
-		panel.setLayout(new GridLayout(1, 1));
-		panel.add(filler);
-		return panel;
-	}
-
+	/**
+	 * Refresh the currently selected tab with an updated list of events
+	 */
 	public void refresh(ArrayList<ArrayList<Event>> eventList) {
 		if (getSelectedIndex() == Constants.TODAY_TAB_NUMBER) {
 			todayPanel.refresh();
@@ -85,12 +79,18 @@ public class MainTab extends JTabbedPane {
 		}
 	}
 
+	/**
+	 * Refresh all three different event type tabs with an updated list of events
+	 */
 	private void refreshAllEventTabs(ArrayList<ArrayList<Event>> eventList) {
 		taskPanel.refresh(eventList);
 		deadlinePanel.refresh(eventList);
 		schedulePanel.refresh(eventList);
 	}
 	
+	/**
+	 * Displays the image from the path given
+	 */
 	protected static ImageIcon createImageIcon(String path) {
 		java.net.URL imgURL = MainTab.class.getResource(path);
 		if (imgURL != null) {
@@ -99,5 +99,17 @@ public class MainTab extends JTabbedPane {
 			System.err.println("Couldn't find file: " + path);
 			return null;
 		}
+	}
+	
+	/**
+	 * Creates a Text Panel with the text given
+	 */
+	protected JComponent makeTextPanel(String text) {
+		JPanel panel = new JPanel(false);
+		JLabel filler = new JLabel(text);
+		filler.setHorizontalAlignment(JLabel.CENTER);
+		panel.setLayout(new GridLayout(1, 1));
+		panel.add(filler);
+		return panel;
 	}
 }

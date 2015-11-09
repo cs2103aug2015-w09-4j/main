@@ -19,6 +19,10 @@ public class SearchComponent extends JPanel {
 		refresh();
 	}
 
+	/**
+	 * Refresh the display in the Search Tab with the list of search results
+	 * ONLY when there is an update in the search results
+	 */
 	public void refresh(){
 		removeAll();
 		ArrayList<ArrayList<Event>> eventList = logic.updateSearchDisplay();
