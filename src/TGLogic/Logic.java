@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Stack;
-import TGExceptions.TaskDateExistenceException;
 import TGParser.Parser;
 import TGStorage.TGStorageManager;
 import TGUtils.Command;
@@ -29,7 +28,7 @@ public class Logic {
 	 * Initialization of TGStorageManager, TGIDMap, and reversedCommandStack
 	 */
 	public Logic() {
-		//get file pathe from Config class
+		//get file path from Config class
 		config = new Config();
 		fileName = config.getFileName();
 		try {
@@ -94,7 +93,7 @@ public class Logic {
 		Command currentCommand;
 		try {
 			currentCommand = Parser.parseCommand(input);
-		} catch (ParseException |TaskDateExistenceException e) {
+		} catch (ParseException e) {
 			logger.writeException(e.toString());
 			return getErrorCommand(Constants.TANGGUO_DATE_OUT_OF_BOUNDS);
 		} catch (NumberFormatException e) {

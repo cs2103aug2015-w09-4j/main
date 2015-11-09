@@ -1,6 +1,7 @@
 package TGParser;
 
-import TGExceptions.TaskDateExistenceException;
+import java.text.ParseException;
+
 import TGUtils.Constants;
 
 public class EventCheck {
@@ -21,11 +22,11 @@ public class EventCheck {
 		scheduleStartAndEnd = input.split(Constants.SCHEDULE_FIRST_SPLIT);
 		scheduleCheckArray = scheduleStartAndEnd[scheduleStartAndEnd.length - 1].split(Constants.SCHEDULE_SECOND_SPLIT);
 		scheduleStartDateAndTime = scheduleCheckArray[0];
-		
+
 		if(scheduleCheckArray.length > 1)
 			scheduleEndDateAndTime = scheduleCheckArray[1];
 	}
-	
+
 	public String getDeadlineDateAndTime() {
 		return deadlineDateAndTime;
 	}
@@ -37,7 +38,7 @@ public class EventCheck {
 	public String getScheduleEndDateAndTime() {
 		return scheduleEndDateAndTime;
 	}
-	
+
 	public EventCheck reInitialize(String input) {
 		EventCheck newEventCheck = new EventCheck(input);
 		return newEventCheck;
@@ -68,8 +69,8 @@ public class EventCheck {
 
 		return eventName;
 	}
-	
-	public void isProperFloatingTaskCheck() throws TaskDateExistenceException {	
+
+	public void isProperFloatingTaskCheck() throws ParseException {
 		if(deadlineCheckArray.length > 1) {
 			DateTimeHandler.checkTaskValidity(getDeadlineDateAndTime());
 		}

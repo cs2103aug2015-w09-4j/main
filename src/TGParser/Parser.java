@@ -3,7 +3,6 @@ package TGParser;
 import java.text.ParseException;
 import java.util.Date;
 
-import TGExceptions.TaskDateExistenceException;
 import TGUtils.Command;
 import TGUtils.Constants;
 
@@ -17,7 +16,7 @@ public class Parser {
 	  	Command test1 = Parser.parseCommand("update end d1 6/11");
 	  }*/
 
-	public static Command parseCommand(String input) throws ParseException, IndexOutOfBoundsException, TaskDateExistenceException {
+	public static Command parseCommand(String input) throws ParseException, IndexOutOfBoundsException {
 		String command = getFirstWord(input);
 		String event = removeFirstWord(input);
 		String displayedIndex;

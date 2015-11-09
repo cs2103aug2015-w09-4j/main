@@ -5,8 +5,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-
-import TGExceptions.TaskDateExistenceException;
 import TGUtils.Constants;
 
 public class DateTimeHandler {
@@ -109,17 +107,17 @@ public class DateTimeHandler {
 		return true;
 	}
 
-	public static void checkTaskValidity(String input) throws TaskDateExistenceException {
+	public static void checkTaskValidity(String input) throws ParseException {
 		int inputLength = input.length();
 		int inputLengthCheck = input.replaceAll(Constants.DATE_DETECTION, Constants.NULL).length();
 
 		if(inputLength - inputLengthCheck != 0)
-			throw new TaskDateExistenceException();
+			throw new ParseException(input, inputLengthCheck);
 
 		inputLengthCheck = input.replaceAll(Constants.TIME_DETECTION, Constants.NULL).length();
 
 		if(inputLength - inputLengthCheck != 0)
-			throw new TaskDateExistenceException();
+			throw new ParseException(input, inputLengthCheck);
 
 	}
 
