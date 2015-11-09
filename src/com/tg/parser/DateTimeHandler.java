@@ -1,3 +1,4 @@
+//@@author A0124503W
 package com.tg.parser;
 
 import java.text.DateFormat;
@@ -106,7 +107,7 @@ public class DateTimeHandler {
 		}
 		return true;
 	}
-
+//@@author A0124503W-reused
 	public static void checkTaskValidity(String input) throws ParseException {
 		int inputLength = input.length();
 		int inputLengthCheck = input.replaceAll(Constants.DATE_DETECTION, Constants.NULL).length();
@@ -120,7 +121,7 @@ public class DateTimeHandler {
 			throw new ParseException(input, inputLengthCheck);
 
 	}
-
+//@@author A0124503W
 	private static String getTodayDate() {
 		DateFormat df = new SimpleDateFormat(Constants.DEFAULT_DATE_FORMAT);
 		Calendar cal = Calendar.getInstance();

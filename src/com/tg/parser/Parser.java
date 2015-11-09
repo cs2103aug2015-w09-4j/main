@@ -1,3 +1,4 @@
+//@@author A0124503W
 package com.tg.parser;
 
 import java.text.ParseException;
@@ -7,7 +8,7 @@ import TGUtils.Command;
 import TGUtils.Constants;
 
 public class Parser {
-
+	
 	/*  public static void main(String[] args) throws IndexOutOfBoundsException,
 	  ParseException, AbnormalScheduleTimeException, TaskDateExistenceException
 	  { Parser parser = new Parser();
@@ -15,7 +16,7 @@ public class Parser {
 	  	Command test = Parser.parseCommand("add task by 6/11/2015 15:09");
 	  	Command test1 = Parser.parseCommand("update end d1 6/11");
 	  }*/
-
+	
 	public static Command parseCommand(String input) throws ParseException, IndexOutOfBoundsException {
 		String command = getFirstWord(input);
 		String event = removeFirstWord(input);
@@ -169,7 +170,7 @@ public class Parser {
 		}
 		return tempCommand;
 	}
-
+//@@author A0124503W
 	private static String updateDateTimeCheck(String displayedIndex, String date) {
 		if (displayedIndex.charAt(0) == Constants.DEADLINE_CHAR) {
 			date = DateTimeHandler.defaultDateTimeCheck(date, Constants.DEADLINE);
@@ -222,7 +223,7 @@ public class Parser {
 			return Constants.COMMAND_TYPE.INVALID;
 		}
 	}
-
+//@@author A0124503W-reused
 	private static String removeFirstWord(String input) {
 		return input.replaceFirst(getFirstWord(input), Constants.NULL).trim();
 	}
