@@ -1,4 +1,4 @@
-package TGUI;
+package com.tg.gui;
 
 import java.awt.GridLayout;
 import java.awt.event.KeyEvent;
@@ -14,9 +14,8 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import com.tg.backend.Logic;
-
-import TGUtils.Constants;
-import TGUtils.Event;
+import com.tg.util.Constants;
+import com.tg.util.Event;
 
 public class MainTab extends JTabbedPane {
 	TodayComponent todayPanel;

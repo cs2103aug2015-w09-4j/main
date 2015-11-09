@@ -1,4 +1,4 @@
-package test;
+package com.tg.test;
 
 public class Test_Commands {
 	/**

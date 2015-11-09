@@ -1,4 +1,4 @@
-package TGUI;
+package com.tg.gui;
 
 import java.util.ArrayList;
 
@@ -6,9 +6,8 @@ import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
 import com.tg.backend.Logic;
-
-import TGUtils.Constants;
-import TGUtils.Event;
+import com.tg.util.Constants;
+import com.tg.util.Event;
 
 public class EventComponent extends JPanel {
 	int eventType;

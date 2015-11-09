@@ -1,4 +1,4 @@
-package test;
+package com.tg.test;
 
 import static org.junit.Assert.*;
 
@@ -8,9 +8,8 @@ import org.junit.Test;
 
 import com.tg.parser.DateTimeHandler;
 import com.tg.parser.Parser;
-
-import TGUtils.Command;
-import TGUtils.Constants;
+import com.tg.util.Command;
+import com.tg.util.Constants;
 
 public class ParserTest {
 

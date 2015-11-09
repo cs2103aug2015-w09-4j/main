@@ -1,4 +1,4 @@
-package TGUtils;
+package com.tg.util;
 import java.util.Comparator;
 
 //@@author A0127604L

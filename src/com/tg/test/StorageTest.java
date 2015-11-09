@@ -1,5 +1,5 @@
 //@@author A0126833E
-package test;
+package com.tg.test;
 
 import static org.junit.Assert.*;
 
@@ -9,9 +9,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.tg.backend.TGStorageManager;
-
-import TGUtils.Constants;
-import TGUtils.Event;
+import com.tg.util.Constants;
+import com.tg.util.Event;
 
 public class StorageTest {
 	@Before

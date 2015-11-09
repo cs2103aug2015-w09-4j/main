@@ -1,4 +1,4 @@
-package TGUI;
+package com.tg.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
@@ -19,8 +19,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import com.tg.backend.Logic;
-
-import TGUtils.Command;
+import com.tg.util.Command;
 
 public class MainFrame extends JFrame{
 	private Logic TGlogic;

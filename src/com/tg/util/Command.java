@@ -1,8 +1,8 @@
-package TGUtils;
+package com.tg.util;
 import java.util.ArrayList;
 import java.util.Date;
 
-import TGUtils.Constants.COMMAND_TYPE;
+import com.tg.util.Constants.COMMAND_TYPE;
 
 public class Command {
 	private Constants.COMMAND_TYPE type;

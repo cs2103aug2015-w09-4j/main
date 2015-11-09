@@ -1,5 +1,5 @@
 //@@author A0126833E
-package TGUtils;
+package com.tg.util;
 
 import java.awt.Color;
 import java.awt.Dimension;

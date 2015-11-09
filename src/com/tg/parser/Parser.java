@@ -4,8 +4,8 @@ package com.tg.parser;
 import java.text.ParseException;
 import java.util.Date;
 
-import TGUtils.Command;
-import TGUtils.Constants;
+import com.tg.util.Command;
+import com.tg.util.Constants;
 
 public class Parser {
 	

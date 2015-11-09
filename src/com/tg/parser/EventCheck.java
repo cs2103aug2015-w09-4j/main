@@ -3,7 +3,7 @@ package com.tg.parser;
 
 import java.text.ParseException;
 
-import TGUtils.Constants;
+import com.tg.util.Constants;
 
 public class EventCheck {
 

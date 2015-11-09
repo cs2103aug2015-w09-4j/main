@@ -36,11 +36,11 @@ import org.w3c.dom.Node;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 
-import TGUtils.Constants;
-import TGUtils.Event;
-import TGUtils.Logger;
-import TGUtils.Sorters;
-import TGUtils.TimeClash;
+import com.tg.util.Constants;
+import com.tg.util.Event;
+import com.tg.util.Logger;
+import com.tg.util.Sorters;
+import com.tg.util.TimeClash;
 
 public class TGStorageManager {
 	private String filePath;

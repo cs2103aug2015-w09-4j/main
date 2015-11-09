@@ -1,5 +1,5 @@
 //@author A0126833
-package TGUI;
+package com.tg.gui;
 import javax.swing.JFrame;
 
 public class TangGuo {

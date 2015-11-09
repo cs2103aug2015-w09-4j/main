@@ -1,4 +1,4 @@
-package TGUI;
+package com.tg.gui;
 
 import java.util.ArrayList;
 
@@ -7,9 +7,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import com.tg.backend.Logic;
-
-import TGUtils.Constants;
-import TGUtils.Event;
+import com.tg.util.Constants;
+import com.tg.util.Event;
 
 public class SearchComponent extends JPanel {
 	Logic logic;

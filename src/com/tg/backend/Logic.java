@@ -9,11 +9,10 @@ import java.util.Date;
 import java.util.Stack;
 
 import com.tg.parser.Parser;
-
-import TGUtils.Command;
-import TGUtils.Constants;
-import TGUtils.Event;
-import TGUtils.Logger;
+import com.tg.util.Command;
+import com.tg.util.Constants;
+import com.tg.util.Event;
+import com.tg.util.Logger;
 
 public class Logic {
 

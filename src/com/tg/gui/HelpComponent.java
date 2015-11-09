@@ -1,4 +1,4 @@
-package TGUI;
+package com.tg.gui;
 
 import java.awt.Color;
 import java.awt.Component;

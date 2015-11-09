@@ -1,4 +1,4 @@
-package TGUI;
+package com.tg.gui;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -12,8 +12,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
-import TGUtils.Constants;
-import TGUtils.Event;
+import com.tg.util.Constants;
+import com.tg.util.Event;
 //@@author A0127604L
 public class GUITools {
 	
