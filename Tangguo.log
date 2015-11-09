@@ -352,3 +352,151 @@
 2015/11/08 19:36:19 Log: add task: dun
 2015/11/08 20:01:20 exception occurs: java.text.ParseException: Unparseable date: "08/11/2015 09:99"
 2015/11/08 20:01:33 Log: add deadline: sibeh
+2015/11/09 00:54:33 Log: add deadline: dun
+2015/11/09 00:55:24 Log: add schedule: try
+2015/11/09 10:24:43 Log: add task: one
+2015/11/09 10:25:12 Log: add task: this by 19:L0
+2015/11/09 10:25:36 Log: delete task: this by 19:L0
+2015/11/09 10:25:40 Log: delete task: one
+2015/11/09 10:25:47 Log: add task: this
+2015/11/09 10:25:52 Log: delete task: this
+2015/11/09 10:26:38 Log: add task: fjd
+2015/11/09 10:26:49 Log: add task: by 09:00
+2015/11/09 10:27:01 Log: add task: by 09:00
+2015/11/09 10:27:06 Log: delete task: by 09:00
+2015/11/09 10:27:07 Log: delete task: by 09:00
+2015/11/09 10:27:19 exception occurs: java.text.ParseException: Unparseable date: "-09/11/2015 01:00"
+2015/11/09 10:27:25 Log: add task: this by diajfiosj
+2015/11/09 10:27:35 Log: add task: this by 19/ad
+2015/11/09 10:27:45 Log: delete task: this by 19/ad
+2015/11/09 10:27:46 Log: delete task: this by diajfiosj
+2015/11/09 10:28:13 Log: add task: this by 09//02
+2015/11/09 10:28:18 Log: delete task: this by 09//02
+2015/11/09 10:28:25 Log: add deadline: this
+2015/11/09 10:30:49 Log: add deadline: this from 09:00 to
+2015/11/09 10:31:49 exception occurs: TGExceptions.AbnormalScheduleTimeException
+2015/11/09 10:32:16 Log: add schedule: hm by dhi
+2015/11/09 10:44:42 exception occurs: java.text.ParseException: Unparseable date: ""
+2015/11/09 10:45:55 Log: add schedule: clash
+2015/11/09 10:46:06 exception occurs: java.lang.StringIndexOutOfBoundsException: String index out of range: -1
+2015/11/09 10:46:20 Log: add schedule: hmm
+2015/11/09 10:46:45 Log: add schedule: now this
+2015/11/09 10:46:53 Log: delete schedule: now this
+2015/11/09 10:46:56 Log: delete schedule: hmm
+2015/11/09 10:59:46 Log: add task: null
+2015/11/09 10:59:46 Log: add task: null
+2015/11/09 10:59:46 Log: add task: null
+2015/11/09 11:00:01 Log: add task: this
+2015/11/09 11:00:02 Log: add task: this
+2015/11/09 11:00:03 Log: add task: a
+2015/11/09 11:00:05 Log: add task: 
+2015/11/09 11:00:09 Log: add task: this
+2015/11/09 11:00:10 Log: add task: this
+2015/11/09 11:00:10 Log: add task: this
+2015/11/09 11:00:11 Log: add task: this
+2015/11/09 11:00:11 Log: add task: this
+2015/11/09 11:00:11 Log: add task: this
+2015/11/09 11:00:12 Log: add task: this
+2015/11/09 11:01:52 Log: add task: this
+2015/11/09 11:01:53 Log: add task: this
+2015/11/09 11:01:53 Log: add task: this
+2015/11/09 11:01:53 Log: add task: this
+2015/11/09 11:01:53 Log: add task: this
+2015/11/09 11:01:54 Log: add task: this
+2015/11/09 11:01:54 Log: add task: this
+2015/11/09 11:01:54 Log: add task: this
+2015/11/09 11:01:54 Log: add task: this
+2015/11/09 11:01:54 Log: add task: this
+2015/11/09 11:01:55 Log: add task: this
+2015/11/09 11:01:55 Log: add task: this
+2015/11/09 11:01:55 Log: add task: this
+2015/11/09 11:01:55 Log: add task: this
+2015/11/09 11:01:55 Log: add task: this
+2015/11/09 11:01:55 Log: add task: this
+2015/11/09 11:01:56 Log: add task: this
+2015/11/09 11:01:56 Log: add task: this
+2015/11/09 11:01:56 Log: add task: this
+2015/11/09 11:01:56 Log: add task: this
+2015/11/09 11:01:56 Log: add task: this
+2015/11/09 11:01:56 Log: add task: this
+2015/11/09 11:01:57 Log: add task: this
+2015/11/09 11:01:57 Log: add task: this
+2015/11/09 11:01:57 Log: add task: this
+2015/11/09 11:01:57 Log: add task: this
+2015/11/09 11:01:57 Log: add task: this
+2015/11/09 11:01:57 Log: add task: this
+2015/11/09 11:01:58 Log: add task: this
+2015/11/09 11:01:58 Log: add task: this
+2015/11/09 11:01:58 Log: add task: this
+2015/11/09 11:01:58 Log: add task: this
+2015/11/09 11:01:58 Log: add task: this
+2015/11/09 11:01:58 Log: add task: this
+2015/11/09 11:01:59 Log: add task: this
+2015/11/09 11:02:11 Log: delete task: this
+2015/11/09 11:02:12 Log: delete task: this
+2015/11/09 11:02:13 Log: delete task: this
+2015/11/09 11:02:13 Log: delete task: this
+2015/11/09 11:02:13 Log: delete task: this
+2015/11/09 11:02:13 Log: delete task: this
+2015/11/09 11:02:13 Log: delete task: this
+2015/11/09 11:02:14 Log: delete task: this
+2015/11/09 11:02:14 Log: delete task: this
+2015/11/09 11:02:14 Log: delete task: this
+2015/11/09 11:02:14 Log: delete task: this
+2015/11/09 11:02:24 Log: delete task: this
+2015/11/09 11:02:27 Log: delete task: this
+2015/11/09 11:02:27 Log: delete task: this
+2015/11/09 11:02:27 Log: delete task: this
+2015/11/09 11:02:27 Log: delete task: this
+2015/11/09 11:02:28 Log: delete task: this
+2015/11/09 11:02:28 Log: delete task: this
+2015/11/09 11:02:28 Log: delete task: this
+2015/11/09 11:02:28 Log: delete task: this
+2015/11/09 11:02:28 Log: delete task: this
+2015/11/09 11:02:28 Log: delete task: this
+2015/11/09 11:02:29 Log: delete task: this
+2015/11/09 11:02:29 Log: delete task: this
+2015/11/09 11:02:29 Log: delete task: this
+2015/11/09 11:02:29 Log: delete task: this
+2015/11/09 11:02:29 Log: delete task: this
+2015/11/09 11:02:34 Log: delete task: this
+2015/11/09 11:02:36 Log: delete task: this
+2015/11/09 11:02:36 Log: delete task: this
+2015/11/09 11:02:36 Log: delete task: this
+2015/11/09 11:02:36 Log: delete task: this
+2015/11/09 11:02:37 Log: delete task: this
+2015/11/09 11:02:37 Log: delete task: this
+2015/11/09 11:02:37 Log: delete task: this
+2015/11/09 11:02:37 Log: delete task: this
+2015/11/09 11:02:38 Log: delete task: this
+2015/11/09 11:02:38 Log: delete task: this
+2015/11/09 11:02:38 Log: delete task: this
+2015/11/09 11:02:38 Log: delete task: this
+2015/11/09 11:02:39 Log: delete task: this
+2015/11/09 11:02:39 Log: delete task: this
+2015/11/09 11:02:39 Log: delete task: 
+2015/11/09 11:04:33 exception occurs: java.text.ParseException: Unparseable date: "09/11/2015 180:0"
+2015/11/09 11:11:23 Log: delete schedule: hm by dhi
+2015/11/09 11:11:24 Log: add schedule: hm by dhi
+2015/11/09 13:20:33 Log: delete task: this
+2015/11/09 13:20:35 Log: delete task: this
+2015/11/09 13:20:35 Log: delete task: a
+2015/11/09 13:20:39 Log: delete schedule: clash
+2015/11/09 13:20:41 Log: delete schedule: hm by dhi
+2015/11/09 13:20:43 Log: delete deadline: this from 09:00 to
+2015/11/09 13:21:10 Log: add task: read 2105 textbook
+2015/11/09 13:21:22 Log: add task: drink 3000cc of Gong Cha
+2015/11/09 13:21:40 Log: add deadline: 2105 assignment
+2015/11/09 13:22:12 Log: add task: presentation 09:00 medium
+2015/11/09 13:22:17 Log: delete task: presentation 09:00 medium
+2015/11/09 13:22:29 exception occurs: TGExceptions.TaskDateExistenceException
+2015/11/09 13:23:03 Log: add schedule: presentation
+2015/11/09 13:23:30 Log: add schedule: group discussion
+2015/11/09 13:23:43 exception occurs: java.text.ParseException: Unparseable date: "09/11/2015 14:99"
+2015/11/09 13:23:51 Log: add schedule: buy gong cha
+2015/11/09 13:24:22 exception occurs: java.lang.StringIndexOutOfBoundsException: String index out of range: -1
+2015/11/09 13:24:32 Log: add schedule: tutorial
+2015/11/09 13:25:04 Log: add schedule: lepak
+2015/11/09 13:25:45 Log: add schedule: written assignment
+2015/11/09 13:26:26 Log: add schedule: tuition
+2015/11/09 13:27:07 Log: add deadline: math assignment
