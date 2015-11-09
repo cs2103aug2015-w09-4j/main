@@ -58,15 +58,10 @@ public class MainTab extends JTabbedPane {
 			@Override
 			public void stateChanged(ChangeEvent e) {
 				System.out.println(getSelectedIndex());
-				if (getSelectedIndex() == Constants.TODAY_TAB_NUMBER) { // today
-					todayPanel.refresh();
-				} else if (getSelectedIndex() == Constants.SEARCH_TAB_NUMBER) { // search result
-					searchPanel.refresh();
-				} else {
-					refreshAllEventTabs(logic.updateDisplay());
-				}
+				refresh(logic.updateDisplay());
 			}
 		});
+		
 		refresh(logic.updateDisplay());
 	}
 

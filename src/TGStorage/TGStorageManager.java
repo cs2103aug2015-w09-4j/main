@@ -1,4 +1,5 @@
 package TGStorage;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -12,7 +13,6 @@ import java.util.Collections;
 import java.util.Date;
 
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.print.Doc;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.stream.XMLOutputFactory;
@@ -42,7 +42,7 @@ import TGUtils.Constants;
 import TGUtils.Event;
 import TGUtils.Logger;
 import TGUtils.Sorters;
-import TGUtils.TimeBlock;
+import TGUtils.TimeClash;
 
 public class TGStorageManager {
 	private String _filePath;
@@ -51,31 +51,43 @@ public class TGStorageManager {
 	private ArrayList<Event> _deadlineCache;
 	private ArrayList<Event> _scheduleCache;
 	private Logger logger;
-	private TimeBlock tb;
-	File inputFile;
+	private TimeClash tb;
 	private int currentIndex;
+	File inputFile;
 
+	/**
+	 * Creates a TGStorageManager object
+	 * initializes file, event caches, logger, and time block
+	 * @param filePath
+	 * @param fileName
+	 */
 	public TGStorageManager(String filePath, String fileName) {
 		this._filePath = filePath;
 		this._fileName = fileName;
 		this._taskCache = new ArrayList<Event>();
 		this._deadlineCache = new ArrayList<Event>();
 		this._scheduleCache = new ArrayList<Event>();
-		this.tb = new TimeBlock();
+		this.tb = new TimeClash();
 		try {
-			this.logger = new Logger("Tangguo.log");
+			this.logger = new Logger(Constants.LOG_FILE);
 		} catch (IOException e) {
+			System.out.println(Constants.FAILED_TO_INITIALIZE_LOGGER);
 			e.printStackTrace();
 		}
-
 		initialize();
 	}
-
+	
+	//sets the file path to be @param filePath
 	public void setFilePath(String filePath) {
 		this._filePath = filePath;
 	}
-
-	public Event getEventByID(int id){
+	
+	/**
+	 * Iterates through the event caches to find an event of the same id
+	 * @param id
+	 * @return event which id == @param id, else null
+	 */
+	public Event getEventByID(int id) {
 		for (Event element:_taskCache){
 			if (element.getID() == id){
 				return element;
@@ -95,72 +107,117 @@ public class TGStorageManager {
 		}
 		return null;
 	}
-
+	
+	//returns task cache
 	public ArrayList<Event> getTaskCache() {
 		return this._taskCache;
 	}
 
+	//returns schedule cache
 	public ArrayList<Event> getScheduleCache() {
 		return this._scheduleCache;
 	}
 
+	//returns deadline cache
 	public ArrayList<Event> getDeadlineCache() {
 		return this._deadlineCache;
 	}
 
+	//returns the current index of Events
 	public int getCurrentIndex() {
 		return currentIndex;
 	}
-
-	public int addTaskToStorage(Event newTask){
-		logger.writeLog("addTask: "+newTask.getName());
-		_taskCache.add(newTask);
-		currentIndex++;
-		updateStorage();
-		return newTask.getID();
-	}
-
-	public int addTask(String name, String category, int priority){
+	
+	/**
+	 * Creates an Event object with given params, and stores the task event
+	 * into storage
+	 * @param name
+	 * @param category
+	 * @param priority
+	 * @return id of the task event being added
+	 */
+	public int addTask(String name, String category, int priority) {
 		Event newTask = new Event(currentIndex, name, category, priority);
 		addTaskToStorage(newTask);
 		return newTask.getID();
-
 	}
-
-	public int addDeadlineToStorage (Event newDeadline){
-		logger.writeLog("add deadline: "+newDeadline.getName());
-		_deadlineCache.add(newDeadline);
-		currentIndex++;
-		updateStorage();
-		return newDeadline.getID();
-	}
-
-	public int addDeadline(String name, Date endDate, String category, int priority){
+	
+	/**
+	 * Creates an Event object with given params, and stores the deadline event
+	 * into storage
+	 * @param name
+	 * @param endDate
+	 * @param category
+	 * @param priority
+	 * @return id of the deadline event being added
+	 */
+	public int addDeadline(String name, Date endDate, String category, int priority) {
 		Event newDeadline = new Event(currentIndex, name, endDate, category, priority);
 		addDeadlineToStorage(newDeadline);
 		return newDeadline.getID();
 	}
 
-	public int addScheduleToStorage(Event newSchedule){
-		logger.writeLog("add schedule: "+newSchedule.getName());
-		_scheduleCache.add(newSchedule);
-		currentIndex++;
-		updateStorage();
-		tb.updateCache(_scheduleCache);
-		return newSchedule.getID();
-	}
-
-	public int addSchedule(String name, Date startDate, Date endDate, String category, int priority){
+	/**
+	 * Creates an Event object with given params, and stores the schedule event
+	 * into storage
+	 * @param name
+	 * @param startDate
+	 * @param endDate
+	 * @param category
+	 * @param priority
+	 * @return id of the schedule event being added
+	 */
+	public int addSchedule(String name, Date startDate, Date endDate, String category, int priority) {
 		Event newSchedule = new Event(currentIndex, name, startDate, endDate, category, priority);
 		addScheduleToStorage(newSchedule);
 		return newSchedule.getID();
 	}
 
-	//precon:id exists
+	/**
+	 * Adds an Event object into storage and writes this action into the logger
+	 * @param newEvent
+	 * @param eventCache
+	 * @param logMsg
+	 * @return id of @newEvent
+	 */
+	private int addEventToStorage(Event newEvent, ArrayList<Event> eventCache, String logMsg) {
+		logger.writeLog(logMsg + newEvent.getName());
+		eventCache.add(newEvent);
+		currentIndex++;
+		updateStorage();
+		return newEvent.getID();
+	}
+	
+	//adds a task Event object to storage
+	public int addTaskToStorage(Event newTask){
+		return addEventToStorage(newTask, _taskCache, Constants.LOG_ADD_TASK);
+	}
+	
+	
+	//adds a deadline Event object to storage
+	public int addDeadlineToStorage (Event newDeadline){
+		return addEventToStorage(newDeadline, _deadlineCache, Constants.LOG_ADD_DEADLINE);
+	}
+
+	//adds a schedule Event object to storage
+	public int addScheduleToStorage(Event newSchedule){
+		int id = addEventToStorage(newSchedule, _scheduleCache, Constants.LOG_ADD_SCHEDULE);
+		tb.updateCache(_scheduleCache);
+		_scheduleCache = tb.getCache();
+		return id;
+	}
+	
+	/**
+	 * precon:id exists
+	 * Iterates through the Event caches, removes Event object with the same 
+	 * ID as @param id
+	 * @param id
+	 * @return deleted event
+	 */
 	public Event deleteEventByID(int id){
 		for (Event element:_taskCache){
 			if (element.getID() == id){
-				logger.writeLog("delete Task: "+element.getName());
+				logger.writeLog(Constants.LOG_DELETE_TASK+element.getName());
 				_taskCache.remove(element);
 				updateStorage();
 				return element;
@@ -169,7 +226,7 @@ public class TGStorageManager {
 
 		for (Event element:_scheduleCache){
 			if (element.getID() == id){
-				logger.writeLog("delete schedule: "+element.getName());
+				logger.writeLog(Constants.LOG_DELETE_SCHEDULE+element.getName());
 				_scheduleCache.remove(element);
 				updateStorage();
 				tb.updateCache(_scheduleCache);
@@ -179,18 +236,23 @@ public class TGStorageManager {
 
 		for (Event element:_deadlineCache){
 			if (element.getID() == id){
-				logger.writeLog("delete deadline: "+element.getName());
+				logger.writeLog(Constants.LOG_DELETE_DEADLINE+element.getName());
 				_deadlineCache.remove(element);
 				updateStorage();
 				return element;
 			}
 		}
-		assert false:"no matched ID found";
+		assert false:Constants.ASSERT_NO_MATCHED_ID;
 		return null;
-		//System.out.println("not found");
 	}
 
-	//precon:id exists
+	/**
+	 * precon:id exists
+	 * Iterates through the Event caches, updates name of Event object with id == @param ID
+	 * to @param name
+	 * @param id
+	 * @param name
+	 */
 	public void updateNameByID(int id, String name){
 		for (Event element:_taskCache){
 			if (element.getID() == id){
@@ -216,17 +278,24 @@ public class TGStorageManager {
 				return;
 			}
 		}
-		//System.out.println("not found");
 	}
 
-	//precon:id exists
+	/**
+	 * precon:id exists
+	 * Iterates through schedule cache, updates the start date of the
+	 * Event object with ID == @param id to @param startDate
+	 * @param id
+	 * @param startDate
+	 * @return true if start date is not blocked by the time block, false otherwise
+	 */
 	public boolean updateStartByID(int id, Date startDate){
 		for (Event element:_scheduleCache){
 			if (element.getID() == id){
-				if (startDate.before(element.getEnd()) && tb.updateStart(id, startDate)) {
+				if (startDate.before(element.getEnd())) {
 					element.setStart(startDate);
 					updateStorage();
 					tb.updateCache(_scheduleCache);
+					_scheduleCache = tb.getCache();
 					return true;
 				} else {
 					return false;
@@ -234,17 +303,24 @@ public class TGStorageManager {
 			}
 		}
 		return false;
-		//System.out.println("not found");
 	}
 
-	//precon:id exists
+	/**
+	 * precon:id exists
+	 * Iterates through schedule and deadline cache, updates the end date of the
+	 * Event object with ID == @param id to @param endDate
+	 * @param id
+	 * @param endDate
+	 * @return true if end date is not blocked by the time block, false otherwise
+	 */
 	public boolean updateEndByID(int id, Date endDate){
 		for (Event element:_scheduleCache){
 			if (element.getID() == id){
-				if (endDate.after(element.getStart()) && tb.updateEnd(id, endDate)) {
+				if (endDate.after(element.getStart())) {
 					element.setEnd(endDate);
 					updateStorage();
 					tb.updateCache(_scheduleCache);
+					_scheduleCache = tb.getCache();
 					return true;
 				} else {
 					return false;
@@ -260,10 +336,15 @@ public class TGStorageManager {
 			}
 		}
 		return false;
-		//System.out.println("not found");
 	}
 
-	//precon:id exists
+	/**
+	 * precon:id exists
+	 * Iterates through the Event caches, updates the category of the
+	 * Event object with ID == @param id to @param category
+	 * @param id
+	 * @param category
+	 */
 	public void updateCategoryByID(int id, String category){
 		for (Event element:_taskCache){
 			if (element.getID() == id){
@@ -289,10 +370,15 @@ public class TGStorageManager {
 				return;
 			}
 		}
-		//System.out.println("not found");
 	}
 
-	//precon:id exists
+	/**
+	 * precon:id exists
+	 * Iterates through the Event caches, updates the priority of the
+	 * Event object with ID == @param id to @param priority
+	 * @param id
+	 * @param priority
+	 */
 	public void updatePriorityByID(int id, int priority){
 		for (Event element:_taskCache){
 			if (element.getID() == id){
@@ -318,9 +404,15 @@ public class TGStorageManager {
 				return;
 			}
 		}
-		//System.out.println("not found");
 	}
 
+	/**
+	 * precon:id exists
+	 * Iterates through the Event caches, updates whether the
+	 * Event object with ID == @param id is done with @param isDone
+	 * @param id
+	 * @param isDone
+	 */
 	public void updateIsDoneByID(int id, boolean isDone){
 		for (Event element:_taskCache){
 			if (element.getID() == id){
@@ -346,53 +438,69 @@ public class TGStorageManager {
 				return;
 			}
 		}
-		//System.out.println("not found");
 	}
 
+	//sorts the caches according to event names
 	public void sortName() {
 		Collections.sort(_taskCache, Sorters.sortName());
 		Collections.sort(_deadlineCache, Sorters.sortName());
 		Collections.sort(_scheduleCache, Sorters.sortName());
 	}
 
+	//sorts the schedules according to start times
 	public void sortStart() {
 		Collections.sort(_scheduleCache, Sorters.sortStart());
 	}
 
+	//sorts the deadlines and schedules according to end times
 	public void sortEnd() {
 		Collections.sort(_deadlineCache, Sorters.sortEnd());
 		Collections.sort(_scheduleCache, Sorters.sortEnd());
 	}
 
+	//sorts the caches according to event priorities
 	public void sortPriority() {
 		Collections.sort(_taskCache, Sorters.sortPriority());
 		Collections.sort(_deadlineCache, Sorters.sortPriority());
 		Collections.sort(_scheduleCache, Sorters.sortPriority());
 	}
 
+	/**
+	 * Searches the task cache for all tasks that contain a key word
+	 * @param key
+	 * @return an ArrayList of all tasks which contain @param key
+	 */
 	public ArrayList<Event> searchTask(String key) {
-		ArrayList<Event> result = new ArrayList<Event>();
-		for (Event element:_taskCache){
-			if (element.contains(key)) {
-				result.add(element);
-			}
-		}
-		return result;
+		return searchEventCache(key, _taskCache);
 	}
 
+	/**
+	 * Searches the deadline cache for all deadlines that contain a key word
+	 * @param key
+	 * @return an ArrayList of all deadlines which contain @param key
+	 */
 	public ArrayList<Event> searchDeadline(String key) {
-		ArrayList<Event> result = new ArrayList<Event>();
-		for (Event element:_deadlineCache){
-			if (element.contains(key)) {
-				result.add(element);
-			}
-		}
-		return result;
+		return searchEventCache(key, _deadlineCache);
 	}
 
+	/**
+	 * Searches the schedule cache for all schedules that contain a key word
+	 * @param key
+	 * @return an ArrayList of all schedules which contain @param key
+	 */
 	public ArrayList<Event> searchSchedule(String key) {
+		return searchEventCache(key, _scheduleCache);
+	}
+	
+	/**
+	 * Searches @param cache for all Event objects containing keyword @param key
+	 * @param key
+	 * @param cache
+	 * @return an ArrayList of Event objects that match the criteria
+	 */
+	private ArrayList<Event> searchEventCache(String key, ArrayList<Event> cache){
 		ArrayList<Event> result = new ArrayList<Event>();
-		for (Event element:_scheduleCache){
+		for (Event element:cache){
 			if (element.contains(key)) {
 				result.add(element);
 			}
@@ -400,6 +508,7 @@ public class TGStorageManager {
 		return result;
 	}
 
+	//clears all event caches
 	public void clear(){
 		_scheduleCache.clear();
 		_deadlineCache.clear();
@@ -407,298 +516,379 @@ public class TGStorageManager {
 		updateStorage();
 	}
 
+	/**
+	 * Initializes TangGuo by reading from the storage file and initializing
+	 * the event caches with the data stored
+	 */
 	private void initialize() {
-		try {
-			File inputFile;
-			if (_filePath.equals("")) {
-				inputFile = new File(_fileName);
-			} else {
-				inputFile = new File(_filePath, _fileName);
-			}
-			// TODO file existence
-			// System.out.println(inputFile.exists());
-			if (!inputFile.exists()) {
-				createStorageFile();
-				return;
-			}
-			DocumentBuilderFactory dbFactory = DocumentBuilderFactory
-					.newInstance();
+		File inputFile;
+		if (_filePath.equals(Constants.NULL)) {
+			inputFile = new File(_fileName);
+		} else {
+			inputFile = new File(_filePath, _fileName);
+		}
+		if (!inputFile.exists()) {
+			createStorageFile();
+			return;
+		}
+		Document doc = parseFile(inputFile);
+		currentIndex = getCurrentIndexFromFile(doc);
+		initializeCaches(doc);
+	}
+	
+	/**
+	 * Parses @param inputFile into a Document object
+	 * @param inputFile
+	 * @return Document object of @param inputFile
+	 */
+	private Document parseFile(File inputFile) {
+		try{
+			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 			Document doc = dBuilder.parse(inputFile);
 			doc.getDocumentElement().normalize();
-			currentIndex = getCurrentIndexFromFile(doc);
-			initializeTaskCache(doc);
-			initializeDeadlineCache(doc);
-			initializeScheduleCache(doc);
-			tb.updateCache(this._scheduleCache);
-
+			return doc;
 		} catch (ParserConfigurationException e) {
+			logger.writeException(Constants.LOG_FAILED_PARSE_FILE);
 			e.printStackTrace();
 		} catch (SAXException e) {
+			logger.writeException(Constants.LOG_FAILED_PARSE_FILE);
 			e.printStackTrace();
 		} catch (IOException e) {
+			logger.writeException(Constants.LOG_FAILED_PARSE_FILE);
 			e.printStackTrace();
 		}
+		return null;
+	}
+	
+	/**
+	 * Initializes task, deadline, and schedule caches from storage file
+	 * @param doc
+	 */
+	private void initializeCaches(Document doc) {
+		initializeTaskCache(doc);
+		initializeDeadlineCache(doc);
+		initializeScheduleCache(doc);
+		tb.updateCache(this._scheduleCache);
 	}
 
+	/**
+	 * creates an XML file for storing user data
+	 */
 	private void createStorageFile() {
 		currentIndex = 0;
 		StringWriter stringWriter = new StringWriter();
-
 		XMLOutputFactory xMLOutputFactory = XMLOutputFactory.newInstance();
 		XMLStreamWriter xMLStreamWriter;
 		try {
-			xMLStreamWriter = xMLOutputFactory
-					.createXMLStreamWriter(stringWriter);
+			xMLStreamWriter = xMLOutputFactory.createXMLStreamWriter(stringWriter);
 
 			xMLStreamWriter.writeStartDocument();
-			xMLStreamWriter.writeStartElement("calendar");
-			xMLStreamWriter.writeAttribute("current", "0");
+			xMLStreamWriter.writeStartElement(Constants.CALENDAR);
+			xMLStreamWriter.writeAttribute(Constants.ATTRIBUTE_CURRENT_INDEX,
+					Constants.INITIALIZE_CURRENT_INDEX);
 			xMLStreamWriter.writeEndElement();
 			xMLStreamWriter.writeEndDocument();
 
 			xMLStreamWriter.flush();
 			xMLStreamWriter.close();
-
 		} catch (XMLStreamException e) {
-			// TODO Auto-generated catch block
+			logger.writeException(Constants.LOG_FAILED_CREATE_FILE);
 			e.printStackTrace();
 			return;
 		}
-
-			writexmlStringToFile(stringWriter.getBuffer().toString());
-			try {
-				stringWriter.close();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		writeXMLStringToFile(stringWriter.getBuffer().toString());
+		try {
+			stringWriter.close();
+		} catch (IOException e) {
+			logger.writeException(Constants.LOG_FAILED_CLOSE_STRINGWRITER);
+			e.printStackTrace();
+		}
 	}
 
+	//parses and returns the current index from @param doc
 	private int getCurrentIndexFromFile(Document doc) {
-		return Integer.parseInt(doc.getDocumentElement()
-				.getAttribute("current"));
+		return Integer.parseInt(doc.getDocumentElement().getAttribute(Constants.ATTRIBUTE_CURRENT_INDEX));
 	}
 
-	private void initializeTaskCache(Document doc) {
-		NodeList nodeList = getNodeList(doc, Constants.XML_TASK_EXPRESSION);
-		String nameString, categoryString;
-		int ID, priority;
-		boolean isDone, hasClash;
+	/**
+	 * reads task data from @param doc and stores the task events into the task cache
+	 * @param doc
+	 */
+	private void initializeTaskCache(Document doc) {	
+		NodeList nodeList = getNodeList(doc, Constants.XML_TASK_EXPRESSION);		
 		Event event;
 		for (int i = 0; i < nodeList.getLength(); i++) {
 			Node nNode = nodeList.item(i);
 			if (nNode.getNodeType() == Node.ELEMENT_NODE) {
 				Element eElement = (Element) nNode;
-				ID = Integer.parseInt(eElement.getAttribute("id"));
-				nameString = getPropertyFromElement(eElement, "name");;
-				categoryString = getPropertyFromElement(eElement, "category");
-				priority = Integer.parseInt(getPropertyFromElement(eElement, "priority"));
-				isDone = Boolean.parseBoolean(getPropertyFromElement(eElement, "isDone"));
-				hasClash = Boolean.parseBoolean(getPropertyFromElement(eElement, "hasClash"));
-
-				event = new Event(ID, nameString, categoryString, priority);
-				event.setIsDone(isDone);
-				event.setHasClash(hasClash);
-
+				event = createTaskEvent(eElement);
 				_taskCache.add(event);
 			}
-		}
+		}		
 	}
+	
+	/**
+	 * converts @param eElement into an Event object (task)
+	 * @param eElement
+	 * @return an Event object parsed from @param eElement
+	 */
+	private Event createTaskEvent(Element eElement) {
+		int ID = Integer.parseInt(eElement.getAttribute(Constants.ATTRIBUTE_ID));
+		String nameString = getPropertyFromElement(eElement, Constants.PROPERTY_NAME);;
+		String categoryString = getPropertyFromElement(eElement, Constants.PROPERTY_CATEGORY);
+		int priority = Integer.parseInt(getPropertyFromElement(eElement, Constants.PROPERTY_PRIORITY));
+		boolean isDone = Boolean.parseBoolean(getPropertyFromElement(eElement, Constants.PROPERTY_IS_DONE));
+		boolean hasClash = Boolean.parseBoolean(getPropertyFromElement(eElement, Constants.PROPERTY_HAS_CLASH));
 
+		Event event = new Event(ID, nameString, categoryString, priority);
+		event.setIsDone(isDone);
+		event.setHasClash(hasClash);
+		return event;
+	}
+	
+	/**
+	 * @param doc
+	 * @param expression
+	 * @return a NodeList from @param doc by compiling @param expression
+	 */
 	private NodeList getNodeList(Document doc, String expression) {
 		try{
 			XPath xPath = XPathFactory.newInstance().newXPath();
-			return (NodeList) xPath.compile(expression)
-				.evaluate(doc, XPathConstants.NODESET);
+			return (NodeList) xPath.compile(expression).evaluate(doc, XPathConstants.NODESET);
 		} catch (XPathExpressionException e){
-			System.out.println("Fail to compile xPath");
+			logger.writeException(Constants.LOG_FAILED_COMPILATION_XPATH);
+			e.printStackTrace();
 			return null;
 		}
 	}
-
+	
+	//returns specified property of an Element object
 	private String getPropertyFromElement(Element eElement, String property){
 		return eElement.getElementsByTagName(property).item(0).getTextContent();
 	}
 
+	/**
+	 * reads deadline data from @param doc and stores the deadline events into 
+	 * the deadline cache
+	 * @param doc
+	 */
 	private void initializeDeadlineCache(Document doc) {
-		DateFormat sdf = new SimpleDateFormat(Constants.DEFAULT_DATE_FORMAT);
-		try {
-			NodeList nodeList = getNodeList(doc, Constants.XML_DEADLINE_EXPRESSION);
-			String nameString, categoryString;
-			Date endDate;
-			int ID, priority;
-			boolean isDone, hasClash;
-			Event event;
-			for (int i = 0; i < nodeList.getLength(); i++) {
-				Node nNode = nodeList.item(i);
-				if (nNode.getNodeType() == Node.ELEMENT_NODE) {
-					Element eElement = (Element) nNode;
-					ID = Integer.parseInt(eElement.getAttribute("id"));
-					nameString = getPropertyFromElement(eElement, "name");
-					endDate = sdf.parse(getPropertyFromElement(eElement, "endDate"));
-					categoryString = getPropertyFromElement(eElement, "category");
-					priority = Integer.parseInt(getPropertyFromElement(eElement, "priority"));
-					isDone = Boolean.parseBoolean(getPropertyFromElement(eElement, "isDone"));
-					hasClash = Boolean.parseBoolean(getPropertyFromElement(eElement, "hasClash"));
-
-					event = new Event(ID, nameString, endDate, categoryString, priority);
-					event.setIsDone(isDone);
-					event.setHasClash(hasClash);
-
-					_deadlineCache.add(event);
-				}
+		NodeList nodeList = getNodeList(doc, Constants.XML_DEADLINE_EXPRESSION);
+		Event event;
+		for (int i = 0; i < nodeList.getLength(); i++) {
+			Node nNode = nodeList.item(i);
+			if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+				Element eElement = (Element) nNode;
+				event = createDeadlineEvent(eElement);
+				_deadlineCache.add(event);
 			}
+		}	
+	}
+	
+	/**
+	 * converts @param eElement into an Event object (deadline)
+	 * @param eElement
+	 * @return an Event object parsed from @param eElement
+	 */
+	private Event createDeadlineEvent(Element eElement) {
+		int ID = Integer.parseInt(eElement.getAttribute(Constants.ATTRIBUTE_ID));
+		String nameString = getPropertyFromElement(eElement, Constants.PROPERTY_NAME);;
+		String categoryString = getPropertyFromElement(eElement, Constants.PROPERTY_CATEGORY);
+		int priority = Integer.parseInt(getPropertyFromElement(eElement, Constants.PROPERTY_PRIORITY));
+		boolean isDone = Boolean.parseBoolean(getPropertyFromElement(eElement, Constants.PROPERTY_IS_DONE));
+		boolean hasClash = Boolean.parseBoolean(getPropertyFromElement(eElement, Constants.PROPERTY_HAS_CLASH));
+		
+		DateFormat sdf = new SimpleDateFormat(Constants.DEFAULT_DATE_FORMAT);
+		Date endDate = null;
+		try {
+			endDate = sdf.parse(getPropertyFromElement(eElement, Constants.PROPERTY_END));
 		} catch (ParseException e) {
-			System.out.println("Failed to parse date when reading from file");
+			logger.writeException(Constants.LOG_FAILED_PARSE_DATE_FROM_FILE);
 			e.printStackTrace();
+			return null;
 		}
+		Event event = new Event(ID, nameString, endDate, categoryString, priority);
+		event.setIsDone(isDone);
+		event.setHasClash(hasClash);
+		return event;
 	}
 
+	/**
+	 * reads schedule data from @param doc and stores the schedule events into 
+	 * the schedule cache
+	 * @param doc
+	 */
 	private void initializeScheduleCache(Document doc) {
-
-		DateFormat sdf = new SimpleDateFormat(Constants.DEFAULT_DATE_FORMAT);
-		try {
-			NodeList nodeList = getNodeList(doc, Constants.XML_SCHEDULE_EXPRESSION);
-			String nameString, categoryString;
-			Date startDate, endDate;
-			int ID, priority;
-			boolean isDone, hasClash;
-			Event event;
-			for (int i = 0; i < nodeList.getLength(); i++) {
-				Node nNode = nodeList.item(i);
-				if (nNode.getNodeType() == Node.ELEMENT_NODE) {
-					Element eElement = (Element) nNode;
-					ID = Integer.parseInt(eElement.getAttribute("id"));
-					nameString = getPropertyFromElement(eElement, "name");
-					startDate = sdf.parse(getPropertyFromElement(eElement, "startDate"));
-					endDate = sdf.parse(getPropertyFromElement(eElement, "endDate"));
-					categoryString = getPropertyFromElement(eElement, "category");
-					priority = Integer.parseInt(getPropertyFromElement(eElement, "priority"));
-					isDone = Boolean.parseBoolean(getPropertyFromElement(eElement, "isDone"));
-					hasClash = Boolean.parseBoolean(getPropertyFromElement(eElement, "hasClash"));
-
-					event = new Event(ID, nameString, startDate, endDate, categoryString, priority);
-					event.setIsDone(isDone);
-					event.setHasClash(hasClash);
-
-					_scheduleCache.add(event);
-				}
+		NodeList nodeList = getNodeList(doc, Constants.XML_SCHEDULE_EXPRESSION);
+		Event event;
+		for (int i = 0; i < nodeList.getLength(); i++) {
+			Node nNode = nodeList.item(i);
+			if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+				Element eElement = (Element) nNode;
+				event = createScheduleEvent(eElement);
+				_scheduleCache.add(event);
 			}
-		} catch (ParseException e) {
-			System.out.println("Failed to parse date when reading from file");
-			e.printStackTrace();
-		}
+		}	
 	}
+	
+	/**
+	 * converts @param eElement into an Event object (schedule)
+	 * @param eElement
+	 * @return an Event object parsed from @param eElement
+	 */
+	private Event createScheduleEvent(Element eElement) {
+		int ID = Integer.parseInt(eElement.getAttribute(Constants.ATTRIBUTE_ID));
+		String nameString = getPropertyFromElement(eElement, Constants.PROPERTY_NAME);;
+		String categoryString = getPropertyFromElement(eElement, Constants.PROPERTY_CATEGORY);
+		int priority = Integer.parseInt(getPropertyFromElement(eElement, Constants.PROPERTY_PRIORITY));
+		boolean isDone = Boolean.parseBoolean(getPropertyFromElement(eElement, Constants.PROPERTY_IS_DONE));
+		boolean hasClash = Boolean.parseBoolean(getPropertyFromElement(eElement, Constants.PROPERTY_HAS_CLASH));
+		
+		DateFormat sdf = new SimpleDateFormat(Constants.DEFAULT_DATE_FORMAT);
+		Date endDate = null, startDate = null;
+		try {
+			startDate = sdf.parse(getPropertyFromElement(eElement, Constants.PROPERTY_START));
+			endDate = sdf.parse(getPropertyFromElement(eElement, Constants.PROPERTY_END));
+		} catch (ParseException e) {
+			logger.writeException(Constants.LOG_FAILED_PARSE_DATE_FROM_FILE);
+			e.printStackTrace();
+			return null;
+		}
+		Event event = new Event(ID, nameString, startDate, endDate, categoryString, priority);
+		event.setIsDone(isDone);
+		event.setHasClash(hasClash);
+		return event;
+	}
+	
+	/**
+	 * Writes every event stored inside the Event caches into the storage file
+	 */
 	private void updateStorage(){
 		try {
-	         StringWriter stringWriter = new StringWriter();
-	         DateFormat sdf = new SimpleDateFormat(Constants.DEFAULT_DATE_FORMAT);
-	         XMLOutputFactory xMLOutputFactory = XMLOutputFactory.newInstance();
-	         XMLStreamWriter xmlStreamWriter = xMLOutputFactory.createXMLStreamWriter(stringWriter);
-
-	         xmlStreamWriter.writeStartDocument();
-	         xmlStreamWriter.writeStartElement("calendar");
-	         xmlStreamWriter.writeAttribute("current", String.valueOf(currentIndex));
-	         for (Event element:_taskCache){
-	        	 xmlStreamWriter.writeStartElement("task");
-	        	 writeTaskProperties(xmlStreamWriter, element);
-	             xmlStreamWriter.writeEndElement();
-	         }
-
-	         for (Event element:_deadlineCache){
-	        	 xmlStreamWriter.writeStartElement("deadline");
-	             writeTaskProperties(xmlStreamWriter, element);
-	             writeEndProperty(xmlStreamWriter, element, sdf);
-	             xmlStreamWriter.writeEndElement();
-	         }
-
-	         for (Event element:_scheduleCache){
-	        	 xmlStreamWriter.writeStartElement("schedule");
-	             writeTaskProperties(xmlStreamWriter, element);
-	             writeStartProperty(xmlStreamWriter, element, sdf);
-	             writeEndProperty(xmlStreamWriter, element, sdf);
-	             xmlStreamWriter.writeEndElement();
-	         }
-
-	         xmlStreamWriter.writeEndElement();
-	         xmlStreamWriter.writeEndDocument();
-
-	         xmlStreamWriter.flush();
-	         xmlStreamWriter.close();
-
-	         String xmlString = stringWriter.getBuffer().toString();
-
-	         writexmlStringToFile(xmlString);
-	         stringWriter.close();
-
-
-	      } catch (XMLStreamException e) {
-	         e.printStackTrace();
-	      } catch (IOException e) {
-	         // TODO Auto-generated catch block
-	         e.printStackTrace();
-	      }
+			StringWriter stringWriter = new StringWriter();
+	        DateFormat sdf = new SimpleDateFormat(Constants.DEFAULT_DATE_FORMAT);
+	        XMLOutputFactory xMLOutputFactory = XMLOutputFactory.newInstance();
+	        XMLStreamWriter xmlStreamWriter = xMLOutputFactory.createXMLStreamWriter(stringWriter);
+	
+	        xmlStreamWriter.writeStartDocument();
+	        xmlStreamWriter.writeStartElement(Constants.CALENDAR);
+	        xmlStreamWriter.writeAttribute(Constants.ATTRIBUTE_CURRENT_INDEX, String.valueOf(currentIndex)); 
+	        for (Event element:_taskCache){
+	        	xmlStreamWriter.writeStartElement(Constants.TASK_TYPE);
+	        	writeTaskProperties(xmlStreamWriter, element);
+	            xmlStreamWriter.writeEndElement();
+	        }
+	        for (Event element:_deadlineCache){
+	        	xmlStreamWriter.writeStartElement(Constants.DEADLINE_TYPE);
+	            writeTaskProperties(xmlStreamWriter, element);
+	            writeEndProperty(xmlStreamWriter, element, sdf);
+	            xmlStreamWriter.writeEndElement();
+	        }
+	        for (Event element:_scheduleCache){
+	        	xmlStreamWriter.writeStartElement(Constants.SCHEDULE_TYPE);
+	            writeTaskProperties(xmlStreamWriter, element);
+	            writeStartProperty(xmlStreamWriter, element, sdf);
+	            writeEndProperty(xmlStreamWriter, element, sdf);
+	            xmlStreamWriter.writeEndElement();
+	        }
+	        xmlStreamWriter.writeEndElement();
+	        xmlStreamWriter.writeEndDocument();
+	        xmlStreamWriter.flush();
+	        xmlStreamWriter.close();
+	
+	        String xmlString = stringWriter.getBuffer().toString();
+	        writeXMLStringToFile(xmlString);
+	        stringWriter.close();
+		} catch (XMLStreamException e) {
+			logger.writeException(Constants.LOG_FAILED_WRITE_TO_FILE);
+	        e.printStackTrace();
+		} catch (IOException e) {
+	    	logger.writeException(Constants.LOG_FAILED_CLOSE_STRINGWRITER);
+	        e.printStackTrace();
+		}
 	}
-
+	
+	/**
+	 * Writes in the task properties of an Event object
+	 * @param xmlStreamWriter
+	 * @param element
+	 */
 	private void writeTaskProperties(XMLStreamWriter xmlStreamWriter, Event element){
 		try{
-			xmlStreamWriter.writeAttribute("id", String.valueOf(element.getID()));
-	        xmlStreamWriter.writeStartElement("name");
+			xmlStreamWriter.writeAttribute(Constants.ATTRIBUTE_ID, String.valueOf(element.getID()));
+	        xmlStreamWriter.writeStartElement(Constants.PROPERTY_NAME);
 	        xmlStreamWriter.writeCharacters(element.getName());
 	        xmlStreamWriter.writeEndElement();
-	        xmlStreamWriter.writeStartElement("category");
+	        xmlStreamWriter.writeStartElement(Constants.PROPERTY_CATEGORY);
 	        xmlStreamWriter.writeCharacters(element.getCategory());
 	        xmlStreamWriter.writeEndElement();
-	        xmlStreamWriter.writeStartElement("priority");
+	        xmlStreamWriter.writeStartElement(Constants.PROPERTY_PRIORITY);
 	        xmlStreamWriter.writeCharacters(String.valueOf(element.getPriority()));
 	        xmlStreamWriter.writeEndElement();
-	        xmlStreamWriter.writeStartElement("isDone");
+	        xmlStreamWriter.writeStartElement(Constants.PROPERTY_IS_DONE);
 	        xmlStreamWriter.writeCharacters(String.valueOf(element.isDone()));
 	        xmlStreamWriter.writeEndElement();
-	        xmlStreamWriter.writeStartElement("hasClash");
+	        xmlStreamWriter.writeStartElement(Constants.PROPERTY_HAS_CLASH);
 	        xmlStreamWriter.writeCharacters(String.valueOf(element.hasClash()));
 	        xmlStreamWriter.writeEndElement();
 		} catch (XMLStreamException e){
-			System.out.println("Failed to write into file");
+			logger.writeException(Constants.LOG_FAILED_WRITE_TO_FILE);
 			e.printStackTrace();
 		}
 	}
-
+	
+	/**
+	 * Writes in the start time property of schedule Event objects
+	 * @param xmlStreamWriter
+	 * @param element
+	 * @param sdf
+	 */
 	private void writeStartProperty(XMLStreamWriter xmlStreamWriter, Event element, DateFormat sdf){
 		try {
-			xmlStreamWriter.writeStartElement("startDate");
+			xmlStreamWriter.writeStartElement(Constants.PROPERTY_START);
             xmlStreamWriter.writeCharacters(sdf.format(element.getStart()));
             xmlStreamWriter.writeEndElement();
 		} catch (XMLStreamException e) {
-			System.out.println("Failed to write into file");
+			logger.writeException(Constants.LOG_FAILED_WRITE_TO_FILE);
 			e.printStackTrace();
 		}
 	}
-
+	
+	/**
+	 * Writes in the end time property of deadline and schedule Event objects
+	 * @param xmlStreamWriter
+	 * @param element
+	 * @param sdf
+	 */
 	private void writeEndProperty(XMLStreamWriter xmlStreamWriter, Event element, DateFormat sdf){
 		try {
-			xmlStreamWriter.writeStartElement("endDate");
+			xmlStreamWriter.writeStartElement(Constants.PROPERTY_END);
             xmlStreamWriter.writeCharacters(sdf.format(element.getEnd()));
             xmlStreamWriter.writeEndElement();
 		} catch (XMLStreamException e) {
-			System.out.println("Failed to write into file");
+			logger.writeException(Constants.LOG_FAILED_WRITE_TO_FILE);
 			e.printStackTrace();
 		}
 	}
 
-	private void writexmlStringToFile(String xmlString){
+	/**
+	 * Writes in @param xmlString into the storage file
+	 * @param xmlString
+	 */
+	private void writeXMLStringToFile(String xmlString){
 		try {
             Source xmlInput = new StreamSource(new StringReader(xmlString));
             StringWriter outputStringWriter = new StringWriter();
             StreamResult xmlOutput = new StreamResult(outputStringWriter);
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
-            transformerFactory.setAttribute("indent-number", 2);
+            transformerFactory.setAttribute(Constants.ATTRIBUTE_INDENT_NUMBER, 
+            		Constants.ATTRIBUTE_INDENT_NUMBER_VALUE);
             Transformer transformer = transformerFactory.newTransformer();
-            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+            transformer.setOutputProperty(OutputKeys.INDENT, Constants.PROPERTY_YES);
             transformer.transform(xmlInput, xmlOutput);
 			File outputFile;
-			if (_filePath.equals("")) {
+			if (_filePath.equals(Constants.NULL)) {
 				outputFile = new File(_fileName);
 			} else {
 				outputFile = new File(_filePath, _fileName);
@@ -707,16 +897,10 @@ public class TGStorageManager {
 			fw.write(xmlOutput.getWriter().toString());
 			fw.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (TransformerConfigurationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (TransformerFactoryConfigurationError e) {
-			// TODO Auto-generated catch block
+			logger.writeException(Constants.LOG_FAILED_WRITE_TO_FILE);
 			e.printStackTrace();
 		} catch (TransformerException e) {
-			// TODO Auto-generated catch block
+			logger.writeException(Constants.LOG_FAILED_TRANSFORM_XMLSTRING);
 			e.printStackTrace();
 		}
 	}

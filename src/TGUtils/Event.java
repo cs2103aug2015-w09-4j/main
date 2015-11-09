@@ -15,6 +15,7 @@ public class Event {
 	private boolean hasClash;
 
 	public Event(int ID, String name, Date startDate, Date endDate, String category, int priority){
+		
 		this.type = Constants.SCHEDULE_TYPE_NUMBER;
 		this.ID = ID;
 		this.name = name;

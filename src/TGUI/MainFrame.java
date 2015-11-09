@@ -56,7 +56,6 @@ public class MainFrame extends JFrame{
 		up = new Stack<String>();
 		down = new Stack<String>();
 		button.addActionListener(new ActionListener(){
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				submitCommand();

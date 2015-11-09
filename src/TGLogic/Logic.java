@@ -290,7 +290,7 @@ public class Logic {
 		}else if (event.getType()==Constants.DEADLINE_TYPE_NUMBER){ //deadline is today's if end date is on today
 			return isSameDay(today,event.getEnd());
 		}else if (event.getType()==Constants.SCHEDULE_TYPE_NUMBER){
-			return isWithinInterval(today,event.getStart(),event.getEnd()) && isOnInterval(today,event.getStart(),event.getEnd());
+			return isWithinInterval(today,event.getStart(),event.getEnd()) || isOnInterval(today,event.getStart(),event.getEnd());
 		}else{
 			return false;
 		}
