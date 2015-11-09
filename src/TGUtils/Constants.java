@@ -139,9 +139,16 @@ public class Constants {
 	public static final char DEADLINE_CHAR = 'd';
 	public static final char SCHEDULE_CHAR = 's';
 
-	public static final String LOW = "LOW";
-	public static final String MID = "MID";
-	public static final String HIGH = "HIGH";
+	public static final String ADD_CATEGORY = "-c";
+	public static final String ADD_PRIORITY = "-p";
+	public static final int ADD_NULL = -1;
+	
+	public static final String STRING_LOW = "LOW";
+	public static final String STRING_MID = "MID";
+	public static final String STRING_HIGH = "HIGH";
+	public static final int INT_LOW = 1;
+	public static final int INT_MID = 2;
+	public static final int INT_HIGH = 3;
 
 
 	/*
@@ -169,9 +176,7 @@ public class Constants {
 	public static final String TANGGUO_DELETE_SUCCESS = "Deleted from %1$s: %2$s";
 	public static final String TANGGUO_UPDATE_NAME_SUCCESS = "Name of %1$s updated to %2$s";
 	public static final String TANGGUO_UPDATE_START_SUCCESS = "Start date of %1$s updated to %2$s";
-	public static final String TANGGUO_UPDATE_START_FAIL = "Unable to update Start date, try again";
 	public static final String TANGGUO_UPDATE_END_SUCCESS = "End date of %1$s updated to %2$s";
-	public static final String TANGGUO_UPDATE_END_FAIL = "Unable to update End date, try again";
 	public static final String TANGGUO_UPDATE_PRIORITY_SUCCESS = "Priority of %1$s updated to %2$s";	//print int?
 	public static final String TANGGUO_UPDATE_CATEGORY_SUCCESS = "Category of %1$s updated to %2$s";
 	public static final String TANGGUO_UPDATE_DONE_SUCCESS = "%1$s completed";
@@ -193,6 +198,8 @@ public class Constants {
 	public static final String TANGGUO_INVALID_INDEX = "The task index you entered seems to be invalid, try again";
 	public static final String TANGGUO_INVALID_DATE = "The date format you entered seems to be invalid, try again";
 	public static final String TANGGUO_INVALID_SCHEDULE = "The start time you entered seem to be later than your end time, try again";
+	public static final String TANGGUO_INVALID_START = "Unable to update start time as it is later than the end time, try again";
+	public static final String TANGGUO_INVALID_END = "Unable to update end time as it is earlier than the start time, try again";
 	public static final String TANGGUO_INVALID_COMMAND = "The command you entered seems to be invalid, try another command";
 	public static final String TANGGUO_DATE_OUT_OF_BOUNDS = "The date or time you have entered is in the wrong format, try again";
 	public static final String TANGGUO_INVALID_PRIORITY = "The priority level you entered seems to be invalid, try again";

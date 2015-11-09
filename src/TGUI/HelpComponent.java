@@ -15,12 +15,12 @@ public class HelpComponent extends JPanel {
 		String[] columnNames = { "Action", "Command" };
 
 		Object[][] data = {
-				{"add new floating task", "add <name>"},
-				{"add new schedule", "add <name> from <date> to <date>"},
-				{"add new deadline", "add <name> by <date>"},
-				{"add new floating task with priority", "add -p <name> <low/mid/high>"},
-				{"add new schedule with priority", "add -p <name> from <date> to <date> <low/mid/high>"},
-				{"add new deadline with priority", "add -p <name> by <date> <low/mid/high>"},
+				{"add new task event", "add <name>"},
+				{"add new schedule event", "add <name> from <date> to <date>"},
+				{"add new deadline event", "add <name> by <date>"},
+				{"add new task event with priority", "add <name> -p <low/mid/high>"},
+				{"add new schedule event with priority", "add <name> from <date> to <date> -p <low/mid/high>"},
+				{"add new deadline event with priority", "add <name> by <date> -p <low/mid/high>"},
 				{"update the name of an event", "update name <t,d,s><num> <name>"},
 				{"update the start date of an event", "update start <t,d,s><num> <date>"},
 				{"update the end date of an event", "update end <t,d,s><num> <date>"},

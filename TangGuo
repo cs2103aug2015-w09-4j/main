@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><calendar current="81">
+<?xml version="1.0" encoding="UTF-8"?><calendar current="82">
   <task id="3">
     <name>fjd</name>
     <category>DEFAULT</category>
@@ -24,7 +24,7 @@
     <name>dun</name>
     <category>DEFAULT</category>
     <priority>1</priority>
-    <isDone>false</isDone>
+    <isDone>true</isDone>
     <hasClash>false</hasClash>
   </task>
   <task id="75">
@@ -38,18 +38,25 @@
     <name>now try this</name>
     <category>DEFAULT</category>
     <priority>1</priority>
-    <isDone>false</isDone>
+    <isDone>true</isDone>
     <hasClash>false</hasClash>
   </task>
   <task id="77">
     <name>hey hey hey</name>
     <category>DEFAULT</category>
     <priority>1</priority>
-    <isDone>false</isDone>
+    <isDone>true</isDone>
     <hasClash>false</hasClash>
   </task>
   <task id="78">
     <name>dobedobedo</name>
+    <category>DEFAULT</category>
+    <priority>1</priority>
+    <isDone>true</isDone>
+    <hasClash>false</hasClash>
+  </task>
+  <task id="81">
+    <name>doob</name>
     <category>DEFAULT</category>
     <priority>1</priority>
     <isDone>false</isDone>
@@ -102,7 +109,7 @@
     <priority>2</priority>
     <isDone>false</isDone>
     <hasClash>true</hasClash>
-    <startDate>09/11/2015 10:00</startDate>
+    <startDate>09/11/2015 09:00</startDate>
     <endDate>09/11/2015 12:30</endDate>
   </schedule>
   <schedule id="68">

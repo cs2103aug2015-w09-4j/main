@@ -8,9 +8,6 @@ import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Stack;
-
-import TGExceptions.AbnormalScheduleTimeException;
-import TGExceptions.TaskDateExistenceException;
 import TGParser.Parser;
 import TGStorage.TGStorageManager;
 import TGUtils.Command;
@@ -92,7 +89,7 @@ public class Logic {
 		Command currentCommand;
 		try {
 			currentCommand = Parser.parseCommand(input);
-		} catch (ParseException | TaskDateExistenceException e) {
+		} catch (ParseException e) {
 			logger.writeException(e.toString());
 			return getErrorCommand(Constants.TANGGUO_DATE_OUT_OF_BOUNDS);
 		} catch (NumberFormatException e) {
@@ -101,9 +98,6 @@ public class Logic {
 		} catch (IndexOutOfBoundsException e) {
 			logger.writeException(e.toString());
 			return getErrorCommand(Constants.TANGGUO_INVALID_COMMAND);
-		} catch (AbnormalScheduleTimeException e) {
-			logger.writeException(e.toString());
-			return getErrorCommand(Constants.TANGGUO_INVALID_SCHEDULE);
 		}
 		Command returnedCommand = executeProcessedCommand(currentCommand);
 		return returnedCommand;
@@ -198,11 +192,14 @@ public class Logic {
 	/**
 	 * adds a Schedule event
 	 */
-	private Command addSchedule(Command command) {
-		Command returnedCommand = createAddReturnCommand(command);
-		if (command.isUserCommand()) {
-			int newID = storage.addSchedule(command.getEventName(), command.getEventStart(), 
-					command.getEventEnd(), command.getEventCategory(), command.getEventPriority());
+	private Command addSchedule(Command command){
+		if(command.getEventStart().compareTo(command.getEventEnd()) >= 0) {
+			return getErrorCommand(Constants.TANGGUO_INVALID_SCHEDULE);
+		}
+		Command returnedCommand = new Command();
+		returnedCommand.setDisplayMessage(String.format(Constants.TANGGUO_ADD_SUCCESS, fileName, command.getEventName()));
+		if (command.isUserCommand()){
+			int newID = storage.addSchedule(command.getEventName(), command.getEventStart(), command.getEventEnd(), command.getEventCategory(), command.getEventPriority());
 			reversedCommandStack.push(reverseAdd(newID));
 		} else {
 			storage.addScheduleToStorage(command.getEvent());
@@ -407,18 +404,19 @@ public class Logic {
 		} else {
 			return getErrorCommand(Constants.TANGGUO_INVALID_INDEX);
 		}
-		Date oldStart = storage.getEventByID(taskID).getStart();
-		if (storage.updateStartByID(taskID, startDate)) {
-			if (command.isUserCommand()) {
-				reversedCommandStack.push(reverseUpdateStart(taskID, oldStart, displayedIndex));
-			}
-			returnedCommand.setDisplayMessage(String.format(Constants.TANGGUO_UPDATE_START_SUCCESS,
-					storage.getEventByID(taskID).getName(), startDate.toString()));
-			returnedCommand.setDisplayedEventList(updateDisplay());
-			return returnedCommand;
-		} else {
-			return getErrorCommand(Constants.TANGGUO_UPDATE_START_FAIL);
+		Event element = storage.getEventByID(taskID);
+		if (startDate.after(element.getEnd())) {
+			return getErrorCommand(Constants.TANGGUO_INVALID_START);
 		}
+		Date oldStart = element.getStart();
+		if (command.isUserCommand()){
+			reversedCommandStack.push(reverseUpdateStart(taskID, oldStart, displayedIndex));
+		}
+		storage.updateStartByID(taskID, startDate);
+		returnedCommand.setDisplayMessage(String.format(Constants.TANGGUO_UPDATE_START_SUCCESS, storage.getEventByID(taskID).getName(),
+				startDate.toString()));
+		returnedCommand.setDisplayedEventList(updateDisplay());
+		return returnedCommand;
 	}
 
 	/**
@@ -453,18 +451,19 @@ public class Logic {
 		} else {
 			return getErrorCommand(Constants.TANGGUO_INVALID_INDEX);
 		}
-		Date oldEnd = storage.getEventByID(taskID).getEnd();
-		if (storage.updateEndByID(taskID, endDate)) {
-			if (command.isUserCommand()) {
-				reversedCommandStack.push(reverseUpdateEnd(taskID, oldEnd, displayedIndex));
-			}
-			returnedCommand.setDisplayMessage(String.format(Constants.TANGGUO_UPDATE_END_SUCCESS,
-					storage.getEventByID(taskID).getName(), endDate.toString()));
-			returnedCommand.setDisplayedEventList(updateDisplay());
-			return returnedCommand;
-		} else {
-			return getErrorCommand(Constants.TANGGUO_UPDATE_END_FAIL);
+		Event element = storage.getEventByID(taskID);
+		if (endDate.before(element.getStart())) {
+			return getErrorCommand(Constants.TANGGUO_INVALID_END);
 		}
+		Date oldEnd = element.getEnd();
+		if (command.isUserCommand()){
+			reversedCommandStack.push(reverseUpdateEnd(taskID, oldEnd, displayedIndex));
+		}
+		storage.updateEndByID(taskID, endDate);
+		returnedCommand.setDisplayMessage(String.format(Constants.TANGGUO_UPDATE_END_SUCCESS, storage.getEventByID(taskID).getName(),
+				endDate.toString()));
+		returnedCommand.setDisplayedEventList(updateDisplay());
+		return returnedCommand;
 	}
 
 	/**

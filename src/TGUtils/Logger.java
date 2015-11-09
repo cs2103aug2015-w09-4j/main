@@ -13,24 +13,30 @@ public class Logger {
 	//private Writer output;
 	final DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 	public Logger(String fileAdd) throws IOException{
-		
+
 		this.fileAdd = fileAdd;
-		
-		
 	}
 	public void writeException(String content) {
 		Date date = new Date();
 		String temp = dateFormat.format(date) + " exception occurs: " + content+"\n";
-		
+
 			writeline(temp);
-		
+
+	}
+
+	public void writeAddEventLog(String name){
+		writeLog(Constants.LOG_ADD_TASK + name);
+	}
+
+	public void writeDeleteEventLog(String name){
+		writeLog(Constants.LOG_DELETE_TASK + name);
 	}
 	public void writeLog(String content){
 		Date date = new Date();
 		String temp = dateFormat.format(date) + " Log: " + content+"\n";
 		writeline(temp);
 	}
-	
+
 	private void writeline(String content){
 		try {
 			Writer output = new BufferedWriter(new FileWriter(fileAdd, true));
@@ -40,6 +46,6 @@ public class Logger {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
 }
