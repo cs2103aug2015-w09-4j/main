@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?><calendar current="82">
+  <task id="3">
+    <name>fjd</name>
+    <category>DEFAULT</category>
+    <priority>1</priority>
+    <isDone>true</isDone>
+    <hasClash>false</hasClash>
+  </task>
+  <task id="62">
+    <name>read 2105 textbook</name>
+    <category>DEFAULT</category>
+    <priority>1</priority>
+    <isDone>false</isDone>
+    <hasClash>false</hasClash>
+  </task>
+  <task id="63">
+    <name>drink 3000cc of Gong Cha</name>
+    <category>DEFAULT</category>
+    <priority>3</priority>
+    <isDone>false</isDone>
+    <hasClash>false</hasClash>
+  </task>
+  <task id="74">
+    <name>dun</name>
+    <category>DEFAULT</category>
+    <priority>1</priority>
+    <isDone>true</isDone>
+    <hasClash>false</hasClash>
+  </task>
+  <task id="75">
+    <name>does this work</name>
+    <category>DEFAULT</category>
+    <priority>1</priority>
+    <isDone>false</isDone>
+    <hasClash>false</hasClash>
+  </task>
+  <task id="76">
+    <name>now try this</name>
+    <category>DEFAULT</category>
+    <priority>1</priority>
+    <isDone>true</isDone>
+    <hasClash>false</hasClash>
+  </task>
+  <task id="77">
+    <name>hey hey hey</name>
+    <category>DEFAULT</category>
+    <priority>1</priority>
+    <isDone>true</isDone>
+    <hasClash>false</hasClash>
+  </task>
+  <task id="78">
+    <name>dobedobedo</name>
+    <category>DEFAULT</category>
+    <priority>1</priority>
+    <isDone>true</isDone>
+    <hasClash>false</hasClash>
+  </task>
+  <task id="81">
+    <name>doob</name>
+    <category>DEFAULT</category>
+    <priority>1</priority>
+    <isDone>false</isDone>
+    <hasClash>false</hasClash>
+  </task>
+  <deadline id="9">
+    <name>this</name>
+    <category>DEFAULT</category>
+    <priority>1</priority>
+    <isDone>false</isDone>
+    <hasClash>false</hasClash>
+    <endDate>06/10/2015 23:59</endDate>
+  </deadline>
+  <deadline id="64">
+    <name>2105 assignment</name>
+    <category>DEFAULT</category>
+    <priority>3</priority>
+    <isDone>false</isDone>
+    <hasClash>false</hasClash>
+    <endDate>09/11/2015 23:59</endDate>
+  </deadline>
+  <deadline id="73">
+    <name>math assignment</name>
+    <category>DEFAULT</category>
+    <priority>1</priority>
+    <isDone>false</isDone>
+    <hasClash>false</hasClash>
+    <endDate>16/11/2015 23:59</endDate>
+  </deadline>
+  <deadline id="79">
+    <name>dooo</name>
+    <category>DEFAULT</category>
+    <priority>2</priority>
+    <isDone>false</isDone>
+    <hasClash>false</hasClash>
+    <endDate>09/11/2015 09:00</endDate>
+  </deadline>
+  <schedule id="66">
+    <name>presentation</name>
+    <category>DEFAULT</category>
+    <priority>2</priority>
+    <isDone>false</isDone>
+    <hasClash>false</hasClash>
+    <startDate>09/11/2015 09:00</startDate>
+    <endDate>09/11/2015 10:00</endDate>
+  </schedule>
+  <schedule id="67">
+    <name>group discussion</name>
+    <category>DEFAULT</category>
+    <priority>2</priority>
+    <isDone>false</isDone>
+    <hasClash>true</hasClash>
+    <startDate>09/11/2015 09:00</startDate>
+    <endDate>09/11/2015 12:30</endDate>
+  </schedule>
+  <schedule id="68">
+    <name>buy gong cha</name>
+    <category>DEFAULT</category>
+    <priority>3</priority>
+    <isDone>false</isDone>
+    <hasClash>true</hasClash>
+    <startDate>09/11/2015 12:00</startDate>
+    <endDate>09/11/2015 15:00</endDate>
+  </schedule>
+  <schedule id="69">
+    <name>tutorial</name>
+    <category>DEFAULT</category>
+    <priority>1</priority>
+    <isDone>false</isDone>
+    <hasClash>false</hasClash>
+    <startDate>09/11/2015 16:00</startDate>
+    <endDate>09/11/2015 17:00</endDate>
+  </schedule>
+  <schedule id="80">
+    <name>sjid</name>
+    <category>DEFAULT</category>
+    <priority>1</priority>
+    <isDone>false</isDone>
+    <hasClash>false</hasClash>
+    <startDate>09/11/2015 17:00</startDate>
+    <endDate>09/11/2015 19:00</endDate>
+  </schedule>
+  <schedule id="70">
+    <name>lepak</name>
+    <category>monday</category>
+    <priority>1</priority>
+    <isDone>false</isDone>
+    <hasClash>false</hasClash>
+    <startDate>09/11/2015 19:00</startDate>
+    <endDate>09/11/2015 23:00</endDate>
+  </schedule>
+  <schedule id="72">
+    <name>tuition</name>
+    <category>DEFAULT</category>
+    <priority>1</priority>
+    <isDone>false</isDone>
+    <hasClash>false</hasClash>
+    <startDate>10/11/2015 14:30</startDate>
+    <endDate>10/11/2015 16:30</endDate>
+  </schedule>
+  <schedule id="71">
+    <name>written assignment</name>
+    <category>DEFAULT</category>
+    <priority>1</priority>
+    <isDone>false</isDone>
+    <hasClash>false</hasClash>
+    <startDate>12/11/2015 10:00</startDate>
+    <endDate>12/11/2015 11:30</endDate>
+  </schedule>
+</calendar>

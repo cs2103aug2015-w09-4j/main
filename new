@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?><calendar current="2">
-  <deadline id="1">
-    <name>new</name>
-    <endDate>10/10/2015 23:59</endDate>
-    <category>DEFAULT</category>
-    <priority>3</priority>
-    <isDone>false</isDone>
-  </deadline>
-</calendar>

@@ -14,11 +14,4 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>src/GUI/img/HEADER_today.png</name>
-			<type>1</type>
-			<location>/Users/matanghao1/Downloads/HEADER_today.png</location>
-		</link>
-	</linkedResources>
 </projectDescription>
