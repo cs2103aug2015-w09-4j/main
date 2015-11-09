@@ -76,6 +76,7 @@ public class TGStorageManager {
 	public void setFilePath(String filePath) {
 		this.filePath = filePath;
 	}
+	
 	//@@author A0126833E
 	/**
 	 * Iterates through the event caches to find an event of the same id
@@ -387,7 +388,8 @@ public class TGStorageManager {
 			}
 		}
 	}
-	//@@author
+	
+	//@@author A0131465L
 	/**
 	 * precon:id exists Iterates through the Event caches, updates whether the
 	 * Event object with ID == @param id is done with @param isDone
@@ -494,6 +496,7 @@ public class TGStorageManager {
 		}
 		return result;
 	}
+	
 	//@@author A0126833E
 	// clears all event caches
 	public void clear() {
@@ -522,7 +525,8 @@ public class TGStorageManager {
 		currentIndex = getCurrentIndexFromFile(doc);
 		initializeCaches(doc);
 	}
-	//@@author
+	
+	//@@author A0131465L
 	/**
 	 * Parses @param inputFile into a Document object
 	 *
@@ -560,6 +564,7 @@ public class TGStorageManager {
 		initializeScheduleCache(doc);
 		tb.updateCache(this.scheduleCache);
 	}
+	
 	//@@author A0126833E
 	/**
 	 * creates an XML file for storing user data
@@ -615,7 +620,8 @@ public class TGStorageManager {
 			}
 		}
 	}
-	//@@author
+	
+	//@@author A0131465L
 	/**
 	 * converts @param eElement into an Event object (task)
 	 *

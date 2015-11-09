@@ -3,7 +3,6 @@ package com.tg.backend;
 import java.lang.String;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.Date;
@@ -170,6 +169,7 @@ public class Logic {
 		return returnedCommand;
 	}
 
+	//@author A0131465L
 	/**
 	 * adds a Deadline event
 	 */
@@ -278,6 +278,7 @@ public class Logic {
 		return temp;
 	}
 
+	//@author
 	/**
 	 * @param cache
 	 * @param header
@@ -337,6 +338,7 @@ public class Logic {
 		return sdf.format(date1).equals(sdf.format(date2));
 	}
 
+	//@author UPDATE_NAME
 	/**
 	 * Updates the name of an existing event to the new name entered by the user
 	 * @param command
@@ -362,6 +364,7 @@ public class Logic {
 		return returnedCommand;
 	}
 
+	//@author
 	// return an ERROR command which tells the GUI that the command given is invalid
 	private Command getErrorCommand(String ErrorMessage) {
 		Command c = new Command();
@@ -369,6 +372,7 @@ public class Logic {
 		return c;
 	}
 
+	//@author A0131465L
 	/**
 	 * Reverts back the name of an event
 	 * @param id
@@ -526,6 +530,7 @@ public class Logic {
 		return temp;
 	}
 
+	//@author
 	/**
 	 * Updates the category of an existing Event to the new category entered by user
 	 * @param command
@@ -570,6 +575,7 @@ public class Logic {
 		return temp;
 	}
 
+	//@author A0131465L
 	/**
 	 * Marks an existing Event as done
 	 * @param command
